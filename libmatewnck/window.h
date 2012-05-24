@@ -24,10 +24,6 @@
 #ifndef MATEWNCK_WINDOW_H
 #define MATEWNCK_WINDOW_H
 
-#ifndef MATEWNCK_I_KNOW_THIS_IS_UNSTABLE
-#error "libmatewnck should only be used if you understand that it's subject to frequent change, and is not supported as a fixed API/ABI or as part of the platform"
-#endif
-
 #include <glib-object.h>
 #include <libmatewnck/screen.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>

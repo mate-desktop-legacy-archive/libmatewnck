@@ -12,7 +12,6 @@ noinst_PROGRAMS =		\
 AM_CPPFLAGS =					\
 	$(LIBMATEWNCK_CFLAGS)			\
 	-I$(top_srcdir)				\
-	-DMATEWNCK_I_KNOW_THIS_IS_UNSTABLE		\
 	-DMATEWNCK_LOCALEDIR=\"$(matewncklocaledir)\"	\
 	$(DISABLE_DEPRECATED_CFLAGS)
 
