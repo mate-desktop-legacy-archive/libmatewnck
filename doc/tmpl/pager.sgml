@@ -1,0 +1,119 @@
+<!-- ##### SECTION Title ##### -->
+WnckPager
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### STRUCT WnckPager ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION wnck_pager_new ##### -->
+<para>
+
+</para>
+
+@screen: 
+@Returns: 
+
+
+<!-- ##### FUNCTION wnck_pager_set_screen ##### -->
+<para>
+
+</para>
+
+@pager: 
+@screen: 
+
+
+<!-- ##### FUNCTION wnck_pager_set_orientation ##### -->
+<para>
+
+</para>
+
+@pager: 
+@orientation: 
+@Returns: 
+
+
+<!-- ##### FUNCTION wnck_pager_set_n_rows ##### -->
+<para>
+
+</para>
+
+@pager: 
+@n_rows: 
+@Returns: 
+
+
+<!-- ##### ENUM WnckPagerLayoutPolicy ##### -->
+<para>
+
+</para>
+
+@WNCK_PAGER_LAYOUT_POLICY_AUTOMATIC: 
+@WNCK_PAGER_LAYOUT_POLICY_WIDTH_FOR_HEIGHT: 
+@WNCK_PAGER_LAYOUT_POLICY_HEIGHT_FOR_WIDTH: 
+
+<!-- ##### FUNCTION wnck_pager_set_layout_policy ##### -->
+<para>
+
+</para>
+
+@pager: 
+@policy: 
+
+
+<!-- ##### ENUM WnckPagerDisplayMode ##### -->
+<para>
+
+</para>
+
+@WNCK_PAGER_DISPLAY_NAME: 
+@WNCK_PAGER_DISPLAY_CONTENT: 
+
+<!-- ##### FUNCTION wnck_pager_set_display_mode ##### -->
+<para>
+
+</para>
+
+@pager: 
+@mode: 
+
+
+<!-- ##### FUNCTION wnck_pager_set_show_all ##### -->
+<para>
+
+</para>
+
+@pager: 
+@show_all_workspaces: 
+
+
+<!-- ##### FUNCTION wnck_pager_set_shadow_type ##### -->
+<para>
+
+</para>
+
+@pager: 
+@shadow_type: 
+
+

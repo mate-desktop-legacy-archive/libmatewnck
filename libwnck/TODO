@@ -1,0 +1,4 @@
+get rid of gdk_display_get_default + _wnck_get_default_display
+check that (transfer none) is fine (ie, it doesn't try to reference)
+
+completely rework tasklist geometry management (Port to GTK3 + Fix build after...)
