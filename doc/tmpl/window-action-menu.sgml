@@ -1,5 +1,5 @@
 <!-- ##### SECTION Title ##### -->
-WnckActionMenu
+MateWnckActionMenu
 
 <!-- ##### SECTION Short_Description ##### -->
 
@@ -20,18 +20,18 @@ WnckActionMenu
 <!-- ##### SECTION Image ##### -->
 
 
-<!-- ##### STRUCT WnckActionMenu ##### -->
+<!-- ##### STRUCT MateWnckActionMenu ##### -->
 <para>
 
 </para>
 
 
-<!-- ##### ARG WnckActionMenu:window ##### -->
+<!-- ##### ARG MateWnckActionMenu:window ##### -->
 <para>
 
 </para>
 
-<!-- ##### FUNCTION wnck_action_menu_new ##### -->
+<!-- ##### FUNCTION matewnck_action_menu_new ##### -->
 <para>
 
 </para>
@@ -40,7 +40,7 @@ WnckActionMenu
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_create_window_action_menu ##### -->
+<!-- ##### FUNCTION matewnck_create_window_action_menu ##### -->
 <para>
 
 </para>

@@ -20,7 +20,7 @@ Miscellaneous Functions
 <!-- ##### SECTION Image ##### -->
 
 
-<!-- ##### FUNCTION wnck_gtk_window_set_dock_type ##### -->
+<!-- ##### FUNCTION matewnck_gtk_window_set_dock_type ##### -->
 <para>
 
 </para>
@@ -28,15 +28,15 @@ Miscellaneous Functions
 @window: 
 
 
-<!-- ##### ENUM WnckClientType ##### -->
+<!-- ##### ENUM MateWnckClientType ##### -->
 <para>
 
 </para>
 
-@WNCK_CLIENT_TYPE_APPLICATION: 
-@WNCK_CLIENT_TYPE_PAGER: 
+@MATEWNCK_CLIENT_TYPE_APPLICATION: 
+@MATEWNCK_CLIENT_TYPE_PAGER: 
 
-<!-- ##### FUNCTION wnck_set_client_type ##### -->
+<!-- ##### FUNCTION matewnck_set_client_type ##### -->
 <para>
 
 </para>

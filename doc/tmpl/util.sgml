@@ -17,7 +17,7 @@ Miscellaneous Functions
 <!-- ##### SECTION Stability_Level ##### -->
 
 
-<!-- ##### FUNCTION wnck_gtk_window_set_dock_type ##### -->
+<!-- ##### FUNCTION matewnck_gtk_window_set_dock_type ##### -->
 <para>
 
 </para>
@@ -25,15 +25,15 @@ Miscellaneous Functions
 @window: 
 
 
-<!-- ##### ENUM WnckClientType ##### -->
+<!-- ##### ENUM MateWnckClientType ##### -->
 <para>
 
 </para>
 
-@WNCK_CLIENT_TYPE_APPLICATION: 
-@WNCK_CLIENT_TYPE_PAGER: 
+@MATEWNCK_CLIENT_TYPE_APPLICATION: 
+@MATEWNCK_CLIENT_TYPE_PAGER: 
 
-<!-- ##### FUNCTION wnck_set_client_type ##### -->
+<!-- ##### FUNCTION matewnck_set_client_type ##### -->
 <para>
 
 </para>
@@ -41,7 +41,7 @@ Miscellaneous Functions
 @ewmh_sourceindication_client_type: 
 
 
-<!-- ##### STRUCT WnckResourceUsage ##### -->
+<!-- ##### STRUCT MateWnckResourceUsage ##### -->
 <para>
 
 </para>
@@ -59,7 +59,7 @@ Miscellaneous Functions
 @n_cursors: 
 @n_other: 
 
-<!-- ##### FUNCTION wnck_xid_read_resource_usage ##### -->
+<!-- ##### FUNCTION matewnck_xid_read_resource_usage ##### -->
 <para>
 
 </para>
@@ -69,7 +69,7 @@ Miscellaneous Functions
 @usage: 
 
 
-<!-- ##### FUNCTION wnck_pid_read_resource_usage ##### -->
+<!-- ##### FUNCTION matewnck_pid_read_resource_usage ##### -->
 <para>
 
 </para>

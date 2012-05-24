@@ -1,5 +1,5 @@
 <!-- ##### SECTION Title ##### -->
-WnckSelector
+MateWnckSelector
 
 <!-- ##### SECTION Short_Description ##### -->
 
@@ -20,13 +20,13 @@ WnckSelector
 <!-- ##### SECTION Image ##### -->
 
 
-<!-- ##### STRUCT WnckSelector ##### -->
+<!-- ##### STRUCT MateWnckSelector ##### -->
 <para>
 
 </para>
 
 
-<!-- ##### FUNCTION wnck_selector_new ##### -->
+<!-- ##### FUNCTION matewnck_selector_new ##### -->
 <para>
 
 </para>

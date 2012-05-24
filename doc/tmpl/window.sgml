@@ -1,5 +1,5 @@
 <!-- ##### SECTION Title ##### -->
-WnckWindow
+MateWnckWindow
 
 <!-- ##### SECTION Short_Description ##### -->
 
@@ -20,59 +20,59 @@ WnckWindow
 <!-- ##### SECTION Image ##### -->
 
 
-<!-- ##### STRUCT WnckWindow ##### -->
+<!-- ##### STRUCT MateWnckWindow ##### -->
 <para>
 
 </para>
 
 
-<!-- ##### SIGNAL WnckWindow::actions-changed ##### -->
+<!-- ##### SIGNAL MateWnckWindow::actions-changed ##### -->
 <para>
 
 </para>
 
-@wnckwindow: the object which received the signal.
+@matewnckwindow: the object which received the signal.
 @arg1: 
 @arg2: 
 
-<!-- ##### SIGNAL WnckWindow::geometry-changed ##### -->
+<!-- ##### SIGNAL MateWnckWindow::geometry-changed ##### -->
 <para>
 
 </para>
 
-@wnckwindow: the object which received the signal.
+@matewnckwindow: the object which received the signal.
 
-<!-- ##### SIGNAL WnckWindow::icon-changed ##### -->
+<!-- ##### SIGNAL MateWnckWindow::icon-changed ##### -->
 <para>
 
 </para>
 
-@wnckwindow: the object which received the signal.
+@matewnckwindow: the object which received the signal.
 
-<!-- ##### SIGNAL WnckWindow::name-changed ##### -->
+<!-- ##### SIGNAL MateWnckWindow::name-changed ##### -->
 <para>
 
 </para>
 
-@wnckwindow: the object which received the signal.
+@matewnckwindow: the object which received the signal.
 
-<!-- ##### SIGNAL WnckWindow::state-changed ##### -->
+<!-- ##### SIGNAL MateWnckWindow::state-changed ##### -->
 <para>
 
 </para>
 
-@wnckwindow: the object which received the signal.
+@matewnckwindow: the object which received the signal.
 @arg1: 
 @arg2: 
 
-<!-- ##### SIGNAL WnckWindow::workspace-changed ##### -->
+<!-- ##### SIGNAL MateWnckWindow::workspace-changed ##### -->
 <para>
 
 </para>
 
-@wnckwindow: the object which received the signal.
+@matewnckwindow: the object which received the signal.
 
-<!-- ##### FUNCTION wnck_window_get ##### -->
+<!-- ##### FUNCTION matewnck_window_get ##### -->
 <para>
 
 </para>
@@ -81,7 +81,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_get_screen ##### -->
+<!-- ##### FUNCTION matewnck_window_get_screen ##### -->
 <para>
 
 </para>
@@ -90,7 +90,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_has_name ##### -->
+<!-- ##### FUNCTION matewnck_window_has_name ##### -->
 <para>
 
 </para>
@@ -99,7 +99,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_get_name ##### -->
+<!-- ##### FUNCTION matewnck_window_get_name ##### -->
 <para>
 
 </para>
@@ -108,7 +108,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_has_icon_name ##### -->
+<!-- ##### FUNCTION matewnck_window_has_icon_name ##### -->
 <para>
 
 </para>
@@ -117,7 +117,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_get_icon_name ##### -->
+<!-- ##### FUNCTION matewnck_window_get_icon_name ##### -->
 <para>
 
 </para>
@@ -126,7 +126,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_get_icon_is_fallback ##### -->
+<!-- ##### FUNCTION matewnck_window_get_icon_is_fallback ##### -->
 <para>
 
 </para>
@@ -135,7 +135,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_get_icon ##### -->
+<!-- ##### FUNCTION matewnck_window_get_icon ##### -->
 <para>
 
 </para>
@@ -144,7 +144,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_get_mini_icon ##### -->
+<!-- ##### FUNCTION matewnck_window_get_mini_icon ##### -->
 <para>
 
 </para>
@@ -153,7 +153,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_get_application ##### -->
+<!-- ##### FUNCTION matewnck_window_get_application ##### -->
 <para>
 
 </para>
@@ -162,7 +162,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_get_transient ##### -->
+<!-- ##### FUNCTION matewnck_window_get_transient ##### -->
 <para>
 
 </para>
@@ -171,7 +171,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_get_group_leader ##### -->
+<!-- ##### FUNCTION matewnck_window_get_group_leader ##### -->
 <para>
 
 </para>
@@ -180,7 +180,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_get_xid ##### -->
+<!-- ##### FUNCTION matewnck_window_get_xid ##### -->
 <para>
 
 </para>
@@ -189,7 +189,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_get_class_group ##### -->
+<!-- ##### FUNCTION matewnck_window_get_class_group ##### -->
 <para>
 
 </para>
@@ -198,7 +198,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_get_session_id ##### -->
+<!-- ##### FUNCTION matewnck_window_get_session_id ##### -->
 <para>
 
 </para>
@@ -207,7 +207,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_get_session_id_utf8 ##### -->
+<!-- ##### FUNCTION matewnck_window_get_session_id_utf8 ##### -->
 <para>
 
 </para>
@@ -216,7 +216,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_get_pid ##### -->
+<!-- ##### FUNCTION matewnck_window_get_pid ##### -->
 <para>
 
 </para>
@@ -225,7 +225,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_get_sort_order ##### -->
+<!-- ##### FUNCTION matewnck_window_get_sort_order ##### -->
 <para>
 
 </para>
@@ -234,7 +234,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_set_sort_order ##### -->
+<!-- ##### FUNCTION matewnck_window_set_sort_order ##### -->
 <para>
 
 </para>
@@ -243,21 +243,21 @@ WnckWindow
 @order: 
 
 
-<!-- ##### ENUM WnckWindowType ##### -->
+<!-- ##### ENUM MateWnckWindowType ##### -->
 <para>
 
 </para>
 
-@WNCK_WINDOW_NORMAL: 
-@WNCK_WINDOW_DESKTOP: 
-@WNCK_WINDOW_DOCK: 
-@WNCK_WINDOW_DIALOG: 
-@WNCK_WINDOW_TOOLBAR: 
-@WNCK_WINDOW_MENU: 
-@WNCK_WINDOW_UTILITY: 
-@WNCK_WINDOW_SPLASHSCREEN: 
+@MATEWNCK_WINDOW_NORMAL: 
+@MATEWNCK_WINDOW_DESKTOP: 
+@MATEWNCK_WINDOW_DOCK: 
+@MATEWNCK_WINDOW_DIALOG: 
+@MATEWNCK_WINDOW_TOOLBAR: 
+@MATEWNCK_WINDOW_MENU: 
+@MATEWNCK_WINDOW_UTILITY: 
+@MATEWNCK_WINDOW_SPLASHSCREEN: 
 
-<!-- ##### FUNCTION wnck_window_get_window_type ##### -->
+<!-- ##### FUNCTION matewnck_window_get_window_type ##### -->
 <para>
 
 </para>
@@ -266,7 +266,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_set_window_type ##### -->
+<!-- ##### FUNCTION matewnck_window_set_window_type ##### -->
 <para>
 
 </para>
@@ -275,35 +275,26 @@ WnckWindow
 @wintype: 
 
 
-<!-- ##### ENUM WnckWindowState ##### -->
+<!-- ##### ENUM MateWnckWindowState ##### -->
 <para>
 
 </para>
 
-@WNCK_WINDOW_STATE_MINIMIZED: 
-@WNCK_WINDOW_STATE_MAXIMIZED_HORIZONTALLY: 
-@WNCK_WINDOW_STATE_MAXIMIZED_VERTICALLY: 
-@WNCK_WINDOW_STATE_SHADED: 
-@WNCK_WINDOW_STATE_SKIP_PAGER: 
-@WNCK_WINDOW_STATE_SKIP_TASKLIST: 
-@WNCK_WINDOW_STATE_STICKY: 
-@WNCK_WINDOW_STATE_HIDDEN: 
-@WNCK_WINDOW_STATE_FULLSCREEN: 
-@WNCK_WINDOW_STATE_DEMANDS_ATTENTION: 
-@WNCK_WINDOW_STATE_URGENT: 
-@WNCK_WINDOW_STATE_ABOVE: 
-@WNCK_WINDOW_STATE_BELOW: 
+@MATEWNCK_WINDOW_STATE_MINIMIZED: 
+@MATEWNCK_WINDOW_STATE_MAXIMIZED_HORIZONTALLY: 
+@MATEWNCK_WINDOW_STATE_MAXIMIZED_VERTICALLY: 
+@MATEWNCK_WINDOW_STATE_SHADED: 
+@MATEWNCK_WINDOW_STATE_SKIP_PAGER: 
+@MATEWNCK_WINDOW_STATE_SKIP_TASKLIST: 
+@MATEWNCK_WINDOW_STATE_STICKY: 
+@MATEWNCK_WINDOW_STATE_HIDDEN: 
+@MATEWNCK_WINDOW_STATE_FULLSCREEN: 
+@MATEWNCK_WINDOW_STATE_DEMANDS_ATTENTION: 
+@MATEWNCK_WINDOW_STATE_URGENT: 
+@MATEWNCK_WINDOW_STATE_ABOVE: 
+@MATEWNCK_WINDOW_STATE_BELOW: 
 
-<!-- ##### FUNCTION wnck_window_get_state ##### -->
-<para>
-
-</para>
-
-@window: 
-@Returns: 
-
-
-<!-- ##### FUNCTION wnck_window_is_minimized ##### -->
+<!-- ##### FUNCTION matewnck_window_get_state ##### -->
 <para>
 
 </para>
@@ -312,7 +303,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_is_maximized_horizontally ##### -->
+<!-- ##### FUNCTION matewnck_window_is_minimized ##### -->
 <para>
 
 </para>
@@ -321,7 +312,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_is_maximized_vertically ##### -->
+<!-- ##### FUNCTION matewnck_window_is_maximized_horizontally ##### -->
 <para>
 
 </para>
@@ -330,7 +321,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_is_maximized ##### -->
+<!-- ##### FUNCTION matewnck_window_is_maximized_vertically ##### -->
 <para>
 
 </para>
@@ -339,7 +330,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_is_shaded ##### -->
+<!-- ##### FUNCTION matewnck_window_is_maximized ##### -->
 <para>
 
 </para>
@@ -348,7 +339,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_is_pinned ##### -->
+<!-- ##### FUNCTION matewnck_window_is_shaded ##### -->
 <para>
 
 </para>
@@ -357,7 +348,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_is_sticky ##### -->
+<!-- ##### FUNCTION matewnck_window_is_pinned ##### -->
 <para>
 
 </para>
@@ -366,7 +357,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_is_above ##### -->
+<!-- ##### FUNCTION matewnck_window_is_sticky ##### -->
 <para>
 
 </para>
@@ -375,7 +366,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_is_below ##### -->
+<!-- ##### FUNCTION matewnck_window_is_above ##### -->
 <para>
 
 </para>
@@ -384,7 +375,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_is_skip_pager ##### -->
+<!-- ##### FUNCTION matewnck_window_is_below ##### -->
 <para>
 
 </para>
@@ -393,7 +384,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_is_skip_tasklist ##### -->
+<!-- ##### FUNCTION matewnck_window_is_skip_pager ##### -->
 <para>
 
 </para>
@@ -402,7 +393,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_is_fullscreen ##### -->
+<!-- ##### FUNCTION matewnck_window_is_skip_tasklist ##### -->
 <para>
 
 </para>
@@ -411,7 +402,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_needs_attention ##### -->
+<!-- ##### FUNCTION matewnck_window_is_fullscreen ##### -->
 <para>
 
 </para>
@@ -420,7 +411,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_or_transient_needs_attention ##### -->
+<!-- ##### FUNCTION matewnck_window_needs_attention ##### -->
 <para>
 
 </para>
@@ -429,32 +420,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### ENUM WnckWindowActions ##### -->
-<para>
-
-</para>
-
-@WNCK_WINDOW_ACTION_MOVE: 
-@WNCK_WINDOW_ACTION_RESIZE: 
-@WNCK_WINDOW_ACTION_SHADE: 
-@WNCK_WINDOW_ACTION_STICK: 
-@WNCK_WINDOW_ACTION_MAXIMIZE_HORIZONTALLY: 
-@WNCK_WINDOW_ACTION_MAXIMIZE_VERTICALLY: 
-@WNCK_WINDOW_ACTION_CHANGE_WORKSPACE: 
-@WNCK_WINDOW_ACTION_CLOSE: 
-@WNCK_WINDOW_ACTION_UNMAXIMIZE_HORIZONTALLY: 
-@WNCK_WINDOW_ACTION_UNMAXIMIZE_VERTICALLY: 
-@WNCK_WINDOW_ACTION_UNSHADE: 
-@WNCK_WINDOW_ACTION_UNSTICK: 
-@WNCK_WINDOW_ACTION_MINIMIZE: 
-@WNCK_WINDOW_ACTION_UNMINIMIZE: 
-@WNCK_WINDOW_ACTION_MAXIMIZE: 
-@WNCK_WINDOW_ACTION_UNMAXIMIZE: 
-@WNCK_WINDOW_ACTION_FULLSCREEN: 
-@WNCK_WINDOW_ACTION_ABOVE: 
-@WNCK_WINDOW_ACTION_BELOW: 
-
-<!-- ##### FUNCTION wnck_window_get_actions ##### -->
+<!-- ##### FUNCTION matewnck_window_or_transient_needs_attention ##### -->
 <para>
 
 </para>
@@ -463,7 +429,41 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_minimize ##### -->
+<!-- ##### ENUM MateWnckWindowActions ##### -->
+<para>
+
+</para>
+
+@MATEWNCK_WINDOW_ACTION_MOVE: 
+@MATEWNCK_WINDOW_ACTION_RESIZE: 
+@MATEWNCK_WINDOW_ACTION_SHADE: 
+@MATEWNCK_WINDOW_ACTION_STICK: 
+@MATEWNCK_WINDOW_ACTION_MAXIMIZE_HORIZONTALLY: 
+@MATEWNCK_WINDOW_ACTION_MAXIMIZE_VERTICALLY: 
+@MATEWNCK_WINDOW_ACTION_CHANGE_WORKSPACE: 
+@MATEWNCK_WINDOW_ACTION_CLOSE: 
+@MATEWNCK_WINDOW_ACTION_UNMAXIMIZE_HORIZONTALLY: 
+@MATEWNCK_WINDOW_ACTION_UNMAXIMIZE_VERTICALLY: 
+@MATEWNCK_WINDOW_ACTION_UNSHADE: 
+@MATEWNCK_WINDOW_ACTION_UNSTICK: 
+@MATEWNCK_WINDOW_ACTION_MINIMIZE: 
+@MATEWNCK_WINDOW_ACTION_UNMINIMIZE: 
+@MATEWNCK_WINDOW_ACTION_MAXIMIZE: 
+@MATEWNCK_WINDOW_ACTION_UNMAXIMIZE: 
+@MATEWNCK_WINDOW_ACTION_FULLSCREEN: 
+@MATEWNCK_WINDOW_ACTION_ABOVE: 
+@MATEWNCK_WINDOW_ACTION_BELOW: 
+
+<!-- ##### FUNCTION matewnck_window_get_actions ##### -->
+<para>
+
+</para>
+
+@window: 
+@Returns: 
+
+
+<!-- ##### FUNCTION matewnck_window_minimize ##### -->
 <para>
 
 </para>
@@ -471,7 +471,7 @@ WnckWindow
 @window: 
 
 
-<!-- ##### FUNCTION wnck_window_unminimize ##### -->
+<!-- ##### FUNCTION matewnck_window_unminimize ##### -->
 <para>
 
 </para>
@@ -480,7 +480,7 @@ WnckWindow
 @timestamp: 
 
 
-<!-- ##### FUNCTION wnck_window_maximize_horizontally ##### -->
+<!-- ##### FUNCTION matewnck_window_maximize_horizontally ##### -->
 <para>
 
 </para>
@@ -488,7 +488,7 @@ WnckWindow
 @window: 
 
 
-<!-- ##### FUNCTION wnck_window_unmaximize_horizontally ##### -->
+<!-- ##### FUNCTION matewnck_window_unmaximize_horizontally ##### -->
 <para>
 
 </para>
@@ -496,7 +496,7 @@ WnckWindow
 @window: 
 
 
-<!-- ##### FUNCTION wnck_window_maximize_vertically ##### -->
+<!-- ##### FUNCTION matewnck_window_maximize_vertically ##### -->
 <para>
 
 </para>
@@ -504,7 +504,7 @@ WnckWindow
 @window: 
 
 
-<!-- ##### FUNCTION wnck_window_unmaximize_vertically ##### -->
+<!-- ##### FUNCTION matewnck_window_unmaximize_vertically ##### -->
 <para>
 
 </para>
@@ -512,7 +512,7 @@ WnckWindow
 @window: 
 
 
-<!-- ##### FUNCTION wnck_window_maximize ##### -->
+<!-- ##### FUNCTION matewnck_window_maximize ##### -->
 <para>
 
 </para>
@@ -520,7 +520,7 @@ WnckWindow
 @window: 
 
 
-<!-- ##### FUNCTION wnck_window_unmaximize ##### -->
+<!-- ##### FUNCTION matewnck_window_unmaximize ##### -->
 <para>
 
 </para>
@@ -528,7 +528,7 @@ WnckWindow
 @window: 
 
 
-<!-- ##### FUNCTION wnck_window_shade ##### -->
+<!-- ##### FUNCTION matewnck_window_shade ##### -->
 <para>
 
 </para>
@@ -536,7 +536,7 @@ WnckWindow
 @window: 
 
 
-<!-- ##### FUNCTION wnck_window_unshade ##### -->
+<!-- ##### FUNCTION matewnck_window_unshade ##### -->
 <para>
 
 </para>
@@ -544,7 +544,7 @@ WnckWindow
 @window: 
 
 
-<!-- ##### FUNCTION wnck_window_pin ##### -->
+<!-- ##### FUNCTION matewnck_window_pin ##### -->
 <para>
 
 </para>
@@ -552,7 +552,7 @@ WnckWindow
 @window: 
 
 
-<!-- ##### FUNCTION wnck_window_unpin ##### -->
+<!-- ##### FUNCTION matewnck_window_unpin ##### -->
 <para>
 
 </para>
@@ -560,7 +560,7 @@ WnckWindow
 @window: 
 
 
-<!-- ##### FUNCTION wnck_window_stick ##### -->
+<!-- ##### FUNCTION matewnck_window_stick ##### -->
 <para>
 
 </para>
@@ -568,7 +568,7 @@ WnckWindow
 @window: 
 
 
-<!-- ##### FUNCTION wnck_window_unstick ##### -->
+<!-- ##### FUNCTION matewnck_window_unstick ##### -->
 <para>
 
 </para>
@@ -576,7 +576,7 @@ WnckWindow
 @window: 
 
 
-<!-- ##### FUNCTION wnck_window_make_above ##### -->
+<!-- ##### FUNCTION matewnck_window_make_above ##### -->
 <para>
 
 </para>
@@ -584,7 +584,7 @@ WnckWindow
 @window: 
 
 
-<!-- ##### FUNCTION wnck_window_unmake_above ##### -->
+<!-- ##### FUNCTION matewnck_window_unmake_above ##### -->
 <para>
 
 </para>
@@ -592,7 +592,7 @@ WnckWindow
 @window: 
 
 
-<!-- ##### FUNCTION wnck_window_make_below ##### -->
+<!-- ##### FUNCTION matewnck_window_make_below ##### -->
 <para>
 
 </para>
@@ -600,7 +600,7 @@ WnckWindow
 @window: 
 
 
-<!-- ##### FUNCTION wnck_window_unmake_below ##### -->
+<!-- ##### FUNCTION matewnck_window_unmake_below ##### -->
 <para>
 
 </para>
@@ -608,16 +608,7 @@ WnckWindow
 @window: 
 
 
-<!-- ##### FUNCTION wnck_window_set_skip_pager ##### -->
-<para>
-
-</para>
-
-@window: 
-@skip: 
-
-
-<!-- ##### FUNCTION wnck_window_set_skip_tasklist ##### -->
+<!-- ##### FUNCTION matewnck_window_set_skip_pager ##### -->
 <para>
 
 </para>
@@ -626,7 +617,16 @@ WnckWindow
 @skip: 
 
 
-<!-- ##### FUNCTION wnck_window_set_fullscreen ##### -->
+<!-- ##### FUNCTION matewnck_window_set_skip_tasklist ##### -->
+<para>
+
+</para>
+
+@window: 
+@skip: 
+
+
+<!-- ##### FUNCTION matewnck_window_set_fullscreen ##### -->
 <para>
 
 </para>
@@ -635,7 +635,7 @@ WnckWindow
 @fullscreen: 
 
 
-<!-- ##### FUNCTION wnck_window_close ##### -->
+<!-- ##### FUNCTION matewnck_window_close ##### -->
 <para>
 
 </para>
@@ -644,7 +644,7 @@ WnckWindow
 @timestamp: 
 
 
-<!-- ##### FUNCTION wnck_window_get_workspace ##### -->
+<!-- ##### FUNCTION matewnck_window_get_workspace ##### -->
 <para>
 
 </para>
@@ -653,17 +653,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_is_on_workspace ##### -->
-<para>
-
-</para>
-
-@window: 
-@workspace: 
-@Returns: 
-
-
-<!-- ##### FUNCTION wnck_window_is_visible_on_workspace ##### -->
+<!-- ##### FUNCTION matewnck_window_is_on_workspace ##### -->
 <para>
 
 </para>
@@ -673,7 +663,17 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_move_to_workspace ##### -->
+<!-- ##### FUNCTION matewnck_window_is_visible_on_workspace ##### -->
+<para>
+
+</para>
+
+@window: 
+@workspace: 
+@Returns: 
+
+
+<!-- ##### FUNCTION matewnck_window_move_to_workspace ##### -->
 <para>
 
 </para>
@@ -682,7 +682,7 @@ WnckWindow
 @space: 
 
 
-<!-- ##### FUNCTION wnck_window_is_in_viewport ##### -->
+<!-- ##### FUNCTION matewnck_window_is_in_viewport ##### -->
 <para>
 
 </para>
@@ -692,7 +692,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_activate ##### -->
+<!-- ##### FUNCTION matewnck_window_activate ##### -->
 <para>
 
 </para>
@@ -701,7 +701,7 @@ WnckWindow
 @timestamp: 
 
 
-<!-- ##### FUNCTION wnck_window_is_active ##### -->
+<!-- ##### FUNCTION matewnck_window_is_active ##### -->
 <para>
 
 </para>
@@ -710,7 +710,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_is_most_recently_activated ##### -->
+<!-- ##### FUNCTION matewnck_window_is_most_recently_activated ##### -->
 <para>
 
 </para>
@@ -719,7 +719,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_activate_transient ##### -->
+<!-- ##### FUNCTION matewnck_window_activate_transient ##### -->
 <para>
 
 </para>
@@ -728,7 +728,7 @@ WnckWindow
 @timestamp: 
 
 
-<!-- ##### FUNCTION wnck_window_transient_is_most_recently_activated ##### -->
+<!-- ##### FUNCTION matewnck_window_transient_is_most_recently_activated ##### -->
 <para>
 
 </para>
@@ -737,7 +737,7 @@ WnckWindow
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_window_set_icon_geometry ##### -->
+<!-- ##### FUNCTION matewnck_window_set_icon_geometry ##### -->
 <para>
 
 </para>
@@ -749,46 +749,34 @@ WnckWindow
 @height: 
 
 
-<!-- ##### ENUM WnckWindowGravity ##### -->
+<!-- ##### ENUM MateWnckWindowGravity ##### -->
 <para>
 
 </para>
 
-@WNCK_WINDOW_GRAVITY_CURRENT: 
-@WNCK_WINDOW_GRAVITY_NORTHWEST: 
-@WNCK_WINDOW_GRAVITY_NORTH: 
-@WNCK_WINDOW_GRAVITY_NORTHEAST: 
-@WNCK_WINDOW_GRAVITY_WEST: 
-@WNCK_WINDOW_GRAVITY_CENTER: 
-@WNCK_WINDOW_GRAVITY_EAST: 
-@WNCK_WINDOW_GRAVITY_SOUTHWEST: 
-@WNCK_WINDOW_GRAVITY_SOUTH: 
-@WNCK_WINDOW_GRAVITY_SOUTHEAST: 
-@WNCK_WINDOW_GRAVITY_STATIC: 
+@MATEWNCK_WINDOW_GRAVITY_CURRENT: 
+@MATEWNCK_WINDOW_GRAVITY_NORTHWEST: 
+@MATEWNCK_WINDOW_GRAVITY_NORTH: 
+@MATEWNCK_WINDOW_GRAVITY_NORTHEAST: 
+@MATEWNCK_WINDOW_GRAVITY_WEST: 
+@MATEWNCK_WINDOW_GRAVITY_CENTER: 
+@MATEWNCK_WINDOW_GRAVITY_EAST: 
+@MATEWNCK_WINDOW_GRAVITY_SOUTHWEST: 
+@MATEWNCK_WINDOW_GRAVITY_SOUTH: 
+@MATEWNCK_WINDOW_GRAVITY_SOUTHEAST: 
+@MATEWNCK_WINDOW_GRAVITY_STATIC: 
 
-<!-- ##### ENUM WnckWindowMoveResizeMask ##### -->
+<!-- ##### ENUM MateWnckWindowMoveResizeMask ##### -->
 <para>
 
 </para>
 
-@WNCK_WINDOW_CHANGE_X: 
-@WNCK_WINDOW_CHANGE_Y: 
-@WNCK_WINDOW_CHANGE_WIDTH: 
-@WNCK_WINDOW_CHANGE_HEIGHT: 
+@MATEWNCK_WINDOW_CHANGE_X: 
+@MATEWNCK_WINDOW_CHANGE_Y: 
+@MATEWNCK_WINDOW_CHANGE_WIDTH: 
+@MATEWNCK_WINDOW_CHANGE_HEIGHT: 
 
-<!-- ##### FUNCTION wnck_window_get_client_window_geometry ##### -->
-<para>
-
-</para>
-
-@window: 
-@xp: 
-@yp: 
-@widthp: 
-@heightp: 
-
-
-<!-- ##### FUNCTION wnck_window_get_geometry ##### -->
+<!-- ##### FUNCTION matewnck_window_get_client_window_geometry ##### -->
 <para>
 
 </para>
@@ -800,7 +788,19 @@ WnckWindow
 @heightp: 
 
 
-<!-- ##### FUNCTION wnck_window_set_geometry ##### -->
+<!-- ##### FUNCTION matewnck_window_get_geometry ##### -->
+<para>
+
+</para>
+
+@window: 
+@xp: 
+@yp: 
+@widthp: 
+@heightp: 
+
+
+<!-- ##### FUNCTION matewnck_window_set_geometry ##### -->
 <para>
 
 </para>
@@ -814,7 +814,7 @@ WnckWindow
 @height: 
 
 
-<!-- ##### FUNCTION wnck_window_keyboard_move ##### -->
+<!-- ##### FUNCTION matewnck_window_keyboard_move ##### -->
 <para>
 
 </para>
@@ -822,7 +822,7 @@ WnckWindow
 @window: 
 
 
-<!-- ##### FUNCTION wnck_window_keyboard_size ##### -->
+<!-- ##### FUNCTION matewnck_window_keyboard_size ##### -->
 <para>
 
 </para>

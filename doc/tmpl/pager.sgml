@@ -1,5 +1,5 @@
 <!-- ##### SECTION Title ##### -->
-WnckPager
+MateWnckPager
 
 <!-- ##### SECTION Short_Description ##### -->
 
@@ -20,13 +20,13 @@ WnckPager
 <!-- ##### SECTION Image ##### -->
 
 
-<!-- ##### STRUCT WnckPager ##### -->
+<!-- ##### STRUCT MateWnckPager ##### -->
 <para>
 
 </para>
 
 
-<!-- ##### FUNCTION wnck_pager_new ##### -->
+<!-- ##### FUNCTION matewnck_pager_new ##### -->
 <para>
 
 </para>
@@ -35,7 +35,7 @@ WnckPager
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_pager_set_screen ##### -->
+<!-- ##### FUNCTION matewnck_pager_set_screen ##### -->
 <para>
 
 </para>
@@ -44,7 +44,7 @@ WnckPager
 @screen: 
 
 
-<!-- ##### FUNCTION wnck_pager_set_orientation ##### -->
+<!-- ##### FUNCTION matewnck_pager_set_orientation ##### -->
 <para>
 
 </para>
@@ -54,7 +54,7 @@ WnckPager
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_pager_set_n_rows ##### -->
+<!-- ##### FUNCTION matewnck_pager_set_n_rows ##### -->
 <para>
 
 </para>
@@ -64,16 +64,16 @@ WnckPager
 @Returns: 
 
 
-<!-- ##### ENUM WnckPagerLayoutPolicy ##### -->
+<!-- ##### ENUM MateWnckPagerLayoutPolicy ##### -->
 <para>
 
 </para>
 
-@WNCK_PAGER_LAYOUT_POLICY_AUTOMATIC: 
-@WNCK_PAGER_LAYOUT_POLICY_WIDTH_FOR_HEIGHT: 
-@WNCK_PAGER_LAYOUT_POLICY_HEIGHT_FOR_WIDTH: 
+@MATEWNCK_PAGER_LAYOUT_POLICY_AUTOMATIC: 
+@MATEWNCK_PAGER_LAYOUT_POLICY_WIDTH_FOR_HEIGHT: 
+@MATEWNCK_PAGER_LAYOUT_POLICY_HEIGHT_FOR_WIDTH: 
 
-<!-- ##### FUNCTION wnck_pager_set_layout_policy ##### -->
+<!-- ##### FUNCTION matewnck_pager_set_layout_policy ##### -->
 <para>
 
 </para>
@@ -82,15 +82,15 @@ WnckPager
 @policy: 
 
 
-<!-- ##### ENUM WnckPagerDisplayMode ##### -->
+<!-- ##### ENUM MateWnckPagerDisplayMode ##### -->
 <para>
 
 </para>
 
-@WNCK_PAGER_DISPLAY_NAME: 
-@WNCK_PAGER_DISPLAY_CONTENT: 
+@MATEWNCK_PAGER_DISPLAY_NAME: 
+@MATEWNCK_PAGER_DISPLAY_CONTENT: 
 
-<!-- ##### FUNCTION wnck_pager_set_display_mode ##### -->
+<!-- ##### FUNCTION matewnck_pager_set_display_mode ##### -->
 <para>
 
 </para>
@@ -99,7 +99,7 @@ WnckPager
 @mode: 
 
 
-<!-- ##### FUNCTION wnck_pager_set_show_all ##### -->
+<!-- ##### FUNCTION matewnck_pager_set_show_all ##### -->
 <para>
 
 </para>
@@ -108,7 +108,7 @@ WnckPager
 @show_all_workspaces: 
 
 
-<!-- ##### FUNCTION wnck_pager_set_shadow_type ##### -->
+<!-- ##### FUNCTION matewnck_pager_set_shadow_type ##### -->
 <para>
 
 </para>

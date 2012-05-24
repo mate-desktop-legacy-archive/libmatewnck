@@ -1,13 +1,13 @@
 AC_PREREQ(2.62)
 
-m4_define([wnck_major_version], [2])
-m4_define([wnck_minor_version], [31])
-m4_define([wnck_micro_version], [0])
-m4_define([wnck_version],
-          [wnck_major_version.wnck_minor_version.wnck_micro_version])
+m4_define([matewnck_major_version], [1])
+m4_define([matewnck_minor_version], [3])
+m4_define([matewnck_micro_version], [0])
+m4_define([matewnck_version],
+          [matewnck_major_version.matewnck_minor_version.matewnck_micro_version])
 
-AC_INIT([libwnck], [wnck_version],
-        [http://bugzilla.gnome.org/enter_bug.cgi?product=libwnck])
+AC_INIT([libmatewnck], [matewnck_version],
+        [http://www.mate-desktop.org/])
 
 AM_CONFIG_HEADER(config.h)
 
@@ -16,33 +16,33 @@ m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 AC_CONFIG_MACRO_DIR([m4])
 
 AM_MAINTAINER_MODE
-GNOME_COMMON_INIT
-GNOME_MAINTAINER_MODE_DEFINES
+MATE_COMMON_INIT
+MATE_MAINTAINER_MODE_DEFINES
 
-dnl libtool versioning for libwnck
+dnl libtool versioning for libmatewnck
 
 dnl increment if the interface has additions, changes, removals.
-LIBWNCK_CURRENT=26
+LIBMATEWNCK_CURRENT=26
 
 dnl increment any time the source changes; set to
 dnl  0 if you increment CURRENT
-LIBWNCK_REVISION=0
+LIBMATEWNCK_REVISION=0
 
 dnl increment if any interfaces have been added; set to 0
 dnl  if any interfaces have been changed or removed. removal has
 dnl  precedence over adding, so set to 0 if both happened.
-LIBWNCK_AGE=4
+LIBMATEWNCK_AGE=4
 
-AC_SUBST(LIBWNCK_CURRENT)
-AC_SUBST(LIBWNCK_REVISION)
-AC_SUBST(LIBWNCK_AGE)
+AC_SUBST(LIBMATEWNCK_CURRENT)
+AC_SUBST(LIBMATEWNCK_REVISION)
+AC_SUBST(LIBMATEWNCK_AGE)
 
-WNCK_MAJOR_VERSION=wnck_major_version
-WNCK_MINOR_VERSION=wnck_minor_version
-WNCK_MICRO_VERSION=wnck_micro_version
-AC_SUBST(WNCK_MAJOR_VERSION)
-AC_SUBST(WNCK_MINOR_VERSION)
-AC_SUBST(WNCK_MICRO_VERSION)
+MATEWNCK_MAJOR_VERSION=matewnck_major_version
+MATEWNCK_MINOR_VERSION=matewnck_minor_version
+MATEWNCK_MICRO_VERSION=matewnck_micro_version
+AC_SUBST(MATEWNCK_MAJOR_VERSION)
+AC_SUBST(MATEWNCK_MINOR_VERSION)
+AC_SUBST(MATEWNCK_MICRO_VERSION)
 
 IT_PROG_INTLTOOL([0.40.0])
 
@@ -73,7 +73,7 @@ if test "x$GCC" = "xyes"; then
 fi
 changequote([,])dnl
 
-GNOME_COMPILE_WARNINGS(maximum)
+MATE_COMPILE_WARNINGS(maximum)
 
 AC_ARG_ENABLE(deprecation_flags,
               [AC_HELP_STRING([--enable-deprecation-flags],
@@ -85,7 +85,7 @@ if test "x$enable_deprecation_flags" = "xyes"; then
    AC_SUBST(DISABLE_DEPRECATED_CFLAGS)
 fi
 
-GETTEXT_PACKAGE=libwnck
+GETTEXT_PACKAGE=libmatewnck
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [Package name])
 
@@ -93,8 +93,8 @@ AM_GLIB_GNU_GETTEXT
 
 # AM_GLIB_GNU_GETTEXT above substs $DATADIRNAME
 # this is the directory where the *.{mo,gmo} files are installed
-wncklocaledir='${prefix}/${DATADIRNAME}/locale'
-AC_SUBST(wncklocaledir)
+matewncklocaledir='${prefix}/${DATADIRNAME}/locale'
+AC_SUBST(matewncklocaledir)
 
 AC_PATH_PROG(PKG_CONFIG, pkg-config)
 
@@ -160,9 +160,9 @@ AC_SUBST(XRES_PACKAGE)
 AC_SUBST(XLIB_CFLAGS)
 AC_SUBST(XLIB_LIBS)
 
-PKG_CHECK_MODULES(LIBWNCK, gtk+-2.0 >= 2.19.7 glib-2.0 >= 2.16.0 gobject-2.0 >= 2.13.0 $STARTUP_NOTIFICATION_PACKAGE $X11_PACKAGE $XRES_PACKAGE)
-AC_SUBST(LIBWNCK_LIBS)
-AC_SUBST(LIBWNCK_CFLAGS)
+PKG_CHECK_MODULES(LIBMATEWNCK, gtk+-2.0 >= 2.19.7 glib-2.0 >= 2.16.0 gobject-2.0 >= 2.13.0 $STARTUP_NOTIFICATION_PACKAGE $X11_PACKAGE $XRES_PACKAGE)
+AC_SUBST(LIBMATEWNCK_LIBS)
+AC_SUBST(LIBMATEWNCK_CFLAGS)
 
 GLIB_GENMARSHAL=`$PKG_CONFIG --variable=glib_genmarshal glib-2.0`  
 AC_SUBST(GLIB_GENMARSHAL)
@@ -189,10 +189,10 @@ AC_OUTPUT([
 Makefile
 doc/Makefile
 po/Makefile.in
-libwnck/Makefile
-libwnck/version.h
-libwnck-1.0.pc
-libwnck-1.0-uninstalled.pc
+libmatewnck/Makefile
+libmatewnck/version.h
+libmatewnck-1.0.pc
+libmatewnck-1.0-uninstalled.pc
 ])
 
 dnl ---------------------------------------------------------------------------
@@ -200,8 +200,8 @@ dnl - Show summary
 dnl ---------------------------------------------------------------------------
 
 echo "
-              libwnck $VERSION
-              `echo libwnck $VERSION | sed "s/./=/g"`
+              libmatewnck $VERSION
+              `echo libmatewnck $VERSION | sed "s/./=/g"`
 
         prefix:                       ${prefix}
         exec_prefix:                  ${exec_prefix}

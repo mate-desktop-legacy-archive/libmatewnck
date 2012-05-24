@@ -1,5 +1,5 @@
 <!-- ##### SECTION Title ##### -->
-WnckWorkspace
+MateWnckWorkspace
 
 <!-- ##### SECTION Short_Description ##### -->
 
@@ -20,29 +20,20 @@ WnckWorkspace
 <!-- ##### SECTION Image ##### -->
 
 
-<!-- ##### STRUCT WnckWorkspace ##### -->
+<!-- ##### STRUCT MateWnckWorkspace ##### -->
 <para>
 
 </para>
 
 
-<!-- ##### SIGNAL WnckWorkspace::name-changed ##### -->
+<!-- ##### SIGNAL MateWnckWorkspace::name-changed ##### -->
 <para>
 
 </para>
 
-@wnckworkspace: the object which received the signal.
+@matewnckworkspace: the object which received the signal.
 
-<!-- ##### FUNCTION wnck_workspace_get_screen ##### -->
-<para>
-
-</para>
-
-@space: 
-@Returns: 
-
-
-<!-- ##### FUNCTION wnck_workspace_get_number ##### -->
+<!-- ##### FUNCTION matewnck_workspace_get_screen ##### -->
 <para>
 
 </para>
@@ -51,7 +42,7 @@ WnckWorkspace
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_workspace_get_name ##### -->
+<!-- ##### FUNCTION matewnck_workspace_get_number ##### -->
 <para>
 
 </para>
@@ -60,7 +51,16 @@ WnckWorkspace
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_workspace_change_name ##### -->
+<!-- ##### FUNCTION matewnck_workspace_get_name ##### -->
+<para>
+
+</para>
+
+@space: 
+@Returns: 
+
+
+<!-- ##### FUNCTION matewnck_workspace_change_name ##### -->
 <para>
 
 </para>
@@ -69,7 +69,7 @@ WnckWorkspace
 @name: 
 
 
-<!-- ##### FUNCTION wnck_workspace_get_width ##### -->
+<!-- ##### FUNCTION matewnck_workspace_get_width ##### -->
 <para>
 
 </para>
@@ -78,7 +78,7 @@ WnckWorkspace
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_workspace_get_height ##### -->
+<!-- ##### FUNCTION matewnck_workspace_get_height ##### -->
 <para>
 
 </para>
@@ -87,7 +87,7 @@ WnckWorkspace
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_workspace_get_viewport_x ##### -->
+<!-- ##### FUNCTION matewnck_workspace_get_viewport_x ##### -->
 <para>
 
 </para>
@@ -96,7 +96,7 @@ WnckWorkspace
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_workspace_get_viewport_y ##### -->
+<!-- ##### FUNCTION matewnck_workspace_get_viewport_y ##### -->
 <para>
 
 </para>
@@ -105,7 +105,7 @@ WnckWorkspace
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_workspace_is_virtual ##### -->
+<!-- ##### FUNCTION matewnck_workspace_is_virtual ##### -->
 <para>
 
 </para>
@@ -114,7 +114,7 @@ WnckWorkspace
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_workspace_get_layout_row ##### -->
+<!-- ##### FUNCTION matewnck_workspace_get_layout_row ##### -->
 <para>
 
 </para>
@@ -123,7 +123,7 @@ WnckWorkspace
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_workspace_get_layout_column ##### -->
+<!-- ##### FUNCTION matewnck_workspace_get_layout_column ##### -->
 <para>
 
 </para>
@@ -132,7 +132,7 @@ WnckWorkspace
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_workspace_get_neighbor ##### -->
+<!-- ##### FUNCTION matewnck_workspace_get_neighbor ##### -->
 <para>
 
 </para>
@@ -142,7 +142,7 @@ WnckWorkspace
 @Returns: 
 
 
-<!-- ##### FUNCTION wnck_workspace_activate ##### -->
+<!-- ##### FUNCTION matewnck_workspace_activate ##### -->
 <para>
 
 </para>

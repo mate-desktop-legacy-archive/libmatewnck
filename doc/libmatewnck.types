@@ -1,0 +1,13 @@
+#include <libmatewnck/libmatewnck.h>
+#include <libmatewnck/class-group.h>
+
+matewnck_window_get_type
+matewnck_class_group_get_type
+matewnck_application_get_type
+matewnck_workspace_get_type
+matewnck_screen_get_type
+
+matewnck_action_menu_get_type
+matewnck_pager_get_type
+matewnck_selector_get_type
+matewnck_tasklist_get_type
