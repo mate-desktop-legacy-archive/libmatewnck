@@ -30,33 +30,33 @@
 G_BEGIN_DECLS
 
 #define MATEWNCK_TYPE_WORKSPACE              (matewnck_workspace_get_type ())
-#define MATEWNCK_WORKSPACE(object)           (G_TYPE_CHECK_INSTANCE_CAST ((object), MATEWNCK_TYPE_WORKSPACE, MateWnckWorkspace))
-#define MATEWNCK_WORKSPACE_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), MATEWNCK_TYPE_WORKSPACE, MateWnckWorkspaceClass))
+#define MATEWNCK_WORKSPACE(object)           (G_TYPE_CHECK_INSTANCE_CAST ((object), MATEWNCK_TYPE_WORKSPACE, MatewnckWorkspace))
+#define MATEWNCK_WORKSPACE_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), MATEWNCK_TYPE_WORKSPACE, MatewnckWorkspaceClass))
 #define MATEWNCK_IS_WORKSPACE(object)        (G_TYPE_CHECK_INSTANCE_TYPE ((object), MATEWNCK_TYPE_WORKSPACE))
 #define MATEWNCK_IS_WORKSPACE_CLASS(klass)   (G_TYPE_CHECK_CLASS_TYPE ((klass), MATEWNCK_TYPE_WORKSPACE))
-#define MATEWNCK_WORKSPACE_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS ((obj), MATEWNCK_TYPE_WORKSPACE, MateWnckWorkspaceClass))
+#define MATEWNCK_WORKSPACE_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS ((obj), MATEWNCK_TYPE_WORKSPACE, MatewnckWorkspaceClass))
 
-typedef struct _MateWnckWorkspaceClass   MateWnckWorkspaceClass;
-typedef struct _MateWnckWorkspacePrivate MateWnckWorkspacePrivate;
+typedef struct _MatewnckWorkspaceClass   MatewnckWorkspaceClass;
+typedef struct _MatewnckWorkspacePrivate MatewnckWorkspacePrivate;
 
 /**
- * MateWnckWorkspace:
+ * MatewnckWorkspace:
  *
- * The #MateWnckWorkspace struct contains only private fields and should not be
+ * The #MatewnckWorkspace struct contains only private fields and should not be
  * directly accessed.
  */
-struct _MateWnckWorkspace
+struct _MatewnckWorkspace
 {
   GObject parent_instance;
 
-  MateWnckWorkspacePrivate *priv;
+  MatewnckWorkspacePrivate *priv;
 };
 
-struct _MateWnckWorkspaceClass
+struct _MatewnckWorkspaceClass
 {
   GObjectClass parent_class;
 
-  void (* name_changed) (MateWnckWorkspace *space);
+  void (* name_changed) (MatewnckWorkspace *space);
   
   /* Padding for future expansion */
   void (* pad1) (void);
@@ -67,24 +67,24 @@ struct _MateWnckWorkspaceClass
 
 GType matewnck_workspace_get_type (void) G_GNUC_CONST;
 
-int         matewnck_workspace_get_number     (MateWnckWorkspace *space);
-const char* matewnck_workspace_get_name       (MateWnckWorkspace *space);
-void        matewnck_workspace_change_name    (MateWnckWorkspace *space,
+int         matewnck_workspace_get_number     (MatewnckWorkspace *space);
+const char* matewnck_workspace_get_name       (MatewnckWorkspace *space);
+void        matewnck_workspace_change_name    (MatewnckWorkspace *space,
                                            const char    *name);
-MateWnckScreen* matewnck_workspace_get_screen     (MateWnckWorkspace *space);
-void        matewnck_workspace_activate       (MateWnckWorkspace *space,
+MatewnckScreen* matewnck_workspace_get_screen     (MatewnckWorkspace *space);
+void        matewnck_workspace_activate       (MatewnckWorkspace *space,
                                            guint32        timestamp);
-int         matewnck_workspace_get_width      (MateWnckWorkspace *space);
-int         matewnck_workspace_get_height     (MateWnckWorkspace *space);
-int         matewnck_workspace_get_viewport_x (MateWnckWorkspace *space);
-int         matewnck_workspace_get_viewport_y (MateWnckWorkspace *space);
-gboolean    matewnck_workspace_is_virtual     (MateWnckWorkspace *space);
+int         matewnck_workspace_get_width      (MatewnckWorkspace *space);
+int         matewnck_workspace_get_height     (MatewnckWorkspace *space);
+int         matewnck_workspace_get_viewport_x (MatewnckWorkspace *space);
+int         matewnck_workspace_get_viewport_y (MatewnckWorkspace *space);
+gboolean    matewnck_workspace_is_virtual     (MatewnckWorkspace *space);
 
 
-int matewnck_workspace_get_layout_row          (MateWnckWorkspace       *space);
-int matewnck_workspace_get_layout_column       (MateWnckWorkspace       *space);
-MateWnckWorkspace* matewnck_workspace_get_neighbor (MateWnckWorkspace       *space,
-                                            MateWnckMotionDirection  direction);
+int matewnck_workspace_get_layout_row          (MatewnckWorkspace       *space);
+int matewnck_workspace_get_layout_column       (MatewnckWorkspace       *space);
+MatewnckWorkspace* matewnck_workspace_get_neighbor (MatewnckWorkspace       *space,
+                                            MatewnckMotionDirection  direction);
 
 G_END_DECLS
 

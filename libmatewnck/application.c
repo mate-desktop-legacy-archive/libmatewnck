@@ -35,16 +35,16 @@
  * @see_also: matewnck_window_get_application()
  * @stability: Unstable
  *
- * The #MateWnckApplication is a group of #MateWnckWindow that are all in the same
+ * The #MatewnckApplication is a group of #MatewnckWindow that are all in the same
  * application. It can be used to represent windows by applications, group
  * windows by applications or to manipulate all windows of a particular
  * application.
  *
- * A #MateWnckApplication is identified by the group leader of the #MateWnckWindow
- * belonging to it, and new #MateWnckWindow are added to a #MateWnckApplication if and
- * only if they have the group leader of the #MateWnckApplication.
+ * A #MatewnckApplication is identified by the group leader of the #MatewnckWindow
+ * belonging to it, and new #MatewnckWindow are added to a #MatewnckApplication if and
+ * only if they have the group leader of the #MatewnckApplication.
  *
- * The #MateWnckApplication objects are always owned by libmatewnck and must not be
+ * The #MatewnckApplication objects are always owned by libmatewnck and must not be
  * referenced or unreferenced.
  */
 
@@ -52,22 +52,22 @@
 
 static GHashTable *app_hash = NULL;
 
-struct _MateWnckApplicationPrivate
+struct _MatewnckApplicationPrivate
 {
   Window xwindow; /* group leader */
-  MateWnckScreen *screen;
+  MatewnckScreen *screen;
   GList *windows;
   int pid;
   char *name;
 
-  MateWnckWindow *name_window;    /* window we are using name of */
+  MatewnckWindow *name_window;    /* window we are using name of */
 
   GdkPixbuf *icon;
   GdkPixbuf *mini_icon;
   
-  MateWnckIconCache *icon_cache;
+  MatewnckIconCache *icon_cache;
 
-  MateWnckWindow *icon_window;
+  MatewnckWindow *icon_window;
 
   char *startup_id;
   
@@ -77,8 +77,8 @@ struct _MateWnckApplicationPrivate
   guint need_emit_icon_changed : 1;
 };
 
-G_DEFINE_TYPE (MateWnckApplication, matewnck_application, G_TYPE_OBJECT);
-#define MATEWNCK_APPLICATION_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), MATEWNCK_TYPE_APPLICATION, MateWnckApplicationPrivate))
+G_DEFINE_TYPE (MatewnckApplication, matewnck_application, G_TYPE_OBJECT);
+#define MATEWNCK_APPLICATION_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), MATEWNCK_TYPE_APPLICATION, MatewnckApplicationPrivate))
 
 enum {
   NAME_CHANGED,
@@ -86,21 +86,21 @@ enum {
   LAST_SIGNAL
 };
 
-static void emit_name_changed (MateWnckApplication *app);
-static void emit_icon_changed (MateWnckApplication *app);
+static void emit_name_changed (MatewnckApplication *app);
+static void emit_icon_changed (MatewnckApplication *app);
 
-static void reset_name  (MateWnckApplication *app);
-static void update_name (MateWnckApplication *app);
+static void reset_name  (MatewnckApplication *app);
+static void update_name (MatewnckApplication *app);
 
-static void matewnck_application_init        (MateWnckApplication      *application);
-static void matewnck_application_class_init  (MateWnckApplicationClass *klass);
+static void matewnck_application_init        (MatewnckApplication      *application);
+static void matewnck_application_class_init  (MatewnckApplicationClass *klass);
 static void matewnck_application_finalize    (GObject        *object);
 
 
 static guint signals[LAST_SIGNAL] = { 0 };
 
 static void
-matewnck_application_init (MateWnckApplication *application)
+matewnck_application_init (MatewnckApplication *application)
 {  
   application->priv = MATEWNCK_APPLICATION_GET_PRIVATE (application);
 
@@ -130,17 +130,17 @@ matewnck_application_init (MateWnckApplication *application)
 }
 
 static void
-matewnck_application_class_init (MateWnckApplicationClass *klass)
+matewnck_application_class_init (MatewnckApplicationClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  g_type_class_add_private (klass, sizeof (MateWnckApplicationPrivate));
+  g_type_class_add_private (klass, sizeof (MatewnckApplicationPrivate));
 
   object_class->finalize = matewnck_application_finalize;
   
   /**
-   * MateWnckApplication::name-changed:
-   * @app: the #MateWnckApplication which emitted the signal.
+   * MatewnckApplication::name-changed:
+   * @app: the #MatewnckApplication which emitted the signal.
    *
    * Emitted when the name of @app changes.
    */
@@ -148,14 +148,14 @@ matewnck_application_class_init (MateWnckApplicationClass *klass)
     g_signal_new ("name_changed",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (MateWnckApplicationClass, name_changed),
+                  G_STRUCT_OFFSET (MatewnckApplicationClass, name_changed),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
   /**
-   * MateWnckApplication::icon-changed:
-   * @app: the #MateWnckApplication which emitted the signal.
+   * MatewnckApplication::icon-changed:
+   * @app: the #MatewnckApplication which emitted the signal.
    *
    * Emitted when the icon of @app changes.
    */
@@ -163,7 +163,7 @@ matewnck_application_class_init (MateWnckApplicationClass *klass)
     g_signal_new ("icon_changed",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (MateWnckApplicationClass, icon_changed),
+                  G_STRUCT_OFFSET (MatewnckApplicationClass, icon_changed),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
@@ -172,7 +172,7 @@ matewnck_application_class_init (MateWnckApplicationClass *klass)
 static void
 matewnck_application_finalize (GObject *object)
 {
-  MateWnckApplication *application;
+  MatewnckApplication *application;
 
   application = MATEWNCK_APPLICATION (object);
 
@@ -205,15 +205,15 @@ matewnck_application_finalize (GObject *object)
  * matewnck_application_get:
  * @xwindow: the X window ID of a group leader.
  *
- * Gets the #MateWnckApplication corresponding to the group leader with @xwindow
+ * Gets the #MatewnckApplication corresponding to the group leader with @xwindow
  * as X window ID.
  *
- * Return value: (transfer none): the #MateWnckApplication corresponding to
- * @xwindow, or %NULL if there no such #MateWnckApplication could be found. The
- * returned #MateWnckApplication is owned by libmatewnck and must not be referenced or
+ * Return value: (transfer none): the #MatewnckApplication corresponding to
+ * @xwindow, or %NULL if there no such #MatewnckApplication could be found. The
+ * returned #MatewnckApplication is owned by libmatewnck and must not be referenced or
  * unreferenced.
  */
-MateWnckApplication*
+MatewnckApplication*
 matewnck_application_get (gulong xwindow)
 {
   if (app_hash == NULL)
@@ -224,14 +224,14 @@ matewnck_application_get (gulong xwindow)
 
 /**
  * matewnck_application_get_xid:
- * @app: a #MateWnckApplication.
+ * @app: a #MatewnckApplication.
  * 
  * Gets the X window ID of the group leader window for @app.
  * 
  * Return value: the X window ID of the group leader window for @app.
  **/
 gulong
-matewnck_application_get_xid (MateWnckApplication *app)
+matewnck_application_get_xid (MatewnckApplication *app)
 {
   g_return_val_if_fail (MATEWNCK_IS_APPLICATION (app), 0);
   
@@ -240,16 +240,16 @@ matewnck_application_get_xid (MateWnckApplication *app)
 
 /**
  * matewnck_application_get_windows:
- * @app: a #MateWnckApplication.
+ * @app: a #MatewnckApplication.
  * 
- * Gets the list of #MateWnckWindow belonging to @app.
+ * Gets the list of #MatewnckWindow belonging to @app.
  * 
- * Return value: (element-type MateWnckWindow) (transfer none): the list of
- * #MateWnckWindow belonging to @app, or %NULL if the application contains no
+ * Return value: (element-type MatewnckWindow) (transfer none): the list of
+ * #MatewnckWindow belonging to @app, or %NULL if the application contains no
  * window. The list should not be modified nor freed, as it is owned by @app.
  **/
 GList*
-matewnck_application_get_windows (MateWnckApplication *app)
+matewnck_application_get_windows (MatewnckApplication *app)
 {
   g_return_val_if_fail (MATEWNCK_IS_APPLICATION (app), NULL);
 
@@ -258,14 +258,14 @@ matewnck_application_get_windows (MateWnckApplication *app)
 
 /**
  * matewnck_application_get_n_windows:
- * @app: a #MateWnckApplication.
+ * @app: a #MatewnckApplication.
  * 
- * Gets the number of #MateWnckWindow belonging to @app.
+ * Gets the number of #MatewnckWindow belonging to @app.
  * 
- * Return value: the number of #MateWnckWindow belonging to @app.
+ * Return value: the number of #MatewnckWindow belonging to @app.
  **/
 int
-matewnck_application_get_n_windows (MateWnckApplication *app)
+matewnck_application_get_n_windows (MatewnckApplication *app)
 {
   g_return_val_if_fail (MATEWNCK_IS_APPLICATION (app), 0);
 
@@ -274,7 +274,7 @@ matewnck_application_get_n_windows (MateWnckApplication *app)
 
 /**
  * matewnck_application_get_name:
- * @app: a #MateWnckApplication.
+ * @app: a #MatewnckApplication.
  * 
  * Gets the name of @app. Since there is no way to properly find this name,
  * various suboptimal heuristics are used to find it. GTK+ should probably have
@@ -286,7 +286,7 @@ matewnck_application_get_n_windows (MateWnckApplication *app)
  * Return value: the name of @app, or a fallback name if no name is available.
  **/
 const char*
-matewnck_application_get_name (MateWnckApplication *app)
+matewnck_application_get_name (MatewnckApplication *app)
 {
   g_return_val_if_fail (MATEWNCK_IS_APPLICATION (app), NULL);
 
@@ -298,7 +298,7 @@ matewnck_application_get_name (MateWnckApplication *app)
 
 /**
  * matewnck_application_get_icon_name:
- * @app: a #MateWnckApplication
+ * @app: a #MatewnckApplication
  * 
  * Gets the icon name of @app (to be used when @app is minimized). Since
  * there is no way to properly find this name, various suboptimal heuristics
@@ -308,7 +308,7 @@ matewnck_application_get_name (MateWnckApplication *app)
  * is available.
  **/
 const char*
-matewnck_application_get_icon_name (MateWnckApplication *app)
+matewnck_application_get_icon_name (MatewnckApplication *app)
 {
   g_return_val_if_fail (MATEWNCK_IS_APPLICATION (app), NULL);
 
@@ -324,14 +324,14 @@ matewnck_application_get_icon_name (MateWnckApplication *app)
 
 /**
  * matewnck_application_get_pid:
- * @app: a #MateWnckApplication.
+ * @app: a #MatewnckApplication.
  * 
  * Gets the process ID of @app.
  * 
  * Return value: the process ID of @app, or 0 if none is available.
  **/
 int
-matewnck_application_get_pid (MateWnckApplication *app)
+matewnck_application_get_pid (MatewnckApplication *app)
 {
   g_return_val_if_fail (MATEWNCK_IS_APPLICATION (app), 0);
 
@@ -339,7 +339,7 @@ matewnck_application_get_pid (MateWnckApplication *app)
 }
 
 static void
-get_icons (MateWnckApplication *app)
+get_icons (MatewnckApplication *app)
 {
   GdkPixbuf *icon;
   GdkPixbuf *mini_icon;
@@ -379,15 +379,15 @@ get_icons (MateWnckApplication *app)
 }
 
 /* Prefer to get group icon from a window of type "normal" */
-static MateWnckWindow*
-find_icon_window (MateWnckApplication *app)
+static MatewnckWindow*
+find_icon_window (MatewnckApplication *app)
 {
   GList *tmp;
 
   tmp = app->priv->windows;
   while (tmp != NULL)
     {
-      MateWnckWindow *w = tmp->data;
+      MatewnckWindow *w = tmp->data;
 
       if (matewnck_window_get_window_type (w) == MATEWNCK_WINDOW_NORMAL)
         return w;
@@ -403,7 +403,7 @@ find_icon_window (MateWnckApplication *app)
 
 /**
  * matewnck_application_get_icon:
- * @app: a #MateWnckApplication.
+ * @app: a #MatewnckApplication.
  * 
  * Gets the icon to be used for @app. If no icon is set for @app, a
  * suboptimal heuristic is used to find an appropriate icon. If no icon was
@@ -413,7 +413,7 @@ find_icon_window (MateWnckApplication *app)
  * <classname>GdkPixbuf</classname> if it needs to keep the icon around.
  **/
 GdkPixbuf*
-matewnck_application_get_icon (MateWnckApplication *app)
+matewnck_application_get_icon (MatewnckApplication *app)
 {
   g_return_val_if_fail (MATEWNCK_IS_APPLICATION (app), NULL);
 
@@ -425,7 +425,7 @@ matewnck_application_get_icon (MateWnckApplication *app)
     return app->priv->icon;
   else
     {
-      MateWnckWindow *w = find_icon_window (app);
+      MatewnckWindow *w = find_icon_window (app);
       if (w)
         return matewnck_window_get_icon (w);
       else
@@ -435,7 +435,7 @@ matewnck_application_get_icon (MateWnckApplication *app)
 
 /**
  * matewnck_application_get_mini_icon:
- * @app: a #MateWnckApplication.
+ * @app: a #MatewnckApplication.
  * 
  * Gets the mini-icon to be used for @app. If no mini-icon is set for @app,
  * a suboptimal heuristic is used to find an appropriate icon. If no mini-icon
@@ -446,7 +446,7 @@ matewnck_application_get_icon (MateWnckApplication *app)
  * around.
  **/
 GdkPixbuf*
-matewnck_application_get_mini_icon (MateWnckApplication *app)
+matewnck_application_get_mini_icon (MatewnckApplication *app)
 {
   g_return_val_if_fail (MATEWNCK_IS_APPLICATION (app), NULL);
 
@@ -458,7 +458,7 @@ matewnck_application_get_mini_icon (MateWnckApplication *app)
     return app->priv->mini_icon;
   else
     {
-      MateWnckWindow *w = find_icon_window (app);
+      MatewnckWindow *w = find_icon_window (app);
       if (w)
         return matewnck_window_get_mini_icon (w);
       else
@@ -468,7 +468,7 @@ matewnck_application_get_mini_icon (MateWnckApplication *app)
 
 /**
  * matewnck_application_get_icon_is_fallback:
- * @app: a #MateWnckApplication
+ * @app: a #MatewnckApplication
  *
  * Gets whether a default fallback icon is used for @app (because none
  * was set on @app).
@@ -476,7 +476,7 @@ matewnck_application_get_mini_icon (MateWnckApplication *app)
  * Return value: %TRUE if the icon for @app is a fallback, %FALSE otherwise.
  **/
 gboolean
-matewnck_application_get_icon_is_fallback (MateWnckApplication *app)
+matewnck_application_get_icon_is_fallback (MatewnckApplication *app)
 {
   g_return_val_if_fail (MATEWNCK_IS_APPLICATION (app), FALSE);
 
@@ -484,7 +484,7 @@ matewnck_application_get_icon_is_fallback (MateWnckApplication *app)
     return FALSE;
   else
     {
-      MateWnckWindow *w = find_icon_window (app);
+      MatewnckWindow *w = find_icon_window (app);
       if (w)
         return matewnck_window_get_icon_is_fallback (w);
       else
@@ -494,7 +494,7 @@ matewnck_application_get_icon_is_fallback (MateWnckApplication *app)
 
 /**
  * matewnck_application_get_startup_id:
- * @app: a #MateWnckApplication.
+ * @app: a #MatewnckApplication.
  *
  * Gets the startup sequence ID used for startup notification of @app.
  *
@@ -504,7 +504,7 @@ matewnck_application_get_icon_is_fallback (MateWnckApplication *app)
  * Since: 2.2
  */
 const char*
-matewnck_application_get_startup_id (MateWnckApplication *app)
+matewnck_application_get_startup_id (MatewnckApplication *app)
 {
   g_return_val_if_fail (MATEWNCK_IS_APPLICATION (app), NULL);
 
@@ -512,11 +512,11 @@ matewnck_application_get_startup_id (MateWnckApplication *app)
 }
 
 /* xwindow is a group leader */
-MateWnckApplication*
+MatewnckApplication*
 _matewnck_application_create (Window      xwindow,
-                          MateWnckScreen *screen)
+                          MatewnckScreen *screen)
 {
-  MateWnckApplication *application;
+  MatewnckApplication *application;
   
   if (app_hash == NULL)
     app_hash = g_hash_table_new (_matewnck_xid_hash, _matewnck_xid_equal);
@@ -545,7 +545,7 @@ _matewnck_application_create (Window      xwindow,
   
   /* Hash now owns one ref, caller gets none */
 
-  /* Note that xwindow may correspond to a MateWnckWindow's xwindow,
+  /* Note that xwindow may correspond to a MatewnckWindow's xwindow,
    * so we select events needed by either
    */
   _matewnck_select_input (application->priv->xwindow,
@@ -555,7 +555,7 @@ _matewnck_application_create (Window      xwindow,
 }
 
 void
-_matewnck_application_destroy (MateWnckApplication *application)
+_matewnck_application_destroy (MatewnckApplication *application)
 {
   g_return_if_fail (matewnck_application_get (application->priv->xwindow) == application);
   
@@ -568,8 +568,8 @@ _matewnck_application_destroy (MateWnckApplication *application)
 }
 
 static void
-window_name_changed (MateWnckWindow      *window,
-                     MateWnckApplication *app)
+window_name_changed (MatewnckWindow      *window,
+                     MatewnckApplication *app)
 {
   if (window == app->priv->name_window)
     {
@@ -579,8 +579,8 @@ window_name_changed (MateWnckWindow      *window,
 }
 
 void
-_matewnck_application_add_window (MateWnckApplication *app,
-                              MateWnckWindow      *window)
+_matewnck_application_add_window (MatewnckApplication *app,
+                              MatewnckWindow      *window)
 {
   g_return_if_fail (MATEWNCK_IS_APPLICATION (app));
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
@@ -603,8 +603,8 @@ _matewnck_application_add_window (MateWnckApplication *app,
 }
 
 void
-_matewnck_application_remove_window (MateWnckApplication *app,
-                                 MateWnckWindow      *window)
+_matewnck_application_remove_window (MatewnckApplication *app,
+                                 MatewnckWindow      *window)
 {
   g_return_if_fail (MATEWNCK_IS_APPLICATION (app));
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
@@ -627,7 +627,7 @@ _matewnck_application_remove_window (MateWnckApplication *app,
 }
 
 void
-_matewnck_application_process_property_notify (MateWnckApplication *app,
+_matewnck_application_process_property_notify (MatewnckApplication *app,
                                            XEvent          *xevent)
 {
   /* This prop notify is on the leader window */
@@ -668,7 +668,7 @@ _matewnck_application_process_property_notify (MateWnckApplication *app,
 }
 
 static void
-emit_name_changed (MateWnckApplication *app)
+emit_name_changed (MatewnckApplication *app)
 {
   g_signal_emit (G_OBJECT (app),
                  signals[NAME_CHANGED],
@@ -676,7 +676,7 @@ emit_name_changed (MateWnckApplication *app)
 }
 
 static void
-emit_icon_changed (MateWnckApplication *app)
+emit_icon_changed (MatewnckApplication *app)
 {
   app->priv->need_emit_icon_changed = FALSE;
   g_signal_emit (G_OBJECT (app),
@@ -685,7 +685,7 @@ emit_icon_changed (MateWnckApplication *app)
 }
 
 static void
-reset_name  (MateWnckApplication *app)
+reset_name  (MatewnckApplication *app)
 {
   if (!app->priv->name_from_leader)
     {
@@ -696,7 +696,7 @@ reset_name  (MateWnckApplication *app)
 }
 
 static void
-update_name (MateWnckApplication *app)
+update_name (MatewnckApplication *app)
 {
   g_assert (app->priv->name_from_leader || app->priv->name == NULL);
 

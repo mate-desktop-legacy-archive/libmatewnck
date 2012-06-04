@@ -40,10 +40,10 @@
 /**
  * SECTION:window
  * @short_description: an object representing a window.
- * @see_also: #MateWnckWorkspace, #MateWnckApplication, #MateWnckClassGroup
+ * @see_also: #MatewnckWorkspace, #MatewnckApplication, #MatewnckClassGroup
  * @stability: Unstable
  *
- * The #MateWnckWindow objects are always owned by libmatewnck and must not be
+ * The #MatewnckWindow objects are always owned by libmatewnck and must not be
  * referenced or unreferenced.
  */
 
@@ -70,12 +70,12 @@ static GHashTable *window_hash = NULL;
     ((window)->priv->is_above            << 11)|        \
     ((window)->priv->is_below            << 12))
 
-struct _MateWnckWindowPrivate
+struct _MatewnckWindowPrivate
 {
   Window xwindow;
-  MateWnckScreen *screen;
-  MateWnckApplication *app;
-  MateWnckClassGroup *class_group;
+  MatewnckScreen *screen;
+  MatewnckApplication *app;
+  MatewnckClassGroup *class_group;
   Window group_leader;
   Window transient_for;
   GdkRectangle icon_geometry;
@@ -87,14 +87,14 @@ struct _MateWnckWindowPrivate
   int workspace;
   gint sort_order;
 
-  MateWnckWindowType wintype;
+  MatewnckWindowType wintype;
   
   GdkPixbuf *icon;
   GdkPixbuf *mini_icon;
 
-  MateWnckIconCache *icon_cache;
+  MatewnckIconCache *icon_cache;
   
-  MateWnckWindowActions actions;
+  MatewnckWindowActions actions;
 
   int x;
   int y;
@@ -163,8 +163,8 @@ struct _MateWnckWindowPrivate
   guint need_emit_icon_changed : 1;
 };
 
-G_DEFINE_TYPE (MateWnckWindow, matewnck_window, G_TYPE_OBJECT);
-#define MATEWNCK_WINDOW_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), MATEWNCK_TYPE_WINDOW, MateWnckWindowPrivate))
+G_DEFINE_TYPE (MatewnckWindow, matewnck_window, G_TYPE_OBJECT);
+#define MATEWNCK_WINDOW_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), MATEWNCK_TYPE_WINDOW, MatewnckWindowPrivate))
 
 enum {
   NAME_CHANGED,
@@ -176,43 +176,43 @@ enum {
   LAST_SIGNAL
 };
 
-static void matewnck_window_init        (MateWnckWindow      *window);
-static void matewnck_window_class_init  (MateWnckWindowClass *klass);
+static void matewnck_window_init        (MatewnckWindow      *window);
+static void matewnck_window_class_init  (MatewnckWindowClass *klass);
 static void matewnck_window_finalize    (GObject        *object);
 
-static void emit_name_changed      (MateWnckWindow      *window);
-static void emit_state_changed     (MateWnckWindow      *window,
-                                    MateWnckWindowState  changed_mask,
-                                    MateWnckWindowState  new_state);
-static void emit_workspace_changed (MateWnckWindow      *window);
-static void emit_icon_changed      (MateWnckWindow      *window);
-static void emit_actions_changed   (MateWnckWindow       *window,
-                                    MateWnckWindowActions changed_mask,
-                                    MateWnckWindowActions new_actions);
-static void emit_geometry_changed  (MateWnckWindow      *window);
+static void emit_name_changed      (MatewnckWindow      *window);
+static void emit_state_changed     (MatewnckWindow      *window,
+                                    MatewnckWindowState  changed_mask,
+                                    MatewnckWindowState  new_state);
+static void emit_workspace_changed (MatewnckWindow      *window);
+static void emit_icon_changed      (MatewnckWindow      *window);
+static void emit_actions_changed   (MatewnckWindow       *window,
+                                    MatewnckWindowActions changed_mask,
+                                    MatewnckWindowActions new_actions);
+static void emit_geometry_changed  (MatewnckWindow      *window);
 
-static void update_name      (MateWnckWindow *window);
-static void update_state     (MateWnckWindow *window);
-static void update_wm_state  (MateWnckWindow *window);
-static void update_icon_name (MateWnckWindow *window);
-static void update_workspace (MateWnckWindow *window);
-static void update_actions   (MateWnckWindow *window);
-static void update_wintype   (MateWnckWindow *window);
-static void update_transient_for (MateWnckWindow *window);
-static void update_startup_id (MateWnckWindow *window);
-static void update_wmclass    (MateWnckWindow *window);
-static void update_frame_extents (MateWnckWindow *window);
-static void unqueue_update   (MateWnckWindow *window);
-static void queue_update     (MateWnckWindow *window);
-static void force_update_now (MateWnckWindow *window);
+static void update_name      (MatewnckWindow *window);
+static void update_state     (MatewnckWindow *window);
+static void update_wm_state  (MatewnckWindow *window);
+static void update_icon_name (MatewnckWindow *window);
+static void update_workspace (MatewnckWindow *window);
+static void update_actions   (MatewnckWindow *window);
+static void update_wintype   (MatewnckWindow *window);
+static void update_transient_for (MatewnckWindow *window);
+static void update_startup_id (MatewnckWindow *window);
+static void update_wmclass    (MatewnckWindow *window);
+static void update_frame_extents (MatewnckWindow *window);
+static void unqueue_update   (MatewnckWindow *window);
+static void queue_update     (MatewnckWindow *window);
+static void force_update_now (MatewnckWindow *window);
 
-static MateWnckWindow* find_last_transient_for (GList *windows,
+static MatewnckWindow* find_last_transient_for (GList *windows,
                                             Window xwindow);
 
 static guint signals[LAST_SIGNAL] = { 0 };
 
 static void
-matewnck_window_init (MateWnckWindow *window)
+matewnck_window_init (MatewnckWindow *window)
 {
   window->priv = MATEWNCK_WINDOW_GET_PRIVATE (window);
 
@@ -297,17 +297,17 @@ matewnck_window_init (MateWnckWindow *window)
 }
 
 static void
-matewnck_window_class_init (MateWnckWindowClass *klass)
+matewnck_window_class_init (MatewnckWindowClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  g_type_class_add_private (klass, sizeof (MateWnckWindowPrivate));
+  g_type_class_add_private (klass, sizeof (MatewnckWindowPrivate));
 
   object_class->finalize = matewnck_window_finalize;
 
   /**
-   * MateWnckWindow::name-changed:
-   * @window: the #MateWnckWindow which emitted the signal.
+   * MatewnckWindow::name-changed:
+   * @window: the #MatewnckWindow which emitted the signal.
    *
    * Emitted when the name of @window changes.
    */
@@ -315,14 +315,14 @@ matewnck_window_class_init (MateWnckWindowClass *klass)
     g_signal_new ("name_changed",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (MateWnckWindowClass, name_changed),
+                  G_STRUCT_OFFSET (MatewnckWindowClass, name_changed),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
   /**
-   * MateWnckWindow::state-changed:
-   * @window: the #MateWnckWindow which emitted the signal.
+   * MatewnckWindow::state-changed:
+   * @window: the #MatewnckWindow which emitted the signal.
    * @changed_mask: the bitmask containing bits set for all states of @window
    * that have changed. 
    * @new_state: the new state of @window.
@@ -330,21 +330,21 @@ matewnck_window_class_init (MateWnckWindowClass *klass)
    * Emitted when the state of @window changes. This can happen when @window is
    * (un)minimized, (un)maximized, (un)sticked, (un)shaded, (un)made above,
    * (un)made below, (un)set fullscreen, when it needs attention, etc. See
-   * #MateWnckWindowState for the complete list of states that might have changed.
+   * #MatewnckWindowState for the complete list of states that might have changed.
    */
   signals[STATE_CHANGED] =
     g_signal_new ("state_changed",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (MateWnckWindowClass, state_changed),
+                  G_STRUCT_OFFSET (MatewnckWindowClass, state_changed),
                   NULL, NULL,
                   _matewnck_marshal_VOID__FLAGS_FLAGS,
                   G_TYPE_NONE, 2,
                   MATEWNCK_TYPE_WINDOW_STATE, MATEWNCK_TYPE_WINDOW_STATE);
 
   /**
-   * MateWnckWindow::workspace-changed:
-   * @window: the #MateWnckWindow which emitted the signal.
+   * MatewnckWindow::workspace-changed:
+   * @window: the #MatewnckWindow which emitted the signal.
    *
    * Emitted when the current workspace of @window changes, or if @window has
    * been pinned or unpinned.
@@ -353,14 +353,14 @@ matewnck_window_class_init (MateWnckWindowClass *klass)
     g_signal_new ("workspace_changed",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (MateWnckWindowClass, workspace_changed),
+                  G_STRUCT_OFFSET (MatewnckWindowClass, workspace_changed),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
   /**
-   * MateWnckWindow::icon-changed:
-   * @window: the #MateWnckWindow which emitted the signal.
+   * MatewnckWindow::icon-changed:
+   * @window: the #MatewnckWindow which emitted the signal.
    *
    * Emitted when the icon of @window changes.
    */
@@ -368,14 +368,14 @@ matewnck_window_class_init (MateWnckWindowClass *klass)
     g_signal_new ("icon_changed",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (MateWnckWindowClass, icon_changed),
+                  G_STRUCT_OFFSET (MatewnckWindowClass, icon_changed),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
   /**
-   * MateWnckWindow::actions-changed:
-   * @window: the #MateWnckWindow which emitted the signal.
+   * MatewnckWindow::actions-changed:
+   * @window: the #MatewnckWindow which emitted the signal.
    * @changed_mask: the bitmask containing bits set for all actions
    * availabilities for @window that have changed. 
    * @new_state: the new actions availabilities for @window.
@@ -386,7 +386,7 @@ matewnck_window_class_init (MateWnckWindowClass *klass)
     g_signal_new ("actions_changed",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (MateWnckWindowClass, actions_changed),
+                  G_STRUCT_OFFSET (MatewnckWindowClass, actions_changed),
                   NULL, NULL,
                   _matewnck_marshal_VOID__FLAGS_FLAGS,
                   G_TYPE_NONE, 2,
@@ -394,8 +394,8 @@ matewnck_window_class_init (MateWnckWindowClass *klass)
                   MATEWNCK_TYPE_WINDOW_ACTIONS);
 
   /**
-   * MateWnckWindow::geometry-changed:
-   * @window: the #MateWnckWindow which emitted the signal.
+   * MatewnckWindow::geometry-changed:
+   * @window: the #MatewnckWindow which emitted the signal.
    *
    * Emitted when the geometry of @window changes.
    */
@@ -403,7 +403,7 @@ matewnck_window_class_init (MateWnckWindowClass *klass)
     g_signal_new ("geometry_changed",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (MateWnckWindowClass, geometry_changed),
+                  G_STRUCT_OFFSET (MatewnckWindowClass, geometry_changed),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);  
@@ -412,7 +412,7 @@ matewnck_window_class_init (MateWnckWindowClass *klass)
 static void
 matewnck_window_finalize (GObject *object)
 {
-  MateWnckWindow *window;
+  MatewnckWindow *window;
 
   window = MATEWNCK_WINDOW (object);
 
@@ -460,14 +460,14 @@ matewnck_window_finalize (GObject *object)
  * matewnck_window_get:
  * @xwindow: an X window ID.
  *
- * Gets a preexisting #MateWnckWindow for the X window @xwindow. This will not
- * create a #MateWnckWindow if none exists. The function is robust against bogus
+ * Gets a preexisting #MatewnckWindow for the X window @xwindow. This will not
+ * create a #MatewnckWindow if none exists. The function is robust against bogus
  * window IDs.
  *
- * Return value: (transfer none): the #MateWnckWindow for @xwindow. The returned
- * #MateWnckWindow is owned by libmatewnck and must not be referenced or unreferenced.
+ * Return value: (transfer none): the #MatewnckWindow for @xwindow. The returned
+ * #MatewnckWindow is owned by libmatewnck and must not be referenced or unreferenced.
  **/
-MateWnckWindow*
+MatewnckWindow*
 matewnck_window_get (gulong xwindow)
 {
   if (window_hash == NULL)
@@ -478,27 +478,27 @@ matewnck_window_get (gulong xwindow)
 
 /**
  * matewnck_window_get_screen:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
- * Gets the #MateWnckScreen @window is on.
+ * Gets the #MatewnckScreen @window is on.
  *
- * Return value: (transfer none): the #MateWnckScreen @window is on. The returned
- * #MateWnckScreen is owned by libmatewnck and must not be referenced or unreferenced.
+ * Return value: (transfer none): the #MatewnckScreen @window is on. The returned
+ * #MatewnckScreen is owned by libmatewnck and must not be referenced or unreferenced.
  **/
-MateWnckScreen*
-matewnck_window_get_screen (MateWnckWindow *window)
+MatewnckScreen*
+matewnck_window_get_screen (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), NULL);
 
   return window->priv->screen;
 }
 
-MateWnckWindow*
+MatewnckWindow*
 _matewnck_window_create (Window      xwindow,
-                     MateWnckScreen *screen,
+                     MatewnckScreen *screen,
                      gint        sort_order)
 {
-  MateWnckWindow *window;
+  MatewnckWindow *window;
 
   if (window_hash == NULL)
     window_hash = g_hash_table_new (_matewnck_xid_hash, _matewnck_xid_equal);
@@ -514,7 +514,7 @@ _matewnck_window_create (Window      xwindow,
 
   /* Hash now owns one ref, caller gets none */
 
-  /* Note that xwindow may correspond to a MateWnckApplication's xwindow,
+  /* Note that xwindow may correspond to a MatewnckApplication's xwindow,
    * that's why we select the union of the mask we want for Application
    * and the one we want for window
    */
@@ -565,7 +565,7 @@ _matewnck_window_create (Window      xwindow,
 }
 
 void
-_matewnck_window_destroy (MateWnckWindow *window)
+_matewnck_window_destroy (MatewnckWindow *window)
 {
   g_return_if_fail (matewnck_window_get (window->priv->xwindow) == window);
 
@@ -580,14 +580,14 @@ _matewnck_window_destroy (MateWnckWindow *window)
 }
 
 static Display *
-_matewnck_window_get_display (MateWnckWindow *window)
+_matewnck_window_get_display (MatewnckWindow *window)
 {
   return DisplayOfScreen (MATEWNCK_SCREEN_XSCREEN (window->priv->screen));
 }
 
 /**
  * matewnck_window_has_name:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Checks whether or not @window has a name. matewnck_window_get_name()
  * will always return some value, even if @window has no name set;
@@ -602,7 +602,7 @@ _matewnck_window_get_display (MateWnckWindow *window)
  * Since: 2.16
  **/
 gboolean
-matewnck_window_has_name (MateWnckWindow *window)
+matewnck_window_has_name (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), FALSE);
 
@@ -611,7 +611,7 @@ matewnck_window_has_name (MateWnckWindow *window)
 
 /**
  * matewnck_window_get_name:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Gets the name of @window, as it should be displayed in a pager
  * or tasklist. Always returns some value, even if @window has no name
@@ -624,7 +624,7 @@ matewnck_window_has_name (MateWnckWindow *window)
  * available.
  **/
 const char*
-matewnck_window_get_name (MateWnckWindow *window)
+matewnck_window_get_name (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), NULL);
 
@@ -636,7 +636,7 @@ matewnck_window_get_name (MateWnckWindow *window)
 
 /**
  * matewnck_window_has_icon_name:
- * @window: a #MateWnckWindow
+ * @window: a #MatewnckWindow
  *
  * Checks whether or not @window has an icon name.
  * matewnck_window_get_icon_name() will always return some value, even if
@@ -655,7 +655,7 @@ matewnck_window_get_name (MateWnckWindow *window)
  * Since: 2.16
  **/
 gboolean
-matewnck_window_has_icon_name (MateWnckWindow *window)
+matewnck_window_has_icon_name (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), FALSE);
 
@@ -664,7 +664,7 @@ matewnck_window_has_icon_name (MateWnckWindow *window)
 
 /**
  * matewnck_window_get_icon_name:
- * @window: a #MateWnckWindow
+ * @window: a #MatewnckWindow
  *
  * Gets the icon name of @window, as it should be displayed for an icon
  * (minimized state). Always returns some value, even if @window has no icon
@@ -678,7 +678,7 @@ matewnck_window_has_icon_name (MateWnckWindow *window)
  * name is available.
  **/
 const char*
-matewnck_window_get_icon_name (MateWnckWindow *window)
+matewnck_window_get_icon_name (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), NULL);
 
@@ -691,7 +691,7 @@ matewnck_window_get_icon_name (MateWnckWindow *window)
 }
 
 char *
-_matewnck_window_get_name_for_display (MateWnckWindow *window,
+_matewnck_window_get_name_for_display (MatewnckWindow *window,
                                    gboolean    use_icon_name,
                                    gboolean    use_state_decorations)
 {
@@ -720,16 +720,16 @@ _matewnck_window_get_name_for_display (MateWnckWindow *window,
 
 /**
  * matewnck_window_get_application:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
- * Gets the #MateWnckApplication to which @window belongs.
+ * Gets the #MatewnckApplication to which @window belongs.
  *
- * Return value: (transfer none): the #MateWnckApplication to which @window belongs.
- * The returned #MateWnckApplication is owned by libmatewnck and must not be referenced
+ * Return value: (transfer none): the #MatewnckApplication to which @window belongs.
+ * The returned #MatewnckApplication is owned by libmatewnck and must not be referenced
  * or unreferenced.
  **/
-MateWnckApplication*
-matewnck_window_get_application  (MateWnckWindow *window)
+MatewnckApplication*
+matewnck_window_get_application  (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), NULL);
 
@@ -738,17 +738,17 @@ matewnck_window_get_application  (MateWnckWindow *window)
 
 /**
  * matewnck_window_get_transient:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
- * Gets the #MateWnckWindow for which @window is transient.
+ * Gets the #MatewnckWindow for which @window is transient.
  *
- * Return value: the #MateWnckWindow for which @window is transient, or %NULL if
- * @window is not transient for any #MateWnckWindow.
+ * Return value: the #MatewnckWindow for which @window is transient, or %NULL if
+ * @window is not transient for any #MatewnckWindow.
  *
  * Since: 2.12
  **/
-MateWnckWindow*
-matewnck_window_get_transient (MateWnckWindow *window)
+MatewnckWindow*
+matewnck_window_get_transient (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), NULL);
 
@@ -757,7 +757,7 @@ matewnck_window_get_transient (MateWnckWindow *window)
 
 /**
  * matewnck_window_get_group_leader:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Gets the group leader of the group of windows to which @window belongs.
  *
@@ -766,7 +766,7 @@ matewnck_window_get_transient (MateWnckWindow *window)
  * group.
  **/
 gulong
-matewnck_window_get_group_leader (MateWnckWindow *window)
+matewnck_window_get_group_leader (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), None);
 
@@ -775,14 +775,14 @@ matewnck_window_get_group_leader (MateWnckWindow *window)
 
 /**
  * matewnck_window_get_xid:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Gets the X window ID of @window.
  *
  * Return value: the X window ID of @window.
  **/
 gulong
-matewnck_window_get_xid (MateWnckWindow *window)
+matewnck_window_get_xid (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), None);
 
@@ -791,18 +791,18 @@ matewnck_window_get_xid (MateWnckWindow *window)
 
 /**
  * matewnck_window_get_class_group:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
- * Gets the #MateWnckClassGroup to which @window belongs.
+ * Gets the #MatewnckClassGroup to which @window belongs.
  *
- * Return value: (transfer none): the #MateWnckClassGroup to which @window belongs.
- * The returned #MateWnckClassGroup is owned by libmatewnck and must not be referenced
+ * Return value: (transfer none): the #MatewnckClassGroup to which @window belongs.
+ * The returned #MatewnckClassGroup is owned by libmatewnck and must not be referenced
  * or unreferenced.
  *
  * Since: 2.2
  **/
-MateWnckClassGroup *
-matewnck_window_get_class_group (MateWnckWindow *window)
+MatewnckClassGroup *
+matewnck_window_get_class_group (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), NULL);
 
@@ -811,7 +811,7 @@ matewnck_window_get_class_group (MateWnckWindow *window)
 
 /**
  * matewnck_window_get_session_id:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Gets the session ID for @window in Latin-1 encoding.
  * NOTE: this is invalid UTF-8. You can't display this
@@ -822,7 +822,7 @@ matewnck_window_get_class_group (MateWnckWindow *window)
  * no session ID.
  **/
 const char*
-matewnck_window_get_session_id (MateWnckWindow *window)
+matewnck_window_get_session_id (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), NULL);
 
@@ -831,7 +831,7 @@ matewnck_window_get_session_id (MateWnckWindow *window)
 
 /**
  * matewnck_window_get_session_id_utf8:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Gets the session ID for @window in UTF-8 encoding.
  * The session ID should be in Latin-1 encoding, so the conversion should work,
@@ -842,7 +842,7 @@ matewnck_window_get_session_id (MateWnckWindow *window)
  * no session ID.
  **/
 const char*
-matewnck_window_get_session_id_utf8 (MateWnckWindow *window)
+matewnck_window_get_session_id_utf8 (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), NULL);
 
@@ -869,14 +869,14 @@ matewnck_window_get_session_id_utf8 (MateWnckWindow *window)
 
 /**
  * matewnck_window_get_pid:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Gets the process ID of @window.
  *
  * Return value: the process ID of @window, or 0 if none is available.
  **/
 int
-matewnck_window_get_pid (MateWnckWindow *window)
+matewnck_window_get_pid (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), 0);
 
@@ -885,10 +885,10 @@ matewnck_window_get_pid (MateWnckWindow *window)
 
 /**
  * matewnck_window_get_sort_order:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Gets the sort order of @window, used for ordering of @window in
- * #MateWnckSelector and #MateWnckTasklist. The sort order is an internal state in
+ * #MatewnckSelector and #MatewnckTasklist. The sort order is an internal state in
  * libmatewnck. The initial value is defined when the window is created.
  *
  * Return value: the sort order of @window, or G_MAXINT if none is available.
@@ -896,7 +896,7 @@ matewnck_window_get_pid (MateWnckWindow *window)
  * Since: 2.10
  **/
 gint
-matewnck_window_get_sort_order (MateWnckWindow *window)
+matewnck_window_get_sort_order (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), G_MAXINT);
 
@@ -905,15 +905,15 @@ matewnck_window_get_sort_order (MateWnckWindow *window)
 
 /**
  * matewnck_window_set_sort_order:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  * @order: new sort order for @window.
  *
  * Sets the sort order of @window. The sort order is used for ordering of
- * @window in #MateWnckSelector and #MateWnckTasklist.
+ * @window in #MatewnckSelector and #MatewnckTasklist.
  *
  * Since: 2.20
  **/
-void        matewnck_window_set_sort_order        (MateWnckWindow *window, 
+void        matewnck_window_set_sort_order        (MatewnckWindow *window, 
 					       gint order)
 { 
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
@@ -924,14 +924,14 @@ void        matewnck_window_set_sort_order        (MateWnckWindow *window,
 
 /**
  * matewnck_window_get_window_type:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  * 
  * Gets the semantic type of @window.
  * 
  * Return value: the semantic type of @window.
  **/
-MateWnckWindowType
-matewnck_window_get_window_type (MateWnckWindow *window)
+MatewnckWindowType
+matewnck_window_get_window_type (MatewnckWindow *window)
 {
   /* FIXME: should we have an invalid window type for this? */
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), 0);
@@ -941,7 +941,7 @@ matewnck_window_get_window_type (MateWnckWindow *window)
 
 /**
  * matewnck_window_set_window_type:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  * @wintype: a semantic type.
  * 
  * Sets the semantic type of @window to @wintype.
@@ -949,7 +949,7 @@ matewnck_window_get_window_type (MateWnckWindow *window)
  * Since: 2.12
  **/
 void
-matewnck_window_set_window_type (MateWnckWindow *window, MateWnckWindowType wintype)
+matewnck_window_set_window_type (MatewnckWindow *window, MatewnckWindowType wintype)
 {
   Atom atom;
 
@@ -996,15 +996,15 @@ matewnck_window_set_window_type (MateWnckWindow *window, MateWnckWindowType wint
 
 /**
  * matewnck_window_is_minimized:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Gets whether @window is minimized. Minimization state may change anytime
- * a #MateWnckWindow::state-changed signal gets emitted.
+ * a #MatewnckWindow::state-changed signal gets emitted.
  *
  * Return value: %TRUE if @window is minimized, %FALSE otherwise.
  **/
 gboolean
-matewnck_window_is_minimized (MateWnckWindow *window)
+matewnck_window_is_minimized (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), FALSE);
 
@@ -1013,10 +1013,10 @@ matewnck_window_is_minimized (MateWnckWindow *window)
 
 /**
  * matewnck_window_needs_attention:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Gets whether @window needs attention. This state may change anytime
- * a #MateWnckWindow::state-changed signal gets emitted.
+ * a #MatewnckWindow::state-changed signal gets emitted.
  *
  * This state depends on flags such as the demands_attention and is_urgent
  * hints.
@@ -1026,7 +1026,7 @@ matewnck_window_is_minimized (MateWnckWindow *window)
  * Since: 2.12
  **/
 gboolean
-matewnck_window_needs_attention (MateWnckWindow *window)
+matewnck_window_needs_attention (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), FALSE);
 
@@ -1034,7 +1034,7 @@ matewnck_window_needs_attention (MateWnckWindow *window)
 }
 
 time_t
-_matewnck_window_get_needs_attention_time (MateWnckWindow *window)
+_matewnck_window_get_needs_attention_time (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), 0);
 
@@ -1042,11 +1042,11 @@ _matewnck_window_get_needs_attention_time (MateWnckWindow *window)
 }
 
 /* Return whether the transient of @window needs attention */
-static MateWnckWindow *
-transient_needs_attention (MateWnckWindow *window)
+static MatewnckWindow *
+transient_needs_attention (MatewnckWindow *window)
 {
   GList *windows;
-  MateWnckWindow *transient;
+  MatewnckWindow *transient;
   
   if (!MATEWNCK_IS_WINDOW (window))
     return NULL;
@@ -1068,13 +1068,13 @@ transient_needs_attention (MateWnckWindow *window)
 }
 
 time_t
-_matewnck_window_or_transient_get_needs_attention_time (MateWnckWindow *window)
+_matewnck_window_or_transient_get_needs_attention_time (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), 0);
 
   if (_matewnck_window_get_needs_attention_time (window) == 0)
     {
-      MateWnckWindow *transient;
+      MatewnckWindow *transient;
 
       transient = transient_needs_attention (window);
       if (transient)
@@ -1088,10 +1088,10 @@ _matewnck_window_or_transient_get_needs_attention_time (MateWnckWindow *window)
 
 /**
  * matewnck_window_or_transient_needs_attention:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Gets whether @window or one of its transients needs attention. This state
- * may change anytime a #MateWnckWindow::state-changed signal gets emitted.
+ * may change anytime a #MatewnckWindow::state-changed signal gets emitted.
  *
  * Return value: %TRUE if @window or one of its transients needs attention,
  * %FALSE otherwise.
@@ -1099,7 +1099,7 @@ _matewnck_window_or_transient_get_needs_attention_time (MateWnckWindow *window)
  * Since: 2.12
  **/
 gboolean
-matewnck_window_or_transient_needs_attention (MateWnckWindow *window)
+matewnck_window_or_transient_needs_attention (MatewnckWindow *window)
 {
   return matewnck_window_needs_attention (window) || 
          transient_needs_attention (window) != NULL;
@@ -1107,15 +1107,15 @@ matewnck_window_or_transient_needs_attention (MateWnckWindow *window)
 
 /**
  * matewnck_window_is_maximized_horizontally:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Gets whether @window is maximized horizontally. Horizontal maximization
- * state may change anytime a #MateWnckWindow::state-changed signal gets emitted.
+ * state may change anytime a #MatewnckWindow::state-changed signal gets emitted.
  *
  * Return value: %TRUE if @window is maximized horizontally, %FALSE otherwise.
  **/
 gboolean
-matewnck_window_is_maximized_horizontally (MateWnckWindow *window)
+matewnck_window_is_maximized_horizontally (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), FALSE);
 
@@ -1124,15 +1124,15 @@ matewnck_window_is_maximized_horizontally (MateWnckWindow *window)
 
 /**
  * matewnck_window_is_maximized_vertically:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Gets whether @window is maximized vertically. vertiVal maximization
- * state may change anytime a #MateWnckWindow::state-changed signal gets emitted.
+ * state may change anytime a #MatewnckWindow::state-changed signal gets emitted.
  *
  * Return value: %TRUE if @window is maximized vertically, %FALSE otherwise.
  **/
 gboolean
-matewnck_window_is_maximized_vertically   (MateWnckWindow *window)
+matewnck_window_is_maximized_vertically   (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), FALSE);
 
@@ -1140,14 +1140,14 @@ matewnck_window_is_maximized_vertically   (MateWnckWindow *window)
 }
 
 const char*
-_matewnck_window_get_startup_id (MateWnckWindow *window)
+_matewnck_window_get_startup_id (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), NULL);
   
   if (window->priv->startup_id == NULL &&
       window->priv->group_leader != None)
     {
-      MateWnckApplication *app;
+      MatewnckApplication *app;
 
       /* Fall back to group leader property */
       
@@ -1163,7 +1163,7 @@ _matewnck_window_get_startup_id (MateWnckWindow *window)
 }
 
 const char*
-_matewnck_window_get_resource_class (MateWnckWindow *window)
+_matewnck_window_get_resource_class (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), NULL);
 
@@ -1171,7 +1171,7 @@ _matewnck_window_get_resource_class (MateWnckWindow *window)
 }
 
 const char*
-_matewnck_window_get_resource_name (MateWnckWindow *window)
+_matewnck_window_get_resource_name (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), NULL);
 
@@ -1180,10 +1180,10 @@ _matewnck_window_get_resource_name (MateWnckWindow *window)
 
 /**
  * matewnck_window_is_maximized:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Gets whether @window is maximized. Maximization state may change
- * anytime a #MateWnckWindow::state-changed signal gets emitted.
+ * anytime a #MatewnckWindow::state-changed signal gets emitted.
  *
  * As for GDK, "maximized" means both vertically and horizontally. If @window
  * is maximized in only one direction, then @window is not considered
@@ -1193,7 +1193,7 @@ _matewnck_window_get_resource_name (MateWnckWindow *window)
  * otherwise.
  **/
 gboolean
-matewnck_window_is_maximized (MateWnckWindow *window)
+matewnck_window_is_maximized (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), FALSE);
 
@@ -1204,15 +1204,15 @@ matewnck_window_is_maximized (MateWnckWindow *window)
 
 /**
  * matewnck_window_is_shaded:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Gets whether @window is shaded. Shade state may change anytime
- * a #MateWnckWindow::state-changed signal gets emitted.
+ * a #MatewnckWindow::state-changed signal gets emitted.
  *
  * Return value: %TRUE if @window is shaded, %FALSE otherwise.
  **/
 gboolean
-matewnck_window_is_shaded                 (MateWnckWindow *window)
+matewnck_window_is_shaded                 (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), FALSE);
 
@@ -1221,10 +1221,10 @@ matewnck_window_is_shaded                 (MateWnckWindow *window)
 
 /**
  * matewnck_window_is_above:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Gets whether @window is above other windows. This state may change
- * anytime a #MateWnckWindow::state-changed signal gets emitted.
+ * anytime a #MatewnckWindow::state-changed signal gets emitted.
  *
  * See matewnck_window_make_above() for more details on this state.
  *
@@ -1233,7 +1233,7 @@ matewnck_window_is_shaded                 (MateWnckWindow *window)
  * Since: 2.14
  **/
 gboolean
-matewnck_window_is_above                  (MateWnckWindow *window)
+matewnck_window_is_above                  (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), FALSE);
 
@@ -1242,10 +1242,10 @@ matewnck_window_is_above                  (MateWnckWindow *window)
 
 /**
  * matewnck_window_is_below:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Gets whether @window is below other windows. This state may change
- * anytime a #MateWnckWindow::state-changed signal gets emitted.
+ * anytime a #MatewnckWindow::state-changed signal gets emitted.
  *
  * See matewnck_window_make_below() for more details on this state.
  *
@@ -1254,7 +1254,7 @@ matewnck_window_is_above                  (MateWnckWindow *window)
  * Since: 2.20
  **/
 gboolean
-matewnck_window_is_below                  (MateWnckWindow *window)
+matewnck_window_is_below                  (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), FALSE);
 
@@ -1263,15 +1263,15 @@ matewnck_window_is_below                  (MateWnckWindow *window)
 
 /**
  * matewnck_window_is_skip_pager:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Gets whether @window is included on pagers. This state may change
- * anytime a #MateWnckWindow::state-changed signal gets emitted.
+ * anytime a #MatewnckWindow::state-changed signal gets emitted.
  *
  * Return value: %TRUE if @window is included on pagers, %FALSE otherwise.
  **/
 gboolean
-matewnck_window_is_skip_pager             (MateWnckWindow *window)
+matewnck_window_is_skip_pager             (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), FALSE);
 
@@ -1280,13 +1280,13 @@ matewnck_window_is_skip_pager             (MateWnckWindow *window)
 
 /**
  * matewnck_window_set_skip_pager:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  * @skip: whether @window should be included on pagers.
  *
  * Asks the window manager to make @window included or not included on pagers.
  **/
 void
-matewnck_window_set_skip_pager (MateWnckWindow *window,
+matewnck_window_set_skip_pager (MatewnckWindow *window,
                             gboolean skip)
 {
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
@@ -1299,15 +1299,15 @@ matewnck_window_set_skip_pager (MateWnckWindow *window,
 
 /**
  * matewnck_window_is_skip_tasklist:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Gets whether @window is included on tasklists. This state may change
- * anytime a #MateWnckWindow::state-changed signal gets emitted.
+ * anytime a #MatewnckWindow::state-changed signal gets emitted.
  *
  * Return value: %TRUE if @window is included on tasklists, %FALSE otherwise.
  **/
 gboolean
-matewnck_window_is_skip_tasklist          (MateWnckWindow *window)
+matewnck_window_is_skip_tasklist          (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), FALSE);
 
@@ -1316,17 +1316,17 @@ matewnck_window_is_skip_tasklist          (MateWnckWindow *window)
 
 /**
  * matewnck_window_is_fullscreen:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Gets whether @window is fullscreen. Fullscreen state may change
- * anytime a #MateWnckWindow::state-changed signal gets emitted.
+ * anytime a #MatewnckWindow::state-changed signal gets emitted.
  *
  * Return value: %TRUE if @window is fullscreen, %FALSE otherwise.
  *
  * Since: 2.8
  **/
 gboolean
-matewnck_window_is_fullscreen                 (MateWnckWindow *window)
+matewnck_window_is_fullscreen                 (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), FALSE);
 
@@ -1335,14 +1335,14 @@ matewnck_window_is_fullscreen                 (MateWnckWindow *window)
 
 /**
  * matewnck_window_set_skip_tasklist:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  * @skip: whether @window should be included on tasklists.
  *
  * Asks the window manager to make @window included or not included on
  * tasklists.
  **/
 void
-matewnck_window_set_skip_tasklist (MateWnckWindow *window,
+matewnck_window_set_skip_tasklist (MatewnckWindow *window,
                                gboolean skip)
 {
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
@@ -1355,7 +1355,7 @@ matewnck_window_set_skip_tasklist (MateWnckWindow *window,
 
 /**
  * matewnck_window_set_fullscreen:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  * @fullscreen: whether to make @window fullscreen.
  *
  * Asks the window manager to set the fullscreen state of @window according to
@@ -1364,7 +1364,7 @@ matewnck_window_set_skip_tasklist (MateWnckWindow *window,
  * Since: 2.8
  **/
 void
-matewnck_window_set_fullscreen (MateWnckWindow *window,
+matewnck_window_set_fullscreen (MatewnckWindow *window,
                                gboolean fullscreen)
 {
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
@@ -1377,10 +1377,10 @@ matewnck_window_set_fullscreen (MateWnckWindow *window,
 
 /**
  * matewnck_window_is_sticky:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Gets whether @window is sticky. Sticky state may change
- * anytime a #MateWnckWindow::state-changed signal gets emitted.
+ * anytime a #MatewnckWindow::state-changed signal gets emitted.
  *
  * Sticky here means "stuck to the glass", i.e. does not scroll with the
  * viewport. In GDK/GTK+ (e.g. gdk_window_stick()/gtk_window_stick()), sticky
@@ -1390,7 +1390,7 @@ matewnck_window_set_fullscreen (MateWnckWindow *window,
  * Return value: %TRUE if @window is "stuck to the glass", %FALSE otherwise.
  **/
 gboolean
-matewnck_window_is_sticky                 (MateWnckWindow *window)
+matewnck_window_is_sticky                 (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), FALSE);
 
@@ -1399,7 +1399,7 @@ matewnck_window_is_sticky                 (MateWnckWindow *window)
 
 /**
  * matewnck_window_close:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  * @timestamp: the X server timestamp of the user interaction event that caused
  * this call to occur.
  *
@@ -1411,7 +1411,7 @@ matewnck_window_is_sticky                 (MateWnckWindow *window)
  * Since: 2.6
  **/
 void
-matewnck_window_close (MateWnckWindow *window,
+matewnck_window_close (MatewnckWindow *window,
 		   guint32     timestamp)
 {
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
@@ -1422,12 +1422,12 @@ matewnck_window_close (MateWnckWindow *window,
 
 /**
  * matewnck_window_minimize:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Minimizes @window.
  **/
 void
-matewnck_window_minimize                (MateWnckWindow *window)
+matewnck_window_minimize                (MatewnckWindow *window)
 {
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
 
@@ -1436,7 +1436,7 @@ matewnck_window_minimize                (MateWnckWindow *window)
 
 /**
  * matewnck_window_unminimize:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  * @timestamp: the X server timestamp of the user interaction event that caused
  * this call to occur.
  *
@@ -1444,7 +1444,7 @@ matewnck_window_minimize                (MateWnckWindow *window)
  * matewnck_window_activate_transient() for details on how the activation is done.
  **/
 void
-matewnck_window_unminimize              (MateWnckWindow *window,
+matewnck_window_unminimize              (MatewnckWindow *window,
                                      guint32     timestamp)
 {
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
@@ -1454,12 +1454,12 @@ matewnck_window_unminimize              (MateWnckWindow *window,
 
 /**
  * matewnck_window_maximize:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Asks the window manager to maximize @window.
  **/
 void
-matewnck_window_maximize                (MateWnckWindow *window)
+matewnck_window_maximize                (MatewnckWindow *window)
 {
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
 
@@ -1472,12 +1472,12 @@ matewnck_window_maximize                (MateWnckWindow *window)
 
 /**
  * matewnck_window_unmaximize:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Asks the window manager to unmaximize @window.
  **/
 void
-matewnck_window_unmaximize              (MateWnckWindow *window)
+matewnck_window_unmaximize              (MatewnckWindow *window)
 {
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
 
@@ -1490,12 +1490,12 @@ matewnck_window_unmaximize              (MateWnckWindow *window)
 
 /**
  * matewnck_window_maximize_horizontally:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Asks the window manager to maximize horizontally @window.
  **/
 void
-matewnck_window_maximize_horizontally   (MateWnckWindow *window)
+matewnck_window_maximize_horizontally   (MatewnckWindow *window)
 {
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
 
@@ -1508,12 +1508,12 @@ matewnck_window_maximize_horizontally   (MateWnckWindow *window)
 
 /**
  * matewnck_window_unmaximize_horizontally:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Asks the window manager to unmaximize horizontally @window.
  **/
 void
-matewnck_window_unmaximize_horizontally (MateWnckWindow *window)
+matewnck_window_unmaximize_horizontally (MatewnckWindow *window)
 {
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
 
@@ -1526,12 +1526,12 @@ matewnck_window_unmaximize_horizontally (MateWnckWindow *window)
 
 /**
  * matewnck_window_maximize_vertically:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Asks the window manager to maximize vertically @window.
  **/
 void
-matewnck_window_maximize_vertically     (MateWnckWindow *window)
+matewnck_window_maximize_vertically     (MatewnckWindow *window)
 {
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
 
@@ -1544,12 +1544,12 @@ matewnck_window_maximize_vertically     (MateWnckWindow *window)
 
 /**
  * matewnck_window_unmaximize_vertically:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Asks the window manager to unmaximize vertically @window.
  **/
 void
-matewnck_window_unmaximize_vertically   (MateWnckWindow *window)
+matewnck_window_unmaximize_vertically   (MatewnckWindow *window)
 {
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
 
@@ -1562,12 +1562,12 @@ matewnck_window_unmaximize_vertically   (MateWnckWindow *window)
 
 /**
  * matewnck_window_shade:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Asks the window manager to shade @window.
  **/
 void
-matewnck_window_shade                   (MateWnckWindow *window)
+matewnck_window_shade                   (MatewnckWindow *window)
 {
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
 
@@ -1580,12 +1580,12 @@ matewnck_window_shade                   (MateWnckWindow *window)
 
 /**
  * matewnck_window_unshade:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Asks the window manager to unshade @window.
  **/
 void
-matewnck_window_unshade                 (MateWnckWindow *window)
+matewnck_window_unshade                 (MatewnckWindow *window)
 {
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
 
@@ -1598,7 +1598,7 @@ matewnck_window_unshade                 (MateWnckWindow *window)
 
 /**
  * matewnck_window_make_above:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Asks the window manager to put @window on top of most windows (@window will
  * not be on top of focused fullscreen windows, of other windows with this
@@ -1607,7 +1607,7 @@ matewnck_window_unshade                 (MateWnckWindow *window)
  * Since: 2.14
  **/
 void
-matewnck_window_make_above (MateWnckWindow *window)
+matewnck_window_make_above (MatewnckWindow *window)
 {
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
 
@@ -1620,7 +1620,7 @@ matewnck_window_make_above (MateWnckWindow *window)
 
 /**
  * matewnck_window_unmake_above:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Asks the window manager to not put @window on top of most windows, and to
  * put it again in the stack with other windows.
@@ -1628,7 +1628,7 @@ matewnck_window_make_above (MateWnckWindow *window)
  * Since: 2.14
  **/
 void
-matewnck_window_unmake_above (MateWnckWindow *window)
+matewnck_window_unmake_above (MatewnckWindow *window)
 {
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
 
@@ -1641,14 +1641,14 @@ matewnck_window_unmake_above (MateWnckWindow *window)
 
 /**
  * matewnck_window_make_below:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Asks the window manager to put @window below most windows.
  *
  * Since: 2.20
  **/
 void
-matewnck_window_make_below (MateWnckWindow *window)
+matewnck_window_make_below (MatewnckWindow *window)
 {
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
 
@@ -1661,7 +1661,7 @@ matewnck_window_make_below (MateWnckWindow *window)
 
 /**
  * matewnck_window_unmake_below:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Asks the window manager to not put @window below most windows, and to
  * put it again in the stack with other windows.
@@ -1669,7 +1669,7 @@ matewnck_window_make_below (MateWnckWindow *window)
  * Since: 2.20
  **/
 void
-matewnck_window_unmake_below (MateWnckWindow *window)
+matewnck_window_unmake_below (MatewnckWindow *window)
 {
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
 
@@ -1682,13 +1682,13 @@ matewnck_window_unmake_below (MateWnckWindow *window)
 
 /**
  * matewnck_window_stick:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Asks the window manager to keep the @window<!-- -->'s position fixed on the
  * screen, even when the workspace or viewport scrolls.
  **/
 void
-matewnck_window_stick                   (MateWnckWindow *window)
+matewnck_window_stick                   (MatewnckWindow *window)
 {
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
 
@@ -1701,13 +1701,13 @@ matewnck_window_stick                   (MateWnckWindow *window)
 
 /**
  * matewnck_window_unstick:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Asks the window manager to not have @window<!-- -->'s position fixed on the
  * screen when the workspace or viewport scrolls.
  **/
 void
-matewnck_window_unstick                 (MateWnckWindow *window)
+matewnck_window_unstick                 (MatewnckWindow *window)
 {
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
 
@@ -1720,12 +1720,12 @@ matewnck_window_unstick                 (MateWnckWindow *window)
 
 /**
  * matewnck_window_keyboard_move:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Asks the window manager to start moving @window via the keyboard.
  **/
 void
-matewnck_window_keyboard_move (MateWnckWindow *window)
+matewnck_window_keyboard_move (MatewnckWindow *window)
 {
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
 
@@ -1735,12 +1735,12 @@ matewnck_window_keyboard_move (MateWnckWindow *window)
 
 /**
  * matewnck_window_keyboard_size:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Asks the window manager to start resizing @window via the keyboard.
  **/
 void
-matewnck_window_keyboard_size (MateWnckWindow *window)
+matewnck_window_keyboard_size (MatewnckWindow *window)
 {
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
 
@@ -1750,17 +1750,17 @@ matewnck_window_keyboard_size (MateWnckWindow *window)
 
 /**
  * matewnck_window_get_workspace:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Gets the current workspace @window is on. If the window is pinned (on all
  * workspaces), or not on any workspaces, %NULL may be returned.
  *
  * Return value: (transfer none): the single current workspace @window is on, or
- * %NULL. The returned #MateWnckWorkspace is owned by libmatewnck and must not be
+ * %NULL. The returned #MatewnckWorkspace is owned by libmatewnck and must not be
  * referenced or unreferenced.
  **/
-MateWnckWorkspace*
-matewnck_window_get_workspace (MateWnckWindow *window)
+MatewnckWorkspace*
+matewnck_window_get_workspace (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), NULL);
 
@@ -1772,15 +1772,15 @@ matewnck_window_get_workspace (MateWnckWindow *window)
 
 /**
  * matewnck_window_move_to_workspace:
- * @window: a #MateWnckWindow.
- * @space: a #MateWnckWorkspace.
+ * @window: a #MatewnckWindow.
+ * @space: a #MatewnckWorkspace.
  *
  * Asks the window manager to move @window to @space. If @window was pinned, it
  * will also result in @window being visible only on @space.
  **/
 void
-matewnck_window_move_to_workspace (MateWnckWindow    *window,
-                               MateWnckWorkspace *space)
+matewnck_window_move_to_workspace (MatewnckWindow    *window,
+                               MatewnckWorkspace *space)
 {
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
   g_return_if_fail (MATEWNCK_IS_WORKSPACE (space));
@@ -1792,16 +1792,16 @@ matewnck_window_move_to_workspace (MateWnckWindow    *window,
 
 /**
  * matewnck_window_is_pinned:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Gets whether @window is on all workspace. Pinned state may change
- * anytime a #MateWnckWindow::workspace-changed signal gets emitted, but not when
- * a #MateWnckWindow::state-changed gets emitted.
+ * anytime a #MatewnckWindow::workspace-changed signal gets emitted, but not when
+ * a #MatewnckWindow::state-changed gets emitted.
  *
  * Return value: %TRUE if @window is on all workspaces, %FALSE otherwise.
  **/
 gboolean
-matewnck_window_is_pinned (MateWnckWindow *window)
+matewnck_window_is_pinned (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), FALSE);
 
@@ -1810,12 +1810,12 @@ matewnck_window_is_pinned (MateWnckWindow *window)
 
 /**
  * matewnck_window_pin:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Asks the window manager to put @window on all workspaces.
  **/
 void
-matewnck_window_pin (MateWnckWindow *window)
+matewnck_window_pin (MatewnckWindow *window)
 {
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
 
@@ -1826,7 +1826,7 @@ matewnck_window_pin (MateWnckWindow *window)
 
 /**
  * matewnck_window_unpin:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Asks the window manager to put @window only in the currently active
  * workspace, if @window was previously pinned. If @window was not pinned,
@@ -1835,9 +1835,9 @@ matewnck_window_pin (MateWnckWindow *window)
  * @window<!-- -->'s workspace to the first workspace.
  **/
 void
-matewnck_window_unpin (MateWnckWindow *window)
+matewnck_window_unpin (MatewnckWindow *window)
 {
-  MateWnckWorkspace *active;
+  MatewnckWorkspace *active;
 
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
 
@@ -1853,7 +1853,7 @@ matewnck_window_unpin (MateWnckWindow *window)
 
 /**
  * matewnck_window_activate:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  * @timestamp: the X server timestamp of the user interaction event that caused
  * this call to occur.
  *
@@ -1868,7 +1868,7 @@ matewnck_window_unpin (MateWnckWindow *window)
  * Since: 2.10
  **/
 void
-matewnck_window_activate (MateWnckWindow *window,
+matewnck_window_activate (MatewnckWindow *window,
                       guint32     timestamp)
 {
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
@@ -1880,15 +1880,15 @@ matewnck_window_activate (MateWnckWindow *window,
 
 /**
  * matewnck_window_is_active:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
- * Gets whether @window is the active window on its #MateWnckScreen.
+ * Gets whether @window is the active window on its #MatewnckScreen.
  *
- * Return value: %TRUE if @window is the active window on its #MateWnckScreen,
+ * Return value: %TRUE if @window is the active window on its #MatewnckScreen,
  * %FALSE otherwise.
  **/
 gboolean
-matewnck_window_is_active (MateWnckWindow *window)
+matewnck_window_is_active (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), FALSE);
 
@@ -1897,10 +1897,10 @@ matewnck_window_is_active (MateWnckWindow *window)
 
 /**
  * matewnck_window_is_most_recently_activated:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Gets whether @window is the most recently activated window on its
- * #MateWnckScreen.
+ * #MatewnckScreen.
  *
  * The most recently activated window is identical to the active
  * window for click and sloppy focus methods (since a window is always
@@ -1908,16 +1908,16 @@ matewnck_window_is_active (MateWnckWindow *window)
  * there often is no active window.
  *
  * Return value: %TRUE if @window was the most recently activated window on its
- * #MateWnckScreen, %FALSE otherwise.
+ * #MatewnckScreen, %FALSE otherwise.
  *
  * Since: 2.8
  **/
 gboolean
-matewnck_window_is_most_recently_activated (MateWnckWindow *window)
+matewnck_window_is_most_recently_activated (MatewnckWindow *window)
 {
-  MateWnckWindow * current;
-  MateWnckWindow * previous;
-  MateWnckWindow * most_recently_activated_window;
+  MatewnckWindow * current;
+  MatewnckWindow * previous;
+  MatewnckWindow * most_recently_activated_window;
 
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), FALSE);
 
@@ -1932,12 +1932,12 @@ matewnck_window_is_most_recently_activated (MateWnckWindow *window)
   return (window == most_recently_activated_window);
 }
 
-static MateWnckWindow*
+static MatewnckWindow*
 find_last_transient_for (GList *windows,
                          Window xwindow)
 {
   GList *tmp; 
-  MateWnckWindow *retval;
+  MatewnckWindow *retval;
 
   /* find _last_ transient for xwindow in the list */
   
@@ -1946,7 +1946,7 @@ find_last_transient_for (GList *windows,
   tmp = windows;
   while (tmp != NULL)
     {
-      MateWnckWindow *w = tmp->data;
+      MatewnckWindow *w = tmp->data;
 
       if (w->priv->transient_for == xwindow &&
 	  w->priv->wintype != MATEWNCK_WINDOW_UTILITY)
@@ -1960,7 +1960,7 @@ find_last_transient_for (GList *windows,
 
 /**
  * matewnck_window_activate_transient:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  * @timestamp: the X server timestamp of the user interaction event that caused
  * this call to occur.
  *
@@ -1977,12 +1977,12 @@ find_last_transient_for (GList *windows,
  * Since: 2.10
  **/
 void
-matewnck_window_activate_transient (MateWnckWindow *window,
+matewnck_window_activate_transient (MatewnckWindow *window,
                                 guint32     timestamp)
 {
   GList *windows;
-  MateWnckWindow *transient;
-  MateWnckWindow *next;
+  MatewnckWindow *transient;
+  MatewnckWindow *next;
   
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
 
@@ -2013,18 +2013,18 @@ matewnck_window_activate_transient (MateWnckWindow *window,
 
 /**
  * matewnck_window_transient_is_most_recently_activated:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Gets whether one of the transients of @window is the most
  * recently activated window. See
  * matewnck_window_is_most_recently_activated() for a more complete
  * description of what is meant by most recently activated.  This
- * function is needed because clicking on a #MateWnckTasklist once will
+ * function is needed because clicking on a #MatewnckTasklist once will
  * activate a transient instead of @window itself
  * (matewnck_window_activate_transient), and clicking again should
  * minimize @window and its transients.  (Not doing this can be
  * especially annoying in the case of modal dialogs that don't appear
- * in the #MateWnckTaslist).
+ * in the #MatewnckTaslist).
  * 
  * Return value: %TRUE if one of the transients of @window is the most recently
  * activated window, %FALSE otherwise.
@@ -2032,10 +2032,10 @@ matewnck_window_activate_transient (MateWnckWindow *window,
  * Since: 2.12
  **/
 gboolean
-matewnck_window_transient_is_most_recently_activated (MateWnckWindow *window)
+matewnck_window_transient_is_most_recently_activated (MatewnckWindow *window)
 {
   GList *windows;
-  MateWnckWindow *transient;
+  MatewnckWindow *transient;
   
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), FALSE);
 
@@ -2056,7 +2056,7 @@ matewnck_window_transient_is_most_recently_activated (MateWnckWindow *window)
 }
 
 static void
-get_icons (MateWnckWindow *window)
+get_icons (MatewnckWindow *window)
 {
   GdkPixbuf *icon;
   GdkPixbuf *mini_icon;
@@ -2090,7 +2090,7 @@ get_icons (MateWnckWindow *window)
 
 /**
  * matewnck_window_get_icon:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  * 
  * Gets the icon to be used for @window. If no icon was found, a fallback
  * icon is used. matewnck_window_get_icon_is_fallback() can be used to tell if the
@@ -2101,7 +2101,7 @@ get_icons (MateWnckWindow *window)
  * around.
  **/
 GdkPixbuf*
-matewnck_window_get_icon (MateWnckWindow *window)
+matewnck_window_get_icon (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), NULL);
 
@@ -2116,7 +2116,7 @@ matewnck_window_get_icon (MateWnckWindow *window)
 
 /**
  * matewnck_window_get_mini_icon:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  * 
  * Gets the mini-icon to be used for @window. If no mini-icon was found, a
  * fallback mini-icon is used. matewnck_window_get_icon_is_fallback() can be used
@@ -2127,7 +2127,7 @@ matewnck_window_get_icon (MateWnckWindow *window)
  * around.
  **/
 GdkPixbuf*
-matewnck_window_get_mini_icon (MateWnckWindow *window)
+matewnck_window_get_mini_icon (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), NULL);
   
@@ -2142,7 +2142,7 @@ matewnck_window_get_mini_icon (MateWnckWindow *window)
 
 /**
  * matewnck_window_get_icon_is_fallback:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  *
  * Gets whether a default fallback icon is used for @window (because none
  * was set on @window).
@@ -2150,7 +2150,7 @@ matewnck_window_get_mini_icon (MateWnckWindow *window)
  * Return value: %TRUE if the icon for @window is a fallback, %FALSE otherwise.
  **/
 gboolean
-matewnck_window_get_icon_is_fallback (MateWnckWindow *window)
+matewnck_window_get_icon_is_fallback (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), FALSE);
 
@@ -2159,14 +2159,14 @@ matewnck_window_get_icon_is_fallback (MateWnckWindow *window)
 
 /**
  * matewnck_window_get_actions:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  * 
  * Gets the actions that can be done for @window.
  * 
  * Return value: bitmask of actions that can be done for @window.
  **/
-MateWnckWindowActions
-matewnck_window_get_actions (MateWnckWindow *window)
+MatewnckWindowActions
+matewnck_window_get_actions (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), 0);
 
@@ -2176,14 +2176,14 @@ matewnck_window_get_actions (MateWnckWindow *window)
 
 /**
  * matewnck_window_get_state:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  * 
  * Gets the state of @window.
  * 
  * Return value: bitmask of active states for @window.
  **/
-MateWnckWindowState
-matewnck_window_get_state (MateWnckWindow *window)
+MatewnckWindowState
+matewnck_window_get_state (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), 0);
 
@@ -2192,7 +2192,7 @@ matewnck_window_get_state (MateWnckWindow *window)
 
 /**
  * matewnck_window_get_client_window_geometry:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  * @xp: return location for X coordinate in pixels of @window.
  * @yp: return location for Y coordinate in pixels of @window.
  * @widthp: return location for width in pixels of @window.
@@ -2210,7 +2210,7 @@ matewnck_window_get_state (MateWnckWindow *window)
  * Since: 2.20
  **/
 void
-matewnck_window_get_client_window_geometry (MateWnckWindow *window,
+matewnck_window_get_client_window_geometry (MatewnckWindow *window,
                                         int        *xp,
 					int        *yp,
 					int        *widthp,
@@ -2230,7 +2230,7 @@ matewnck_window_get_client_window_geometry (MateWnckWindow *window,
 
 /**
  * matewnck_window_get_geometry:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  * @xp: return location for X coordinate in pixels of @window.
  * @yp: return location for Y coordinate in pixels of @window.
  * @widthp: return location for width in pixels of @window.
@@ -2247,7 +2247,7 @@ matewnck_window_get_client_window_geometry (MateWnckWindow *window,
  * added by the window manager, use matewnck_window_get_client_window_geometry().
  **/
 void
-matewnck_window_get_geometry (MateWnckWindow *window,
+matewnck_window_get_geometry (MatewnckWindow *window,
                           int        *xp,
                           int        *yp,
                           int        *widthp,
@@ -2267,7 +2267,7 @@ matewnck_window_get_geometry (MateWnckWindow *window,
 
 /**
  * matewnck_window_set_geometry:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  * @gravity: the gravity point to use as a reference for the new position.
  * @geometry_mask: a bitmask containing flags for what should be set.
  * @x: new X coordinate in pixels of @window.
@@ -2288,9 +2288,9 @@ matewnck_window_get_geometry (MateWnckWindow *window,
  * Since: 2.16
  **/
 void
-matewnck_window_set_geometry (MateWnckWindow               *window,
-                          MateWnckWindowGravity         gravity,
-                          MateWnckWindowMoveResizeMask  geometry_mask,
+matewnck_window_set_geometry (MatewnckWindow               *window,
+                          MatewnckWindowGravity         gravity,
+                          MatewnckWindowMoveResizeMask  geometry_mask,
                           int                       x,
                           int                       y,
                           int                       width,
@@ -2318,8 +2318,8 @@ matewnck_window_set_geometry (MateWnckWindow               *window,
 
 /**
  * matewnck_window_is_visible_on_workspace:
- * @window: a #MateWnckWindow.
- * @workspace: a #MateWnckWorkspace.
+ * @window: a #MatewnckWindow.
+ * @workspace: a #MatewnckWorkspace.
  * 
  * Like matewnck_window_is_on_workspace(), but also checks that
  * the window is in a visible state (i.e. not minimized or shaded).
@@ -2328,10 +2328,10 @@ matewnck_window_set_geometry (MateWnckWindow               *window,
  * otherwise.
  **/
 gboolean
-matewnck_window_is_visible_on_workspace (MateWnckWindow    *window,
-                                     MateWnckWorkspace *workspace)
+matewnck_window_is_visible_on_workspace (MatewnckWindow    *window,
+                                     MatewnckWorkspace *workspace)
 {
-  MateWnckWindowState state;
+  MatewnckWindowState state;
 
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), FALSE);
   g_return_val_if_fail (MATEWNCK_IS_WORKSPACE (workspace), FALSE);
@@ -2346,7 +2346,7 @@ matewnck_window_is_visible_on_workspace (MateWnckWindow    *window,
 
 /**
  * matewnck_window_set_icon_geometry:
- * @window: a #MateWnckWindow.
+ * @window: a #MatewnckWindow.
  * @x: X coordinate in pixels.
  * @y: Y coordinate in pixels.
  * @width: width in pixels.
@@ -2356,7 +2356,7 @@ matewnck_window_is_visible_on_workspace (MateWnckWindow    *window,
  * destination of the minimization animation of @window.
  */
 void
-matewnck_window_set_icon_geometry (MateWnckWindow *window,
+matewnck_window_set_icon_geometry (MatewnckWindow *window,
 			       int         x,
 			       int         y,
 			       int         width,
@@ -2381,16 +2381,16 @@ matewnck_window_set_icon_geometry (MateWnckWindow *window,
 
 /**
  * matewnck_window_is_on_workspace:
- * @window: a #MateWnckWindow.
- * @workspace: a #MateWnckWorkspace.
+ * @window: a #MatewnckWindow.
+ * @workspace: a #MatewnckWorkspace.
  * 
  * Gets whether @window appears on @workspace.
  *
  * Return value: %TRUE if @window appears on @workspace, %FALSE otherwise.
  **/
 gboolean
-matewnck_window_is_on_workspace (MateWnckWindow    *window,
-                             MateWnckWorkspace *workspace)
+matewnck_window_is_on_workspace (MatewnckWindow    *window,
+                             MatewnckWorkspace *workspace)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), FALSE);
   g_return_val_if_fail (MATEWNCK_IS_WORKSPACE (workspace), FALSE);
@@ -2401,8 +2401,8 @@ matewnck_window_is_on_workspace (MateWnckWindow    *window,
 
 /**
  * matewnck_window_is_in_viewport:
- * @window: a #MateWnckWindow.
- * @workspace: a #MateWnckWorkspace.
+ * @window: a #MatewnckWindow.
+ * @workspace: a #MatewnckWorkspace.
  * 
  * Gets %TRUE if @window appears in the current viewport of @workspace.
  * 
@@ -2412,8 +2412,8 @@ matewnck_window_is_on_workspace (MateWnckWindow    *window,
  * Since: 2.4
  **/
 gboolean
-matewnck_window_is_in_viewport (MateWnckWindow    *window,
-                            MateWnckWorkspace *workspace)
+matewnck_window_is_in_viewport (MatewnckWindow    *window,
+                            MatewnckWorkspace *workspace)
 {
   GdkRectangle window_rect;
   GdkRectangle viewport_rect;
@@ -2441,8 +2441,8 @@ matewnck_window_is_in_viewport (MateWnckWindow    *window,
 }
 
 void
-_matewnck_window_set_application (MateWnckWindow      *window,
-                              MateWnckApplication *app)
+_matewnck_window_set_application (MatewnckWindow      *window,
+                              MatewnckApplication *app)
 {
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
   g_return_if_fail (app == NULL || MATEWNCK_IS_APPLICATION (app));
@@ -2455,8 +2455,8 @@ _matewnck_window_set_application (MateWnckWindow      *window,
 }
 
 void
-_matewnck_window_set_class_group (MateWnckWindow     *window,
-			      MateWnckClassGroup *class_group)
+_matewnck_window_set_class_group (MatewnckWindow     *window,
+			      MatewnckClassGroup *class_group)
 {
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
   g_return_if_fail (class_group == NULL || MATEWNCK_IS_CLASS_GROUP (class_group));
@@ -2469,7 +2469,7 @@ _matewnck_window_set_class_group (MateWnckWindow     *window,
 }
 
 void
-_matewnck_window_process_property_notify (MateWnckWindow *window,
+_matewnck_window_process_property_notify (MatewnckWindow *window,
                                       XEvent     *xevent)
 {
   if (xevent->xproperty.atom ==
@@ -2564,7 +2564,7 @@ _matewnck_window_process_property_notify (MateWnckWindow *window,
 }
 
 void
-_matewnck_window_process_configure_notify (MateWnckWindow *window,
+_matewnck_window_process_configure_notify (MatewnckWindow *window,
                                        XEvent     *xevent)
 {
   if (xevent->xconfigure.send_event)
@@ -2587,7 +2587,7 @@ _matewnck_window_process_configure_notify (MateWnckWindow *window,
 }
 
 static void
-update_wm_state (MateWnckWindow *window)
+update_wm_state (MatewnckWindow *window)
 {
   int state;
 
@@ -2605,7 +2605,7 @@ update_wm_state (MateWnckWindow *window)
 }
 
 static void
-update_state (MateWnckWindow *window)
+update_state (MatewnckWindow *window)
 {
   Atom *atoms;
   int n_atoms;
@@ -2751,7 +2751,7 @@ update_state (MateWnckWindow *window)
 }
 
 static void
-update_name (MateWnckWindow *window)
+update_name (MatewnckWindow *window)
 {
   char *new_name;
 
@@ -2770,7 +2770,7 @@ update_name (MateWnckWindow *window)
 }
 
 static void
-update_icon_name (MateWnckWindow *window)
+update_icon_name (MatewnckWindow *window)
 {
   char *new_name = NULL;
 
@@ -2789,7 +2789,7 @@ update_icon_name (MateWnckWindow *window)
 }
 
 static void
-update_workspace (MateWnckWindow *window)
+update_workspace (MatewnckWindow *window)
 {
   int val;
   int old;
@@ -2813,7 +2813,7 @@ update_workspace (MateWnckWindow *window)
 }
 
 static void
-update_actions (MateWnckWindow *window)
+update_actions (MatewnckWindow *window)
 {
   Atom *atoms;
   int   n_atoms;
@@ -2919,11 +2919,11 @@ update_actions (MateWnckWindow *window)
 }
 
 static void
-update_wintype (MateWnckWindow *window)
+update_wintype (MatewnckWindow *window)
 {
   Atom *atoms;
   int n_atoms;
-  MateWnckWindowType type;
+  MatewnckWindowType type;
   gboolean found_type;
   
   if (!window->priv->need_update_wintype)
@@ -2992,7 +2992,7 @@ update_wintype (MateWnckWindow *window)
 }
 
 static void
-update_transient_for (MateWnckWindow *window)
+update_transient_for (MatewnckWindow *window)
 {
   Window parent;
 
@@ -3022,7 +3022,7 @@ update_transient_for (MateWnckWindow *window)
 }
 
 static void
-update_startup_id (MateWnckWindow *window)
+update_startup_id (MatewnckWindow *window)
 {
   if (!window->priv->need_update_startup_id)
     return;
@@ -3036,7 +3036,7 @@ update_startup_id (MateWnckWindow *window)
 }
 
 static void
-update_wmclass (MateWnckWindow *window)
+update_wmclass (MatewnckWindow *window)
 {
   if (!window->priv->need_update_wmclass)
     return;
@@ -3055,7 +3055,7 @@ update_wmclass (MateWnckWindow *window)
 }
 
 static void
-update_wmhints (MateWnckWindow *window)
+update_wmhints (MatewnckWindow *window)
 {
   XWMHints *hints;
 
@@ -3095,7 +3095,7 @@ update_wmhints (MateWnckWindow *window)
 }
 
 static void
-update_frame_extents (MateWnckWindow *window)
+update_frame_extents (MatewnckWindow *window)
 {
   int left, right, top, bottom;
 
@@ -3125,11 +3125,11 @@ update_frame_extents (MateWnckWindow *window)
 }
 
 static void
-force_update_now (MateWnckWindow *window)
+force_update_now (MatewnckWindow *window)
 {
-  MateWnckWindowState old_state;
-  MateWnckWindowState new_state;
-  MateWnckWindowActions old_actions;
+  MatewnckWindowState old_state;
+  MatewnckWindowState new_state;
+  MatewnckWindowActions old_actions;
   
   unqueue_update (window);
 
@@ -3180,7 +3180,7 @@ force_update_now (MateWnckWindow *window)
 static gboolean
 update_idle (gpointer data)
 {
-  MateWnckWindow *window = MATEWNCK_WINDOW (data);
+  MatewnckWindow *window = MATEWNCK_WINDOW (data);
 
   window->priv->update_handler = 0;
   force_update_now (window);
@@ -3188,7 +3188,7 @@ update_idle (gpointer data)
 }
 
 static void
-queue_update (MateWnckWindow *window)
+queue_update (MatewnckWindow *window)
 {
   if (window->priv->update_handler != 0)
     return;
@@ -3197,7 +3197,7 @@ queue_update (MateWnckWindow *window)
 }
 
 static void
-unqueue_update (MateWnckWindow *window)
+unqueue_update (MatewnckWindow *window)
 {
   if (window->priv->update_handler != 0)
     {
@@ -3207,7 +3207,7 @@ unqueue_update (MateWnckWindow *window)
 }
 
 static void
-emit_name_changed (MateWnckWindow *window)
+emit_name_changed (MatewnckWindow *window)
 {
   window->priv->need_emit_name_changed = FALSE;
   g_signal_emit (G_OBJECT (window),
@@ -3216,9 +3216,9 @@ emit_name_changed (MateWnckWindow *window)
 }
 
 static void
-emit_state_changed (MateWnckWindow     *window,
-                    MateWnckWindowState changed_mask,
-                    MateWnckWindowState new_state)
+emit_state_changed (MatewnckWindow     *window,
+                    MatewnckWindowState changed_mask,
+                    MatewnckWindowState new_state)
 {
   g_signal_emit (G_OBJECT (window),
                  signals[STATE_CHANGED],
@@ -3226,7 +3226,7 @@ emit_state_changed (MateWnckWindow     *window,
 }
 
 static void
-emit_workspace_changed (MateWnckWindow *window)
+emit_workspace_changed (MatewnckWindow *window)
 {
   g_signal_emit (G_OBJECT (window),
                  signals[WORKSPACE_CHANGED],
@@ -3234,7 +3234,7 @@ emit_workspace_changed (MateWnckWindow *window)
 }
 
 static void
-emit_icon_changed (MateWnckWindow *window)
+emit_icon_changed (MatewnckWindow *window)
 {
   window->priv->need_emit_icon_changed = FALSE;
   g_signal_emit (G_OBJECT (window),
@@ -3243,9 +3243,9 @@ emit_icon_changed (MateWnckWindow *window)
 }
 
 static void
-emit_actions_changed   (MateWnckWindow       *window,
-                        MateWnckWindowActions changed_mask,
-                        MateWnckWindowActions new_actions)
+emit_actions_changed   (MatewnckWindow       *window,
+                        MatewnckWindowActions changed_mask,
+                        MatewnckWindowActions new_actions)
 {
   g_signal_emit (G_OBJECT (window),
                  signals[ACTIONS_CHANGED],
@@ -3253,7 +3253,7 @@ emit_actions_changed   (MateWnckWindow       *window,
 }
 
 static void
-emit_geometry_changed (MateWnckWindow *window)
+emit_geometry_changed (MatewnckWindow *window)
 {
   g_signal_emit (G_OBJECT (window),
                  signals[GEOMETRY_CHANGED],

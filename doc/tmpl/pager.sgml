@@ -1,5 +1,5 @@
 <!-- ##### SECTION Title ##### -->
-MateWnckPager
+MatewnckPager
 
 <!-- ##### SECTION Short_Description ##### -->
 
@@ -20,7 +20,7 @@ MateWnckPager
 <!-- ##### SECTION Image ##### -->
 
 
-<!-- ##### STRUCT MateWnckPager ##### -->
+<!-- ##### STRUCT MatewnckPager ##### -->
 <para>
 
 </para>
@@ -64,7 +64,7 @@ MateWnckPager
 @Returns: 
 
 
-<!-- ##### ENUM MateWnckPagerLayoutPolicy ##### -->
+<!-- ##### ENUM MatewnckPagerLayoutPolicy ##### -->
 <para>
 
 </para>
@@ -82,7 +82,7 @@ MateWnckPager
 @policy: 
 
 
-<!-- ##### ENUM MateWnckPagerDisplayMode ##### -->
+<!-- ##### ENUM MatewnckPagerDisplayMode ##### -->
 <para>
 
 </para>

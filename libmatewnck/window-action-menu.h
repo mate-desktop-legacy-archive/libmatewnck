@@ -30,30 +30,30 @@
 G_BEGIN_DECLS
 
 #define MATEWNCK_TYPE_ACTION_MENU              (matewnck_action_menu_get_type ())
-#define MATEWNCK_ACTION_MENU(object)           (G_TYPE_CHECK_INSTANCE_CAST ((object), MATEWNCK_TYPE_ACTION_MENU, MateWnckActionMenu))
-#define MATEWNCK_ACTION_MENU_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), MATEWNCK_TYPE_ACTION_MENU, MateWnckActionMenuClass))
+#define MATEWNCK_ACTION_MENU(object)           (G_TYPE_CHECK_INSTANCE_CAST ((object), MATEWNCK_TYPE_ACTION_MENU, MatewnckActionMenu))
+#define MATEWNCK_ACTION_MENU_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), MATEWNCK_TYPE_ACTION_MENU, MatewnckActionMenuClass))
 #define MATEWNCK_IS_ACTION_MENU(object)        (G_TYPE_CHECK_INSTANCE_TYPE ((object), MATEWNCK_TYPE_ACTION_MENU))
 #define MATEWNCK_IS_ACTION_MENU_CLASS(klass)   (G_TYPE_CHECK_CLASS_TYPE ((klass), MATEWNCK_TYPE_ACTION_MENU))
-#define MATEWNCK_ACTION_MENU_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS ((obj), MATEWNCK_TYPE_ACTION_MENU, MateWnckActionMenuClass))
+#define MATEWNCK_ACTION_MENU_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS ((obj), MATEWNCK_TYPE_ACTION_MENU, MatewnckActionMenuClass))
 
-typedef struct _MateWnckActionMenu        MateWnckActionMenu;
-typedef struct _MateWnckActionMenuClass   MateWnckActionMenuClass;
-typedef struct _MateWnckActionMenuPrivate MateWnckActionMenuPrivate;
+typedef struct _MatewnckActionMenu        MatewnckActionMenu;
+typedef struct _MatewnckActionMenuClass   MatewnckActionMenuClass;
+typedef struct _MatewnckActionMenuPrivate MatewnckActionMenuPrivate;
 
 /**
- * MateWnckActionMenu:
+ * MatewnckActionMenu:
  *
- * The #MateWnckActionMenu struct contains only private fields and should not be
+ * The #MatewnckActionMenu struct contains only private fields and should not be
  * directly accessed.
  */
-struct _MateWnckActionMenu
+struct _MatewnckActionMenu
 {
   GtkMenu parent_instance;
 
-  MateWnckActionMenuPrivate *priv;
+  MatewnckActionMenuPrivate *priv;
 };
 
-struct _MateWnckActionMenuClass
+struct _MatewnckActionMenuClass
 {
   GtkMenuClass parent_class;
 
@@ -66,10 +66,10 @@ struct _MateWnckActionMenuClass
 
 GType matewnck_action_menu_get_type (void) G_GNUC_CONST;
 
-GtkWidget* matewnck_action_menu_new (MateWnckWindow *window);
+GtkWidget* matewnck_action_menu_new (MatewnckWindow *window);
 
 #ifndef MATEWNCK_DISABLE_DEPRECATED
-GtkWidget* matewnck_create_window_action_menu (MateWnckWindow *window);
+GtkWidget* matewnck_create_window_action_menu (MatewnckWindow *window);
 #endif /* MATEWNCK_DISABLE_DEPRECATED */
 
 G_END_DECLS

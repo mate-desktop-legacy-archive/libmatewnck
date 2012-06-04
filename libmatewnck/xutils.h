@@ -137,19 +137,19 @@ void   _matewnck_keyboard_size    (Screen *screen,
 void _matewnck_toggle_showing_desktop (Screen  *screen,
                                    gboolean show);
 
-typedef struct _MateWnckIconCache MateWnckIconCache;
+typedef struct _MatewnckIconCache MatewnckIconCache;
 
-MateWnckIconCache *_matewnck_icon_cache_new                  (void);
-void           _matewnck_icon_cache_free                 (MateWnckIconCache *icon_cache);
-void           _matewnck_icon_cache_property_changed     (MateWnckIconCache *icon_cache,
+MatewnckIconCache *_matewnck_icon_cache_new                  (void);
+void           _matewnck_icon_cache_free                 (MatewnckIconCache *icon_cache);
+void           _matewnck_icon_cache_property_changed     (MatewnckIconCache *icon_cache,
                                                       Atom           atom);
-gboolean       _matewnck_icon_cache_get_icon_invalidated (MateWnckIconCache *icon_cache);
-void           _matewnck_icon_cache_set_want_fallback    (MateWnckIconCache *icon_cache,
+gboolean       _matewnck_icon_cache_get_icon_invalidated (MatewnckIconCache *icon_cache);
+void           _matewnck_icon_cache_set_want_fallback    (MatewnckIconCache *icon_cache,
                                                       gboolean       setting);
-gboolean       _matewnck_icon_cache_get_is_fallback      (MateWnckIconCache *icon_cache);
+gboolean       _matewnck_icon_cache_get_is_fallback      (MatewnckIconCache *icon_cache);
 
 gboolean _matewnck_read_icons         (Window          xwindow,
-                                   MateWnckIconCache  *icon_cache,
+                                   MatewnckIconCache  *icon_cache,
                                    GdkPixbuf     **iconp,
                                    int             ideal_width,
                                    int             ideal_height,

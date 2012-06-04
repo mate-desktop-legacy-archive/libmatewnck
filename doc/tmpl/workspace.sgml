@@ -1,5 +1,5 @@
 <!-- ##### SECTION Title ##### -->
-MateWnckWorkspace
+MatewnckWorkspace
 
 <!-- ##### SECTION Short_Description ##### -->
 
@@ -20,13 +20,13 @@ MateWnckWorkspace
 <!-- ##### SECTION Image ##### -->
 
 
-<!-- ##### STRUCT MateWnckWorkspace ##### -->
+<!-- ##### STRUCT MatewnckWorkspace ##### -->
 <para>
 
 </para>
 
 
-<!-- ##### SIGNAL MateWnckWorkspace::name-changed ##### -->
+<!-- ##### SIGNAL MatewnckWorkspace::name-changed ##### -->
 <para>
 
 </para>

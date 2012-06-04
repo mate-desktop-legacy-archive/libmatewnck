@@ -45,8 +45,8 @@ Unstable, unless otherwise indicated
 #include &lt;libmatewnck/libmatewnck.h&gt;
 
 <span class="returnvalue">void</span>                <a class="link" href="libmatewnck-Miscellaneous-Functions.html#matewnck-gtk-window-set-dock-type" title="matewnck_gtk_window_set_dock_type ()">matewnck_gtk_window_set_dock_type</a>       (<em class="parameter"><code><a href="http://library.gnome.org/devel/gtk/GtkWindow.html"><span class="type">GtkWindow</span></a> *window</code></em>);
-enum                <a class="link" href="libmatewnck-Miscellaneous-Functions.html#MateWnckClientType" title="enum MateWnckClientType">MateWnckClientType</a>;
-<span class="returnvalue">void</span>                <a class="link" href="libmatewnck-Miscellaneous-Functions.html#matewnck-set-client-type" title="matewnck_set_client_type ()">matewnck_set_client_type</a>                (<em class="parameter"><code><a class="link" href="libmatewnck-Miscellaneous-Functions.html#MateWnckClientType" title="enum MateWnckClientType"><span class="type">MateWnckClientType</span></a> ewmh_sourceindication_client_type</code></em>);
+enum                <a class="link" href="libmatewnck-Miscellaneous-Functions.html#MatewnckClientType" title="enum MatewnckClientType">MatewnckClientType</a>;
+<span class="returnvalue">void</span>                <a class="link" href="libmatewnck-Miscellaneous-Functions.html#matewnck-set-client-type" title="matewnck_set_client_type ()">matewnck_set_client_type</a>                (<em class="parameter"><code><a class="link" href="libmatewnck-Miscellaneous-Functions.html#MatewnckClientType" title="enum MatewnckClientType"><span class="type">MatewnckClientType</span></a> ewmh_sourceindication_client_type</code></em>);
 </pre>
 </div>
 <div class="refsect1">
@@ -66,7 +66,7 @@ libwcnk users.
 <p><code class="literal">matewnck_gtk_window_set_dock_type</code> has been deprecated since version 2.20 and should not be used in newly-written code. Use <a href="http://library.gnome.org/devel/gdk/gdk3-Windows.html#gdk-window-set-type-hint"><code class="function">gdk_window_set_type_hint()</code></a> instead.</p>
 </div>
 <p>
-Sets the semantic type of <em class="parameter"><code>window</code></em> to <a class="link" href="MateWnckWindow.html#MATEWNCK-WINDOW-DOCK:CAPS"><code class="literal">MATEWNCK_WINDOW_DOCK</code></a>.
+Sets the semantic type of <em class="parameter"><code>window</code></em> to <a class="link" href="MatewnckWindow.html#MATEWNCK-WINDOW-DOCK:CAPS"><code class="literal">MATEWNCK_WINDOW_DOCK</code></a>.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
@@ -78,11 +78,11 @@ Sets the semantic type of <em class="parameter"><code>window</code></em> to <a c
 </div>
 <hr>
 <div class="refsect2">
-<a name="MateWnckClientType"></a><h3>enum MateWnckClientType</h3>
+<a name="MatewnckClientType"></a><h3>enum MatewnckClientType</h3>
 <pre class="programlisting">typedef enum {
   MATEWNCK_CLIENT_TYPE_APPLICATION = 1,
   MATEWNCK_CLIENT_TYPE_PAGER = 2
-} MateWnckClientType;
+} MatewnckClientType;
 </pre>
 <p>
 Type describing the role of the libmatewnck user.
@@ -108,7 +108,7 @@ with window management, like pagers and taskbars.
 <hr>
 <div class="refsect2">
 <a name="matewnck-set-client-type"></a><h3>matewnck_set_client_type ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                matewnck_set_client_type                (<em class="parameter"><code><a class="link" href="libmatewnck-Miscellaneous-Functions.html#MateWnckClientType" title="enum MateWnckClientType"><span class="type">MateWnckClientType</span></a> ewmh_sourceindication_client_type</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">void</span>                matewnck_set_client_type                (<em class="parameter"><code><a class="link" href="libmatewnck-Miscellaneous-Functions.html#MatewnckClientType" title="enum MatewnckClientType"><span class="type">MatewnckClientType</span></a> ewmh_sourceindication_client_type</code></em>);</pre>
 <p>
 Sets the role of the libmatewnck user.
 </p>

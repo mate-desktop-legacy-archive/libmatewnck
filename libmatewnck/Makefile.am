@@ -78,7 +78,7 @@ $(libmatewnck_la_OBJECTS): $(matewnck_built_headers)
 libmatewnck_la_CPPFLAGS =			\
 	$(AM_CPPFLAGS)			\
 	$(XLIB_CFLAGS)			\
-	-DG_LOG_DOMAIN=\"MateWnck\"		\
+	-DG_LOG_DOMAIN=\"Matewnck\"		\
 	-DSN_API_NOT_YET_FROZEN=1
 
 libmatewnck_la_LIBADD =	\
@@ -169,13 +169,13 @@ INTROSPECTION_COMPILER_ARGS = --includedir=$(srcdir)
 if HAVE_INTROSPECTION
 introspection_sources = $(matewnck_sources) $(libmatewnckinclude_HEADERS)
 
-MateWnck-1.0.gir: libmatewnck.la
-MateWnck_1_0_gir_INCLUDES = GObject-2.0 GdkPixbuf-2.0 Gtk-2.0
-MateWnck_1_0_gir_CFLAGS = $(AM_CPPFLAGS)
-MateWnck_1_0_gir_LIBS = libmatewnck.la
-MateWnck_1_0_gir_SCANNERFLAGS = --pkg-export=libmatewnck
-MateWnck_1_0_gir_FILES = $(introspection_sources)
-INTROSPECTION_GIRS += MateWnck-1.0.gir
+Matewnck-1.0.gir: libmatewnck.la
+Matewnck_1_0_gir_INCLUDES = GObject-2.0 GdkPixbuf-2.0 Gtk-2.0
+Matewnck_1_0_gir_CFLAGS = $(AM_CPPFLAGS)
+Matewnck_1_0_gir_LIBS = libmatewnck.la
+Matewnck_1_0_gir_SCANNERFLAGS = --pkg-export=libmatewnck
+Matewnck_1_0_gir_FILES = $(introspection_sources)
+INTROSPECTION_GIRS += Matewnck-1.0.gir
 
 girdir = $(INTROSPECTION_GIRDIR)
 gir_DATA = $(INTROSPECTION_GIRS)

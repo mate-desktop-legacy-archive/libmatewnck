@@ -35,23 +35,23 @@
 /**
  * SECTION:window-action-menu
  * @short_description: a menu widget, used to manipulate a window.
- * @see_also: #MateWnckWindow
+ * @see_also: #MatewnckWindow
  * @stability: Unstable
  *
- * A #MateWnckActionMenu is a menu containing items to manipulate a window.
+ * A #MatewnckActionMenu is a menu containing items to manipulate a window.
  * Relevant actions are displayed in the menu, and updated if the window state
  * changes. The content of this menu is synchronized with the similar menu
  * available in Marco.
  *
  * <note>
  *  <para>
- * If there is only one workspace with a viewport, the #MateWnckActionMenu will
+ * If there is only one workspace with a viewport, the #MatewnckActionMenu will
  * contain items to move the window in the viewport as if the viewport feature
  * was used to create workspaces. This is useful since viewport is generally
  * used as an alternative way to create virtual desktops.
  *  </para>
  *  <para>
- * The #MateWnckActionMenu does not support moving the window in the viewport if
+ * The #MatewnckActionMenu does not support moving the window in the viewport if
  * there are multiple workspaces on the screen: those two notions are so
  * similar that having both at the same time would result in a menu which would
  * be confusing to the user.
@@ -76,9 +76,9 @@ typedef enum
   MOVE_TO_WORKSPACE
 } WindowAction;
 
-struct _MateWnckActionMenuPrivate
+struct _MatewnckActionMenuPrivate
 {
-  MateWnckWindow *window;
+  MatewnckWindow *window;
   GtkWidget *minimize_item;
   GtkWidget *maximize_item;
   GtkWidget *above_item;
@@ -101,8 +101,8 @@ enum {
 	PROP_WINDOW
 };
 
-G_DEFINE_TYPE (MateWnckActionMenu, matewnck_action_menu, GTK_TYPE_MENU);
-#define MATEWNCK_ACTION_MENU_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), MATEWNCK_TYPE_ACTION_MENU, MateWnckActionMenuPrivate))
+G_DEFINE_TYPE (MatewnckActionMenu, matewnck_action_menu, GTK_TYPE_MENU);
+#define MATEWNCK_ACTION_MENU_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), MATEWNCK_TYPE_ACTION_MENU, MatewnckActionMenuPrivate))
 
 static void matewnck_action_menu_finalize (GObject *object);
 
@@ -111,8 +111,8 @@ static void object_weak_notify (gpointer data,
 static void window_weak_notify (gpointer data,
                                 GObject *window);
 
-static void refill_submenu_workspace (MateWnckActionMenu *menu);
-static void refill_submenu_viewport (MateWnckActionMenu *menu);
+static void refill_submenu_workspace (MatewnckActionMenu *menu);
+static void refill_submenu_viewport (MatewnckActionMenu *menu);
 
 static void
 window_weak_notify (gpointer data,
@@ -135,7 +135,7 @@ object_weak_notify (gpointer data,
                        obj);
 }
 
-static MateWnckActionMenu*
+static MatewnckActionMenu*
 get_action_menu (GtkWidget *widget)
 {
   while (widget) {
@@ -157,10 +157,10 @@ static void
 item_activated_callback (GtkWidget *menu_item,
                          gpointer   data)
 {
-  MateWnckActionMenu *menu;
-  MateWnckWindow *window;
+  MatewnckActionMenu *menu;
+  MatewnckWindow *window;
   WindowAction action = GPOINTER_TO_INT (data);
-  MateWnckScreen *screen;
+  MatewnckScreen *screen;
   gboolean viewport_mode;
 
   menu = get_action_menu (menu_item);
@@ -221,7 +221,7 @@ item_activated_callback (GtkWidget *menu_item,
     case LEFT:
       if (!viewport_mode)
         {
-          MateWnckWorkspace *workspace;
+          MatewnckWorkspace *workspace;
           workspace = matewnck_workspace_get_neighbor (matewnck_window_get_workspace (window),
                                                    MATEWNCK_MOTION_LEFT);
           matewnck_window_move_to_workspace (window, workspace);
@@ -242,7 +242,7 @@ item_activated_callback (GtkWidget *menu_item,
     case RIGHT:
       if (!viewport_mode)
         {
-          MateWnckWorkspace *workspace;
+          MatewnckWorkspace *workspace;
           workspace = matewnck_workspace_get_neighbor (matewnck_window_get_workspace (window),
                                                    MATEWNCK_MOTION_RIGHT);
           matewnck_window_move_to_workspace (window, workspace);
@@ -263,7 +263,7 @@ item_activated_callback (GtkWidget *menu_item,
     case UP:
       if (!viewport_mode)
         {
-          MateWnckWorkspace *workspace;
+          MatewnckWorkspace *workspace;
           workspace = matewnck_workspace_get_neighbor (matewnck_window_get_workspace (window),
                                                    MATEWNCK_MOTION_UP);
           matewnck_window_move_to_workspace (window, workspace);
@@ -284,7 +284,7 @@ item_activated_callback (GtkWidget *menu_item,
     case DOWN:
       if (!viewport_mode)
         {
-          MateWnckWorkspace *workspace;
+          MatewnckWorkspace *workspace;
           workspace = matewnck_workspace_get_neighbor (matewnck_window_get_workspace (window),
                                                    MATEWNCK_MOTION_DOWN);
           matewnck_window_move_to_workspace (window, workspace);
@@ -306,7 +306,7 @@ item_activated_callback (GtkWidget *menu_item,
       if (!viewport_mode)
         {
           int workspace_index;
-          MateWnckWorkspace *workspace;
+          MatewnckWorkspace *workspace;
 
           workspace_index = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (menu_item),
                                                                 "workspace"));
@@ -316,7 +316,7 @@ item_activated_callback (GtkWidget *menu_item,
         }
       else
         {
-          MateWnckWorkspace *workspace;
+          MatewnckWorkspace *workspace;
           int new_viewport_x, new_viewport_y;
           int width, height;
           int xw, yw, ww, hw;
@@ -392,12 +392,12 @@ set_item_stock (GtkWidget  *mi,
 }
 
 static gboolean
-update_menu_state (MateWnckActionMenu *menu)
+update_menu_state (MatewnckActionMenu *menu)
 {
-  MateWnckActionMenuPrivate *priv;
-  MateWnckWindowActions      actions;
-  MateWnckScreen            *screen;
-  MateWnckWorkspace         *workspace;
+  MatewnckActionMenuPrivate *priv;
+  MatewnckWindowActions      actions;
+  MatewnckScreen            *screen;
+  MatewnckWorkspace         *workspace;
   gboolean               viewport_mode;
   gboolean               move_workspace_sensitive;
 
@@ -628,7 +628,7 @@ update_menu_state (MateWnckActionMenu *menu)
 }
 
 static void
-queue_update (MateWnckActionMenu *menu)
+queue_update (MatewnckActionMenu *menu)
 {
   if (menu->priv->idle_handler == 0)
     menu->priv->idle_handler = g_idle_add ((GSourceFunc)update_menu_state,
@@ -636,40 +636,40 @@ queue_update (MateWnckActionMenu *menu)
 }
 
 static void
-state_changed_callback (MateWnckWindow     *window,
-                        MateWnckWindowState changed_mask,
-                        MateWnckWindowState new_state,
+state_changed_callback (MatewnckWindow     *window,
+                        MatewnckWindowState changed_mask,
+                        MatewnckWindowState new_state,
                         gpointer        data)
 {
   queue_update (MATEWNCK_ACTION_MENU (data));
 }
 
 static void
-actions_changed_callback (MateWnckWindow       *window,
-                          MateWnckWindowActions changed_mask,
-                          MateWnckWindowActions new_actions,
+actions_changed_callback (MatewnckWindow       *window,
+                          MatewnckWindowActions changed_mask,
+                          MatewnckWindowActions new_actions,
                           gpointer          data)
 {
   queue_update (MATEWNCK_ACTION_MENU (data));
 }
 
 static void
-workspace_changed_callback (MateWnckWindow *window,
+workspace_changed_callback (MatewnckWindow *window,
                             gpointer    data)
 {
   queue_update (MATEWNCK_ACTION_MENU (data));
 }
 
 static void
-screen_workspace_callback (MateWnckWindow    *window,
-                           MateWnckWorkspace *space,
+screen_workspace_callback (MatewnckWindow    *window,
+                           MatewnckWorkspace *space,
                            gpointer       data)
 {
   queue_update (MATEWNCK_ACTION_MENU (data));
 }
 
 static void
-viewports_changed_callback (MateWnckWindow *window,
+viewports_changed_callback (MatewnckWindow *window,
                             gpointer    data)
 {
   queue_update (MATEWNCK_ACTION_MENU (data));
@@ -728,7 +728,7 @@ make_menu_item (WindowAction action)
 }
 
 static char *
-get_workspace_name_with_accel (MateWnckWindow *window,
+get_workspace_name_with_accel (MatewnckWindow *window,
 			       int index)
 {
   const char *name;
@@ -801,13 +801,13 @@ get_workspace_name_with_accel (MateWnckWindow *window,
 }
 
 static void
-refill_submenu_workspace (MateWnckActionMenu *menu)
+refill_submenu_workspace (MatewnckActionMenu *menu)
 {
   GtkWidget *submenu;
   GList *children;
   GList *l;
   int num_workspaces, window_space, i;
-  MateWnckWorkspace *workspace;
+  MatewnckWorkspace *workspace;
 
   submenu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu->priv->workspace_item));
 
@@ -850,13 +850,13 @@ refill_submenu_workspace (MateWnckActionMenu *menu)
 }
 
 static void
-refill_submenu_viewport (MateWnckActionMenu *menu)
+refill_submenu_viewport (MatewnckActionMenu *menu)
 {
   GtkWidget *submenu;
   GList *children;
   GList *l;
-  MateWnckScreen *screen;
-  MateWnckWorkspace *workspace;
+  MatewnckScreen *screen;
+  MatewnckWorkspace *workspace;
   int window_x, window_y;
   int viewport_x, viewport_y;
   int viewport_width, viewport_height;
@@ -935,7 +935,7 @@ matewnck_action_menu_get_property (GObject    *object,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  MateWnckActionMenu *menu;
+  MatewnckActionMenu *menu;
 
   g_return_if_fail (MATEWNCK_IS_ACTION_MENU (object));
 
@@ -959,7 +959,7 @@ matewnck_action_menu_set_property (GObject      *object,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  MateWnckActionMenu *menu;
+  MatewnckActionMenu *menu;
 
   g_return_if_fail (MATEWNCK_IS_ACTION_MENU (object));
 
@@ -980,7 +980,7 @@ matewnck_action_menu_set_property (GObject      *object,
 }
 
 static void
-matewnck_action_menu_init (MateWnckActionMenu *menu)
+matewnck_action_menu_init (MatewnckActionMenu *menu)
 {
   menu->priv = MATEWNCK_ACTION_MENU_GET_PRIVATE (menu);
 
@@ -1008,12 +1008,12 @@ matewnck_action_menu_constructor (GType                  type,
                               GObjectConstructParam *construct_properties)
 {
   GObject               *obj;
-  MateWnckActionMenu        *menu;
-  MateWnckActionMenuPrivate *priv;
+  MatewnckActionMenu        *menu;
+  MatewnckActionMenuPrivate *priv;
   GtkWidget             *submenu;
   GtkWidget             *separator;
   GSList                *pin_group;
-  MateWnckScreen            *screen;
+  MatewnckScreen            *screen;
 
 
   obj = G_OBJECT_CLASS (matewnck_action_menu_parent_class)->constructor (type,
@@ -1170,13 +1170,13 @@ matewnck_action_menu_constructor (GType                  type,
 }
 
 static void
-matewnck_action_menu_class_init (MateWnckActionMenuClass *klass)
+matewnck_action_menu_class_init (MatewnckActionMenuClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   _matewnck_stock_icons_init ();
 
-  g_type_class_add_private (klass, sizeof (MateWnckActionMenuPrivate));
+  g_type_class_add_private (klass, sizeof (MatewnckActionMenuPrivate));
 
   object_class->constructor = matewnck_action_menu_constructor;
   object_class->get_property = matewnck_action_menu_get_property;
@@ -1194,7 +1194,7 @@ matewnck_action_menu_class_init (MateWnckActionMenuClass *klass)
 static void
 matewnck_action_menu_finalize (GObject *object)
 {
-  MateWnckActionMenu *menu;
+  MatewnckActionMenu *menu;
 
   menu = MATEWNCK_ACTION_MENU (object);
 
@@ -1207,17 +1207,17 @@ matewnck_action_menu_finalize (GObject *object)
 
 /**
  * matewnck_action_menu_new:
- * @window: the #MateWnckWindow for which a menu will be created.
+ * @window: the #MatewnckWindow for which a menu will be created.
  *
- * Creates a new #MateWnckActionMenu. The #MateWnckActionMenu will be filled with menu
+ * Creates a new #MatewnckActionMenu. The #MatewnckActionMenu will be filled with menu
  * items for window operations on @window.
  *
- * Return value: a newly created #MateWnckActionMenu.
+ * Return value: a newly created #MatewnckActionMenu.
  *
  * Since: 2.22
  **/
 GtkWidget*
-matewnck_action_menu_new (MateWnckWindow *window)
+matewnck_action_menu_new (MatewnckWindow *window)
 {
   g_return_val_if_fail (MATEWNCK_IS_WINDOW (window), NULL);
 
@@ -1228,17 +1228,17 @@ matewnck_action_menu_new (MateWnckWindow *window)
 
 /**
  * matewnck_create_window_action_menu:
- * @window: the #MateWnckWindow for which a menu will be created.
+ * @window: the #MatewnckWindow for which a menu will be created.
  *
- * Creates a new #MateWnckActionMenu. The #MateWnckActionMenu will be filled with menu
+ * Creates a new #MatewnckActionMenu. The #MatewnckActionMenu will be filled with menu
  * items for window operations on @window.
  *
- * Return value: a newly created #MateWnckActionMenu.
+ * Return value: a newly created #MatewnckActionMenu.
  *
  * Deprecated:2.22: Use matewnck_action_menu_new() instead.
  */
 GtkWidget*
-matewnck_create_window_action_menu (MateWnckWindow *window)
+matewnck_create_window_action_menu (MatewnckWindow *window)
 {
 	return matewnck_action_menu_new (window);
 }

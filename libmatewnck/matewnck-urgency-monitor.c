@@ -32,9 +32,9 @@
 
 static void
 status_icon_activated (GtkStatusIcon *icon,
-                       MateWnckWindow    *window)
+                       MatewnckWindow    *window)
 {
-  MateWnckWorkspace *workspace;
+  MatewnckWorkspace *workspace;
   guint32 timestamp;
 
   /* We're in an activate callback, so gtk_get_current_time() works... */
@@ -52,13 +52,13 @@ status_icon_activated (GtkStatusIcon *icon,
 }
 
 static GtkStatusIcon *
-status_icon_get (MateWnckWindow *window)
+status_icon_get (MatewnckWindow *window)
 {
   return g_object_get_data (G_OBJECT (window), "matewnck-urgency-icon");
 }
 
 static void
-status_icon_update (MateWnckWindow *window)
+status_icon_update (MatewnckWindow *window)
 {
   GtkStatusIcon *icon;
 
@@ -83,7 +83,7 @@ status_icon_update (MateWnckWindow *window)
 }
 
 static void
-status_icon_create (MateWnckWindow *window)
+status_icon_create (MatewnckWindow *window)
 {
   GtkStatusIcon *icon;
 
@@ -97,7 +97,7 @@ status_icon_create (MateWnckWindow *window)
 }
 
 static void
-status_icon_remove (MateWnckWindow *window)
+status_icon_remove (MatewnckWindow *window)
 {
   GtkStatusIcon *icon;
 
@@ -111,9 +111,9 @@ status_icon_remove (MateWnckWindow *window)
 }
 
 static void
-window_state_changed (MateWnckWindow      *window,
-                      MateWnckWindowState  changed_mask,
-                      MateWnckWindowState  new_state,
+window_state_changed (MatewnckWindow      *window,
+                      MatewnckWindowState  changed_mask,
+                      MatewnckWindowState  new_state,
                       gpointer         data)
 {
   GtkStatusIcon *icon;
@@ -140,22 +140,22 @@ window_state_changed (MateWnckWindow      *window,
 }
 
 static void
-window_icon_changed (MateWnckWindow *window,
+window_icon_changed (MatewnckWindow *window,
                      gpointer    data)
 {
   status_icon_update (window);
 }
 
 static void
-window_name_changed (MateWnckWindow *window,
+window_name_changed (MatewnckWindow *window,
                      gpointer    data)
 {
   status_icon_update (window);
 }
 
 static void
-connect_to_window (MateWnckScreen *screen,
-                   MateWnckWindow *window)
+connect_to_window (MatewnckScreen *screen,
+                   MatewnckWindow *window)
 {
   if (matewnck_window_or_transient_needs_attention (window))
     {
@@ -171,8 +171,8 @@ connect_to_window (MateWnckScreen *screen,
 }
 
 static void
-disconnect_from_window (MateWnckScreen *screen,
-                        MateWnckWindow *window)
+disconnect_from_window (MatewnckScreen *screen,
+                        MatewnckWindow *window)
 {
   status_icon_remove (window);
 }
@@ -182,7 +182,7 @@ main (int argc, char **argv)
 {
   GOptionContext *ctxt;
   GError         *error;
-  MateWnckScreen     *screen;
+  MatewnckScreen     *screen;
 
   ctxt = g_option_context_new (NULL);
   g_option_context_set_summary (ctxt, "Monitor windows with the urgency hint "

@@ -34,18 +34,18 @@
 /**
  * SECTION:workspace
  * @short_description: an object representing a workspace.
- * @see_also: #MateWnckScreen
+ * @see_also: #MatewnckScreen
  * @stability: Unstable
  *
- * The #MateWnckWorkspace represents what is called <ulink
+ * The #MatewnckWorkspace represents what is called <ulink
  * url="http://standards.freedesktop.org/wm-spec/wm-spec-latest.html&num;largedesks">virtual
  * desktops</ulink> in the <ulink
  * url="http://standards.freedesktop.org/wm-spec/wm-spec-latest.html">EWMH</ulink>.
- * A workspace is a virtualization of a #MateWnckScreen<!-- -->: only one workspace
- * can be shown on a #MateWnckScreen at a time. It makes it possible, for example,
+ * A workspace is a virtualization of a #MatewnckScreen<!-- -->: only one workspace
+ * can be shown on a #MatewnckScreen at a time. It makes it possible, for example,
  * to put windows on different workspaces to organize them.
  *
- * If the #MateWnckWorkspace size is bigger that the #MateWnckScreen size, the
+ * If the #MatewnckWorkspace size is bigger that the #MatewnckScreen size, the
  * workspace contains a viewport. Viewports are defined in the <ulink
  * url="http://standards.freedesktop.org/wm-spec/wm-spec-latest.html&num;id2457064">large
  * desktops</ulink> section of the <ulink
@@ -55,18 +55,18 @@
  * workspaces with no viewport, or one workspace with a viewport. libmatewnck
  * supports all situations, even multiple workspaces with viewports.
  *
- * Workspaces are organized according to a layout set on the #MateWnckScreen. See
+ * Workspaces are organized according to a layout set on the #MatewnckScreen. See
  * matewnck_screen_try_set_workspace_layout() and
  * matewnck_screen_release_workspace_layout() for more information about the
  * layout.
  *
- * The #MateWnckWorkspace objects are always owned by libmatewnck and must not be
+ * The #MatewnckWorkspace objects are always owned by libmatewnck and must not be
  * referenced or unreferenced.
  */
 
-struct _MateWnckWorkspacePrivate
+struct _MatewnckWorkspacePrivate
 {
-  MateWnckScreen *screen;
+  MatewnckScreen *screen;
   int number;
   char *name;
   int width, height;            /* Workspace size */
@@ -74,25 +74,25 @@ struct _MateWnckWorkspacePrivate
   gboolean is_virtual;
 };
 
-G_DEFINE_TYPE (MateWnckWorkspace, matewnck_workspace, G_TYPE_OBJECT);
-#define MATEWNCK_WORKSPACE_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), MATEWNCK_TYPE_WORKSPACE, MateWnckWorkspacePrivate))
+G_DEFINE_TYPE (MatewnckWorkspace, matewnck_workspace, G_TYPE_OBJECT);
+#define MATEWNCK_WORKSPACE_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), MATEWNCK_TYPE_WORKSPACE, MatewnckWorkspacePrivate))
 
 enum {
   NAME_CHANGED,
   LAST_SIGNAL
 };
 
-static void matewnck_workspace_init        (MateWnckWorkspace      *workspace);
-static void matewnck_workspace_class_init  (MateWnckWorkspaceClass *klass);
+static void matewnck_workspace_init        (MatewnckWorkspace      *workspace);
+static void matewnck_workspace_class_init  (MatewnckWorkspaceClass *klass);
 static void matewnck_workspace_finalize    (GObject        *object);
 
 
-static void emit_name_changed (MateWnckWorkspace *space);
+static void emit_name_changed (MatewnckWorkspace *space);
 
 static guint signals[LAST_SIGNAL] = { 0 };
 
 static void
-matewnck_workspace_init (MateWnckWorkspace *workspace)
+matewnck_workspace_init (MatewnckWorkspace *workspace)
 {
   workspace->priv = MATEWNCK_WORKSPACE_GET_PRIVATE (workspace);
 
@@ -107,17 +107,17 @@ matewnck_workspace_init (MateWnckWorkspace *workspace)
 }
 
 static void
-matewnck_workspace_class_init (MateWnckWorkspaceClass *klass)
+matewnck_workspace_class_init (MatewnckWorkspaceClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  g_type_class_add_private (klass, sizeof (MateWnckWorkspacePrivate));
+  g_type_class_add_private (klass, sizeof (MatewnckWorkspacePrivate));
 
   object_class->finalize = matewnck_workspace_finalize;
 
   /**
-   * MateWnckWorkspace::name-changed:
-   * @space: the #MateWnckWorkspace which emitted the signal.
+   * MatewnckWorkspace::name-changed:
+   * @space: the #MatewnckWorkspace which emitted the signal.
    *
    * Emitted when the name of @space changes.
    */
@@ -125,7 +125,7 @@ matewnck_workspace_class_init (MateWnckWorkspaceClass *klass)
     g_signal_new ("name_changed",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (MateWnckWorkspaceClass, name_changed),
+                  G_STRUCT_OFFSET (MatewnckWorkspaceClass, name_changed),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
@@ -134,7 +134,7 @@ matewnck_workspace_class_init (MateWnckWorkspaceClass *klass)
 static void
 matewnck_workspace_finalize (GObject *object)
 {
-  MateWnckWorkspace *workspace;
+  MatewnckWorkspace *workspace;
 
   workspace = MATEWNCK_WORKSPACE (object);
 
@@ -146,15 +146,15 @@ matewnck_workspace_finalize (GObject *object)
 
 /**
  * matewnck_workspace_get_number:
- * @space: a #MateWnckWorkspace.
+ * @space: a #MatewnckWorkspace.
  * 
- * Gets the index of @space on the #MateWnckScreen to which it belongs. The
+ * Gets the index of @space on the #MatewnckScreen to which it belongs. The
  * first workspace has an index of 0.
  * 
- * Return value: the index of @space on its #MateWnckScreen, or -1 on errors.
+ * Return value: the index of @space on its #MatewnckScreen, or -1 on errors.
  **/
 int
-matewnck_workspace_get_number (MateWnckWorkspace *space)
+matewnck_workspace_get_number (MatewnckWorkspace *space)
 {
   g_return_val_if_fail (MATEWNCK_IS_WORKSPACE (space), -1);
   
@@ -163,7 +163,7 @@ matewnck_workspace_get_number (MateWnckWorkspace *space)
 
 /**
  * matewnck_workspace_get_name:
- * @space: a #MateWnckWorkspace.
+ * @space: a #MatewnckWorkspace.
  * 
  * Gets the human-readable name that should be used to refer to @space. If
  * the user has not set a special name, a fallback like "Workspace 3" will be
@@ -172,7 +172,7 @@ matewnck_workspace_get_number (MateWnckWorkspace *space)
  * Return value: the name of @space.
  **/
 const char*
-matewnck_workspace_get_name (MateWnckWorkspace *space)
+matewnck_workspace_get_name (MatewnckWorkspace *space)
 {
   g_return_val_if_fail (MATEWNCK_IS_WORKSPACE (space), NULL);
   
@@ -181,7 +181,7 @@ matewnck_workspace_get_name (MateWnckWorkspace *space)
 
 /**
  * matewnck_workspace_change_name:
- * @space: a #MateWnckWorkspace.
+ * @space: a #MatewnckWorkspace.
  * @name: new name for @space.
  *
  * Changes the name of @space.
@@ -189,7 +189,7 @@ matewnck_workspace_get_name (MateWnckWorkspace *space)
  * Since: 2.2
  **/
 void
-matewnck_workspace_change_name (MateWnckWorkspace *space,
+matewnck_workspace_change_name (MatewnckWorkspace *space,
                             const char    *name)
 {
   g_return_if_fail (MATEWNCK_IS_WORKSPACE (space));
@@ -202,15 +202,15 @@ matewnck_workspace_change_name (MateWnckWorkspace *space,
 
 /**
  * matewnck_workspace_get_screen:
- * @space: a #MateWnckWorkspace.
+ * @space: a #MatewnckWorkspace.
  *
- * Gets the #MateWnckScreen @space is on.
+ * Gets the #MatewnckScreen @space is on.
  *
- * Return value: the #MateWnckScreen @space is on. The returned #MateWnckScreen is
+ * Return value: the #MatewnckScreen @space is on. The returned #MatewnckScreen is
  * owned by libmatewnck and must not be referenced or unreferenced.
  **/
-MateWnckScreen*
-matewnck_workspace_get_screen (MateWnckWorkspace *space)
+MatewnckScreen*
+matewnck_workspace_get_screen (MatewnckWorkspace *space)
 {
   g_return_val_if_fail (MATEWNCK_IS_WORKSPACE (space), NULL);
 
@@ -219,7 +219,7 @@ matewnck_workspace_get_screen (MateWnckWorkspace *space)
 
 /**
  * matewnck_workspace_activate:
- * @space: a #MateWnckWorkspace.
+ * @space: a #MatewnckWorkspace.
  * @timestamp: the X server timestamp of the user interaction event that caused
  * this call to occur.
  * 
@@ -233,7 +233,7 @@ matewnck_workspace_get_screen (MateWnckWorkspace *space)
  * Since: 2.10
  **/
 void
-matewnck_workspace_activate (MateWnckWorkspace *space,
+matewnck_workspace_activate (MatewnckWorkspace *space,
                          guint32        timestamp)
 {
   g_return_if_fail (MATEWNCK_IS_WORKSPACE (space));
@@ -243,10 +243,10 @@ matewnck_workspace_activate (MateWnckWorkspace *space,
                             timestamp);
 }
 
-MateWnckWorkspace*
-_matewnck_workspace_create (int number, MateWnckScreen *screen)
+MatewnckWorkspace*
+_matewnck_workspace_create (int number, MatewnckScreen *screen)
 {
-  MateWnckWorkspace *space;
+  MatewnckWorkspace *space;
   
   space = g_object_new (MATEWNCK_TYPE_WORKSPACE, NULL);
   space->priv->number = number;
@@ -267,7 +267,7 @@ _matewnck_workspace_create (int number, MateWnckScreen *screen)
 }
 
 void
-_matewnck_workspace_update_name (MateWnckWorkspace *space,
+_matewnck_workspace_update_name (MatewnckWorkspace *space,
                              const char    *name)
 {
   char *old;
@@ -290,7 +290,7 @@ _matewnck_workspace_update_name (MateWnckWorkspace *space,
 }
 
 static void
-emit_name_changed (MateWnckWorkspace *space)
+emit_name_changed (MatewnckWorkspace *space)
 {
   g_signal_emit (G_OBJECT (space),
                  signals[NAME_CHANGED],
@@ -298,7 +298,7 @@ emit_name_changed (MateWnckWorkspace *space)
 }
 
 gboolean
-_matewnck_workspace_set_geometry (MateWnckWorkspace *space,
+_matewnck_workspace_set_geometry (MatewnckWorkspace *space,
                               int            w,
                               int            h)
 {
@@ -317,7 +317,7 @@ _matewnck_workspace_set_geometry (MateWnckWorkspace *space,
 }
 
 gboolean
-_matewnck_workspace_set_viewport (MateWnckWorkspace *space,
+_matewnck_workspace_set_viewport (MatewnckWorkspace *space,
                               int            x,
                               int            y)
 {
@@ -334,7 +334,7 @@ _matewnck_workspace_set_viewport (MateWnckWorkspace *space,
 
 /**
  * matewnck_workspace_get_width:
- * @space: a #MateWnckWorkspace.
+ * @space: a #MatewnckWorkspace.
  *
  * Gets the width of @space.
  *
@@ -343,7 +343,7 @@ _matewnck_workspace_set_viewport (MateWnckWorkspace *space,
  * Since: 2.4
  */
 int
-matewnck_workspace_get_width (MateWnckWorkspace *space)
+matewnck_workspace_get_width (MatewnckWorkspace *space)
 {
   g_return_val_if_fail (MATEWNCK_IS_WORKSPACE (space), 0);
 
@@ -352,7 +352,7 @@ matewnck_workspace_get_width (MateWnckWorkspace *space)
 
 /**
  * matewnck_workspace_get_height:
- * @space: a #MateWnckWorkspace.
+ * @space: a #MatewnckWorkspace.
  *
  * Gets the height of @space.
  *
@@ -361,7 +361,7 @@ matewnck_workspace_get_width (MateWnckWorkspace *space)
  * Since: 2.4
  */
 int
-matewnck_workspace_get_height (MateWnckWorkspace *space)
+matewnck_workspace_get_height (MatewnckWorkspace *space)
 {
   g_return_val_if_fail (MATEWNCK_IS_WORKSPACE (space), 0);
 
@@ -370,7 +370,7 @@ matewnck_workspace_get_height (MateWnckWorkspace *space)
 
 /**
  * matewnck_workspace_get_viewport_x:
- * @space: a #MateWnckWorkspace.
+ * @space: a #MatewnckWorkspace.
  *
  * Gets the X coordinate of the viewport in @space.
  *
@@ -380,7 +380,7 @@ matewnck_workspace_get_height (MateWnckWorkspace *space)
  * Since: 2.4
  */
 int
-matewnck_workspace_get_viewport_x (MateWnckWorkspace *space)
+matewnck_workspace_get_viewport_x (MatewnckWorkspace *space)
 {
   g_return_val_if_fail (MATEWNCK_IS_WORKSPACE (space), 0);
 
@@ -389,7 +389,7 @@ matewnck_workspace_get_viewport_x (MateWnckWorkspace *space)
 
 /**
  * matewnck_workspace_get_viewport_y:
- * @space: a #MateWnckWorkspace.
+ * @space: a #MatewnckWorkspace.
  *
  * Gets the Y coordinate of the viewport in @space.
  *
@@ -399,7 +399,7 @@ matewnck_workspace_get_viewport_x (MateWnckWorkspace *space)
  * Since: 2.4
  */
 int
-matewnck_workspace_get_viewport_y (MateWnckWorkspace *space)
+matewnck_workspace_get_viewport_y (MatewnckWorkspace *space)
 {
   g_return_val_if_fail (MATEWNCK_IS_WORKSPACE (space), 0);
 
@@ -408,7 +408,7 @@ matewnck_workspace_get_viewport_y (MateWnckWorkspace *space)
 
 /**
  * matewnck_workspace_is_virtual:
- * @space: a #MateWnckWorkspace.
+ * @space: a #MatewnckWorkspace.
  *
  * Gets whether @space contains a viewport.
  *
@@ -417,7 +417,7 @@ matewnck_workspace_get_viewport_y (MateWnckWorkspace *space)
  * Since: 2.4
  */
 gboolean
-matewnck_workspace_is_virtual (MateWnckWorkspace *space)
+matewnck_workspace_is_virtual (MatewnckWorkspace *space)
 {
   g_return_val_if_fail (MATEWNCK_IS_WORKSPACE (space), FALSE);
 
@@ -426,22 +426,22 @@ matewnck_workspace_is_virtual (MateWnckWorkspace *space)
 
 /**
  * matewnck_workspace_get_layout_row:
- * @space: a #MateWnckWorkspace.
+ * @space: a #MatewnckWorkspace.
  * 
- * Gets the row of @space in the #MateWnckWorkspace layout. The first row has an
+ * Gets the row of @space in the #MatewnckWorkspace layout. The first row has an
  * index of 0 and is always the top row, regardless of the starting corner set
  * for the layout.
  * 
- * Return value: the row of @space in the #MateWnckWorkspace layout, or -1 on
+ * Return value: the row of @space in the #MatewnckWorkspace layout, or -1 on
  * errors.
  *
  * Since: 2.20
  **/
 int
-matewnck_workspace_get_layout_row (MateWnckWorkspace *space)
+matewnck_workspace_get_layout_row (MatewnckWorkspace *space)
 {
-  _MateWnckLayoutOrientation orientation;
-  _MateWnckLayoutCorner corner;
+  _MatewnckLayoutOrientation orientation;
+  _MatewnckLayoutCorner corner;
   int n_rows;
   int n_cols;
   int row;
@@ -465,23 +465,23 @@ matewnck_workspace_get_layout_row (MateWnckWorkspace *space)
 
 /**
  * matewnck_workspace_get_layout_column:
- * @space: a #MateWnckWorkspace.
+ * @space: a #MatewnckWorkspace.
  * 
- * Gets the column of @space in the #MateWnckWorkspace layout. The first column
+ * Gets the column of @space in the #MatewnckWorkspace layout. The first column
  * has an index of 0 and is always the left column, regardless of the starting
  * corner set for the layout and regardless of the default direction of the
  * environment (i.e., in both Left-To-Right and Right-To-Left environments).
  * 
- * Return value: the column of @space in the #MateWnckWorkspace layout, or -1 on
+ * Return value: the column of @space in the #MatewnckWorkspace layout, or -1 on
  * errors.
  *
  * Since: 2.20
  **/
 int
-matewnck_workspace_get_layout_column (MateWnckWorkspace *space)
+matewnck_workspace_get_layout_column (MatewnckWorkspace *space)
 {
-  _MateWnckLayoutOrientation orientation;
-  _MateWnckLayoutCorner corner;
+  _MatewnckLayoutOrientation orientation;
+  _MatewnckLayoutCorner corner;
   int n_rows;
   int n_cols;
   int col;
@@ -505,24 +505,24 @@ matewnck_workspace_get_layout_column (MateWnckWorkspace *space)
 
 /**
  * matewnck_workspace_get_neighbor:
- * @space: a #MateWnckWorkspace.
+ * @space: a #MatewnckWorkspace.
  * @direction: direction in which to search the neighbor.
  * 
- * Gets the neighbor #MateWnckWorkspace of @space in the @direction direction.
+ * Gets the neighbor #MatewnckWorkspace of @space in the @direction direction.
  *
- * Return value: the neighbor #MateWnckWorkspace of @space in the @direction
- * direction, or %NULL if no such neighbor #MateWnckWorkspace exists. The returned
- * #MateWnckWorkspace is owned by libmatewnck and must not be referenced or
+ * Return value: the neighbor #MatewnckWorkspace of @space in the @direction
+ * direction, or %NULL if no such neighbor #MatewnckWorkspace exists. The returned
+ * #MatewnckWorkspace is owned by libmatewnck and must not be referenced or
  * unreferenced.
  *
  * Since: 2.20
  **/
-MateWnckWorkspace*
-matewnck_workspace_get_neighbor (MateWnckWorkspace       *space,
-                             MateWnckMotionDirection  direction)
+MatewnckWorkspace*
+matewnck_workspace_get_neighbor (MatewnckWorkspace       *space,
+                             MatewnckMotionDirection  direction)
 {
-  _MateWnckLayoutOrientation orientation;
-  _MateWnckLayoutCorner corner;
+  _MatewnckLayoutOrientation orientation;
+  _MatewnckLayoutCorner corner;
   int n_rows;
   int n_cols;
   int row;

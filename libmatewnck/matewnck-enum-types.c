@@ -16,7 +16,7 @@ matewnck_pager_display_mode_get_type (void)
   static GType type = 0;
 
   if (!type)
-    type = g_enum_register_static ("MateWnckPagerDisplayMode", _matewnck_pager_display_mode_values);
+    type = g_enum_register_static ("MatewnckPagerDisplayMode", _matewnck_pager_display_mode_values);
 
   return type;
 }
@@ -34,7 +34,7 @@ matewnck_pager_layout_policy_get_type (void)
   static GType type = 0;
 
   if (!type)
-    type = g_enum_register_static ("MateWnckPagerLayoutPolicy", _matewnck_pager_layout_policy_values);
+    type = g_enum_register_static ("MatewnckPagerLayoutPolicy", _matewnck_pager_layout_policy_values);
 
   return type;
 }
@@ -55,7 +55,7 @@ matewnck_motion_direction_get_type (void)
   static GType type = 0;
 
   if (!type)
-    type = g_enum_register_static ("MateWnckMotionDirection", _matewnck_motion_direction_values);
+    type = g_enum_register_static ("MatewnckMotionDirection", _matewnck_motion_direction_values);
 
   return type;
 }
@@ -72,7 +72,7 @@ _matewncklayoutorientation___matewnck_layout_orientation_get_type (void)
   static GType type = 0;
 
   if (!type)
-    type = g_enum_register_static ("_MateWnckLayoutOrientation", __matewncklayoutorientation___matewnck_layout_orientation_values);
+    type = g_enum_register_static ("_MatewnckLayoutOrientation", __matewncklayoutorientation___matewnck_layout_orientation_values);
 
   return type;
 }
@@ -91,7 +91,7 @@ _matewncklayoutcorner___matewnck_layout_corner_get_type (void)
   static GType type = 0;
 
   if (!type)
-    type = g_enum_register_static ("_MateWnckLayoutCorner", __matewncklayoutcorner___matewnck_layout_corner_values);
+    type = g_enum_register_static ("_MatewnckLayoutCorner", __matewncklayoutcorner___matewnck_layout_corner_values);
 
   return type;
 }
@@ -111,7 +111,7 @@ matewnck_tasklist_grouping_type_get_type (void)
   static GType type = 0;
 
   if (!type)
-    type = g_enum_register_static ("MateWnckTasklistGroupingType", _matewnck_tasklist_grouping_type_values);
+    type = g_enum_register_static ("MatewnckTasklistGroupingType", _matewnck_tasklist_grouping_type_values);
 
   return type;
 }
@@ -130,7 +130,7 @@ matewnck_client_type_get_type (void)
   static GType type = 0;
 
   if (!type)
-    type = g_enum_register_static ("MateWnckClientType", _matewnck_client_type_values);
+    type = g_enum_register_static ("MatewnckClientType", _matewnck_client_type_values);
 
   return type;
 }
@@ -160,7 +160,7 @@ matewnck_window_state_get_type (void)
   static GType type = 0;
 
   if (!type)
-    type = g_flags_register_static ("MateWnckWindowState", _matewnck_window_state_values);
+    type = g_flags_register_static ("MatewnckWindowState", _matewnck_window_state_values);
 
   return type;
 }
@@ -194,7 +194,7 @@ matewnck_window_actions_get_type (void)
   static GType type = 0;
 
   if (!type)
-    type = g_flags_register_static ("MateWnckWindowActions", _matewnck_window_actions_values);
+    type = g_flags_register_static ("MatewnckWindowActions", _matewnck_window_actions_values);
 
   return type;
 }
@@ -217,7 +217,7 @@ matewnck_window_type_get_type (void)
   static GType type = 0;
 
   if (!type)
-    type = g_enum_register_static ("MateWnckWindowType", _matewnck_window_type_values);
+    type = g_enum_register_static ("MatewnckWindowType", _matewnck_window_type_values);
 
   return type;
 }
@@ -243,7 +243,7 @@ matewnck_window_gravity_get_type (void)
   static GType type = 0;
 
   if (!type)
-    type = g_enum_register_static ("MateWnckWindowGravity", _matewnck_window_gravity_values);
+    type = g_enum_register_static ("MatewnckWindowGravity", _matewnck_window_gravity_values);
 
   return type;
 }
@@ -262,7 +262,7 @@ matewnck_window_move_resize_mask_get_type (void)
   static GType type = 0;
 
   if (!type)
-    type = g_flags_register_static ("MateWnckWindowMoveResizeMask", _matewnck_window_move_resize_mask_values);
+    type = g_flags_register_static ("MatewnckWindowMoveResizeMask", _matewnck_window_move_resize_mask_values);
 
   return type;
 }

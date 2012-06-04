@@ -30,30 +30,30 @@
 G_BEGIN_DECLS
 
 #define MATEWNCK_TYPE_PAGER              (matewnck_pager_get_type ())
-#define MATEWNCK_PAGER(object)           (G_TYPE_CHECK_INSTANCE_CAST ((object), MATEWNCK_TYPE_PAGER, MateWnckPager))
-#define MATEWNCK_PAGER_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), MATEWNCK_TYPE_PAGER, MateWnckPagerClass))
+#define MATEWNCK_PAGER(object)           (G_TYPE_CHECK_INSTANCE_CAST ((object), MATEWNCK_TYPE_PAGER, MatewnckPager))
+#define MATEWNCK_PAGER_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), MATEWNCK_TYPE_PAGER, MatewnckPagerClass))
 #define MATEWNCK_IS_PAGER(object)        (G_TYPE_CHECK_INSTANCE_TYPE ((object), MATEWNCK_TYPE_PAGER))
 #define MATEWNCK_IS_PAGER_CLASS(klass)   (G_TYPE_CHECK_CLASS_TYPE ((klass), MATEWNCK_TYPE_PAGER))
-#define MATEWNCK_PAGER_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS ((obj), MATEWNCK_TYPE_PAGER, MateWnckPagerClass))
+#define MATEWNCK_PAGER_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS ((obj), MATEWNCK_TYPE_PAGER, MatewnckPagerClass))
 
-typedef struct _MateWnckPager        MateWnckPager;
-typedef struct _MateWnckPagerClass   MateWnckPagerClass;
-typedef struct _MateWnckPagerPrivate MateWnckPagerPrivate;
+typedef struct _MatewnckPager        MatewnckPager;
+typedef struct _MatewnckPagerClass   MatewnckPagerClass;
+typedef struct _MatewnckPagerPrivate MatewnckPagerPrivate;
 
 /**
- * MateWnckPager:
+ * MatewnckPager:
  *
- * The #MateWnckPager struct contains only private fields and should not be
+ * The #MatewnckPager struct contains only private fields and should not be
  * directly accessed.
  */
-struct _MateWnckPager
+struct _MatewnckPager
 {
   GtkContainer parent_instance;
 
-  MateWnckPagerPrivate *priv;
+  MatewnckPagerPrivate *priv;
 };
 
-struct _MateWnckPagerClass
+struct _MatewnckPagerClass
 {
   GtkContainerClass parent_class;
   
@@ -65,32 +65,32 @@ struct _MateWnckPagerClass
 };
 
 /**
- * MateWnckPagerDisplayMode:
- * @MATEWNCK_PAGER_DISPLAY_NAME: the #MateWnckPager will only display the names of the
+ * MatewnckPagerDisplayMode:
+ * @MATEWNCK_PAGER_DISPLAY_NAME: the #MatewnckPager will only display the names of the
  * workspaces.
- * @MATEWNCK_PAGER_DISPLAY_CONTENT: the #MateWnckPager will display a representation
+ * @MATEWNCK_PAGER_DISPLAY_CONTENT: the #MatewnckPager will display a representation
  * for each window in the workspaces.
  *
- * Mode defining what a #MateWnckPager will display.
+ * Mode defining what a #MatewnckPager will display.
  */
 typedef enum {
   MATEWNCK_PAGER_DISPLAY_NAME,
   MATEWNCK_PAGER_DISPLAY_CONTENT
-} MateWnckPagerDisplayMode;
+} MatewnckPagerDisplayMode;
 
 /**
- * MateWnckPagerLayoutPolicy:
- * @MATEWNCK_PAGER_LAYOUT_POLICY_AUTOMATIC: the #MateWnckPager geometry management is
+ * MatewnckPagerLayoutPolicy:
+ * @MATEWNCK_PAGER_LAYOUT_POLICY_AUTOMATIC: the #MatewnckPager geometry management is
  * "height for width" when in vertical orientation, or "width for height" when
  * in horizontal orientation. This is the default behavior.
- * @MATEWNCK_PAGER_LAYOUT_POLICY_WIDTH_FOR_HEIGHT: the #MateWnckPager calculates its
+ * @MATEWNCK_PAGER_LAYOUT_POLICY_WIDTH_FOR_HEIGHT: the #MatewnckPager calculates its
  * width in proportion to a preset height. This can be used for a vertical
- * #MateWnckPager inside a horizontal panel.
- * @MATEWNCK_PAGER_LAYOUT_POLICY_HEIGHT_FOR_WIDTH: the #MateWnckPager calculates its
+ * #MatewnckPager inside a horizontal panel.
+ * @MATEWNCK_PAGER_LAYOUT_POLICY_HEIGHT_FOR_WIDTH: the #MatewnckPager calculates its
  * height in proportion to a preset width. This can be used for a horizontal
- * #MateWnckPager inside a vertical panel.
+ * #MatewnckPager inside a vertical panel.
  *
- * Policy defining the geometry management used by a #MateWnckPager.
+ * Policy defining the geometry management used by a #MatewnckPager.
  *
  * Since: 2.32
  */
@@ -98,29 +98,29 @@ typedef enum {
   MATEWNCK_PAGER_LAYOUT_POLICY_AUTOMATIC,
   MATEWNCK_PAGER_LAYOUT_POLICY_WIDTH_FOR_HEIGHT,
   MATEWNCK_PAGER_LAYOUT_POLICY_HEIGHT_FOR_WIDTH
-} MateWnckPagerLayoutPolicy;
+} MatewnckPagerLayoutPolicy;
 
 GType matewnck_pager_get_type (void) G_GNUC_CONST;
 
-GtkWidget* matewnck_pager_new (MateWnckScreen *screen);
+GtkWidget* matewnck_pager_new (MatewnckScreen *screen);
 
-gboolean matewnck_pager_set_orientation (MateWnckPager         *pager,
+gboolean matewnck_pager_set_orientation (MatewnckPager         *pager,
 				     GtkOrientation     orientation);
-gboolean matewnck_pager_set_n_rows   (MateWnckPager            *pager,
+gboolean matewnck_pager_set_n_rows   (MatewnckPager            *pager,
 				  int                   n_rows);
-void matewnck_pager_set_display_mode (MateWnckPager            *pager,
-				  MateWnckPagerDisplayMode  mode);
-void matewnck_pager_set_show_all     (MateWnckPager            *pager,
+void matewnck_pager_set_display_mode (MatewnckPager            *pager,
+				  MatewnckPagerDisplayMode  mode);
+void matewnck_pager_set_show_all     (MatewnckPager            *pager,
 				  gboolean              show_all_workspaces);
-void matewnck_pager_set_shadow_type  (MateWnckPager	       *pager,
+void matewnck_pager_set_shadow_type  (MatewnckPager	       *pager,
 				  GtkShadowType		shadow_type);
-void matewnck_pager_set_layout_policy (MateWnckPager            *pager,
-                                   MateWnckPagerLayoutPolicy policy);
+void matewnck_pager_set_layout_policy (MatewnckPager            *pager,
+                                   MatewnckPagerLayoutPolicy policy);
 
 
 #ifndef MATEWNCK_DISABLE_DEPRECATED
-void matewnck_pager_set_screen       (MateWnckPager            *pager,
-				  MateWnckScreen           *screen);
+void matewnck_pager_set_screen       (MatewnckPager            *pager,
+				  MatewnckScreen           *screen);
 #endif /* MATEWNCK_DISABLE_DEPRECATED */
 
 G_END_DECLS

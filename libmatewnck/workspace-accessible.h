@@ -31,23 +31,23 @@ extern "C" {
 #endif /* __cplusplus */
 
 #define MATEWNCK_WORKSPACE_TYPE_ACCESSIBLE                     (matewnck_workspace_accessible_get_type ())
-#define MATEWNCK_WORKSPACE_ACCESSIBLE(obj)                     (G_TYPE_CHECK_INSTANCE_CAST ((obj), MATEWNCK_WORKSPACE_TYPE_ACCESSIBLE, MateWnckWorkspaceAccessible))
-#define MATEWNCK_WORKSPACE_ACCESSIBLE_CLASS(klass)             (G_TYPE_CHECK_CLASS_CAST ((klass), MATEWNCK_WORKSPACE_TYPE_ACCESSIBLE, MateWnckWorkspaceAccessibleClass))
+#define MATEWNCK_WORKSPACE_ACCESSIBLE(obj)                     (G_TYPE_CHECK_INSTANCE_CAST ((obj), MATEWNCK_WORKSPACE_TYPE_ACCESSIBLE, MatewnckWorkspaceAccessible))
+#define MATEWNCK_WORKSPACE_ACCESSIBLE_CLASS(klass)             (G_TYPE_CHECK_CLASS_CAST ((klass), MATEWNCK_WORKSPACE_TYPE_ACCESSIBLE, MatewnckWorkspaceAccessibleClass))
 #define MATEWNCK_IS_WORKSPACE_ACCESSIBLE(obj)                  (G_TYPE_CHECK_INSTANCE_TYPE ((obj), MATEWNCK_WORKSPACE_TYPE_ACCESSIBLE))
-#define MATEWNCK_IS_WORKSPACE_ACCESSIBLE_CLASS(klass)          (G_TYPE_CHECK_CLASS_TYPE ((klass), MateWnckWorkspaceAccessible))
-#define MATEWNCK_WORKSPACE_ACCESSIBLE_GET_CLASS(obj)           (G_TYPE_INSTANCE_GET_CLASS ((obj), MATEWNCK_WORKSPACE_TYPE_ACCESSIBLE, MateWnckWorkspaceAccessibleClass)) 
+#define MATEWNCK_IS_WORKSPACE_ACCESSIBLE_CLASS(klass)          (G_TYPE_CHECK_CLASS_TYPE ((klass), MatewnckWorkspaceAccessible))
+#define MATEWNCK_WORKSPACE_ACCESSIBLE_GET_CLASS(obj)           (G_TYPE_INSTANCE_GET_CLASS ((obj), MATEWNCK_WORKSPACE_TYPE_ACCESSIBLE, MatewnckWorkspaceAccessibleClass)) 
 
-typedef struct _MateWnckWorkspaceAccessible MateWnckWorkspaceAccessible;
-typedef struct _MateWnckWorkspaceAccessibleClass MateWnckWorkspaceAccessibleClass;
+typedef struct _MatewnckWorkspaceAccessible MatewnckWorkspaceAccessible;
+typedef struct _MatewnckWorkspaceAccessibleClass MatewnckWorkspaceAccessibleClass;
 
-struct _MateWnckWorkspaceAccessible
+struct _MatewnckWorkspaceAccessible
 {
   AtkGObjectAccessible parent;
 
   int index;
 };
 
-struct _MateWnckWorkspaceAccessibleClass 
+struct _MatewnckWorkspaceAccessibleClass 
 {
   AtkGObjectAccessibleClass parent_class;
 };

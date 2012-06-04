@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>MatewnckSelector</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="Libmatewnck Reference Manual">
+<link rel="up" href="widgets.html" title="Part III. Libmatewnck Widgets">
+<link rel="prev" href="MatewnckPager.html" title="MatewnckPager">
+<link rel="next" href="MatewnckTasklist.html" title="MatewnckTasklist">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="MatewnckPager.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="widgets.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Libmatewnck Reference Manual</th>
+<td><a accesskey="n" href="MatewnckTasklist.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#MatewnckSelector.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#MatewnckSelector.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#MatewnckSelector.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#MatewnckSelector.implemented-interfaces" class="shortcut">Implemented Interfaces</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="MatewnckSelector"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="MatewnckSelector.top_of_page"></a>MatewnckSelector</span></h2>
+<p>MatewnckSelector — a window selector widget, showing the list of windows as
+a menu.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="MatewnckSelector.stability-level"></a><h2>Stability Level</h2>
+Unstable, unless otherwise indicated
+</div>
+<div class="refsynopsisdiv">
+<a name="MatewnckSelector.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+#include &lt;libmatewnck/libmatewnck.h&gt;
+
+struct              <a class="link" href="MatewnckSelector.html#MatewnckSelector-struct" title="struct MatewnckSelector">MatewnckSelector</a>;
+<a href="http://library.gnome.org/devel/gtk/GtkWidget.html"><span class="returnvalue">GtkWidget</span></a> *         <a class="link" href="MatewnckSelector.html#matewnck-selector-new" title="matewnck_selector_new ()">matewnck_selector_new</a>                   (<em class="parameter"><code><span class="type">void</span></code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="MatewnckSelector.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  GObject
+   +----GInitiallyUnowned
+         +----GtkObject
+               +----<a href="http://library.gnome.org/devel/gtk/GtkWidget.html">GtkWidget</a>
+                     +----<a href="http://library.gnome.org/devel/gtk/GtkContainer.html">GtkContainer</a>
+                           +----<a href="http://library.gnome.org/devel/gtk/GtkMenuShell.html">GtkMenuShell</a>
+                                 +----<a href="http://library.gnome.org/devel/gtk/GtkMenuBar.html">GtkMenuBar</a>
+                                       +----MatewnckSelector
+</pre>
+</div>
+<div class="refsect1">
+<a name="MatewnckSelector.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
+<p>
+MatewnckSelector implements
+ AtkImplementorIface and  <a href="http://library.gnome.org/devel/gtk/GtkBuildable.html">GtkBuildable</a>.</p>
+</div>
+<div class="refsect1">
+<a name="MatewnckSelector.description"></a><h2>Description</h2>
+<p>
+The <a class="link" href="MatewnckSelector.html" title="MatewnckSelector"><span class="type">MatewnckSelector</span></a> represents client windows on a screen as a menu, where
+menu items are labelled with the window titles and icons. Activating a menu
+item activates the represented window.
+</p>
+<p>
+The <a class="link" href="MatewnckSelector.html" title="MatewnckSelector"><span class="type">MatewnckSelector</span></a> will automatically detect the screen it is on, and will
+represent windows of this screen only.
+</p>
+</div>
+<div class="refsect1">
+<a name="MatewnckSelector.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="MatewnckSelector-struct"></a><h3>struct MatewnckSelector</h3>
+<pre class="programlisting">struct MatewnckSelector;</pre>
+<p>
+The <a class="link" href="MatewnckSelector.html" title="MatewnckSelector"><span class="type">MatewnckSelector</span></a> struct contains only private fields and should not be
+directly accessed.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="matewnck-selector-new"></a><h3>matewnck_selector_new ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/gtk/GtkWidget.html"><span class="returnvalue">GtkWidget</span></a> *         matewnck_selector_new                   (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Creates a new <a class="link" href="MatewnckSelector.html" title="MatewnckSelector"><span class="type">MatewnckSelector</span></a>. The <a class="link" href="MatewnckSelector.html" title="MatewnckSelector"><span class="type">MatewnckSelector</span></a> will list <a class="link" href="MatewnckWindow.html" title="MatewnckWindow"><span class="type">MatewnckWindow</span></a> of the
+<a class="link" href="MatewnckScreen.html" title="MatewnckScreen"><span class="type">MatewnckScreen</span></a> it is on.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a newly created <a class="link" href="MatewnckSelector.html" title="MatewnckSelector"><span class="type">MatewnckSelector</span></a>.</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 2.10</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="MatewnckSelector.see-also"></a><h2>See Also</h2>
+<a class="link" href="MatewnckTasklist.html" title="MatewnckTasklist"><span class="type">MatewnckTasklist</span></a>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

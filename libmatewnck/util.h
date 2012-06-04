@@ -27,10 +27,10 @@
 
 #include <gtk/gtk.h>
 
-typedef struct _MateWnckResourceUsage MateWnckResourceUsage;
+typedef struct _MatewnckResourceUsage MatewnckResourceUsage;
 
 /**
- * MateWnckResourceUsage:
+ * MatewnckResourceUsage:
  * @total_bytes_estimate: estimation of the total number of bytes allocated in
  * the X server.
  * @pixmap_bytes: number of bytes allocated in the X server for resources of
@@ -46,13 +46,13 @@ typedef struct _MateWnckResourceUsage MateWnckResourceUsage;
  * @n_cursors: number of Cursor resources allocated.
  * @n_other: number of other resources allocated.
  *
- * The #MateWnckResourceUsage struct contains information about the total resource
+ * The #MatewnckResourceUsage struct contains information about the total resource
  * usage of an X client, and the number of resources allocated for each
  * resource type.
  *
  * Since: 2.6
  */
-struct _MateWnckResourceUsage
+struct _MatewnckResourceUsage
 {
   gulong        total_bytes_estimate;
   
@@ -82,7 +82,7 @@ struct _MateWnckResourceUsage
 };
 
 /**
- * MateWnckClientType:
+ * MatewnckClientType:
  * @MATEWNCK_CLIENT_TYPE_APPLICATION: the libmatewnck user is a normal application.
  * @MATEWNCK_CLIENT_TYPE_PAGER: the libmatewnck user is an utility application dealing
  * with window management, like pagers and taskbars.
@@ -94,17 +94,17 @@ struct _MateWnckResourceUsage
 typedef enum {
   MATEWNCK_CLIENT_TYPE_APPLICATION = 1,
   MATEWNCK_CLIENT_TYPE_PAGER = 2
-} MateWnckClientType;
+} MatewnckClientType;
 
-void matewnck_set_client_type (MateWnckClientType ewmh_sourceindication_client_type);
+void matewnck_set_client_type (MatewnckClientType ewmh_sourceindication_client_type);
 
 void matewnck_xid_read_resource_usage (GdkDisplay        *gdk_display,
                                    gulong             xid,
-                                   MateWnckResourceUsage *usage);
+                                   MatewnckResourceUsage *usage);
 
 void matewnck_pid_read_resource_usage (GdkDisplay        *gdk_display,
                                    gulong             pid,
-                                   MateWnckResourceUsage *usage);
+                                   MatewnckResourceUsage *usage);
 
 
 #ifndef MATEWNCK_DISABLE_DEPRECATED

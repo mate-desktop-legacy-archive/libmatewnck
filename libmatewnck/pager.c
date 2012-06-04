@@ -42,20 +42,20 @@
 /**
  * SECTION:pager
  * @short_description: a pager widget, showing the content of workspaces.
- * @see_also: #MateWnckScreen
+ * @see_also: #MatewnckScreen
  * @stability: Unstable
  *
- * A #MateWnckPager shows a miniature view of the workspaces, representing managed
+ * A #MatewnckPager shows a miniature view of the workspaces, representing managed
  * windows by small rectangles, and allows the user to initiate various window
- * manager actions by manipulating these representations. The #MateWnckPager offers
+ * manager actions by manipulating these representations. The #MatewnckPager offers
  * ways to move windows between workspaces and to change the current workspace.
  *
- * Alternatively, a #MateWnckPager can be configured to only show the names of the
+ * Alternatively, a #MatewnckPager can be configured to only show the names of the
  * workspace instead of their contents.
  *
- * The #MateWnckPager is also responsible for setting the layout of the workspaces.
+ * The #MatewnckPager is also responsible for setting the layout of the workspaces.
  * Since only one application can be responsible for setting the layout on a
- * screen, the #MateWnckPager automatically tries to obtain the manager selection
+ * screen, the #MatewnckPager automatically tries to obtain the manager selection
  * for the screen and only sets the layout if it owns the manager selection.
  * See matewnck_pager_set_orientation() and matewnck_pager_set_n_rows() to change the
  * layout.
@@ -63,13 +63,13 @@
 
 #define N_SCREEN_CONNECTIONS 11
 
-struct _MateWnckPagerPrivate
+struct _MatewnckPagerPrivate
 {
-  MateWnckScreen *screen;
+  MatewnckScreen *screen;
   
   int n_rows; /* really columns for vertical orientation */
-  MateWnckPagerDisplayMode display_mode;
-  MateWnckPagerLayoutPolicy layout_policy;
+  MatewnckPagerDisplayMode display_mode;
+  MatewnckPagerLayoutPolicy layout_policy;
   gboolean show_all_workspaces;
   GtkShadowType shadow_type;
   
@@ -82,7 +82,7 @@ struct _MateWnckPagerPrivate
   guint dragging :1;
   int drag_start_x;
   int drag_start_y;
-  MateWnckWindow *drag_window;
+  MatewnckWindow *drag_window;
 
   GdkPixbuf *bg_cache;
 
@@ -92,8 +92,8 @@ struct _MateWnckPagerPrivate
   guint dnd_time; /* time of last event during dnd (for delayed workspace activation) */
 };
 
-G_DEFINE_TYPE (MateWnckPager, matewnck_pager, GTK_TYPE_WIDGET);
-#define MATEWNCK_PAGER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), MATEWNCK_TYPE_PAGER, MateWnckPagerPrivate))
+G_DEFINE_TYPE (MatewnckPager, matewnck_pager, GTK_TYPE_WIDGET);
+#define MATEWNCK_PAGER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), MATEWNCK_TYPE_PAGER, MatewnckPagerPrivate))
 
 enum
 {
@@ -108,8 +108,8 @@ enum
   (ycoord) >= (rect).y &&                   \
   (ycoord) <  ((rect).y + (rect).height))
 
-static void matewnck_pager_init        (MateWnckPager      *pager);
-static void matewnck_pager_class_init  (MateWnckPagerClass *klass);
+static void matewnck_pager_init        (MatewnckPager      *pager);
+static void matewnck_pager_class_init  (MatewnckPagerClass *klass);
 static void matewnck_pager_finalize    (GObject        *object);
 
 static void     matewnck_pager_realize       (GtkWidget        *widget);
@@ -162,33 +162,33 @@ static gboolean matewnck_pager_query_tooltip (GtkWidget  *widget,
                                           gint        y,
                                           gboolean    keyboard_tip,
                                           GtkTooltip *tooltip);
-static void workspace_name_changed_callback (MateWnckWorkspace *workspace,
+static void workspace_name_changed_callback (MatewnckWorkspace *workspace,
                                              gpointer       data);
 
 static gboolean matewnck_pager_window_state_is_relevant (int state);
-static gint matewnck_pager_window_get_workspace   (MateWnckWindow  *window,
+static gint matewnck_pager_window_get_workspace   (MatewnckWindow  *window,
                                                gboolean     is_state_relevant);
-static void matewnck_pager_queue_draw_workspace   (MateWnckPager   *pager,
+static void matewnck_pager_queue_draw_workspace   (MatewnckPager   *pager,
 					       gint	    i);
-static void matewnck_pager_queue_draw_window (MateWnckPager	   *pager,
-					  MateWnckWindow	   *window);
+static void matewnck_pager_queue_draw_window (MatewnckPager	   *pager,
+					  MatewnckWindow	   *window);
 
-static void matewnck_pager_connect_screen    (MateWnckPager  *pager);
-static void matewnck_pager_connect_window    (MateWnckPager  *pager,
-                                          MateWnckWindow *window);
-static void matewnck_pager_disconnect_screen (MateWnckPager  *pager);
-static void matewnck_pager_disconnect_window (MateWnckPager  *pager,
-                                          MateWnckWindow *window);
+static void matewnck_pager_connect_screen    (MatewnckPager  *pager);
+static void matewnck_pager_connect_window    (MatewnckPager  *pager,
+                                          MatewnckWindow *window);
+static void matewnck_pager_disconnect_screen (MatewnckPager  *pager);
+static void matewnck_pager_disconnect_window (MatewnckPager  *pager,
+                                          MatewnckWindow *window);
 
-static gboolean matewnck_pager_set_layout_hint (MateWnckPager  *pager);
+static gboolean matewnck_pager_set_layout_hint (MatewnckPager  *pager);
 
-static void matewnck_pager_clear_drag (MateWnckPager *pager);
-static void matewnck_pager_check_prelight (MateWnckPager *pager,
+static void matewnck_pager_clear_drag (MatewnckPager *pager);
+static void matewnck_pager_check_prelight (MatewnckPager *pager,
 				       gint	  x,
 				       gint	  y,
 				       gboolean	  dnd);
 
-static GdkPixbuf* matewnck_pager_get_background (MateWnckPager *pager,
+static GdkPixbuf* matewnck_pager_get_background (MatewnckPager *pager,
                                              int        width,
                                              int        height);
 
@@ -196,7 +196,7 @@ static AtkObject* matewnck_pager_get_accessible (GtkWidget *widget);
 
 
 static void
-matewnck_pager_init (MateWnckPager *pager)
+matewnck_pager_init (MatewnckPager *pager)
 {  
   int i;
   static const GtkTargetEntry targets[] = {
@@ -239,12 +239,12 @@ matewnck_pager_init (MateWnckPager *pager)
 }
 
 static void
-matewnck_pager_class_init (MateWnckPagerClass *klass)
+matewnck_pager_class_init (MatewnckPagerClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  g_type_class_add_private (klass, sizeof (MateWnckPagerPrivate));
+  g_type_class_add_private (klass, sizeof (MatewnckPagerPrivate));
 
   object_class->finalize = matewnck_pager_finalize;
 
@@ -271,7 +271,7 @@ matewnck_pager_class_init (MateWnckPagerClass *klass)
 static void
 matewnck_pager_finalize (GObject *object)
 {
-  MateWnckPager *pager;
+  MatewnckPager *pager;
 
   pager = MATEWNCK_PAGER (object);
 
@@ -291,7 +291,7 @@ matewnck_pager_finalize (GObject *object)
 }
 
 static void
-_matewnck_pager_set_screen (MateWnckPager *pager)
+_matewnck_pager_set_screen (MatewnckPager *pager)
 {
   GdkScreen *gdkscreen;
 
@@ -303,7 +303,7 @@ _matewnck_pager_set_screen (MateWnckPager *pager)
 
   if (!matewnck_pager_set_layout_hint (pager))
     {
-      _MateWnckLayoutOrientation orientation;
+      _MatewnckLayoutOrientation orientation;
 
       /* we couldn't set the layout on the screen. This means someone else owns
        * it. Let's at least show the correct layout. */
@@ -331,7 +331,7 @@ matewnck_pager_realize (GtkWidget *widget)
 
   GdkWindowAttr attributes;
   gint attributes_mask;
-  MateWnckPager *pager;
+  MatewnckPager *pager;
   GtkAllocation allocation;
   GdkWindow *window;
   GtkStyle *style;
@@ -385,7 +385,7 @@ matewnck_pager_realize (GtkWidget *widget)
 static void
 matewnck_pager_unrealize (GtkWidget *widget)
 {
-  MateWnckPager *pager;
+  MatewnckPager *pager;
   
   pager = MATEWNCK_PAGER (widget);
 
@@ -407,7 +407,7 @@ static void
 matewnck_pager_size_request  (GtkWidget      *widget,
                           GtkRequisition *requisition)
 {
-  MateWnckPager *pager;
+  MatewnckPager *pager;
   int n_spaces;
   int spaces_per_row;
   double screen_aspect;
@@ -415,7 +415,7 @@ matewnck_pager_size_request  (GtkWidget      *widget,
   int size;
   int n_rows;
   int focus_width;
-  MateWnckWorkspace *space;
+  MatewnckWorkspace *space;
 
   pager = MATEWNCK_PAGER (widget);
   
@@ -501,7 +501,7 @@ matewnck_pager_size_request  (GtkWidget      *widget,
       else
 	{
 	  int n_spaces, i, w;
-	  MateWnckScreen *screen;
+	  MatewnckScreen *screen;
 	  PangoLayout *layout;
 
 	  n_spaces = matewnck_screen_get_workspace_count (pager->priv->screen);
@@ -557,7 +557,7 @@ static void
 matewnck_pager_size_allocate (GtkWidget      *widget,
                           GtkAllocation  *allocation)
 {
-  MateWnckPager *pager;
+  MatewnckPager *pager;
   int workspace_size;
   int focus_width;
   int width;
@@ -630,7 +630,7 @@ matewnck_pager_size_allocate (GtkWidget      *widget,
 }
 
 static void
-get_workspace_rect (MateWnckPager    *pager,
+get_workspace_rect (MatewnckPager    *pager,
                     int           space,
                     GdkRectangle *rect)
 {
@@ -654,7 +654,7 @@ get_workspace_rect (MateWnckPager    *pager,
 
   if (!pager->priv->show_all_workspaces)
     {
-      MateWnckWorkspace *active_space;
+      MatewnckWorkspace *active_space;
   
       active_space = matewnck_screen_get_active_workspace (pager->priv->screen);
 
@@ -756,11 +756,11 @@ matewnck_pager_window_state_is_relevant (int state)
 }
 
 static gint
-matewnck_pager_window_get_workspace (MateWnckWindow *window,
+matewnck_pager_window_get_workspace (MatewnckWindow *window,
                                  gboolean    is_state_relevant)
 {
   gint state;
-  MateWnckWorkspace *workspace;
+  MatewnckWorkspace *workspace;
 
   state = matewnck_window_get_state (window);
   if (is_state_relevant && !matewnck_pager_window_state_is_relevant (state))
@@ -773,8 +773,8 @@ matewnck_pager_window_get_workspace (MateWnckWindow *window,
 }
 
 static GList*
-get_windows_for_workspace_in_bottom_to_top (MateWnckScreen    *screen,
-                                            MateWnckWorkspace *workspace)
+get_windows_for_workspace_in_bottom_to_top (MatewnckScreen    *screen,
+                                            MatewnckWorkspace *workspace)
 {
   GList *result;
   GList *windows;
@@ -787,7 +787,7 @@ get_windows_for_workspace_in_bottom_to_top (MateWnckScreen    *screen,
   windows = matewnck_screen_get_windows_stacked (screen);
   for (tmp = windows; tmp != NULL; tmp = tmp->next)
     {
-      MateWnckWindow *win = MATEWNCK_WINDOW (tmp->data);
+      MatewnckWindow *win = MATEWNCK_WINDOW (tmp->data);
       if (matewnck_pager_window_get_workspace (win, TRUE) == workspace_num)
 	result = g_list_prepend (result, win);
     }
@@ -798,13 +798,13 @@ get_windows_for_workspace_in_bottom_to_top (MateWnckScreen    *screen,
 }
 
 static void
-get_window_rect (MateWnckWindow         *window,
+get_window_rect (MatewnckWindow         *window,
                  const GdkRectangle *workspace_rect,
                  GdkRectangle       *rect)
 {
   double width_ratio, height_ratio;
   int x, y, width, height;
-  MateWnckWorkspace *workspace;
+  MatewnckWorkspace *workspace;
   GdkRectangle unclipped_win_rect;
   
   workspace = matewnck_window_get_workspace (window);
@@ -843,7 +843,7 @@ get_window_rect (MateWnckWindow         *window,
 static void
 draw_window (GdkDrawable        *drawable,
              GtkWidget          *widget,
-             MateWnckWindow         *win,
+             MatewnckWindow         *win,
              const GdkRectangle *winrect,
              GtkStateType        state,
              gboolean            translucent)
@@ -940,14 +940,14 @@ draw_window (GdkDrawable        *drawable,
   cairo_destroy (cr);
 }            
 
-static MateWnckWindow *
-window_at_point (MateWnckPager     *pager,
-                 MateWnckWorkspace *space,
+static MatewnckWindow *
+window_at_point (MatewnckPager     *pager,
+                 MatewnckWorkspace *space,
                  GdkRectangle  *space_rect,
                  int            x,
                  int            y)
 {
-  MateWnckWindow *window;
+  MatewnckWindow *window;
   GList *windows;
   GList *tmp;
 
@@ -961,7 +961,7 @@ window_at_point (MateWnckPager     *pager,
 
   for (tmp = windows; tmp != NULL; tmp = tmp->next)
     {
-      MateWnckWindow *win = MATEWNCK_WINDOW (tmp->data);
+      MatewnckWindow *win = MATEWNCK_WINDOW (tmp->data);
       GdkRectangle winrect;
 
       get_window_rect (win, space_rect, &winrect);
@@ -980,7 +980,7 @@ window_at_point (MateWnckPager     *pager,
 }
 
 static int
-workspace_at_point (MateWnckPager *pager,
+workspace_at_point (MatewnckPager *pager,
                     int        x,
                     int        y,
                     int       *viewport_x,
@@ -1062,7 +1062,7 @@ workspace_at_point (MateWnckPager *pager,
       if (POINT_IN_RECT (x, y, rect))
         {
 	  double width_ratio, height_ratio;
-	  MateWnckWorkspace *space;
+	  MatewnckWorkspace *space;
 
 	  space = matewnck_screen_get_workspace (pager->priv->screen, i);
           g_assert (space != NULL);
@@ -1088,7 +1088,7 @@ workspace_at_point (MateWnckPager *pager,
 
 
 static void
-matewnck_pager_draw_workspace (MateWnckPager    *pager,
+matewnck_pager_draw_workspace (MatewnckPager    *pager,
 			   int           workspace,
 			   GdkRectangle *rect,
                            GdkPixbuf    *bg_pixbuf)
@@ -1096,7 +1096,7 @@ matewnck_pager_draw_workspace (MateWnckPager    *pager,
   GList *windows;
   GList *tmp;
   gboolean is_current;
-  MateWnckWorkspace *space;
+  MatewnckWorkspace *space;
   GtkWidget *widget;
   GtkStateType state;
   GdkWindow *window;
@@ -1258,7 +1258,7 @@ matewnck_pager_draw_workspace (MateWnckPager    *pager,
       tmp = windows;
       while (tmp != NULL)
 	{
-	  MateWnckWindow *win = tmp->data;
+	  MatewnckWindow *win = tmp->data;
 	  GdkRectangle winrect;
 	  
 	  get_window_rect (win, rect, &winrect);
@@ -1324,10 +1324,10 @@ static gboolean
 matewnck_pager_expose_event  (GtkWidget      *widget,
                           GdkEventExpose *event)
 {
-  MateWnckPager *pager;
+  MatewnckPager *pager;
   int i;
   int n_spaces;
-  MateWnckWorkspace *active_space;
+  MatewnckWorkspace *active_space;
   GdkPixbuf *bg_pixbuf;
   gboolean first;
   GdkWindow *window;
@@ -1413,9 +1413,9 @@ static gboolean
 matewnck_pager_button_press (GtkWidget      *widget,
                          GdkEventButton *event)
 {
-  MateWnckPager *pager;
+  MatewnckPager *pager;
   int space_number;
-  MateWnckWorkspace *space = NULL;
+  MatewnckWorkspace *space = NULL;
   GdkRectangle workspace_rect;
 						    
   if (event->button != 1)
@@ -1453,8 +1453,8 @@ matewnck_pager_button_press (GtkWidget      *widget,
 static gboolean
 matewnck_pager_drag_motion_timeout (gpointer data)
 {
-  MateWnckPager *pager = MATEWNCK_PAGER (data);
-  MateWnckWorkspace *active_workspace, *dnd_workspace;
+  MatewnckPager *pager = MATEWNCK_PAGER (data);
+  MatewnckWorkspace *active_workspace, *dnd_workspace;
 
   pager->priv->dnd_activate = 0;
   active_workspace = matewnck_screen_get_active_workspace (pager->priv->screen);
@@ -1469,7 +1469,7 @@ matewnck_pager_drag_motion_timeout (gpointer data)
 }
 
 static void
-matewnck_pager_queue_draw_workspace (MateWnckPager *pager,
+matewnck_pager_queue_draw_workspace (MatewnckPager *pager,
                                  gint       i)
 {
   GdkRectangle rect;
@@ -1484,8 +1484,8 @@ matewnck_pager_queue_draw_workspace (MateWnckPager *pager,
 }
 
 static void
-matewnck_pager_queue_draw_window (MateWnckPager  *pager,
-                              MateWnckWindow *window)
+matewnck_pager_queue_draw_window (MatewnckPager  *pager,
+                              MatewnckWindow *window)
 {
   gint workspace;
 
@@ -1497,7 +1497,7 @@ matewnck_pager_queue_draw_window (MateWnckPager  *pager,
 }
 
 static void
-matewnck_pager_check_prelight (MateWnckPager *pager,
+matewnck_pager_check_prelight (MatewnckPager *pager,
                            gint       x,
                            gint       y,
                            gboolean   prelight_dnd)
@@ -1530,7 +1530,7 @@ matewnck_pager_drag_motion (GtkWidget          *widget,
                         gint                y,
                         guint               time)
 {
-  MateWnckPager *pager;
+  MatewnckPager *pager;
   gint previous_workspace;
 
   pager = MATEWNCK_PAGER (widget);
@@ -1579,7 +1579,7 @@ matewnck_pager_drag_drop  (GtkWidget        *widget,
 		       gint              y,
 		       guint             time)
 {
-  MateWnckPager *pager = MATEWNCK_PAGER (widget);
+  MatewnckPager *pager = MATEWNCK_PAGER (widget);
   GdkAtom target;
   
   target = gtk_drag_dest_find_target (widget, context, NULL);
@@ -1604,8 +1604,8 @@ matewnck_pager_drag_data_received (GtkWidget          *widget,
 			       guint               info,
 			       guint               time)
 {
-  MateWnckPager *pager = MATEWNCK_PAGER (widget);
-  MateWnckWorkspace *space;
+  MatewnckPager *pager = MATEWNCK_PAGER (widget);
+  MatewnckWorkspace *space;
   GList *tmp;
   gint i;
   gulong xid;
@@ -1631,7 +1631,7 @@ matewnck_pager_drag_data_received (GtkWidget          *widget,
     {
       if (matewnck_window_get_xid (tmp->data) == xid)
 	{
-	  MateWnckWindow *win = tmp->data;
+	  MatewnckWindow *win = tmp->data;
 	  matewnck_window_move_to_workspace (win, space);
 	  if (space == matewnck_screen_get_active_workspace (pager->priv->screen))
 	    matewnck_window_activate (win, time);
@@ -1650,7 +1650,7 @@ matewnck_pager_drag_data_get (GtkWidget        *widget,
                           guint             info,
                           guint             time)
 {
-  MateWnckPager *pager = MATEWNCK_PAGER (widget);
+  MatewnckPager *pager = MATEWNCK_PAGER (widget);
   gulong xid;
 
   if (pager->priv->drag_window == NULL)
@@ -1666,7 +1666,7 @@ static void
 matewnck_pager_drag_end (GtkWidget        *widget,
                      GdkDragContext   *context)
 {
-  MateWnckPager *pager = MATEWNCK_PAGER (widget);
+  MatewnckPager *pager = MATEWNCK_PAGER (widget);
 
   matewnck_pager_clear_drag (pager);
 }
@@ -1676,7 +1676,7 @@ matewnck_pager_drag_motion_leave (GtkWidget          *widget,
                               GdkDragContext     *context,
                               guint               time)
 {
-  MateWnckPager *pager = MATEWNCK_PAGER (widget);
+  MatewnckPager *pager = MATEWNCK_PAGER (widget);
 
   if (pager->priv->dnd_activate != 0)
     {
@@ -1688,7 +1688,7 @@ matewnck_pager_drag_motion_leave (GtkWidget          *widget,
 }
 
 static void
-matewnck_drag_clean_up (MateWnckWindow     *window,
+matewnck_drag_clean_up (MatewnckWindow     *window,
 		    GdkDragContext *context,
 		    gboolean	    clean_up_for_context_destroy,
 		    gboolean	    clean_up_for_window_destroy);
@@ -1701,11 +1701,11 @@ matewnck_drag_context_destroyed (gpointer  windowp,
 }
 
 static void
-matewnck_update_drag_icon (MateWnckWindow     *window,
+matewnck_update_drag_icon (MatewnckWindow     *window,
 		       GdkDragContext *context)
 {
   gint org_w, org_h, dnd_w, dnd_h;
-  MateWnckWorkspace *workspace;
+  MatewnckWorkspace *workspace;
   GdkRectangle rect;
   GdkPixmap *pixmap;
   GtkWidget *widget;
@@ -1754,7 +1754,7 @@ static void
 matewnck_drag_window_destroyed (gpointer  contextp,
                             GObject  *window)
 {
-  matewnck_drag_clean_up ((MateWnckWindow *) window, GDK_DRAG_CONTEXT (contextp),
+  matewnck_drag_clean_up ((MatewnckWindow *) window, GDK_DRAG_CONTEXT (contextp),
                       FALSE, TRUE);
 }
 
@@ -1768,7 +1768,7 @@ matewnck_drag_source_destroyed (gpointer  contextp,
 /* CAREFUL: This function is a bit brittle, because the pointers given may be
  * finalized already */
 static void
-matewnck_drag_clean_up (MateWnckWindow     *window,
+matewnck_drag_clean_up (MatewnckWindow     *window,
 		    GdkDragContext *context,
 		    gboolean	    clean_up_for_context_destroy,
 		    gboolean	    clean_up_for_window_destroy)
@@ -1800,7 +1800,7 @@ matewnck_drag_clean_up (MateWnckWindow     *window,
 
 /**
  * matewnck_window_set_as_drag_icon:
- * @window: #MateWnckWindow to use as drag icon
+ * @window: #MatewnckWindow to use as drag icon
  * @context: #GdkDragContext to set the icon on
  * @drag_source: #GtkWidget that started the drag, or one of its parent. This
  * widget needs to stay alive as long as possible during the drag.
@@ -1808,7 +1808,7 @@ matewnck_drag_clean_up (MateWnckWindow     *window,
  * Sets the given @window as the drag icon for @context.
  **/
 void 
-_matewnck_window_set_as_drag_icon (MateWnckWindow     *window,
+_matewnck_window_set_as_drag_icon (MatewnckWindow     *window,
                                GdkDragContext *context,
                                GtkWidget      *drag_source)
 {
@@ -1833,7 +1833,7 @@ static gboolean
 matewnck_pager_motion (GtkWidget        *widget,
                    GdkEventMotion   *event)
 {
-  MateWnckPager *pager;
+  MatewnckPager *pager;
   GdkWindow *window;
   int x, y;
 
@@ -1870,7 +1870,7 @@ static gboolean
 matewnck_pager_leave_notify	 (GtkWidget          *widget,
 	      		  GdkEventCrossing   *event)
 {
-  MateWnckPager *pager;
+  MatewnckPager *pager;
 
   pager = MATEWNCK_PAGER (widget);
 
@@ -1883,8 +1883,8 @@ static gboolean
 matewnck_pager_button_release (GtkWidget        *widget,
                            GdkEventButton   *event)
 {
-  MateWnckWorkspace *space;
-  MateWnckPager *pager;
+  MatewnckWorkspace *space;
+  MatewnckPager *pager;
   int i;
   int j;
   int viewport_x;
@@ -1943,7 +1943,7 @@ static gboolean
 matewnck_pager_focus (GtkWidget        *widget,
                   GtkDirectionType  direction)
 {
-  MateWnckPager *pager;
+  MatewnckPager *pager;
 
   pager = MATEWNCK_PAGER (widget);
   
@@ -1952,8 +1952,8 @@ matewnck_pager_focus (GtkWidget        *widget,
 
 /**
  * matewnck_pager_set_screen:
- * @pager: a #MateWnckPager.
- * @screen: a #MateWnckScreen.
+ * @pager: a #MatewnckPager.
+ * @screen: a #MatewnckScreen.
  *
  * Does nothing.
  *
@@ -1961,8 +1961,8 @@ matewnck_pager_focus (GtkWidget        *widget,
  * Deprecated:2.20:
  */
 void
-matewnck_pager_set_screen (MateWnckPager  *pager,
-		       MateWnckScreen *screen)
+matewnck_pager_set_screen (MatewnckPager  *pager,
+		       MatewnckScreen *screen)
 {
 }
 
@@ -1974,9 +1974,9 @@ matewnck_pager_query_tooltip (GtkWidget  *widget,
                           GtkTooltip *tooltip)
 {
   int i;
-  MateWnckPager *pager;
-  MateWnckScreen *screen;
-  MateWnckWorkspace *space;
+  MatewnckPager *pager;
+  MatewnckScreen *screen;
+  MatewnckWorkspace *space;
   char *name;
 
   pager = MATEWNCK_PAGER (widget);
@@ -1992,7 +1992,7 @@ matewnck_pager_query_tooltip (GtkWidget  *widget,
 
   if (matewnck_screen_get_active_workspace (screen) == space)
     {
-      MateWnckWindow *window;
+      MatewnckWindow *window;
       GdkRectangle workspace_rect;
 
       get_workspace_rect (pager, i, &workspace_rect);
@@ -2023,16 +2023,16 @@ matewnck_pager_query_tooltip (GtkWidget  *widget,
  * matewnck_pager_new:
  * @screen: deprecated argument, can be %NULL.
  *
- * Creates a new #MateWnckPager. The #MateWnckPager will show the #MateWnckWorkspace of the
- * #MateWnckScreen it is on.
+ * Creates a new #MatewnckPager. The #MatewnckPager will show the #MatewnckWorkspace of the
+ * #MatewnckScreen it is on.
  *
- * Return value: a newly created #MateWnckPager.
+ * Return value: a newly created #MatewnckPager.
  */
 /* TODO: when we break API again, remove the screen from here */
 GtkWidget*
-matewnck_pager_new (MateWnckScreen *screen)
+matewnck_pager_new (MatewnckScreen *screen)
 {
-  MateWnckPager *pager;
+  MatewnckPager *pager;
   
   pager = g_object_new (MATEWNCK_TYPE_PAGER, NULL);
 
@@ -2040,7 +2040,7 @@ matewnck_pager_new (MateWnckScreen *screen)
 }
 
 static gboolean
-matewnck_pager_set_layout_hint (MateWnckPager *pager)
+matewnck_pager_set_layout_hint (MatewnckPager *pager)
 {
   int layout_rows;
   int layout_cols;
@@ -2082,32 +2082,32 @@ matewnck_pager_set_layout_hint (MateWnckPager *pager)
 
 /**
  * matewnck_pager_set_orientation:
- * @pager: a #MateWnckPager.
- * @orientation: orientation to use for the layout of #MateWnckWorkspace on the
- * #MateWnckScreen @pager is watching.
+ * @pager: a #MatewnckPager.
+ * @orientation: orientation to use for the layout of #MatewnckWorkspace on the
+ * #MatewnckScreen @pager is watching.
  *
- * Tries to change the orientation of the layout of #MateWnckWorkspace on the
- * #MateWnckScreen @pager is watching. Since no more than one application should
- * set this property of a #MateWnckScreen at a time, setting the layout is not
+ * Tries to change the orientation of the layout of #MatewnckWorkspace on the
+ * #MatewnckScreen @pager is watching. Since no more than one application should
+ * set this property of a #MatewnckScreen at a time, setting the layout is not
  * guaranteed to work. 
  *
- * If @orientation is %GTK_ORIENTATION_HORIZONTAL, the #MateWnckWorkspace will be
- * laid out in rows, with the first #MateWnckWorkspace in the top left corner.
+ * If @orientation is %GTK_ORIENTATION_HORIZONTAL, the #MatewnckWorkspace will be
+ * laid out in rows, with the first #MatewnckWorkspace in the top left corner.
  *
- * If @orientation is %GTK_ORIENTATION_VERTICAL, the #MateWnckWorkspace will be
- * laid out in columns, with the first #MateWnckWorkspace in the top left corner.
+ * If @orientation is %GTK_ORIENTATION_VERTICAL, the #MatewnckWorkspace will be
+ * laid out in columns, with the first #MatewnckWorkspace in the top left corner.
  *
  * For example, if the layout contains one row, but the orientation of the
- * layout is vertical, the #MateWnckPager will display a column of #MateWnckWorkspace.
+ * layout is vertical, the #MatewnckPager will display a column of #MatewnckWorkspace.
  *
  * If @pager has not been added to a widget hierarchy, the call will fail
  * because @pager can't know the screen on which to modify the orientation.
  *
- * Return value: %TRUE if the layout of #MateWnckWorkspace has been successfully
+ * Return value: %TRUE if the layout of #MatewnckWorkspace has been successfully
  * changed or did not need to be changed, %FALSE otherwise.
  */
 gboolean
-matewnck_pager_set_orientation (MateWnckPager     *pager,
+matewnck_pager_set_orientation (MatewnckPager     *pager,
                             GtkOrientation orientation)
 {
   GtkOrientation old_orientation;
@@ -2138,23 +2138,23 @@ matewnck_pager_set_orientation (MateWnckPager     *pager,
 
 /**
  * matewnck_pager_set_n_rows:
- * @pager: a #MateWnckPager.
- * @n_rows: the number of rows to use for the layout of #MateWnckWorkspace on the
- * #MateWnckScreen @pager is watching.
+ * @pager: a #MatewnckPager.
+ * @n_rows: the number of rows to use for the layout of #MatewnckWorkspace on the
+ * #MatewnckScreen @pager is watching.
  *
- * Tries to change the number of rows in the layout of #MateWnckWorkspace on the
- * #MateWnckScreen @pager is watching. Since no more than one application should
- * set this property of a #MateWnckScreen at a time, setting the layout is not
+ * Tries to change the number of rows in the layout of #MatewnckWorkspace on the
+ * #MatewnckScreen @pager is watching. Since no more than one application should
+ * set this property of a #MatewnckScreen at a time, setting the layout is not
  * guaranteed to work. 
  *
  * If @pager has not been added to a widget hierarchy, the call will fail
  * because @pager can't know the screen on which to modify the layout.
  *
- * Return value: %TRUE if the layout of #MateWnckWorkspace has been successfully
+ * Return value: %TRUE if the layout of #MatewnckWorkspace has been successfully
  * changed or did not need to be changed, %FALSE otherwise.
  */
 gboolean
-matewnck_pager_set_n_rows (MateWnckPager *pager,
+matewnck_pager_set_n_rows (MatewnckPager *pager,
 		       int        n_rows)
 {
   int      old_n_rows;
@@ -2186,14 +2186,14 @@ matewnck_pager_set_n_rows (MateWnckPager *pager,
 
 /**
  * matewnck_pager_set_display_mode:
- * @pager: a #MateWnckPager.
+ * @pager: a #MatewnckPager.
  * @mode: a display mode.
  *
  * Sets the display mode for @pager to @mode.
  */
 void
-matewnck_pager_set_display_mode (MateWnckPager            *pager,
-			     MateWnckPagerDisplayMode  mode)
+matewnck_pager_set_display_mode (MatewnckPager            *pager,
+			     MatewnckPagerDisplayMode  mode)
 {
   g_return_if_fail (MATEWNCK_IS_PAGER (pager));
 
@@ -2208,7 +2208,7 @@ matewnck_pager_set_display_mode (MateWnckPager            *pager,
 
 /**
  * matewnck_pager_set_layout_policy:
- * @pager: a #MateWnckPager.
+ * @pager: a #MatewnckPager.
  * @policy: a layout policy.
  *
  * Sets the layout policy for @pager to @policy.
@@ -2216,8 +2216,8 @@ matewnck_pager_set_display_mode (MateWnckPager            *pager,
  * Since: 2.32
  */
 void
-matewnck_pager_set_layout_policy (MateWnckPager             *pager,
-			      MateWnckPagerLayoutPolicy  policy)
+matewnck_pager_set_layout_policy (MatewnckPager             *pager,
+			      MatewnckPagerLayoutPolicy  policy)
 {
   g_return_if_fail (MATEWNCK_IS_PAGER (pager));
 
@@ -2230,14 +2230,14 @@ matewnck_pager_set_layout_policy (MateWnckPager             *pager,
 
 /**
  * matewnck_pager_set_show_all:
- * @pager: a #MateWnckPager.
- * @show_all_workspaces: whether to display all #MateWnckWorkspace in @pager.
+ * @pager: a #MatewnckPager.
+ * @show_all_workspaces: whether to display all #MatewnckWorkspace in @pager.
  *
- * Sets @pager to display all #MateWnckWorkspace or not, according to
+ * Sets @pager to display all #MatewnckWorkspace or not, according to
  * @show_all_workspaces.
  */
 void
-matewnck_pager_set_show_all (MateWnckPager *pager,
+matewnck_pager_set_show_all (MatewnckPager *pager,
 			 gboolean   show_all_workspaces)
 {
   g_return_if_fail (MATEWNCK_IS_PAGER (pager));
@@ -2253,17 +2253,17 @@ matewnck_pager_set_show_all (MateWnckPager *pager,
 
 /**
  * matewnck_pager_set_shadow_type:
- * @pager: a #MateWnckPager.
+ * @pager: a #MatewnckPager.
  * @shadow_type: a shadow type.
  *
  * Sets the shadow type for @pager to @shadow_type. The main use of this
- * function is proper integration of #MateWnckPager in panels with non-system
+ * function is proper integration of #MatewnckPager in panels with non-system
  * backgrounds.
  *
  * Since: 2.2
  */
 void
-matewnck_pager_set_shadow_type (MateWnckPager *   pager,
+matewnck_pager_set_shadow_type (MatewnckPager *   pager,
 			    GtkShadowType shadow_type)
 {
   g_return_if_fail (MATEWNCK_IS_PAGER (pager));
@@ -2276,48 +2276,48 @@ matewnck_pager_set_shadow_type (MateWnckPager *   pager,
 }
 
 static void
-active_window_changed_callback    (MateWnckScreen      *screen,
-                                   MateWnckWindow      *previous_window,
+active_window_changed_callback    (MatewnckScreen      *screen,
+                                   MatewnckWindow      *previous_window,
                                    gpointer         data)
 {
-  MateWnckPager *pager = MATEWNCK_PAGER (data);
+  MatewnckPager *pager = MATEWNCK_PAGER (data);
   gtk_widget_queue_draw (GTK_WIDGET (pager));
 }
 
 static void
-active_workspace_changed_callback (MateWnckScreen      *screen,
-                                   MateWnckWorkspace   *previous_workspace,
+active_workspace_changed_callback (MatewnckScreen      *screen,
+                                   MatewnckWorkspace   *previous_workspace,
                                    gpointer         data)
 {
-  MateWnckPager *pager = MATEWNCK_PAGER (data);
+  MatewnckPager *pager = MATEWNCK_PAGER (data);
   gtk_widget_queue_draw (GTK_WIDGET (pager));
 }
 
 static void
-window_stacking_changed_callback  (MateWnckScreen      *screen,
+window_stacking_changed_callback  (MatewnckScreen      *screen,
                                    gpointer         data)
 {
-  MateWnckPager *pager = MATEWNCK_PAGER (data);
+  MatewnckPager *pager = MATEWNCK_PAGER (data);
   gtk_widget_queue_draw (GTK_WIDGET (pager));
 }
 
 static void
-window_opened_callback            (MateWnckScreen      *screen,
-                                   MateWnckWindow      *window,
+window_opened_callback            (MatewnckScreen      *screen,
+                                   MatewnckWindow      *window,
                                    gpointer         data)
 {
-  MateWnckPager *pager = MATEWNCK_PAGER (data);
+  MatewnckPager *pager = MATEWNCK_PAGER (data);
 
   matewnck_pager_connect_window (pager, window);
   matewnck_pager_queue_draw_window (pager, window);
 }
 
 static void
-window_closed_callback            (MateWnckScreen      *screen,
-                                   MateWnckWindow      *window,
+window_closed_callback            (MatewnckScreen      *screen,
+                                   MatewnckWindow      *window,
                                    gpointer         data)
 {
-  MateWnckPager *pager = MATEWNCK_PAGER (data);
+  MatewnckPager *pager = MATEWNCK_PAGER (data);
 
   if (pager->priv->drag_window == window)
     matewnck_pager_clear_drag (pager);
@@ -2326,57 +2326,57 @@ window_closed_callback            (MateWnckScreen      *screen,
 }
 
 static void
-workspace_created_callback        (MateWnckScreen      *screen,
-                                   MateWnckWorkspace   *space,
+workspace_created_callback        (MatewnckScreen      *screen,
+                                   MatewnckWorkspace   *space,
                                    gpointer         data)
 {
-  MateWnckPager *pager = MATEWNCK_PAGER (data);
+  MatewnckPager *pager = MATEWNCK_PAGER (data);
   g_signal_connect (space, "name_changed",
                     G_CALLBACK (workspace_name_changed_callback), pager);
   gtk_widget_queue_resize (GTK_WIDGET (pager));
 }
 
 static void
-workspace_destroyed_callback      (MateWnckScreen      *screen,
-                                   MateWnckWorkspace   *space,
+workspace_destroyed_callback      (MatewnckScreen      *screen,
+                                   MatewnckWorkspace   *space,
                                    gpointer         data)
 {
-  MateWnckPager *pager = MATEWNCK_PAGER (data);
+  MatewnckPager *pager = MATEWNCK_PAGER (data);
   g_signal_handlers_disconnect_by_func (space, G_CALLBACK (workspace_name_changed_callback), pager);
   gtk_widget_queue_resize (GTK_WIDGET (pager));
 }
 
 static void
-application_opened_callback       (MateWnckScreen      *screen,
-                                   MateWnckApplication *app,
+application_opened_callback       (MatewnckScreen      *screen,
+                                   MatewnckApplication *app,
                                    gpointer         data)
 {
-  /*   MateWnckPager *pager = MATEWNCK_PAGER (data); */
+  /*   MatewnckPager *pager = MATEWNCK_PAGER (data); */
 }
 
 static void
-application_closed_callback       (MateWnckScreen      *screen,
-                                   MateWnckApplication *app,
+application_closed_callback       (MatewnckScreen      *screen,
+                                   MatewnckApplication *app,
                                    gpointer         data)
 {
-  /*   MateWnckPager *pager = MATEWNCK_PAGER (data); */
+  /*   MatewnckPager *pager = MATEWNCK_PAGER (data); */
 }
 
 static void
-window_name_changed_callback      (MateWnckWindow      *window,
+window_name_changed_callback      (MatewnckWindow      *window,
                                    gpointer         data)
 {
-  MateWnckPager *pager = MATEWNCK_PAGER (data);
+  MatewnckPager *pager = MATEWNCK_PAGER (data);
   matewnck_pager_queue_draw_window (pager, window);
 }
 
 static void
-window_state_changed_callback     (MateWnckWindow      *window,
-                                   MateWnckWindowState  changed,
-                                   MateWnckWindowState  new,
+window_state_changed_callback     (MatewnckWindow      *window,
+                                   MatewnckWindowState  changed,
+                                   MatewnckWindowState  new,
                                    gpointer         data)
 {
-  MateWnckPager *pager = MATEWNCK_PAGER (data);
+  MatewnckPager *pager = MATEWNCK_PAGER (data);
 
   /* if the changed state changes the visibility in the pager, we need to
    * redraw the whole workspace. matewnck_pager_queue_draw_window() might not be
@@ -2390,35 +2390,35 @@ window_state_changed_callback     (MateWnckWindow      *window,
 }
 
 static void
-window_workspace_changed_callback (MateWnckWindow      *window,
+window_workspace_changed_callback (MatewnckWindow      *window,
                                    gpointer         data)
 {
-  MateWnckPager *pager = MATEWNCK_PAGER (data);
+  MatewnckPager *pager = MATEWNCK_PAGER (data);
   gtk_widget_queue_draw (GTK_WIDGET (pager));
 }
 
 static void
-window_icon_changed_callback      (MateWnckWindow      *window,
+window_icon_changed_callback      (MatewnckWindow      *window,
                                    gpointer         data)
 {
-  MateWnckPager *pager = MATEWNCK_PAGER (data);
+  MatewnckPager *pager = MATEWNCK_PAGER (data);
   matewnck_pager_queue_draw_window (pager, window);
 }
 
 static void
-window_geometry_changed_callback  (MateWnckWindow      *window,
+window_geometry_changed_callback  (MatewnckWindow      *window,
                                    gpointer         data)
 {
-  MateWnckPager *pager = MATEWNCK_PAGER (data);
+  MatewnckPager *pager = MATEWNCK_PAGER (data);
   
   matewnck_pager_queue_draw_window (pager, window);
 }
 
 static void
-background_changed_callback (MateWnckWindow *window,
+background_changed_callback (MatewnckWindow *window,
                              gpointer    data)
 {
-  MateWnckPager *pager = MATEWNCK_PAGER (data);
+  MatewnckPager *pager = MATEWNCK_PAGER (data);
 
   if (pager->priv->bg_cache)
     {
@@ -2430,26 +2430,26 @@ background_changed_callback (MateWnckWindow *window,
 }
 
 static void
-workspace_name_changed_callback (MateWnckWorkspace *space,
+workspace_name_changed_callback (MatewnckWorkspace *space,
                                  gpointer       data)
 {
   gtk_widget_queue_resize (GTK_WIDGET (data));
 }
 
 static void
-viewports_changed_callback (MateWnckWorkspace *space,
+viewports_changed_callback (MatewnckWorkspace *space,
                             gpointer       data)
 {
   gtk_widget_queue_resize (GTK_WIDGET (data));
 }
 
 static void
-matewnck_pager_connect_screen (MateWnckPager *pager)
+matewnck_pager_connect_screen (MatewnckPager *pager)
 {
   int i;
   guint *c;
   GList *tmp;
-  MateWnckScreen *screen;
+  MatewnckScreen *screen;
   
   g_return_if_fail (pager->priv->screen != NULL);
 
@@ -2523,7 +2523,7 @@ matewnck_pager_connect_screen (MateWnckPager *pager)
   /* connect to name_changed on each workspace */
   for (i = 0; i < matewnck_screen_get_workspace_count (pager->priv->screen); i++)
     {
-      MateWnckWorkspace *space;
+      MatewnckWorkspace *space;
       space = matewnck_screen_get_workspace (pager->priv->screen, i);
       g_signal_connect (space, "name_changed",
                         G_CALLBACK (workspace_name_changed_callback), pager);
@@ -2531,8 +2531,8 @@ matewnck_pager_connect_screen (MateWnckPager *pager)
 }
 
 static void
-matewnck_pager_connect_window (MateWnckPager  *pager,
-                           MateWnckWindow *window)
+matewnck_pager_connect_window (MatewnckPager  *pager,
+                           MatewnckWindow *window)
 {
   g_signal_connect (G_OBJECT (window), "name_changed",
                     G_CALLBACK (window_name_changed_callback),
@@ -2552,7 +2552,7 @@ matewnck_pager_connect_window (MateWnckPager  *pager,
 }
 
 static void
-matewnck_pager_disconnect_screen (MateWnckPager  *pager)
+matewnck_pager_disconnect_screen (MatewnckPager  *pager)
 {
   int i;
   GList *tmp;
@@ -2574,7 +2574,7 @@ matewnck_pager_disconnect_screen (MateWnckPager  *pager)
 
   for (i = 0; i < matewnck_screen_get_workspace_count (pager->priv->screen); i++)
     {
-      MateWnckWorkspace *space;
+      MatewnckWorkspace *space;
       space = matewnck_screen_get_workspace (pager->priv->screen, i);
       g_signal_handlers_disconnect_by_func (space, G_CALLBACK (workspace_name_changed_callback), pager);
     }
@@ -2586,8 +2586,8 @@ matewnck_pager_disconnect_screen (MateWnckPager  *pager)
 }
 
 static void
-matewnck_pager_disconnect_window (MateWnckPager  *pager,
-                              MateWnckWindow *window)
+matewnck_pager_disconnect_window (MatewnckPager  *pager,
+                              MatewnckWindow *window)
 {
   g_signal_handlers_disconnect_by_func (G_OBJECT (window),
                                         G_CALLBACK (window_name_changed_callback),
@@ -2607,7 +2607,7 @@ matewnck_pager_disconnect_window (MateWnckPager  *pager,
 }
 
 static void
-matewnck_pager_clear_drag (MateWnckPager *pager)
+matewnck_pager_clear_drag (MatewnckPager *pager)
 {
   if (pager->priv->dragging)
     matewnck_pager_queue_draw_window (pager, pager->priv->drag_window);
@@ -2619,7 +2619,7 @@ matewnck_pager_clear_drag (MateWnckPager *pager)
 }
 
 static GdkPixbuf*
-matewnck_pager_get_background (MateWnckPager *pager,
+matewnck_pager_get_background (MatewnckPager *pager,
                            int        width,
                            int        height)
 {
@@ -2694,7 +2694,7 @@ matewnck_pager_get_accessible (GtkWidget *widget)
       /*
        * Figure out whether accessibility is enabled by looking at the
        * type of the accessible object which would be created for
-       * the parent type MateWnckPager.
+       * the parent type MatewnckPager.
        */
       derived_type = g_type_parent (MATEWNCK_TYPE_PAGER);
 
@@ -2723,16 +2723,16 @@ matewnck_pager_get_accessible (GtkWidget *widget)
 }
 
 int 
-_matewnck_pager_get_n_workspaces (MateWnckPager *pager)
+_matewnck_pager_get_n_workspaces (MatewnckPager *pager)
 {
   return matewnck_screen_get_workspace_count (pager->priv->screen);
 }
 
 const char* 
-_matewnck_pager_get_workspace_name (MateWnckPager *pager,
+_matewnck_pager_get_workspace_name (MatewnckPager *pager,
                                 int        i)
 {
-  MateWnckWorkspace *space;
+  MatewnckWorkspace *space;
 
   space = matewnck_screen_get_workspace (pager->priv->screen, i);
   if (space)
@@ -2741,28 +2741,28 @@ _matewnck_pager_get_workspace_name (MateWnckPager *pager,
     return NULL;
 }
 
-MateWnckWorkspace*
-_matewnck_pager_get_active_workspace (MateWnckPager *pager)
+MatewnckWorkspace*
+_matewnck_pager_get_active_workspace (MatewnckPager *pager)
 {
   return matewnck_screen_get_active_workspace (pager->priv->screen);
 }
 
-MateWnckWorkspace*
-_matewnck_pager_get_workspace (MateWnckPager *pager,
+MatewnckWorkspace*
+_matewnck_pager_get_workspace (MatewnckPager *pager,
                            int        i)
 {
   return matewnck_screen_get_workspace (pager->priv->screen, i);
 } 
 
 void 
-_matewnck_pager_activate_workspace (MateWnckWorkspace *wspace,
+_matewnck_pager_activate_workspace (MatewnckWorkspace *wspace,
                                 guint32        timestamp)
 {
   matewnck_workspace_activate (wspace, timestamp);
 }
 
 void
-_matewnck_pager_get_workspace_rect (MateWnckPager    *pager, 
+_matewnck_pager_get_workspace_rect (MatewnckPager    *pager, 
                                 int           i,
                                 GdkRectangle *rect)
 {

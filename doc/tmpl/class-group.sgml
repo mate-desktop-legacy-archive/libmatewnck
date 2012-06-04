@@ -1,5 +1,5 @@
 <!-- ##### SECTION Title ##### -->
-MateWnckClassGroup
+MatewnckClassGroup
 
 <!-- ##### SECTION Short_Description ##### -->
 
@@ -20,20 +20,20 @@ MateWnckClassGroup
 <!-- ##### SECTION Image ##### -->
 
 
-<!-- ##### STRUCT MateWnckClassGroup ##### -->
+<!-- ##### STRUCT MatewnckClassGroup ##### -->
 <para>
 
 </para>
 
 
-<!-- ##### SIGNAL MateWnckClassGroup::icon-changed ##### -->
+<!-- ##### SIGNAL MatewnckClassGroup::icon-changed ##### -->
 <para>
 
 </para>
 
 @matewnckclassgroup: the object which received the signal.
 
-<!-- ##### SIGNAL MateWnckClassGroup::name-changed ##### -->
+<!-- ##### SIGNAL MatewnckClassGroup::name-changed ##### -->
 <para>
 
 </para>

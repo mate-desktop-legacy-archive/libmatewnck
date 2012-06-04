@@ -30,13 +30,13 @@
 #include "workspace-accessible.h"
 #include "private.h"
 
-typedef struct _MateWnckPagerAccessiblePriv MateWnckPagerAccessiblePriv;
-struct _MateWnckPagerAccessiblePriv
+typedef struct _MatewnckPagerAccessiblePriv MatewnckPagerAccessiblePriv;
+struct _MatewnckPagerAccessiblePriv
 {
   GSList *children;
 };
 
-static void        matewnck_pager_accessible_class_init       (MateWnckPagerAccessibleClass *klass);
+static void        matewnck_pager_accessible_class_init       (MatewnckPagerAccessibleClass *klass);
 static const char* matewnck_pager_accessible_get_name         (AtkObject                *obj);
 static const char* matewnck_pager_accessible_get_description  (AtkObject                *obj);
 static int         matewnck_pager_accessible_get_n_children   (AtkObject                *obj);
@@ -51,11 +51,11 @@ static AtkObject*  matewnck_pager_ref_selection               (AtkSelection     
                                                            int                       i);
 static int         matewnck_pager_selection_count             (AtkSelection             *selection);
 static void        matewnck_pager_accessible_update_workspace (AtkObject                *aobj_ws,
-                                                           MateWnckPager                *pager,
+                                                           MatewnckPager                *pager,
                                                            int                       i);
 static void        matewnck_pager_accessible_finalize         (GObject                  *gobject);
 
-static MateWnckPagerAccessiblePriv* get_private_data          (GObject                  *gobject);
+static MatewnckPagerAccessiblePriv* get_private_data          (GObject                  *gobject);
 
 static void* parent_class;
 static GQuark quark_private_data = 0;
@@ -69,13 +69,13 @@ matewnck_pager_accessible_get_type (void)
     {
       GTypeInfo tinfo = 
         {
-          sizeof (MateWnckPagerAccessibleClass),
+          sizeof (MatewnckPagerAccessibleClass),
           (GBaseInitFunc) NULL, /* base init */
           (GBaseFinalizeFunc) NULL, /* base finalize */
           (GClassInitFunc) matewnck_pager_accessible_class_init, /* class init */
           (GClassFinalizeFunc) NULL, /* class finalize */
           NULL, /* class data */
-          sizeof (MateWnckPagerAccessible), /* instance size */
+          sizeof (MatewnckPagerAccessible), /* instance size */
           0, /* nb preallocs */
           NULL, /* instance init */
           NULL /* value table */
@@ -107,7 +107,7 @@ matewnck_pager_accessible_get_type (void)
       tinfo.instance_size = query.instance_size;
 
       type = g_type_register_static (derived_atk_type,
-                                     "MateWnckPagerAccessible", &tinfo, 0);
+                                     "MatewnckPagerAccessible", &tinfo, 0);
 
       g_type_add_interface_static (type, ATK_TYPE_SELECTION, &atk_selection_info);
     }
@@ -127,7 +127,7 @@ atk_selection_interface_init (AtkSelectionIface *iface)
 }
 
 static void
-matewnck_pager_accessible_class_init (MateWnckPagerAccessibleClass *klass)
+matewnck_pager_accessible_class_init (MatewnckPagerAccessibleClass *klass)
 {
   AtkObjectClass *class = ATK_OBJECT_CLASS (klass);
   GObjectClass *obj_class = G_OBJECT_CLASS (klass);
@@ -148,8 +148,8 @@ static gboolean
 matewnck_pager_add_selection (AtkSelection *selection, 
 		          int           i)
 {
-  MateWnckPager *pager;
-  MateWnckWorkspace *wspace;
+  MatewnckPager *pager;
+  MatewnckWorkspace *wspace;
   GtkWidget *widget;
   int n_spaces; 
 
@@ -190,9 +190,9 @@ static AtkObject*
 matewnck_pager_ref_selection (AtkSelection *selection, 
 		          int           i)
 {
-  MateWnckPager *pager;
+  MatewnckPager *pager;
   GtkWidget *widget;
-  MateWnckWorkspace *active_wspace;
+  MatewnckWorkspace *active_wspace;
   AtkObject *accessible;
   int wsno;       
 
@@ -255,9 +255,9 @@ static gboolean
 matewnck_pager_is_child_selected (AtkSelection *selection, 
 		              int           i)
 {
-  MateWnckPager *pager;
+  MatewnckPager *pager;
   GtkWidget *widget;
-  MateWnckWorkspace *active_wspace;
+  MatewnckWorkspace *active_wspace;
   int wsno;
 
 #if GTK_CHECK_VERSION(2,21,0)
@@ -308,7 +308,7 @@ matewnck_pager_accessible_new (GtkWidget *widget)
 static void
 matewnck_pager_accessible_finalize (GObject *gobject)
 {
-  MateWnckPagerAccessiblePriv *pager_accessible_priv;
+  MatewnckPagerAccessiblePriv *pager_accessible_priv;
   GSList *children;
 
   pager_accessible_priv = get_private_data (gobject);
@@ -363,7 +363,7 @@ matewnck_pager_accessible_get_n_children (AtkObject* obj)
 {
   GtkAccessible *accessible;
   GtkWidget *widget;
-  MateWnckPager *pager;
+  MatewnckPager *pager;
 
   g_return_val_if_fail (MATEWNCK_PAGER_IS_ACCESSIBLE (obj), 0);
 
@@ -392,10 +392,10 @@ matewnck_pager_accessible_ref_child (AtkObject *obj,
 {
   GtkAccessible *accessible;
   GtkWidget *widget;
-  MateWnckPager *pager;
+  MatewnckPager *pager;
   int n_spaces = 0;
   int len;
-  MateWnckPagerAccessiblePriv *pager_accessible_priv;
+  MatewnckPagerAccessiblePriv *pager_accessible_priv;
   AtkObject *ret;
   
   g_return_val_if_fail (MATEWNCK_PAGER_IS_ACCESSIBLE (obj), NULL);
@@ -428,8 +428,8 @@ matewnck_pager_accessible_ref_child (AtkObject *obj,
     {
       AtkRegistry *default_registry;   
       AtkObjectFactory *factory;
-      MateWnckWorkspace *wspace;
-      MateWnckWorkspaceAccessible *space_accessible;
+      MatewnckWorkspace *wspace;
+      MatewnckWorkspaceAccessible *space_accessible;
       
       default_registry = atk_get_default_registry ();
       factory = atk_registry_get_factory (default_registry,
@@ -455,7 +455,7 @@ matewnck_pager_accessible_ref_child (AtkObject *obj,
 
 static void
 matewnck_pager_accessible_update_workspace (AtkObject *aobj_ws,
-                                        MateWnckPager *pager,        	
+                                        MatewnckPager *pager,        	
                                         int        i)
 {
   g_free (aobj_ws->name);
@@ -467,16 +467,16 @@ matewnck_pager_accessible_update_workspace (AtkObject *aobj_ws,
   aobj_ws->role = ATK_ROLE_UNKNOWN;
 }
 
-static MateWnckPagerAccessiblePriv*
+static MatewnckPagerAccessiblePriv*
 get_private_data (GObject *gobject)
 {
-  MateWnckPagerAccessiblePriv *private_data;
+  MatewnckPagerAccessiblePriv *private_data;
 
   private_data = g_object_get_qdata (gobject,
                                      quark_private_data);
   if (!private_data)
     {
-      private_data = g_new0 (MateWnckPagerAccessiblePriv, 1);
+      private_data = g_new0 (MatewnckPagerAccessiblePriv, 1);
       g_object_set_qdata (gobject,
                           quark_private_data,
                           private_data);

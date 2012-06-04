@@ -70,7 +70,7 @@ gboolean option_workspace = FALSE;
 gboolean option_screen = FALSE;
 
 gboolean get_from_user = TRUE;
-MateWnckWindow *got_from_user = NULL;
+MatewnckWindow *got_from_user = NULL;
 
 gulong   xid = 0;
 gulong   interact_app_xid = 0;
@@ -126,7 +126,7 @@ int      set_y = G_MAXINT;
 int      set_width = -1;
 int      set_height = -1;
 char     *set_window_type = NULL;
-MateWnckWindowType set_window_type_t = MATEWNCK_WINDOW_NORMAL;
+MatewnckWindowType set_window_type_t = MATEWNCK_WINDOW_NORMAL;
 
 static gboolean
 option_parse (const char  *option_name,
@@ -318,7 +318,7 @@ timestamp_predicate (Display *display,
 }
 
 static guint32
-get_xserver_timestamp (MateWnckScreen *screen)
+get_xserver_timestamp (MatewnckScreen *screen)
 {
   Display *display;
   int number;
@@ -844,7 +844,7 @@ validate_options (void)
 }
 
 static void
-update_screen (MateWnckScreen *screen)
+update_screen (MatewnckScreen *screen)
 {
   int viewport_x;
   int viewport_y;
@@ -873,7 +873,7 @@ update_screen (MateWnckScreen *screen)
 
   if (set_viewport_x != -1 || set_viewport_y != -1)
     {
-       MateWnckWorkspace *active_space;
+       MatewnckWorkspace *active_space;
 
        active_space = matewnck_screen_get_active_workspace (screen);
 
@@ -910,7 +910,7 @@ update_screen (MateWnckScreen *screen)
 }
 
 static void
-update_workspace (MateWnckWorkspace *space)
+update_workspace (MatewnckWorkspace *space)
 {
   unsigned int timestamp;
 
@@ -925,10 +925,10 @@ update_workspace (MateWnckWorkspace *space)
 
 
 static void
-update_window (MateWnckWindow *window)
+update_window (MatewnckWindow *window)
 {
-  MateWnckWindowActions        actions;
-  MateWnckWindowMoveResizeMask geometry_mask;
+  MatewnckWindowActions        actions;
+  MatewnckWindowMoveResizeMask geometry_mask;
   unsigned int             timestamp;
 
   actions = matewnck_window_get_actions (window);
@@ -1028,8 +1028,8 @@ update_window (MateWnckWindow *window)
     {
       if (actions & MATEWNCK_WINDOW_ACTION_CHANGE_WORKSPACE)
         {
-           MateWnckScreen    *screen;
-           MateWnckWorkspace *space;
+           MatewnckScreen    *screen;
+           MatewnckWorkspace *space;
 
            screen = matewnck_window_get_screen (window);
            space = matewnck_screen_get_workspace (screen, set_workspace);
@@ -1046,14 +1046,14 @@ update_window (MateWnckWindow *window)
   /* do activation after the workspace change */
   if (set_activate)
     {
-       MateWnckScreen    *screen;
-       MateWnckWorkspace *space;
+       MatewnckScreen    *screen;
+       MatewnckWorkspace *space;
 
        screen = matewnck_window_get_screen (window);
        space = matewnck_window_get_workspace (window);
        if (space != NULL)
          {
-           MateWnckWorkspace *active_space;
+           MatewnckWorkspace *active_space;
 
            active_space = matewnck_screen_get_active_workspace (screen);
            if (space != active_space)
@@ -1088,7 +1088,7 @@ update_window (MateWnckWindow *window)
 static void
 list_windows (GList *windows)
 {
-  MateWnckWindow *window;
+  MatewnckWindow *window;
   GList      *l;
   const char *buf;
 
@@ -1108,11 +1108,11 @@ list_windows (GList *windows)
 }
 
 static void
-list_screen (MateWnckScreen *screen)
+list_screen (MatewnckScreen *screen)
 {
   if (list_workspaces)
     {
-      MateWnckWorkspace *space;
+      MatewnckWorkspace *space;
       GList         *spaces;
       GList         *l;
 
@@ -1133,9 +1133,9 @@ list_screen (MateWnckScreen *screen)
 }
 
 static void
-list_workspace (MateWnckWorkspace *space)
+list_workspace (MatewnckWorkspace *space)
 {
-  MateWnckWindow *window;
+  MatewnckWindow *window;
   GList      *all_windows;
   GList      *l;
   GList      *space_windows;
@@ -1162,26 +1162,26 @@ list_workspace (MateWnckWorkspace *space)
 }
 
 static void
-list_class_group (MateWnckClassGroup *class_group)
+list_class_group (MatewnckClassGroup *class_group)
 {
   list_windows (matewnck_class_group_get_windows (class_group));
 }
 
 static void
-list_application (MateWnckApplication *app)
+list_application (MatewnckApplication *app)
 {
   list_windows (matewnck_application_get_windows (app));
 }
 
 static void
-print_screen (MateWnckScreen *screen)
+print_screen (MatewnckScreen *screen)
 {
-  MateWnckWorkspace *space;
-  MateWnckWindow    *window;
+  MatewnckWorkspace *space;
+  MatewnckWindow    *window;
   const char    *buf;
   char          *free_buf;
 #if 0
-  MateWnckLayoutOrientation orientation;
+  MatewnckLayoutOrientation orientation;
   int            rows;
   int            columns;
 #endif
@@ -1251,10 +1251,10 @@ print_screen (MateWnckScreen *screen)
 }
 
 static void
-print_workspace (MateWnckWorkspace *space)
+print_workspace (MatewnckWorkspace *space)
 {
-  MateWnckScreen    *screen;
-  MateWnckWorkspace *neighbor;
+  MatewnckScreen    *screen;
+  MatewnckWorkspace *neighbor;
   const char    *buf;
   char          *free_buf;
 
@@ -1342,7 +1342,7 @@ print_workspace (MateWnckWorkspace *space)
 }
 
 static void
-print_class_group (MateWnckClassGroup *class_group)
+print_class_group (MatewnckClassGroup *class_group)
 {
   GList *windows;
 
@@ -1368,7 +1368,7 @@ print_class_group (MateWnckClassGroup *class_group)
 }
 
 static void
-print_application (MateWnckApplication *app)
+print_application (MatewnckApplication *app)
 {
   const char *buf;
   char       *free_buf;
@@ -1406,14 +1406,14 @@ print_application (MateWnckApplication *app)
 }
 
 static void
-print_window (MateWnckWindow *window)
+print_window (MatewnckWindow *window)
 {
-  MateWnckWindowType     type;
+  MatewnckWindowType     type;
   int                x, y, w, h;
-  MateWnckClassGroup    *class_group;
-  MateWnckWorkspace     *space;
-  MateWnckScreen        *screen;
-  MateWnckWindowActions  actions;
+  MatewnckClassGroup    *class_group;
+  MatewnckWorkspace     *space;
+  MatewnckScreen        *screen;
+  MatewnckWindowActions  actions;
   const char        *buf;
   char              *free_buf;
 
@@ -1685,14 +1685,14 @@ wm_state_set (Display *display,
   return TRUE;
 }
 
-static MateWnckWindow *
+static MatewnckWindow *
 find_managed_window (Display *display,
                      Window   window)
 {
   Window      root;
   Window      parent;
   Window     *kids = NULL;
-  MateWnckWindow *retval;
+  MatewnckWindow *retval;
   guint       nkids;
   int         i, result;
 
@@ -1817,7 +1817,7 @@ main (int argc, char **argv)
   GOptionContext *ctxt;
   GOptionGroup   *group;
   GError         *error;
-  MateWnckScreen     *screen;
+  MatewnckScreen     *screen;
   
   bindtextdomain (GETTEXT_PACKAGE, MATEWNCK_LOCALEDIR);
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -1907,7 +1907,7 @@ main (int argc, char **argv)
 
   if (option_workspace && interact_space < 0)
     {
-      MateWnckWorkspace *space;
+      MatewnckWorkspace *space;
       space = matewnck_screen_get_active_workspace (screen);
       if (space == NULL)
         interact_space = 0;
@@ -1934,7 +1934,7 @@ main (int argc, char **argv)
   else if (mode == WORKSPACE_READ_MODE || mode == WORKSPACE_LIST_MODE ||
            mode == WORKSPACE_WRITE_MODE)
     {
-      MateWnckWorkspace *space;
+      MatewnckWorkspace *space;
 
       g_assert (interact_space != -1);
 
@@ -1957,7 +1957,7 @@ main (int argc, char **argv)
     }
   else if (mode == CLASS_GROUP_READ_MODE || mode == CLASS_GROUP_LIST_MODE)
     {
-      MateWnckClassGroup *class_group;
+      MatewnckClassGroup *class_group;
 
       if (got_from_user)
         class_group = matewnck_window_get_class_group (got_from_user);
@@ -1982,7 +1982,7 @@ main (int argc, char **argv)
     }
   else if (mode == APPLICATION_READ_MODE || mode == APPLICATION_LIST_MODE)
     {
-      MateWnckApplication *app;
+      MatewnckApplication *app;
 
       if (got_from_user)
         app = matewnck_window_get_application (got_from_user);
@@ -2005,7 +2005,7 @@ main (int argc, char **argv)
     }
   else
     {
-      MateWnckWindow *window;
+      MatewnckWindow *window;
 
       if (got_from_user)
         window = got_from_user;

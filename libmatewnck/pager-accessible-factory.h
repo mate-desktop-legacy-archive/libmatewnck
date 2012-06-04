@@ -28,21 +28,21 @@ extern "C" {
 #endif /* __cplusplus */
 
 #define MATEWNCK_TYPE_PAGER_ACCESSIBLE_FACTORY               (matewnck_pager_accessible_factory_get_type())
-#define MATEWNCK_PAGER_ACCESSIBLE_FACTORY(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), MATEWNCK_TYPE_PAGER_ACCESSIBLE_FACTORY, MateWnckpagerAccessibleFactory))
-#define MATEWNCK_PAGER_ACCESSIBLE_FACTORY_CLASS(klass)       (G_TYPE_CHECK_CLASS_CAST ((klass), MATEWNCK_TYPE_PAGER_ACCESSIBLE_FACTORY, MateWnckPagerAccessibleFactoryClass))
+#define MATEWNCK_PAGER_ACCESSIBLE_FACTORY(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), MATEWNCK_TYPE_PAGER_ACCESSIBLE_FACTORY, MatewnckpagerAccessibleFactory))
+#define MATEWNCK_PAGER_ACCESSIBLE_FACTORY_CLASS(klass)       (G_TYPE_CHECK_CLASS_CAST ((klass), MATEWNCK_TYPE_PAGER_ACCESSIBLE_FACTORY, MatewnckPagerAccessibleFactoryClass))
 #define MATEWNCK_IS_PAGER_ACCESSIBLE_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), MATEWNCK_TYPE_PAGER_ACCESSIBLE_FACTORY))
 #define MATEWNCK_IS_PAGER_ACCESSIBLE_FACTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_TYPE ((klass), MATEWNCK_TYPE_PAGER_ACCESSIBLE_FACTORY))
-#define MATEWNCK_PAGER_ACCESSIBLE_FACTORY_GET_CLASS(obj)     (G_TYPE_INSTANCE_GET_CLASS ((obj), MATEWNCK_TYPE_PAGER_ACCESSIBLE_FACTORY, MateWnckPagerAccessibleFactoryClass))
+#define MATEWNCK_PAGER_ACCESSIBLE_FACTORY_GET_CLASS(obj)     (G_TYPE_INSTANCE_GET_CLASS ((obj), MATEWNCK_TYPE_PAGER_ACCESSIBLE_FACTORY, MatewnckPagerAccessibleFactoryClass))
 
-typedef struct _MateWnckPagerAccessibleFactory       MateWnckPagerAccessibleFactory;
-typedef struct _MateWnckPagerAccessibleFactoryClass  MateWnckPagerAccessibleFactoryClass;
+typedef struct _MatewnckPagerAccessibleFactory       MatewnckPagerAccessibleFactory;
+typedef struct _MatewnckPagerAccessibleFactoryClass  MatewnckPagerAccessibleFactoryClass;
 
-struct _MateWnckPagerAccessibleFactory
+struct _MatewnckPagerAccessibleFactory
 {
   AtkObjectFactory parent;
 };
 
-struct _MateWnckPagerAccessibleFactoryClass
+struct _MatewnckPagerAccessibleFactoryClass
 {
   AtkObjectFactoryClass parent_class;
 };

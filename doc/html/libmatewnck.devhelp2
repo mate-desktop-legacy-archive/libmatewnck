@@ -4,17 +4,17 @@
   <chapters>
     <sub name="Libmatewnck Overview" link="intro.html"/>
     <sub name="Libmatewnck Core Window Management Support" link="core.html">
-      <sub name="MateWnckWindow" link="MateWnckWindow.html"/>
-      <sub name="MateWnckClassGroup" link="MateWnckClassGroup.html"/>
-      <sub name="MateWnckApplication" link="MateWnckApplication.html"/>
-      <sub name="MateWnckWorkspace" link="MateWnckWorkspace.html"/>
-      <sub name="MateWnckScreen" link="MateWnckScreen.html"/>
+      <sub name="MatewnckWindow" link="MatewnckWindow.html"/>
+      <sub name="MatewnckClassGroup" link="MatewnckClassGroup.html"/>
+      <sub name="MatewnckApplication" link="MatewnckApplication.html"/>
+      <sub name="MatewnckWorkspace" link="MatewnckWorkspace.html"/>
+      <sub name="MatewnckScreen" link="MatewnckScreen.html"/>
     </sub>
     <sub name="Libmatewnck Widgets" link="widgets.html">
-      <sub name="MateWnckActionMenu" link="libmatewnck-Window-Action-Menu.html"/>
-      <sub name="MateWnckPager" link="MateWnckPager.html"/>
-      <sub name="MateWnckSelector" link="MateWnckSelector.html"/>
-      <sub name="MateWnckTasklist" link="MateWnckTasklist.html"/>
+      <sub name="MatewnckActionMenu" link="libmatewnck-Window-Action-Menu.html"/>
+      <sub name="MatewnckPager" link="MatewnckPager.html"/>
+      <sub name="MatewnckSelector" link="MatewnckSelector.html"/>
+      <sub name="MatewnckTasklist" link="MatewnckTasklist.html"/>
     </sub>
     <sub name="Libmatewnck Utilities" link="utils.html">
       <sub name="Resource Usage of X Clients" link="libmatewnck-Resource-Usage-of-X-Clients.html"/>
@@ -38,291 +38,291 @@
     </sub>
   </chapters>
   <functions>
-    <keyword type="struct" name="MateWnckWindow" link="MateWnckWindow.html#MateWnckWindow-struct"/>
-    <keyword type="function" name="matewnck_window_get ()" link="MateWnckWindow.html#matewnck-window-get"/>
-    <keyword type="function" name="matewnck_window_get_screen ()" link="MateWnckWindow.html#matewnck-window-get-screen"/>
-    <keyword type="function" name="matewnck_window_has_name ()" link="MateWnckWindow.html#matewnck-window-has-name" since="2.16"/>
-    <keyword type="function" name="matewnck_window_get_name ()" link="MateWnckWindow.html#matewnck-window-get-name"/>
-    <keyword type="function" name="matewnck_window_has_icon_name ()" link="MateWnckWindow.html#matewnck-window-has-icon-name" since="2.16"/>
-    <keyword type="function" name="matewnck_window_get_icon_name ()" link="MateWnckWindow.html#matewnck-window-get-icon-name"/>
-    <keyword type="function" name="matewnck_window_get_icon_is_fallback ()" link="MateWnckWindow.html#matewnck-window-get-icon-is-fallback"/>
-    <keyword type="function" name="matewnck_window_get_icon ()" link="MateWnckWindow.html#matewnck-window-get-icon"/>
-    <keyword type="function" name="matewnck_window_get_mini_icon ()" link="MateWnckWindow.html#matewnck-window-get-mini-icon"/>
-    <keyword type="function" name="matewnck_window_get_application ()" link="MateWnckWindow.html#matewnck-window-get-application"/>
-    <keyword type="function" name="matewnck_window_get_transient ()" link="MateWnckWindow.html#matewnck-window-get-transient" since="2.12"/>
-    <keyword type="function" name="matewnck_window_get_group_leader ()" link="MateWnckWindow.html#matewnck-window-get-group-leader"/>
-    <keyword type="function" name="matewnck_window_get_xid ()" link="MateWnckWindow.html#matewnck-window-get-xid"/>
-    <keyword type="function" name="matewnck_window_get_class_group ()" link="MateWnckWindow.html#matewnck-window-get-class-group" since="2.2"/>
-    <keyword type="function" name="matewnck_window_get_session_id ()" link="MateWnckWindow.html#matewnck-window-get-session-id"/>
-    <keyword type="function" name="matewnck_window_get_session_id_utf8 ()" link="MateWnckWindow.html#matewnck-window-get-session-id-utf8"/>
-    <keyword type="function" name="matewnck_window_get_pid ()" link="MateWnckWindow.html#matewnck-window-get-pid"/>
-    <keyword type="function" name="matewnck_window_get_sort_order ()" link="MateWnckWindow.html#matewnck-window-get-sort-order" since="2.10"/>
-    <keyword type="function" name="matewnck_window_set_sort_order ()" link="MateWnckWindow.html#matewnck-window-set-sort-order" since="2.20"/>
-    <keyword type="enum" name="enum MateWnckWindowType" link="MateWnckWindow.html#MateWnckWindowType"/>
-    <keyword type="function" name="matewnck_window_get_window_type ()" link="MateWnckWindow.html#matewnck-window-get-window-type"/>
-    <keyword type="function" name="matewnck_window_set_window_type ()" link="MateWnckWindow.html#matewnck-window-set-window-type" since="2.12"/>
-    <keyword type="enum" name="enum MateWnckWindowState" link="MateWnckWindow.html#MateWnckWindowState"/>
-    <keyword type="function" name="matewnck_window_get_state ()" link="MateWnckWindow.html#matewnck-window-get-state"/>
-    <keyword type="function" name="matewnck_window_is_minimized ()" link="MateWnckWindow.html#matewnck-window-is-minimized"/>
-    <keyword type="function" name="matewnck_window_is_maximized_horizontally ()" link="MateWnckWindow.html#matewnck-window-is-maximized-horizontally"/>
-    <keyword type="function" name="matewnck_window_is_maximized_vertically ()" link="MateWnckWindow.html#matewnck-window-is-maximized-vertically"/>
-    <keyword type="function" name="matewnck_window_is_maximized ()" link="MateWnckWindow.html#matewnck-window-is-maximized"/>
-    <keyword type="function" name="matewnck_window_is_shaded ()" link="MateWnckWindow.html#matewnck-window-is-shaded"/>
-    <keyword type="function" name="matewnck_window_is_pinned ()" link="MateWnckWindow.html#matewnck-window-is-pinned"/>
-    <keyword type="function" name="matewnck_window_is_sticky ()" link="MateWnckWindow.html#matewnck-window-is-sticky"/>
-    <keyword type="function" name="matewnck_window_is_above ()" link="MateWnckWindow.html#matewnck-window-is-above" since="2.14"/>
-    <keyword type="function" name="matewnck_window_is_below ()" link="MateWnckWindow.html#matewnck-window-is-below" since="2.20"/>
-    <keyword type="function" name="matewnck_window_is_skip_pager ()" link="MateWnckWindow.html#matewnck-window-is-skip-pager"/>
-    <keyword type="function" name="matewnck_window_is_skip_tasklist ()" link="MateWnckWindow.html#matewnck-window-is-skip-tasklist"/>
-    <keyword type="function" name="matewnck_window_is_fullscreen ()" link="MateWnckWindow.html#matewnck-window-is-fullscreen" since="2.8"/>
-    <keyword type="function" name="matewnck_window_needs_attention ()" link="MateWnckWindow.html#matewnck-window-needs-attention" since="2.12"/>
-    <keyword type="function" name="matewnck_window_or_transient_needs_attention ()" link="MateWnckWindow.html#matewnck-window-or-transient-needs-attention" since="2.12"/>
-    <keyword type="enum" name="enum MateWnckWindowActions" link="MateWnckWindow.html#MateWnckWindowActions"/>
-    <keyword type="function" name="matewnck_window_get_actions ()" link="MateWnckWindow.html#matewnck-window-get-actions"/>
-    <keyword type="function" name="matewnck_window_minimize ()" link="MateWnckWindow.html#matewnck-window-minimize"/>
-    <keyword type="function" name="matewnck_window_unminimize ()" link="MateWnckWindow.html#matewnck-window-unminimize"/>
-    <keyword type="function" name="matewnck_window_maximize_horizontally ()" link="MateWnckWindow.html#matewnck-window-maximize-horizontally"/>
-    <keyword type="function" name="matewnck_window_unmaximize_horizontally ()" link="MateWnckWindow.html#matewnck-window-unmaximize-horizontally"/>
-    <keyword type="function" name="matewnck_window_maximize_vertically ()" link="MateWnckWindow.html#matewnck-window-maximize-vertically"/>
-    <keyword type="function" name="matewnck_window_unmaximize_vertically ()" link="MateWnckWindow.html#matewnck-window-unmaximize-vertically"/>
-    <keyword type="function" name="matewnck_window_maximize ()" link="MateWnckWindow.html#matewnck-window-maximize"/>
-    <keyword type="function" name="matewnck_window_unmaximize ()" link="MateWnckWindow.html#matewnck-window-unmaximize"/>
-    <keyword type="function" name="matewnck_window_shade ()" link="MateWnckWindow.html#matewnck-window-shade"/>
-    <keyword type="function" name="matewnck_window_unshade ()" link="MateWnckWindow.html#matewnck-window-unshade"/>
-    <keyword type="function" name="matewnck_window_pin ()" link="MateWnckWindow.html#matewnck-window-pin"/>
-    <keyword type="function" name="matewnck_window_unpin ()" link="MateWnckWindow.html#matewnck-window-unpin"/>
-    <keyword type="function" name="matewnck_window_stick ()" link="MateWnckWindow.html#matewnck-window-stick"/>
-    <keyword type="function" name="matewnck_window_unstick ()" link="MateWnckWindow.html#matewnck-window-unstick"/>
-    <keyword type="function" name="matewnck_window_make_above ()" link="MateWnckWindow.html#matewnck-window-make-above" since="2.14"/>
-    <keyword type="function" name="matewnck_window_unmake_above ()" link="MateWnckWindow.html#matewnck-window-unmake-above" since="2.14"/>
-    <keyword type="function" name="matewnck_window_make_below ()" link="MateWnckWindow.html#matewnck-window-make-below" since="2.20"/>
-    <keyword type="function" name="matewnck_window_unmake_below ()" link="MateWnckWindow.html#matewnck-window-unmake-below" since="2.20"/>
-    <keyword type="function" name="matewnck_window_set_skip_pager ()" link="MateWnckWindow.html#matewnck-window-set-skip-pager"/>
-    <keyword type="function" name="matewnck_window_set_skip_tasklist ()" link="MateWnckWindow.html#matewnck-window-set-skip-tasklist"/>
-    <keyword type="function" name="matewnck_window_set_fullscreen ()" link="MateWnckWindow.html#matewnck-window-set-fullscreen" since="2.8"/>
-    <keyword type="function" name="matewnck_window_close ()" link="MateWnckWindow.html#matewnck-window-close" since="2.6"/>
-    <keyword type="function" name="matewnck_window_get_workspace ()" link="MateWnckWindow.html#matewnck-window-get-workspace"/>
-    <keyword type="function" name="matewnck_window_is_on_workspace ()" link="MateWnckWindow.html#matewnck-window-is-on-workspace"/>
-    <keyword type="function" name="matewnck_window_is_visible_on_workspace ()" link="MateWnckWindow.html#matewnck-window-is-visible-on-workspace"/>
-    <keyword type="function" name="matewnck_window_move_to_workspace ()" link="MateWnckWindow.html#matewnck-window-move-to-workspace"/>
-    <keyword type="function" name="matewnck_window_is_in_viewport ()" link="MateWnckWindow.html#matewnck-window-is-in-viewport" since="2.4"/>
-    <keyword type="function" name="matewnck_window_activate ()" link="MateWnckWindow.html#matewnck-window-activate" since="2.10"/>
-    <keyword type="function" name="matewnck_window_is_active ()" link="MateWnckWindow.html#matewnck-window-is-active"/>
-    <keyword type="function" name="matewnck_window_is_most_recently_activated ()" link="MateWnckWindow.html#matewnck-window-is-most-recently-activated" since="2.8"/>
-    <keyword type="function" name="matewnck_window_activate_transient ()" link="MateWnckWindow.html#matewnck-window-activate-transient" since="2.10"/>
-    <keyword type="function" name="matewnck_window_transient_is_most_recently_activated ()" link="MateWnckWindow.html#matewnck-window-transient-is-most-recently-activated" since="2.12"/>
-    <keyword type="function" name="matewnck_window_set_icon_geometry ()" link="MateWnckWindow.html#matewnck-window-set-icon-geometry"/>
-    <keyword type="enum" name="enum MateWnckWindowGravity" link="MateWnckWindow.html#MateWnckWindowGravity" since="2.16"/>
-    <keyword type="enum" name="enum MateWnckWindowMoveResizeMask" link="MateWnckWindow.html#MateWnckWindowMoveResizeMask" since="2.16"/>
-    <keyword type="function" name="matewnck_window_get_client_window_geometry ()" link="MateWnckWindow.html#matewnck-window-get-client-window-geometry" since="2.20"/>
-    <keyword type="function" name="matewnck_window_get_geometry ()" link="MateWnckWindow.html#matewnck-window-get-geometry"/>
-    <keyword type="function" name="matewnck_window_set_geometry ()" link="MateWnckWindow.html#matewnck-window-set-geometry" since="2.16"/>
-    <keyword type="function" name="matewnck_window_keyboard_move ()" link="MateWnckWindow.html#matewnck-window-keyboard-move"/>
-    <keyword type="function" name="matewnck_window_keyboard_size ()" link="MateWnckWindow.html#matewnck-window-keyboard-size"/>
-    <keyword type="signal" name="The &quot;actions-changed&quot; signal" link="MateWnckWindow.html#MateWnckWindow-actions-changed"/>
-    <keyword type="signal" name="The &quot;geometry-changed&quot; signal" link="MateWnckWindow.html#MateWnckWindow-geometry-changed"/>
-    <keyword type="signal" name="The &quot;icon-changed&quot; signal" link="MateWnckWindow.html#MateWnckWindow-icon-changed"/>
-    <keyword type="signal" name="The &quot;name-changed&quot; signal" link="MateWnckWindow.html#MateWnckWindow-name-changed"/>
-    <keyword type="signal" name="The &quot;state-changed&quot; signal" link="MateWnckWindow.html#MateWnckWindow-state-changed"/>
-    <keyword type="signal" name="The &quot;workspace-changed&quot; signal" link="MateWnckWindow.html#MateWnckWindow-workspace-changed"/>
-    <keyword type="struct" name="MateWnckClassGroup" link="MateWnckClassGroup.html#MateWnckClassGroup-struct"/>
-    <keyword type="function" name="matewnck_class_group_get ()" link="MateWnckClassGroup.html#matewnck-class-group-get" since="2.2"/>
-    <keyword type="function" name="matewnck_class_group_get_res_class ()" link="MateWnckClassGroup.html#matewnck-class-group-get-res-class" since="2.2"/>
-    <keyword type="function" name="matewnck_class_group_get_name ()" link="MateWnckClassGroup.html#matewnck-class-group-get-name" since="2.2"/>
-    <keyword type="function" name="matewnck_class_group_get_icon ()" link="MateWnckClassGroup.html#matewnck-class-group-get-icon" since="2.2"/>
-    <keyword type="function" name="matewnck_class_group_get_mini_icon ()" link="MateWnckClassGroup.html#matewnck-class-group-get-mini-icon" since="2.2"/>
-    <keyword type="function" name="matewnck_class_group_get_windows ()" link="MateWnckClassGroup.html#matewnck-class-group-get-windows" since="2.2"/>
-    <keyword type="signal" name="The &quot;icon-changed&quot; signal" link="MateWnckClassGroup.html#MateWnckClassGroup-icon-changed"/>
-    <keyword type="signal" name="The &quot;name-changed&quot; signal" link="MateWnckClassGroup.html#MateWnckClassGroup-name-changed"/>
-    <keyword type="struct" name="MateWnckApplication" link="MateWnckApplication.html#MateWnckApplication-struct"/>
-    <keyword type="function" name="matewnck_application_get ()" link="MateWnckApplication.html#matewnck-application-get"/>
-    <keyword type="function" name="matewnck_application_get_xid ()" link="MateWnckApplication.html#matewnck-application-get-xid"/>
-    <keyword type="function" name="matewnck_application_get_name ()" link="MateWnckApplication.html#matewnck-application-get-name"/>
-    <keyword type="function" name="matewnck_application_get_icon_name ()" link="MateWnckApplication.html#matewnck-application-get-icon-name"/>
-    <keyword type="function" name="matewnck_application_get_pid ()" link="MateWnckApplication.html#matewnck-application-get-pid"/>
-    <keyword type="function" name="matewnck_application_get_icon_is_fallback ()" link="MateWnckApplication.html#matewnck-application-get-icon-is-fallback"/>
-    <keyword type="function" name="matewnck_application_get_icon ()" link="MateWnckApplication.html#matewnck-application-get-icon"/>
-    <keyword type="function" name="matewnck_application_get_mini_icon ()" link="MateWnckApplication.html#matewnck-application-get-mini-icon"/>
-    <keyword type="function" name="matewnck_application_get_startup_id ()" link="MateWnckApplication.html#matewnck-application-get-startup-id" since="2.2"/>
-    <keyword type="function" name="matewnck_application_get_windows ()" link="MateWnckApplication.html#matewnck-application-get-windows"/>
-    <keyword type="function" name="matewnck_application_get_n_windows ()" link="MateWnckApplication.html#matewnck-application-get-n-windows"/>
-    <keyword type="signal" name="The &quot;icon-changed&quot; signal" link="MateWnckApplication.html#MateWnckApplication-icon-changed"/>
-    <keyword type="signal" name="The &quot;name-changed&quot; signal" link="MateWnckApplication.html#MateWnckApplication-name-changed"/>
-    <keyword type="struct" name="MateWnckWorkspace" link="MateWnckWorkspace.html#MateWnckWorkspace-struct"/>
-    <keyword type="function" name="matewnck_workspace_get_screen ()" link="MateWnckWorkspace.html#matewnck-workspace-get-screen"/>
-    <keyword type="function" name="matewnck_workspace_get_number ()" link="MateWnckWorkspace.html#matewnck-workspace-get-number"/>
-    <keyword type="function" name="matewnck_workspace_get_name ()" link="MateWnckWorkspace.html#matewnck-workspace-get-name"/>
-    <keyword type="function" name="matewnck_workspace_change_name ()" link="MateWnckWorkspace.html#matewnck-workspace-change-name" since="2.2"/>
-    <keyword type="function" name="matewnck_workspace_get_width ()" link="MateWnckWorkspace.html#matewnck-workspace-get-width" since="2.4"/>
-    <keyword type="function" name="matewnck_workspace_get_height ()" link="MateWnckWorkspace.html#matewnck-workspace-get-height" since="2.4"/>
-    <keyword type="function" name="matewnck_workspace_get_viewport_x ()" link="MateWnckWorkspace.html#matewnck-workspace-get-viewport-x" since="2.4"/>
-    <keyword type="function" name="matewnck_workspace_get_viewport_y ()" link="MateWnckWorkspace.html#matewnck-workspace-get-viewport-y" since="2.4"/>
-    <keyword type="function" name="matewnck_workspace_is_virtual ()" link="MateWnckWorkspace.html#matewnck-workspace-is-virtual" since="2.4"/>
-    <keyword type="function" name="matewnck_workspace_get_layout_row ()" link="MateWnckWorkspace.html#matewnck-workspace-get-layout-row" since="2.20"/>
-    <keyword type="function" name="matewnck_workspace_get_layout_column ()" link="MateWnckWorkspace.html#matewnck-workspace-get-layout-column" since="2.20"/>
-    <keyword type="function" name="matewnck_workspace_get_neighbor ()" link="MateWnckWorkspace.html#matewnck-workspace-get-neighbor" since="2.20"/>
-    <keyword type="function" name="matewnck_workspace_activate ()" link="MateWnckWorkspace.html#matewnck-workspace-activate" since="2.10"/>
-    <keyword type="signal" name="The &quot;name-changed&quot; signal" link="MateWnckWorkspace.html#MateWnckWorkspace-name-changed"/>
-    <keyword type="struct" name="struct MateWnckScreen" link="MateWnckScreen.html#MateWnckScreen-struct"/>
-    <keyword type="function" name="matewnck_screen_get_default ()" link="MateWnckScreen.html#matewnck-screen-get-default"/>
-    <keyword type="function" name="matewnck_screen_get ()" link="MateWnckScreen.html#matewnck-screen-get"/>
-    <keyword type="function" name="matewnck_screen_get_for_root ()" link="MateWnckScreen.html#matewnck-screen-get-for-root"/>
-    <keyword type="function" name="matewnck_screen_get_number ()" link="MateWnckScreen.html#matewnck-screen-get-number" since="2.20"/>
-    <keyword type="function" name="matewnck_screen_get_width ()" link="MateWnckScreen.html#matewnck-screen-get-width"/>
-    <keyword type="function" name="matewnck_screen_get_height ()" link="MateWnckScreen.html#matewnck-screen-get-height"/>
-    <keyword type="function" name="matewnck_screen_force_update ()" link="MateWnckScreen.html#matewnck-screen-force-update"/>
-    <keyword type="function" name="matewnck_screen_get_window_manager_name ()" link="MateWnckScreen.html#matewnck-screen-get-window-manager-name" since="2.20"/>
-    <keyword type="function" name="matewnck_screen_net_wm_supports ()" link="MateWnckScreen.html#matewnck-screen-net-wm-supports"/>
-    <keyword type="function" name="matewnck_screen_get_active_window ()" link="MateWnckScreen.html#matewnck-screen-get-active-window"/>
-    <keyword type="function" name="matewnck_screen_get_previously_active_window ()" link="MateWnckScreen.html#matewnck-screen-get-previously-active-window" since="2.8"/>
-    <keyword type="function" name="matewnck_screen_get_windows ()" link="MateWnckScreen.html#matewnck-screen-get-windows"/>
-    <keyword type="function" name="matewnck_screen_get_windows_stacked ()" link="MateWnckScreen.html#matewnck-screen-get-windows-stacked"/>
-    <keyword type="function" name="matewnck_screen_get_active_workspace ()" link="MateWnckScreen.html#matewnck-screen-get-active-workspace"/>
-    <keyword type="function" name="matewnck_screen_get_workspaces ()" link="MateWnckScreen.html#matewnck-screen-get-workspaces" since="2.20"/>
-    <keyword type="function" name="matewnck_screen_get_workspace ()" link="MateWnckScreen.html#matewnck-screen-get-workspace"/>
-    <keyword type="function" name="matewnck_screen_get_workspace_index ()" link="MateWnckScreen.html#matewnck-screen-get-workspace-index" deprecated="2.20: Use matewnck_workspace_get_number() instead." since="2.14"/>
-    <keyword type="enum" name="enum MateWnckMotionDirection" link="MateWnckScreen.html#MateWnckMotionDirection" since="2.14"/>
-    <keyword type="function" name="matewnck_screen_get_workspace_neighbor ()" link="MateWnckScreen.html#matewnck-screen-get-workspace-neighbor" deprecated="2.20: Use matewnck_workspace_get_neighbor() instead." since="2.14"/>
-    <keyword type="function" name="matewnck_screen_get_workspace_count ()" link="MateWnckScreen.html#matewnck-screen-get-workspace-count"/>
-    <keyword type="function" name="matewnck_screen_change_workspace_count ()" link="MateWnckScreen.html#matewnck-screen-change-workspace-count" since="2.2"/>
-    <keyword type="function" name="matewnck_screen_try_set_workspace_layout ()" link="MateWnckScreen.html#matewnck-screen-try-set-workspace-layout"/>
-    <keyword type="function" name="matewnck_screen_release_workspace_layout ()" link="MateWnckScreen.html#matewnck-screen-release-workspace-layout"/>
-    <keyword type="struct" name="struct MateWnckWorkspaceLayout" link="MateWnckScreen.html#MateWnckWorkspaceLayout" deprecated="2.20:" since="2.12"/>
-    <keyword type="function" name="matewnck_screen_calc_workspace_layout ()" link="MateWnckScreen.html#matewnck-screen-calc-workspace-layout" deprecated="2.20:" since="2.12"/>
-    <keyword type="function" name="matewnck_screen_free_workspace_layout ()" link="MateWnckScreen.html#matewnck-screen-free-workspace-layout" deprecated="2.20:" since="2.12"/>
-    <keyword type="function" name="matewnck_screen_move_viewport ()" link="MateWnckScreen.html#matewnck-screen-move-viewport" since="2.4"/>
-    <keyword type="function" name="matewnck_screen_get_background_pixmap ()" link="MateWnckScreen.html#matewnck-screen-get-background-pixmap"/>
-    <keyword type="function" name="matewnck_screen_get_showing_desktop ()" link="MateWnckScreen.html#matewnck-screen-get-showing-desktop" since="2.2"/>
-    <keyword type="function" name="matewnck_screen_toggle_showing_desktop ()" link="MateWnckScreen.html#matewnck-screen-toggle-showing-desktop" since="2.2"/>
-    <keyword type="signal" name="The &quot;active-window-changed&quot; signal" link="MateWnckScreen.html#MateWnckScreen-active-window-changed"/>
-    <keyword type="signal" name="The &quot;active-workspace-changed&quot; signal" link="MateWnckScreen.html#MateWnckScreen-active-workspace-changed"/>
-    <keyword type="signal" name="The &quot;application-closed&quot; signal" link="MateWnckScreen.html#MateWnckScreen-application-closed"/>
-    <keyword type="signal" name="The &quot;application-opened&quot; signal" link="MateWnckScreen.html#MateWnckScreen-application-opened"/>
-    <keyword type="signal" name="The &quot;background-changed&quot; signal" link="MateWnckScreen.html#MateWnckScreen-background-changed"/>
-    <keyword type="signal" name="The &quot;class-group-closed&quot; signal" link="MateWnckScreen.html#MateWnckScreen-class-group-closed"/>
-    <keyword type="signal" name="The &quot;class-group-opened&quot; signal" link="MateWnckScreen.html#MateWnckScreen-class-group-opened"/>
-    <keyword type="signal" name="The &quot;showing-desktop-changed&quot; signal" link="MateWnckScreen.html#MateWnckScreen-showing-desktop-changed"/>
-    <keyword type="signal" name="The &quot;viewports-changed&quot; signal" link="MateWnckScreen.html#MateWnckScreen-viewports-changed"/>
-    <keyword type="signal" name="The &quot;window-closed&quot; signal" link="MateWnckScreen.html#MateWnckScreen-window-closed"/>
-    <keyword type="signal" name="The &quot;window-manager-changed&quot; signal" link="MateWnckScreen.html#MateWnckScreen-window-manager-changed"/>
-    <keyword type="signal" name="The &quot;window-opened&quot; signal" link="MateWnckScreen.html#MateWnckScreen-window-opened"/>
-    <keyword type="signal" name="The &quot;window-stacking-changed&quot; signal" link="MateWnckScreen.html#MateWnckScreen-window-stacking-changed"/>
-    <keyword type="signal" name="The &quot;workspace-created&quot; signal" link="MateWnckScreen.html#MateWnckScreen-workspace-created"/>
-    <keyword type="signal" name="The &quot;workspace-destroyed&quot; signal" link="MateWnckScreen.html#MateWnckScreen-workspace-destroyed"/>
-    <keyword type="struct" name="struct MateWnckActionMenu" link="libmatewnck-Window-Action-Menu.html#MateWnckActionMenu-struct"/>
+    <keyword type="struct" name="MatewnckWindow" link="MatewnckWindow.html#MatewnckWindow-struct"/>
+    <keyword type="function" name="matewnck_window_get ()" link="MatewnckWindow.html#matewnck-window-get"/>
+    <keyword type="function" name="matewnck_window_get_screen ()" link="MatewnckWindow.html#matewnck-window-get-screen"/>
+    <keyword type="function" name="matewnck_window_has_name ()" link="MatewnckWindow.html#matewnck-window-has-name" since="2.16"/>
+    <keyword type="function" name="matewnck_window_get_name ()" link="MatewnckWindow.html#matewnck-window-get-name"/>
+    <keyword type="function" name="matewnck_window_has_icon_name ()" link="MatewnckWindow.html#matewnck-window-has-icon-name" since="2.16"/>
+    <keyword type="function" name="matewnck_window_get_icon_name ()" link="MatewnckWindow.html#matewnck-window-get-icon-name"/>
+    <keyword type="function" name="matewnck_window_get_icon_is_fallback ()" link="MatewnckWindow.html#matewnck-window-get-icon-is-fallback"/>
+    <keyword type="function" name="matewnck_window_get_icon ()" link="MatewnckWindow.html#matewnck-window-get-icon"/>
+    <keyword type="function" name="matewnck_window_get_mini_icon ()" link="MatewnckWindow.html#matewnck-window-get-mini-icon"/>
+    <keyword type="function" name="matewnck_window_get_application ()" link="MatewnckWindow.html#matewnck-window-get-application"/>
+    <keyword type="function" name="matewnck_window_get_transient ()" link="MatewnckWindow.html#matewnck-window-get-transient" since="2.12"/>
+    <keyword type="function" name="matewnck_window_get_group_leader ()" link="MatewnckWindow.html#matewnck-window-get-group-leader"/>
+    <keyword type="function" name="matewnck_window_get_xid ()" link="MatewnckWindow.html#matewnck-window-get-xid"/>
+    <keyword type="function" name="matewnck_window_get_class_group ()" link="MatewnckWindow.html#matewnck-window-get-class-group" since="2.2"/>
+    <keyword type="function" name="matewnck_window_get_session_id ()" link="MatewnckWindow.html#matewnck-window-get-session-id"/>
+    <keyword type="function" name="matewnck_window_get_session_id_utf8 ()" link="MatewnckWindow.html#matewnck-window-get-session-id-utf8"/>
+    <keyword type="function" name="matewnck_window_get_pid ()" link="MatewnckWindow.html#matewnck-window-get-pid"/>
+    <keyword type="function" name="matewnck_window_get_sort_order ()" link="MatewnckWindow.html#matewnck-window-get-sort-order" since="2.10"/>
+    <keyword type="function" name="matewnck_window_set_sort_order ()" link="MatewnckWindow.html#matewnck-window-set-sort-order" since="2.20"/>
+    <keyword type="enum" name="enum MatewnckWindowType" link="MatewnckWindow.html#MatewnckWindowType"/>
+    <keyword type="function" name="matewnck_window_get_window_type ()" link="MatewnckWindow.html#matewnck-window-get-window-type"/>
+    <keyword type="function" name="matewnck_window_set_window_type ()" link="MatewnckWindow.html#matewnck-window-set-window-type" since="2.12"/>
+    <keyword type="enum" name="enum MatewnckWindowState" link="MatewnckWindow.html#MatewnckWindowState"/>
+    <keyword type="function" name="matewnck_window_get_state ()" link="MatewnckWindow.html#matewnck-window-get-state"/>
+    <keyword type="function" name="matewnck_window_is_minimized ()" link="MatewnckWindow.html#matewnck-window-is-minimized"/>
+    <keyword type="function" name="matewnck_window_is_maximized_horizontally ()" link="MatewnckWindow.html#matewnck-window-is-maximized-horizontally"/>
+    <keyword type="function" name="matewnck_window_is_maximized_vertically ()" link="MatewnckWindow.html#matewnck-window-is-maximized-vertically"/>
+    <keyword type="function" name="matewnck_window_is_maximized ()" link="MatewnckWindow.html#matewnck-window-is-maximized"/>
+    <keyword type="function" name="matewnck_window_is_shaded ()" link="MatewnckWindow.html#matewnck-window-is-shaded"/>
+    <keyword type="function" name="matewnck_window_is_pinned ()" link="MatewnckWindow.html#matewnck-window-is-pinned"/>
+    <keyword type="function" name="matewnck_window_is_sticky ()" link="MatewnckWindow.html#matewnck-window-is-sticky"/>
+    <keyword type="function" name="matewnck_window_is_above ()" link="MatewnckWindow.html#matewnck-window-is-above" since="2.14"/>
+    <keyword type="function" name="matewnck_window_is_below ()" link="MatewnckWindow.html#matewnck-window-is-below" since="2.20"/>
+    <keyword type="function" name="matewnck_window_is_skip_pager ()" link="MatewnckWindow.html#matewnck-window-is-skip-pager"/>
+    <keyword type="function" name="matewnck_window_is_skip_tasklist ()" link="MatewnckWindow.html#matewnck-window-is-skip-tasklist"/>
+    <keyword type="function" name="matewnck_window_is_fullscreen ()" link="MatewnckWindow.html#matewnck-window-is-fullscreen" since="2.8"/>
+    <keyword type="function" name="matewnck_window_needs_attention ()" link="MatewnckWindow.html#matewnck-window-needs-attention" since="2.12"/>
+    <keyword type="function" name="matewnck_window_or_transient_needs_attention ()" link="MatewnckWindow.html#matewnck-window-or-transient-needs-attention" since="2.12"/>
+    <keyword type="enum" name="enum MatewnckWindowActions" link="MatewnckWindow.html#MatewnckWindowActions"/>
+    <keyword type="function" name="matewnck_window_get_actions ()" link="MatewnckWindow.html#matewnck-window-get-actions"/>
+    <keyword type="function" name="matewnck_window_minimize ()" link="MatewnckWindow.html#matewnck-window-minimize"/>
+    <keyword type="function" name="matewnck_window_unminimize ()" link="MatewnckWindow.html#matewnck-window-unminimize"/>
+    <keyword type="function" name="matewnck_window_maximize_horizontally ()" link="MatewnckWindow.html#matewnck-window-maximize-horizontally"/>
+    <keyword type="function" name="matewnck_window_unmaximize_horizontally ()" link="MatewnckWindow.html#matewnck-window-unmaximize-horizontally"/>
+    <keyword type="function" name="matewnck_window_maximize_vertically ()" link="MatewnckWindow.html#matewnck-window-maximize-vertically"/>
+    <keyword type="function" name="matewnck_window_unmaximize_vertically ()" link="MatewnckWindow.html#matewnck-window-unmaximize-vertically"/>
+    <keyword type="function" name="matewnck_window_maximize ()" link="MatewnckWindow.html#matewnck-window-maximize"/>
+    <keyword type="function" name="matewnck_window_unmaximize ()" link="MatewnckWindow.html#matewnck-window-unmaximize"/>
+    <keyword type="function" name="matewnck_window_shade ()" link="MatewnckWindow.html#matewnck-window-shade"/>
+    <keyword type="function" name="matewnck_window_unshade ()" link="MatewnckWindow.html#matewnck-window-unshade"/>
+    <keyword type="function" name="matewnck_window_pin ()" link="MatewnckWindow.html#matewnck-window-pin"/>
+    <keyword type="function" name="matewnck_window_unpin ()" link="MatewnckWindow.html#matewnck-window-unpin"/>
+    <keyword type="function" name="matewnck_window_stick ()" link="MatewnckWindow.html#matewnck-window-stick"/>
+    <keyword type="function" name="matewnck_window_unstick ()" link="MatewnckWindow.html#matewnck-window-unstick"/>
+    <keyword type="function" name="matewnck_window_make_above ()" link="MatewnckWindow.html#matewnck-window-make-above" since="2.14"/>
+    <keyword type="function" name="matewnck_window_unmake_above ()" link="MatewnckWindow.html#matewnck-window-unmake-above" since="2.14"/>
+    <keyword type="function" name="matewnck_window_make_below ()" link="MatewnckWindow.html#matewnck-window-make-below" since="2.20"/>
+    <keyword type="function" name="matewnck_window_unmake_below ()" link="MatewnckWindow.html#matewnck-window-unmake-below" since="2.20"/>
+    <keyword type="function" name="matewnck_window_set_skip_pager ()" link="MatewnckWindow.html#matewnck-window-set-skip-pager"/>
+    <keyword type="function" name="matewnck_window_set_skip_tasklist ()" link="MatewnckWindow.html#matewnck-window-set-skip-tasklist"/>
+    <keyword type="function" name="matewnck_window_set_fullscreen ()" link="MatewnckWindow.html#matewnck-window-set-fullscreen" since="2.8"/>
+    <keyword type="function" name="matewnck_window_close ()" link="MatewnckWindow.html#matewnck-window-close" since="2.6"/>
+    <keyword type="function" name="matewnck_window_get_workspace ()" link="MatewnckWindow.html#matewnck-window-get-workspace"/>
+    <keyword type="function" name="matewnck_window_is_on_workspace ()" link="MatewnckWindow.html#matewnck-window-is-on-workspace"/>
+    <keyword type="function" name="matewnck_window_is_visible_on_workspace ()" link="MatewnckWindow.html#matewnck-window-is-visible-on-workspace"/>
+    <keyword type="function" name="matewnck_window_move_to_workspace ()" link="MatewnckWindow.html#matewnck-window-move-to-workspace"/>
+    <keyword type="function" name="matewnck_window_is_in_viewport ()" link="MatewnckWindow.html#matewnck-window-is-in-viewport" since="2.4"/>
+    <keyword type="function" name="matewnck_window_activate ()" link="MatewnckWindow.html#matewnck-window-activate" since="2.10"/>
+    <keyword type="function" name="matewnck_window_is_active ()" link="MatewnckWindow.html#matewnck-window-is-active"/>
+    <keyword type="function" name="matewnck_window_is_most_recently_activated ()" link="MatewnckWindow.html#matewnck-window-is-most-recently-activated" since="2.8"/>
+    <keyword type="function" name="matewnck_window_activate_transient ()" link="MatewnckWindow.html#matewnck-window-activate-transient" since="2.10"/>
+    <keyword type="function" name="matewnck_window_transient_is_most_recently_activated ()" link="MatewnckWindow.html#matewnck-window-transient-is-most-recently-activated" since="2.12"/>
+    <keyword type="function" name="matewnck_window_set_icon_geometry ()" link="MatewnckWindow.html#matewnck-window-set-icon-geometry"/>
+    <keyword type="enum" name="enum MatewnckWindowGravity" link="MatewnckWindow.html#MatewnckWindowGravity" since="2.16"/>
+    <keyword type="enum" name="enum MatewnckWindowMoveResizeMask" link="MatewnckWindow.html#MatewnckWindowMoveResizeMask" since="2.16"/>
+    <keyword type="function" name="matewnck_window_get_client_window_geometry ()" link="MatewnckWindow.html#matewnck-window-get-client-window-geometry" since="2.20"/>
+    <keyword type="function" name="matewnck_window_get_geometry ()" link="MatewnckWindow.html#matewnck-window-get-geometry"/>
+    <keyword type="function" name="matewnck_window_set_geometry ()" link="MatewnckWindow.html#matewnck-window-set-geometry" since="2.16"/>
+    <keyword type="function" name="matewnck_window_keyboard_move ()" link="MatewnckWindow.html#matewnck-window-keyboard-move"/>
+    <keyword type="function" name="matewnck_window_keyboard_size ()" link="MatewnckWindow.html#matewnck-window-keyboard-size"/>
+    <keyword type="signal" name="The &quot;actions-changed&quot; signal" link="MatewnckWindow.html#MatewnckWindow-actions-changed"/>
+    <keyword type="signal" name="The &quot;geometry-changed&quot; signal" link="MatewnckWindow.html#MatewnckWindow-geometry-changed"/>
+    <keyword type="signal" name="The &quot;icon-changed&quot; signal" link="MatewnckWindow.html#MatewnckWindow-icon-changed"/>
+    <keyword type="signal" name="The &quot;name-changed&quot; signal" link="MatewnckWindow.html#MatewnckWindow-name-changed"/>
+    <keyword type="signal" name="The &quot;state-changed&quot; signal" link="MatewnckWindow.html#MatewnckWindow-state-changed"/>
+    <keyword type="signal" name="The &quot;workspace-changed&quot; signal" link="MatewnckWindow.html#MatewnckWindow-workspace-changed"/>
+    <keyword type="struct" name="MatewnckClassGroup" link="MatewnckClassGroup.html#MatewnckClassGroup-struct"/>
+    <keyword type="function" name="matewnck_class_group_get ()" link="MatewnckClassGroup.html#matewnck-class-group-get" since="2.2"/>
+    <keyword type="function" name="matewnck_class_group_get_res_class ()" link="MatewnckClassGroup.html#matewnck-class-group-get-res-class" since="2.2"/>
+    <keyword type="function" name="matewnck_class_group_get_name ()" link="MatewnckClassGroup.html#matewnck-class-group-get-name" since="2.2"/>
+    <keyword type="function" name="matewnck_class_group_get_icon ()" link="MatewnckClassGroup.html#matewnck-class-group-get-icon" since="2.2"/>
+    <keyword type="function" name="matewnck_class_group_get_mini_icon ()" link="MatewnckClassGroup.html#matewnck-class-group-get-mini-icon" since="2.2"/>
+    <keyword type="function" name="matewnck_class_group_get_windows ()" link="MatewnckClassGroup.html#matewnck-class-group-get-windows" since="2.2"/>
+    <keyword type="signal" name="The &quot;icon-changed&quot; signal" link="MatewnckClassGroup.html#MatewnckClassGroup-icon-changed"/>
+    <keyword type="signal" name="The &quot;name-changed&quot; signal" link="MatewnckClassGroup.html#MatewnckClassGroup-name-changed"/>
+    <keyword type="struct" name="MatewnckApplication" link="MatewnckApplication.html#MatewnckApplication-struct"/>
+    <keyword type="function" name="matewnck_application_get ()" link="MatewnckApplication.html#matewnck-application-get"/>
+    <keyword type="function" name="matewnck_application_get_xid ()" link="MatewnckApplication.html#matewnck-application-get-xid"/>
+    <keyword type="function" name="matewnck_application_get_name ()" link="MatewnckApplication.html#matewnck-application-get-name"/>
+    <keyword type="function" name="matewnck_application_get_icon_name ()" link="MatewnckApplication.html#matewnck-application-get-icon-name"/>
+    <keyword type="function" name="matewnck_application_get_pid ()" link="MatewnckApplication.html#matewnck-application-get-pid"/>
+    <keyword type="function" name="matewnck_application_get_icon_is_fallback ()" link="MatewnckApplication.html#matewnck-application-get-icon-is-fallback"/>
+    <keyword type="function" name="matewnck_application_get_icon ()" link="MatewnckApplication.html#matewnck-application-get-icon"/>
+    <keyword type="function" name="matewnck_application_get_mini_icon ()" link="MatewnckApplication.html#matewnck-application-get-mini-icon"/>
+    <keyword type="function" name="matewnck_application_get_startup_id ()" link="MatewnckApplication.html#matewnck-application-get-startup-id" since="2.2"/>
+    <keyword type="function" name="matewnck_application_get_windows ()" link="MatewnckApplication.html#matewnck-application-get-windows"/>
+    <keyword type="function" name="matewnck_application_get_n_windows ()" link="MatewnckApplication.html#matewnck-application-get-n-windows"/>
+    <keyword type="signal" name="The &quot;icon-changed&quot; signal" link="MatewnckApplication.html#MatewnckApplication-icon-changed"/>
+    <keyword type="signal" name="The &quot;name-changed&quot; signal" link="MatewnckApplication.html#MatewnckApplication-name-changed"/>
+    <keyword type="struct" name="MatewnckWorkspace" link="MatewnckWorkspace.html#MatewnckWorkspace-struct"/>
+    <keyword type="function" name="matewnck_workspace_get_screen ()" link="MatewnckWorkspace.html#matewnck-workspace-get-screen"/>
+    <keyword type="function" name="matewnck_workspace_get_number ()" link="MatewnckWorkspace.html#matewnck-workspace-get-number"/>
+    <keyword type="function" name="matewnck_workspace_get_name ()" link="MatewnckWorkspace.html#matewnck-workspace-get-name"/>
+    <keyword type="function" name="matewnck_workspace_change_name ()" link="MatewnckWorkspace.html#matewnck-workspace-change-name" since="2.2"/>
+    <keyword type="function" name="matewnck_workspace_get_width ()" link="MatewnckWorkspace.html#matewnck-workspace-get-width" since="2.4"/>
+    <keyword type="function" name="matewnck_workspace_get_height ()" link="MatewnckWorkspace.html#matewnck-workspace-get-height" since="2.4"/>
+    <keyword type="function" name="matewnck_workspace_get_viewport_x ()" link="MatewnckWorkspace.html#matewnck-workspace-get-viewport-x" since="2.4"/>
+    <keyword type="function" name="matewnck_workspace_get_viewport_y ()" link="MatewnckWorkspace.html#matewnck-workspace-get-viewport-y" since="2.4"/>
+    <keyword type="function" name="matewnck_workspace_is_virtual ()" link="MatewnckWorkspace.html#matewnck-workspace-is-virtual" since="2.4"/>
+    <keyword type="function" name="matewnck_workspace_get_layout_row ()" link="MatewnckWorkspace.html#matewnck-workspace-get-layout-row" since="2.20"/>
+    <keyword type="function" name="matewnck_workspace_get_layout_column ()" link="MatewnckWorkspace.html#matewnck-workspace-get-layout-column" since="2.20"/>
+    <keyword type="function" name="matewnck_workspace_get_neighbor ()" link="MatewnckWorkspace.html#matewnck-workspace-get-neighbor" since="2.20"/>
+    <keyword type="function" name="matewnck_workspace_activate ()" link="MatewnckWorkspace.html#matewnck-workspace-activate" since="2.10"/>
+    <keyword type="signal" name="The &quot;name-changed&quot; signal" link="MatewnckWorkspace.html#MatewnckWorkspace-name-changed"/>
+    <keyword type="struct" name="struct MatewnckScreen" link="MatewnckScreen.html#MatewnckScreen-struct"/>
+    <keyword type="function" name="matewnck_screen_get_default ()" link="MatewnckScreen.html#matewnck-screen-get-default"/>
+    <keyword type="function" name="matewnck_screen_get ()" link="MatewnckScreen.html#matewnck-screen-get"/>
+    <keyword type="function" name="matewnck_screen_get_for_root ()" link="MatewnckScreen.html#matewnck-screen-get-for-root"/>
+    <keyword type="function" name="matewnck_screen_get_number ()" link="MatewnckScreen.html#matewnck-screen-get-number" since="2.20"/>
+    <keyword type="function" name="matewnck_screen_get_width ()" link="MatewnckScreen.html#matewnck-screen-get-width"/>
+    <keyword type="function" name="matewnck_screen_get_height ()" link="MatewnckScreen.html#matewnck-screen-get-height"/>
+    <keyword type="function" name="matewnck_screen_force_update ()" link="MatewnckScreen.html#matewnck-screen-force-update"/>
+    <keyword type="function" name="matewnck_screen_get_window_manager_name ()" link="MatewnckScreen.html#matewnck-screen-get-window-manager-name" since="2.20"/>
+    <keyword type="function" name="matewnck_screen_net_wm_supports ()" link="MatewnckScreen.html#matewnck-screen-net-wm-supports"/>
+    <keyword type="function" name="matewnck_screen_get_active_window ()" link="MatewnckScreen.html#matewnck-screen-get-active-window"/>
+    <keyword type="function" name="matewnck_screen_get_previously_active_window ()" link="MatewnckScreen.html#matewnck-screen-get-previously-active-window" since="2.8"/>
+    <keyword type="function" name="matewnck_screen_get_windows ()" link="MatewnckScreen.html#matewnck-screen-get-windows"/>
+    <keyword type="function" name="matewnck_screen_get_windows_stacked ()" link="MatewnckScreen.html#matewnck-screen-get-windows-stacked"/>
+    <keyword type="function" name="matewnck_screen_get_active_workspace ()" link="MatewnckScreen.html#matewnck-screen-get-active-workspace"/>
+    <keyword type="function" name="matewnck_screen_get_workspaces ()" link="MatewnckScreen.html#matewnck-screen-get-workspaces" since="2.20"/>
+    <keyword type="function" name="matewnck_screen_get_workspace ()" link="MatewnckScreen.html#matewnck-screen-get-workspace"/>
+    <keyword type="function" name="matewnck_screen_get_workspace_index ()" link="MatewnckScreen.html#matewnck-screen-get-workspace-index" deprecated="2.20: Use matewnck_workspace_get_number() instead." since="2.14"/>
+    <keyword type="enum" name="enum MatewnckMotionDirection" link="MatewnckScreen.html#MatewnckMotionDirection" since="2.14"/>
+    <keyword type="function" name="matewnck_screen_get_workspace_neighbor ()" link="MatewnckScreen.html#matewnck-screen-get-workspace-neighbor" deprecated="2.20: Use matewnck_workspace_get_neighbor() instead." since="2.14"/>
+    <keyword type="function" name="matewnck_screen_get_workspace_count ()" link="MatewnckScreen.html#matewnck-screen-get-workspace-count"/>
+    <keyword type="function" name="matewnck_screen_change_workspace_count ()" link="MatewnckScreen.html#matewnck-screen-change-workspace-count" since="2.2"/>
+    <keyword type="function" name="matewnck_screen_try_set_workspace_layout ()" link="MatewnckScreen.html#matewnck-screen-try-set-workspace-layout"/>
+    <keyword type="function" name="matewnck_screen_release_workspace_layout ()" link="MatewnckScreen.html#matewnck-screen-release-workspace-layout"/>
+    <keyword type="struct" name="struct MatewnckWorkspaceLayout" link="MatewnckScreen.html#MatewnckWorkspaceLayout" deprecated="2.20:" since="2.12"/>
+    <keyword type="function" name="matewnck_screen_calc_workspace_layout ()" link="MatewnckScreen.html#matewnck-screen-calc-workspace-layout" deprecated="2.20:" since="2.12"/>
+    <keyword type="function" name="matewnck_screen_free_workspace_layout ()" link="MatewnckScreen.html#matewnck-screen-free-workspace-layout" deprecated="2.20:" since="2.12"/>
+    <keyword type="function" name="matewnck_screen_move_viewport ()" link="MatewnckScreen.html#matewnck-screen-move-viewport" since="2.4"/>
+    <keyword type="function" name="matewnck_screen_get_background_pixmap ()" link="MatewnckScreen.html#matewnck-screen-get-background-pixmap"/>
+    <keyword type="function" name="matewnck_screen_get_showing_desktop ()" link="MatewnckScreen.html#matewnck-screen-get-showing-desktop" since="2.2"/>
+    <keyword type="function" name="matewnck_screen_toggle_showing_desktop ()" link="MatewnckScreen.html#matewnck-screen-toggle-showing-desktop" since="2.2"/>
+    <keyword type="signal" name="The &quot;active-window-changed&quot; signal" link="MatewnckScreen.html#MatewnckScreen-active-window-changed"/>
+    <keyword type="signal" name="The &quot;active-workspace-changed&quot; signal" link="MatewnckScreen.html#MatewnckScreen-active-workspace-changed"/>
+    <keyword type="signal" name="The &quot;application-closed&quot; signal" link="MatewnckScreen.html#MatewnckScreen-application-closed"/>
+    <keyword type="signal" name="The &quot;application-opened&quot; signal" link="MatewnckScreen.html#MatewnckScreen-application-opened"/>
+    <keyword type="signal" name="The &quot;background-changed&quot; signal" link="MatewnckScreen.html#MatewnckScreen-background-changed"/>
+    <keyword type="signal" name="The &quot;class-group-closed&quot; signal" link="MatewnckScreen.html#MatewnckScreen-class-group-closed"/>
+    <keyword type="signal" name="The &quot;class-group-opened&quot; signal" link="MatewnckScreen.html#MatewnckScreen-class-group-opened"/>
+    <keyword type="signal" name="The &quot;showing-desktop-changed&quot; signal" link="MatewnckScreen.html#MatewnckScreen-showing-desktop-changed"/>
+    <keyword type="signal" name="The &quot;viewports-changed&quot; signal" link="MatewnckScreen.html#MatewnckScreen-viewports-changed"/>
+    <keyword type="signal" name="The &quot;window-closed&quot; signal" link="MatewnckScreen.html#MatewnckScreen-window-closed"/>
+    <keyword type="signal" name="The &quot;window-manager-changed&quot; signal" link="MatewnckScreen.html#MatewnckScreen-window-manager-changed"/>
+    <keyword type="signal" name="The &quot;window-opened&quot; signal" link="MatewnckScreen.html#MatewnckScreen-window-opened"/>
+    <keyword type="signal" name="The &quot;window-stacking-changed&quot; signal" link="MatewnckScreen.html#MatewnckScreen-window-stacking-changed"/>
+    <keyword type="signal" name="The &quot;workspace-created&quot; signal" link="MatewnckScreen.html#MatewnckScreen-workspace-created"/>
+    <keyword type="signal" name="The &quot;workspace-destroyed&quot; signal" link="MatewnckScreen.html#MatewnckScreen-workspace-destroyed"/>
+    <keyword type="struct" name="struct MatewnckActionMenu" link="libmatewnck-Window-Action-Menu.html#MatewnckActionMenu-struct"/>
     <keyword type="function" name="matewnck_action_menu_new ()" link="libmatewnck-Window-Action-Menu.html#matewnck-action-menu-new" since="2.22"/>
     <keyword type="function" name="matewnck_create_window_action_menu ()" link="libmatewnck-Window-Action-Menu.html#matewnck-create-window-action-menu" deprecated="2.22: Use matewnck_action_menu_new() instead."/>
-    <keyword type="property" name="The &quot;window&quot; property" link="libmatewnck-Window-Action-Menu.html#MateWnckActionMenu--window"/>
-    <keyword type="struct" name="struct MateWnckPager" link="MateWnckPager.html#MateWnckPager-struct"/>
-    <keyword type="function" name="matewnck_pager_new ()" link="MateWnckPager.html#matewnck-pager-new"/>
-    <keyword type="function" name="matewnck_pager_set_screen ()" link="MateWnckPager.html#matewnck-pager-set-screen" deprecated="2.20:" since="2.2"/>
-    <keyword type="function" name="matewnck_pager_set_orientation ()" link="MateWnckPager.html#matewnck-pager-set-orientation"/>
-    <keyword type="function" name="matewnck_pager_set_n_rows ()" link="MateWnckPager.html#matewnck-pager-set-n-rows"/>
-    <keyword type="enum" name="enum MateWnckPagerLayoutPolicy" link="MateWnckPager.html#MateWnckPagerLayoutPolicy" since="2.32"/>
-    <keyword type="function" name="matewnck_pager_set_layout_policy ()" link="MateWnckPager.html#matewnck-pager-set-layout-policy" since="2.32"/>
-    <keyword type="enum" name="enum MateWnckPagerDisplayMode" link="MateWnckPager.html#MateWnckPagerDisplayMode"/>
-    <keyword type="function" name="matewnck_pager_set_display_mode ()" link="MateWnckPager.html#matewnck-pager-set-display-mode"/>
-    <keyword type="function" name="matewnck_pager_set_show_all ()" link="MateWnckPager.html#matewnck-pager-set-show-all"/>
-    <keyword type="function" name="matewnck_pager_set_shadow_type ()" link="MateWnckPager.html#matewnck-pager-set-shadow-type" since="2.2"/>
-    <keyword type="struct" name="struct MateWnckSelector" link="MateWnckSelector.html#MateWnckSelector-struct"/>
-    <keyword type="function" name="matewnck_selector_new ()" link="MateWnckSelector.html#matewnck-selector-new" since="2.10"/>
-    <keyword type="struct" name="struct MateWnckTasklist" link="MateWnckTasklist.html#MateWnckTasklist-struct"/>
-    <keyword type="function" name="matewnck_tasklist_new ()" link="MateWnckTasklist.html#matewnck-tasklist-new"/>
-    <keyword type="function" name="matewnck_tasklist_set_screen ()" link="MateWnckTasklist.html#matewnck-tasklist-set-screen" deprecated="2.20:" since="2.2"/>
-    <keyword type="enum" name="enum MateWnckTasklistGroupingType" link="MateWnckTasklist.html#MateWnckTasklistGroupingType"/>
-    <keyword type="function" name="matewnck_tasklist_set_grouping ()" link="MateWnckTasklist.html#matewnck-tasklist-set-grouping"/>
-    <keyword type="function" name="matewnck_tasklist_set_grouping_limit ()" link="MateWnckTasklist.html#matewnck-tasklist-set-grouping-limit"/>
-    <keyword type="function" name="matewnck_tasklist_set_include_all_workspaces ()" link="MateWnckTasklist.html#matewnck-tasklist-set-include-all-workspaces"/>
-    <keyword type="function" name="matewnck_tasklist_set_switch_workspace_on_unminimize ()" link="MateWnckTasklist.html#matewnck-tasklist-set-switch-workspace-on-unminimize"/>
-    <keyword type="function" name="matewnck_tasklist_set_button_relief ()" link="MateWnckTasklist.html#matewnck-tasklist-set-button-relief" since="2.12"/>
-    <keyword type="function" name="matewnck_tasklist_get_minimum_width ()" link="MateWnckTasklist.html#matewnck-tasklist-get-minimum-width" deprecated="2.20:"/>
-    <keyword type="function" name="matewnck_tasklist_set_minimum_width ()" link="MateWnckTasklist.html#matewnck-tasklist-set-minimum-width" deprecated="2.20:"/>
-    <keyword type="function" name="matewnck_tasklist_get_minimum_height ()" link="MateWnckTasklist.html#matewnck-tasklist-get-minimum-height" deprecated="2.20:"/>
-    <keyword type="function" name="matewnck_tasklist_set_minimum_height ()" link="MateWnckTasklist.html#matewnck-tasklist-set-minimum-height" deprecated="2.20:"/>
-    <keyword type="function" name="MateWnckLoadIconFunction ()" link="MateWnckTasklist.html#MateWnckLoadIconFunction" since="2.2"/>
-    <keyword type="function" name="matewnck_tasklist_set_icon_loader ()" link="MateWnckTasklist.html#matewnck-tasklist-set-icon-loader" since="2.2"/>
-    <keyword type="function" name="matewnck_tasklist_get_size_hint_list ()" link="MateWnckTasklist.html#matewnck-tasklist-get-size-hint-list"/>
-    <keyword type="property" name="The &quot;fade-loop-time&quot; style property" link="MateWnckTasklist.html#MateWnckTasklist--s-fade-loop-time"/>
-    <keyword type="property" name="The &quot;fade-max-loops&quot; style property" link="MateWnckTasklist.html#MateWnckTasklist--s-fade-max-loops"/>
-    <keyword type="property" name="The &quot;fade-opacity&quot; style property" link="MateWnckTasklist.html#MateWnckTasklist--s-fade-opacity"/>
-    <keyword type="property" name="The &quot;fade-overlay-rect&quot; style property" link="MateWnckTasklist.html#MateWnckTasklist--s-fade-overlay-rect"/>
-    <keyword type="struct" name="struct MateWnckResourceUsage" link="libmatewnck-Resource-Usage-of-X-Clients.html#MateWnckResourceUsage" since="2.6"/>
+    <keyword type="property" name="The &quot;window&quot; property" link="libmatewnck-Window-Action-Menu.html#MatewnckActionMenu--window"/>
+    <keyword type="struct" name="struct MatewnckPager" link="MatewnckPager.html#MatewnckPager-struct"/>
+    <keyword type="function" name="matewnck_pager_new ()" link="MatewnckPager.html#matewnck-pager-new"/>
+    <keyword type="function" name="matewnck_pager_set_screen ()" link="MatewnckPager.html#matewnck-pager-set-screen" deprecated="2.20:" since="2.2"/>
+    <keyword type="function" name="matewnck_pager_set_orientation ()" link="MatewnckPager.html#matewnck-pager-set-orientation"/>
+    <keyword type="function" name="matewnck_pager_set_n_rows ()" link="MatewnckPager.html#matewnck-pager-set-n-rows"/>
+    <keyword type="enum" name="enum MatewnckPagerLayoutPolicy" link="MatewnckPager.html#MatewnckPagerLayoutPolicy" since="2.32"/>
+    <keyword type="function" name="matewnck_pager_set_layout_policy ()" link="MatewnckPager.html#matewnck-pager-set-layout-policy" since="2.32"/>
+    <keyword type="enum" name="enum MatewnckPagerDisplayMode" link="MatewnckPager.html#MatewnckPagerDisplayMode"/>
+    <keyword type="function" name="matewnck_pager_set_display_mode ()" link="MatewnckPager.html#matewnck-pager-set-display-mode"/>
+    <keyword type="function" name="matewnck_pager_set_show_all ()" link="MatewnckPager.html#matewnck-pager-set-show-all"/>
+    <keyword type="function" name="matewnck_pager_set_shadow_type ()" link="MatewnckPager.html#matewnck-pager-set-shadow-type" since="2.2"/>
+    <keyword type="struct" name="struct MatewnckSelector" link="MatewnckSelector.html#MatewnckSelector-struct"/>
+    <keyword type="function" name="matewnck_selector_new ()" link="MatewnckSelector.html#matewnck-selector-new" since="2.10"/>
+    <keyword type="struct" name="struct MatewnckTasklist" link="MatewnckTasklist.html#MatewnckTasklist-struct"/>
+    <keyword type="function" name="matewnck_tasklist_new ()" link="MatewnckTasklist.html#matewnck-tasklist-new"/>
+    <keyword type="function" name="matewnck_tasklist_set_screen ()" link="MatewnckTasklist.html#matewnck-tasklist-set-screen" deprecated="2.20:" since="2.2"/>
+    <keyword type="enum" name="enum MatewnckTasklistGroupingType" link="MatewnckTasklist.html#MatewnckTasklistGroupingType"/>
+    <keyword type="function" name="matewnck_tasklist_set_grouping ()" link="MatewnckTasklist.html#matewnck-tasklist-set-grouping"/>
+    <keyword type="function" name="matewnck_tasklist_set_grouping_limit ()" link="MatewnckTasklist.html#matewnck-tasklist-set-grouping-limit"/>
+    <keyword type="function" name="matewnck_tasklist_set_include_all_workspaces ()" link="MatewnckTasklist.html#matewnck-tasklist-set-include-all-workspaces"/>
+    <keyword type="function" name="matewnck_tasklist_set_switch_workspace_on_unminimize ()" link="MatewnckTasklist.html#matewnck-tasklist-set-switch-workspace-on-unminimize"/>
+    <keyword type="function" name="matewnck_tasklist_set_button_relief ()" link="MatewnckTasklist.html#matewnck-tasklist-set-button-relief" since="2.12"/>
+    <keyword type="function" name="matewnck_tasklist_get_minimum_width ()" link="MatewnckTasklist.html#matewnck-tasklist-get-minimum-width" deprecated="2.20:"/>
+    <keyword type="function" name="matewnck_tasklist_set_minimum_width ()" link="MatewnckTasklist.html#matewnck-tasklist-set-minimum-width" deprecated="2.20:"/>
+    <keyword type="function" name="matewnck_tasklist_get_minimum_height ()" link="MatewnckTasklist.html#matewnck-tasklist-get-minimum-height" deprecated="2.20:"/>
+    <keyword type="function" name="matewnck_tasklist_set_minimum_height ()" link="MatewnckTasklist.html#matewnck-tasklist-set-minimum-height" deprecated="2.20:"/>
+    <keyword type="function" name="MatewnckLoadIconFunction ()" link="MatewnckTasklist.html#MatewnckLoadIconFunction" since="2.2"/>
+    <keyword type="function" name="matewnck_tasklist_set_icon_loader ()" link="MatewnckTasklist.html#matewnck-tasklist-set-icon-loader" since="2.2"/>
+    <keyword type="function" name="matewnck_tasklist_get_size_hint_list ()" link="MatewnckTasklist.html#matewnck-tasklist-get-size-hint-list"/>
+    <keyword type="property" name="The &quot;fade-loop-time&quot; style property" link="MatewnckTasklist.html#MatewnckTasklist--s-fade-loop-time"/>
+    <keyword type="property" name="The &quot;fade-max-loops&quot; style property" link="MatewnckTasklist.html#MatewnckTasklist--s-fade-max-loops"/>
+    <keyword type="property" name="The &quot;fade-opacity&quot; style property" link="MatewnckTasklist.html#MatewnckTasklist--s-fade-opacity"/>
+    <keyword type="property" name="The &quot;fade-overlay-rect&quot; style property" link="MatewnckTasklist.html#MatewnckTasklist--s-fade-overlay-rect"/>
+    <keyword type="struct" name="struct MatewnckResourceUsage" link="libmatewnck-Resource-Usage-of-X-Clients.html#MatewnckResourceUsage" since="2.6"/>
     <keyword type="function" name="matewnck_xid_read_resource_usage ()" link="libmatewnck-Resource-Usage-of-X-Clients.html#matewnck-xid-read-resource-usage" since="2.6"/>
     <keyword type="function" name="matewnck_pid_read_resource_usage ()" link="libmatewnck-Resource-Usage-of-X-Clients.html#matewnck-pid-read-resource-usage" since="2.6"/>
     <keyword type="function" name="matewnck_gtk_window_set_dock_type ()" link="libmatewnck-Miscellaneous-Functions.html#matewnck-gtk-window-set-dock-type" deprecated="2.20: Use gdk_window_set_type_hint() instead."/>
-    <keyword type="enum" name="enum MateWnckClientType" link="libmatewnck-Miscellaneous-Functions.html#MateWnckClientType" since="2.14"/>
+    <keyword type="enum" name="enum MatewnckClientType" link="libmatewnck-Miscellaneous-Functions.html#MatewnckClientType" since="2.14"/>
     <keyword type="function" name="matewnck_set_client_type ()" link="libmatewnck-Miscellaneous-Functions.html#matewnck-set-client-type" since="2.14"/>
     <keyword type="macro" name="MATEWNCK_MAJOR_VERSION" link="libmatewnck-Version-Information.html#MATEWNCK-MAJOR-VERSION:CAPS" since="2.32"/>
     <keyword type="macro" name="MATEWNCK_MINOR_VERSION" link="libmatewnck-Version-Information.html#MATEWNCK-MINOR-VERSION:CAPS" since="2.32"/>
     <keyword type="macro" name="MATEWNCK_MICRO_VERSION" link="libmatewnck-Version-Information.html#MATEWNCK-MICRO-VERSION:CAPS" since="2.32"/>
     <keyword type="macro" name="MATEWNCK_CHECK_VERSION()" link="libmatewnck-Version-Information.html#MATEWNCK-CHECK-VERSION:CAPS" since="2.32"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_NORMAL" link="MateWnckWindow.html#MATEWNCK-WINDOW-NORMAL:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_DESKTOP" link="MateWnckWindow.html#MATEWNCK-WINDOW-DESKTOP:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_DOCK" link="MateWnckWindow.html#MATEWNCK-WINDOW-DOCK:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_DIALOG" link="MateWnckWindow.html#MATEWNCK-WINDOW-DIALOG:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_TOOLBAR" link="MateWnckWindow.html#MATEWNCK-WINDOW-TOOLBAR:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_MENU" link="MateWnckWindow.html#MATEWNCK-WINDOW-MENU:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_UTILITY" link="MateWnckWindow.html#MATEWNCK-WINDOW-UTILITY:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_SPLASHSCREEN" link="MateWnckWindow.html#MATEWNCK-WINDOW-SPLASHSCREEN:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_STATE_MINIMIZED" link="MateWnckWindow.html#MATEWNCK-WINDOW-STATE-MINIMIZED:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_STATE_MAXIMIZED_HORIZONTALLY" link="MateWnckWindow.html#MATEWNCK-WINDOW-STATE-MAXIMIZED-HORIZONTALLY:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_STATE_MAXIMIZED_VERTICALLY" link="MateWnckWindow.html#MATEWNCK-WINDOW-STATE-MAXIMIZED-VERTICALLY:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_STATE_SHADED" link="MateWnckWindow.html#MATEWNCK-WINDOW-STATE-SHADED:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_STATE_SKIP_PAGER" link="MateWnckWindow.html#MATEWNCK-WINDOW-STATE-SKIP-PAGER:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_STATE_SKIP_TASKLIST" link="MateWnckWindow.html#MATEWNCK-WINDOW-STATE-SKIP-TASKLIST:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_STATE_STICKY" link="MateWnckWindow.html#MATEWNCK-WINDOW-STATE-STICKY:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_STATE_HIDDEN" link="MateWnckWindow.html#MATEWNCK-WINDOW-STATE-HIDDEN:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_STATE_FULLSCREEN" link="MateWnckWindow.html#MATEWNCK-WINDOW-STATE-FULLSCREEN:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_STATE_DEMANDS_ATTENTION" link="MateWnckWindow.html#MATEWNCK-WINDOW-STATE-DEMANDS-ATTENTION:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_STATE_URGENT" link="MateWnckWindow.html#MATEWNCK-WINDOW-STATE-URGENT:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_STATE_ABOVE" link="MateWnckWindow.html#MATEWNCK-WINDOW-STATE-ABOVE:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_STATE_BELOW" link="MateWnckWindow.html#MATEWNCK-WINDOW-STATE-BELOW:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_MOVE" link="MateWnckWindow.html#MATEWNCK-WINDOW-ACTION-MOVE:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_RESIZE" link="MateWnckWindow.html#MATEWNCK-WINDOW-ACTION-RESIZE:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_SHADE" link="MateWnckWindow.html#MATEWNCK-WINDOW-ACTION-SHADE:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_STICK" link="MateWnckWindow.html#MATEWNCK-WINDOW-ACTION-STICK:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_MAXIMIZE_HORIZONTALLY" link="MateWnckWindow.html#MATEWNCK-WINDOW-ACTION-MAXIMIZE-HORIZONTALLY:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_MAXIMIZE_VERTICALLY" link="MateWnckWindow.html#MATEWNCK-WINDOW-ACTION-MAXIMIZE-VERTICALLY:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_CHANGE_WORKSPACE" link="MateWnckWindow.html#MATEWNCK-WINDOW-ACTION-CHANGE-WORKSPACE:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_CLOSE" link="MateWnckWindow.html#MATEWNCK-WINDOW-ACTION-CLOSE:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_UNMAXIMIZE_HORIZONTALLY" link="MateWnckWindow.html#MATEWNCK-WINDOW-ACTION-UNMAXIMIZE-HORIZONTALLY:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_UNMAXIMIZE_VERTICALLY" link="MateWnckWindow.html#MATEWNCK-WINDOW-ACTION-UNMAXIMIZE-VERTICALLY:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_UNSHADE" link="MateWnckWindow.html#MATEWNCK-WINDOW-ACTION-UNSHADE:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_UNSTICK" link="MateWnckWindow.html#MATEWNCK-WINDOW-ACTION-UNSTICK:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_MINIMIZE" link="MateWnckWindow.html#MATEWNCK-WINDOW-ACTION-MINIMIZE:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_UNMINIMIZE" link="MateWnckWindow.html#MATEWNCK-WINDOW-ACTION-UNMINIMIZE:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_MAXIMIZE" link="MateWnckWindow.html#MATEWNCK-WINDOW-ACTION-MAXIMIZE:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_UNMAXIMIZE" link="MateWnckWindow.html#MATEWNCK-WINDOW-ACTION-UNMAXIMIZE:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_FULLSCREEN" link="MateWnckWindow.html#MATEWNCK-WINDOW-ACTION-FULLSCREEN:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_ABOVE" link="MateWnckWindow.html#MATEWNCK-WINDOW-ACTION-ABOVE:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_BELOW" link="MateWnckWindow.html#MATEWNCK-WINDOW-ACTION-BELOW:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_GRAVITY_CURRENT" link="MateWnckWindow.html#MATEWNCK-WINDOW-GRAVITY-CURRENT:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_GRAVITY_NORTHWEST" link="MateWnckWindow.html#MATEWNCK-WINDOW-GRAVITY-NORTHWEST:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_GRAVITY_NORTH" link="MateWnckWindow.html#MATEWNCK-WINDOW-GRAVITY-NORTH:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_GRAVITY_NORTHEAST" link="MateWnckWindow.html#MATEWNCK-WINDOW-GRAVITY-NORTHEAST:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_GRAVITY_WEST" link="MateWnckWindow.html#MATEWNCK-WINDOW-GRAVITY-WEST:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_GRAVITY_CENTER" link="MateWnckWindow.html#MATEWNCK-WINDOW-GRAVITY-CENTER:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_GRAVITY_EAST" link="MateWnckWindow.html#MATEWNCK-WINDOW-GRAVITY-EAST:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_GRAVITY_SOUTHWEST" link="MateWnckWindow.html#MATEWNCK-WINDOW-GRAVITY-SOUTHWEST:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_GRAVITY_SOUTH" link="MateWnckWindow.html#MATEWNCK-WINDOW-GRAVITY-SOUTH:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_GRAVITY_SOUTHEAST" link="MateWnckWindow.html#MATEWNCK-WINDOW-GRAVITY-SOUTHEAST:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_GRAVITY_STATIC" link="MateWnckWindow.html#MATEWNCK-WINDOW-GRAVITY-STATIC:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_CHANGE_X" link="MateWnckWindow.html#MATEWNCK-WINDOW-CHANGE-X:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_CHANGE_Y" link="MateWnckWindow.html#MATEWNCK-WINDOW-CHANGE-Y:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_CHANGE_WIDTH" link="MateWnckWindow.html#MATEWNCK-WINDOW-CHANGE-WIDTH:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_WINDOW_CHANGE_HEIGHT" link="MateWnckWindow.html#MATEWNCK-WINDOW-CHANGE-HEIGHT:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_MOTION_UP" link="MateWnckScreen.html#MATEWNCK-MOTION-UP:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_MOTION_DOWN" link="MateWnckScreen.html#MATEWNCK-MOTION-DOWN:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_MOTION_LEFT" link="MateWnckScreen.html#MATEWNCK-MOTION-LEFT:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_MOTION_RIGHT" link="MateWnckScreen.html#MATEWNCK-MOTION-RIGHT:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_PAGER_LAYOUT_POLICY_AUTOMATIC" link="MateWnckPager.html#MATEWNCK-PAGER-LAYOUT-POLICY-AUTOMATIC:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_PAGER_LAYOUT_POLICY_WIDTH_FOR_HEIGHT" link="MateWnckPager.html#MATEWNCK-PAGER-LAYOUT-POLICY-WIDTH-FOR-HEIGHT:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_PAGER_LAYOUT_POLICY_HEIGHT_FOR_WIDTH" link="MateWnckPager.html#MATEWNCK-PAGER-LAYOUT-POLICY-HEIGHT-FOR-WIDTH:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_PAGER_DISPLAY_NAME" link="MateWnckPager.html#MATEWNCK-PAGER-DISPLAY-NAME:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_PAGER_DISPLAY_CONTENT" link="MateWnckPager.html#MATEWNCK-PAGER-DISPLAY-CONTENT:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_TASKLIST_NEVER_GROUP" link="MateWnckTasklist.html#MATEWNCK-TASKLIST-NEVER-GROUP:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_TASKLIST_AUTO_GROUP" link="MateWnckTasklist.html#MATEWNCK-TASKLIST-AUTO-GROUP:CAPS"/>
-    <keyword type="constant" name="MATEWNCK_TASKLIST_ALWAYS_GROUP" link="MateWnckTasklist.html#MATEWNCK-TASKLIST-ALWAYS-GROUP:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_NORMAL" link="MatewnckWindow.html#MATEWNCK-WINDOW-NORMAL:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_DESKTOP" link="MatewnckWindow.html#MATEWNCK-WINDOW-DESKTOP:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_DOCK" link="MatewnckWindow.html#MATEWNCK-WINDOW-DOCK:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_DIALOG" link="MatewnckWindow.html#MATEWNCK-WINDOW-DIALOG:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_TOOLBAR" link="MatewnckWindow.html#MATEWNCK-WINDOW-TOOLBAR:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_MENU" link="MatewnckWindow.html#MATEWNCK-WINDOW-MENU:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_UTILITY" link="MatewnckWindow.html#MATEWNCK-WINDOW-UTILITY:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_SPLASHSCREEN" link="MatewnckWindow.html#MATEWNCK-WINDOW-SPLASHSCREEN:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_STATE_MINIMIZED" link="MatewnckWindow.html#MATEWNCK-WINDOW-STATE-MINIMIZED:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_STATE_MAXIMIZED_HORIZONTALLY" link="MatewnckWindow.html#MATEWNCK-WINDOW-STATE-MAXIMIZED-HORIZONTALLY:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_STATE_MAXIMIZED_VERTICALLY" link="MatewnckWindow.html#MATEWNCK-WINDOW-STATE-MAXIMIZED-VERTICALLY:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_STATE_SHADED" link="MatewnckWindow.html#MATEWNCK-WINDOW-STATE-SHADED:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_STATE_SKIP_PAGER" link="MatewnckWindow.html#MATEWNCK-WINDOW-STATE-SKIP-PAGER:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_STATE_SKIP_TASKLIST" link="MatewnckWindow.html#MATEWNCK-WINDOW-STATE-SKIP-TASKLIST:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_STATE_STICKY" link="MatewnckWindow.html#MATEWNCK-WINDOW-STATE-STICKY:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_STATE_HIDDEN" link="MatewnckWindow.html#MATEWNCK-WINDOW-STATE-HIDDEN:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_STATE_FULLSCREEN" link="MatewnckWindow.html#MATEWNCK-WINDOW-STATE-FULLSCREEN:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_STATE_DEMANDS_ATTENTION" link="MatewnckWindow.html#MATEWNCK-WINDOW-STATE-DEMANDS-ATTENTION:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_STATE_URGENT" link="MatewnckWindow.html#MATEWNCK-WINDOW-STATE-URGENT:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_STATE_ABOVE" link="MatewnckWindow.html#MATEWNCK-WINDOW-STATE-ABOVE:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_STATE_BELOW" link="MatewnckWindow.html#MATEWNCK-WINDOW-STATE-BELOW:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_MOVE" link="MatewnckWindow.html#MATEWNCK-WINDOW-ACTION-MOVE:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_RESIZE" link="MatewnckWindow.html#MATEWNCK-WINDOW-ACTION-RESIZE:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_SHADE" link="MatewnckWindow.html#MATEWNCK-WINDOW-ACTION-SHADE:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_STICK" link="MatewnckWindow.html#MATEWNCK-WINDOW-ACTION-STICK:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_MAXIMIZE_HORIZONTALLY" link="MatewnckWindow.html#MATEWNCK-WINDOW-ACTION-MAXIMIZE-HORIZONTALLY:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_MAXIMIZE_VERTICALLY" link="MatewnckWindow.html#MATEWNCK-WINDOW-ACTION-MAXIMIZE-VERTICALLY:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_CHANGE_WORKSPACE" link="MatewnckWindow.html#MATEWNCK-WINDOW-ACTION-CHANGE-WORKSPACE:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_CLOSE" link="MatewnckWindow.html#MATEWNCK-WINDOW-ACTION-CLOSE:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_UNMAXIMIZE_HORIZONTALLY" link="MatewnckWindow.html#MATEWNCK-WINDOW-ACTION-UNMAXIMIZE-HORIZONTALLY:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_UNMAXIMIZE_VERTICALLY" link="MatewnckWindow.html#MATEWNCK-WINDOW-ACTION-UNMAXIMIZE-VERTICALLY:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_UNSHADE" link="MatewnckWindow.html#MATEWNCK-WINDOW-ACTION-UNSHADE:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_UNSTICK" link="MatewnckWindow.html#MATEWNCK-WINDOW-ACTION-UNSTICK:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_MINIMIZE" link="MatewnckWindow.html#MATEWNCK-WINDOW-ACTION-MINIMIZE:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_UNMINIMIZE" link="MatewnckWindow.html#MATEWNCK-WINDOW-ACTION-UNMINIMIZE:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_MAXIMIZE" link="MatewnckWindow.html#MATEWNCK-WINDOW-ACTION-MAXIMIZE:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_UNMAXIMIZE" link="MatewnckWindow.html#MATEWNCK-WINDOW-ACTION-UNMAXIMIZE:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_FULLSCREEN" link="MatewnckWindow.html#MATEWNCK-WINDOW-ACTION-FULLSCREEN:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_ABOVE" link="MatewnckWindow.html#MATEWNCK-WINDOW-ACTION-ABOVE:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_ACTION_BELOW" link="MatewnckWindow.html#MATEWNCK-WINDOW-ACTION-BELOW:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_GRAVITY_CURRENT" link="MatewnckWindow.html#MATEWNCK-WINDOW-GRAVITY-CURRENT:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_GRAVITY_NORTHWEST" link="MatewnckWindow.html#MATEWNCK-WINDOW-GRAVITY-NORTHWEST:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_GRAVITY_NORTH" link="MatewnckWindow.html#MATEWNCK-WINDOW-GRAVITY-NORTH:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_GRAVITY_NORTHEAST" link="MatewnckWindow.html#MATEWNCK-WINDOW-GRAVITY-NORTHEAST:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_GRAVITY_WEST" link="MatewnckWindow.html#MATEWNCK-WINDOW-GRAVITY-WEST:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_GRAVITY_CENTER" link="MatewnckWindow.html#MATEWNCK-WINDOW-GRAVITY-CENTER:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_GRAVITY_EAST" link="MatewnckWindow.html#MATEWNCK-WINDOW-GRAVITY-EAST:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_GRAVITY_SOUTHWEST" link="MatewnckWindow.html#MATEWNCK-WINDOW-GRAVITY-SOUTHWEST:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_GRAVITY_SOUTH" link="MatewnckWindow.html#MATEWNCK-WINDOW-GRAVITY-SOUTH:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_GRAVITY_SOUTHEAST" link="MatewnckWindow.html#MATEWNCK-WINDOW-GRAVITY-SOUTHEAST:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_GRAVITY_STATIC" link="MatewnckWindow.html#MATEWNCK-WINDOW-GRAVITY-STATIC:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_CHANGE_X" link="MatewnckWindow.html#MATEWNCK-WINDOW-CHANGE-X:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_CHANGE_Y" link="MatewnckWindow.html#MATEWNCK-WINDOW-CHANGE-Y:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_CHANGE_WIDTH" link="MatewnckWindow.html#MATEWNCK-WINDOW-CHANGE-WIDTH:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_WINDOW_CHANGE_HEIGHT" link="MatewnckWindow.html#MATEWNCK-WINDOW-CHANGE-HEIGHT:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_MOTION_UP" link="MatewnckScreen.html#MATEWNCK-MOTION-UP:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_MOTION_DOWN" link="MatewnckScreen.html#MATEWNCK-MOTION-DOWN:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_MOTION_LEFT" link="MatewnckScreen.html#MATEWNCK-MOTION-LEFT:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_MOTION_RIGHT" link="MatewnckScreen.html#MATEWNCK-MOTION-RIGHT:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_PAGER_LAYOUT_POLICY_AUTOMATIC" link="MatewnckPager.html#MATEWNCK-PAGER-LAYOUT-POLICY-AUTOMATIC:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_PAGER_LAYOUT_POLICY_WIDTH_FOR_HEIGHT" link="MatewnckPager.html#MATEWNCK-PAGER-LAYOUT-POLICY-WIDTH-FOR-HEIGHT:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_PAGER_LAYOUT_POLICY_HEIGHT_FOR_WIDTH" link="MatewnckPager.html#MATEWNCK-PAGER-LAYOUT-POLICY-HEIGHT-FOR-WIDTH:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_PAGER_DISPLAY_NAME" link="MatewnckPager.html#MATEWNCK-PAGER-DISPLAY-NAME:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_PAGER_DISPLAY_CONTENT" link="MatewnckPager.html#MATEWNCK-PAGER-DISPLAY-CONTENT:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_TASKLIST_NEVER_GROUP" link="MatewnckTasklist.html#MATEWNCK-TASKLIST-NEVER-GROUP:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_TASKLIST_AUTO_GROUP" link="MatewnckTasklist.html#MATEWNCK-TASKLIST-AUTO-GROUP:CAPS"/>
+    <keyword type="constant" name="MATEWNCK_TASKLIST_ALWAYS_GROUP" link="MatewnckTasklist.html#MATEWNCK-TASKLIST-ALWAYS-GROUP:CAPS"/>
     <keyword type="constant" name="MATEWNCK_CLIENT_TYPE_APPLICATION" link="libmatewnck-Miscellaneous-Functions.html#MATEWNCK-CLIENT-TYPE-APPLICATION:CAPS"/>
     <keyword type="constant" name="MATEWNCK_CLIENT_TYPE_PAGER" link="libmatewnck-Miscellaneous-Functions.html#MATEWNCK-CLIENT-TYPE-PAGER:CAPS"/>
   </functions>

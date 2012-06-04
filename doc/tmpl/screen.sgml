@@ -1,5 +1,5 @@
 <!-- ##### SECTION Title ##### -->
-MateWnckScreen
+MatewnckScreen
 
 <!-- ##### SECTION Short_Description ##### -->
 
@@ -20,21 +20,13 @@ MateWnckScreen
 <!-- ##### SECTION Image ##### -->
 
 
-<!-- ##### STRUCT MateWnckScreen ##### -->
+<!-- ##### STRUCT MatewnckScreen ##### -->
 <para>
 
 </para>
 
 
-<!-- ##### SIGNAL MateWnckScreen::active-window-changed ##### -->
-<para>
-
-</para>
-
-@matewnckscreen: the object which received the signal.
-@arg1: 
-
-<!-- ##### SIGNAL MateWnckScreen::active-workspace-changed ##### -->
+<!-- ##### SIGNAL MatewnckScreen::active-window-changed ##### -->
 <para>
 
 </para>
@@ -42,7 +34,7 @@ MateWnckScreen
 @matewnckscreen: the object which received the signal.
 @arg1: 
 
-<!-- ##### SIGNAL MateWnckScreen::application-closed ##### -->
+<!-- ##### SIGNAL MatewnckScreen::active-workspace-changed ##### -->
 <para>
 
 </para>
@@ -50,7 +42,7 @@ MateWnckScreen
 @matewnckscreen: the object which received the signal.
 @arg1: 
 
-<!-- ##### SIGNAL MateWnckScreen::application-opened ##### -->
+<!-- ##### SIGNAL MatewnckScreen::application-closed ##### -->
 <para>
 
 </para>
@@ -58,14 +50,7 @@ MateWnckScreen
 @matewnckscreen: the object which received the signal.
 @arg1: 
 
-<!-- ##### SIGNAL MateWnckScreen::background-changed ##### -->
-<para>
-
-</para>
-
-@matewnckscreen: the object which received the signal.
-
-<!-- ##### SIGNAL MateWnckScreen::class-group-closed ##### -->
+<!-- ##### SIGNAL MatewnckScreen::application-opened ##### -->
 <para>
 
 </para>
@@ -73,7 +58,14 @@ MateWnckScreen
 @matewnckscreen: the object which received the signal.
 @arg1: 
 
-<!-- ##### SIGNAL MateWnckScreen::class-group-opened ##### -->
+<!-- ##### SIGNAL MatewnckScreen::background-changed ##### -->
+<para>
+
+</para>
+
+@matewnckscreen: the object which received the signal.
+
+<!-- ##### SIGNAL MatewnckScreen::class-group-closed ##### -->
 <para>
 
 </para>
@@ -81,21 +73,7 @@ MateWnckScreen
 @matewnckscreen: the object which received the signal.
 @arg1: 
 
-<!-- ##### SIGNAL MateWnckScreen::showing-desktop-changed ##### -->
-<para>
-
-</para>
-
-@matewnckscreen: the object which received the signal.
-
-<!-- ##### SIGNAL MateWnckScreen::viewports-changed ##### -->
-<para>
-
-</para>
-
-@matewnckscreen: the object which received the signal.
-
-<!-- ##### SIGNAL MateWnckScreen::window-closed ##### -->
+<!-- ##### SIGNAL MatewnckScreen::class-group-opened ##### -->
 <para>
 
 </para>
@@ -103,29 +81,21 @@ MateWnckScreen
 @matewnckscreen: the object which received the signal.
 @arg1: 
 
-<!-- ##### SIGNAL MateWnckScreen::window-manager-changed ##### -->
+<!-- ##### SIGNAL MatewnckScreen::showing-desktop-changed ##### -->
 <para>
 
 </para>
 
 @matewnckscreen: the object which received the signal.
 
-<!-- ##### SIGNAL MateWnckScreen::window-opened ##### -->
-<para>
-
-</para>
-
-@matewnckscreen: the object which received the signal.
-@arg1: 
-
-<!-- ##### SIGNAL MateWnckScreen::window-stacking-changed ##### -->
+<!-- ##### SIGNAL MatewnckScreen::viewports-changed ##### -->
 <para>
 
 </para>
 
 @matewnckscreen: the object which received the signal.
 
-<!-- ##### SIGNAL MateWnckScreen::workspace-created ##### -->
+<!-- ##### SIGNAL MatewnckScreen::window-closed ##### -->
 <para>
 
 </para>
@@ -133,7 +103,37 @@ MateWnckScreen
 @matewnckscreen: the object which received the signal.
 @arg1: 
 
-<!-- ##### SIGNAL MateWnckScreen::workspace-destroyed ##### -->
+<!-- ##### SIGNAL MatewnckScreen::window-manager-changed ##### -->
+<para>
+
+</para>
+
+@matewnckscreen: the object which received the signal.
+
+<!-- ##### SIGNAL MatewnckScreen::window-opened ##### -->
+<para>
+
+</para>
+
+@matewnckscreen: the object which received the signal.
+@arg1: 
+
+<!-- ##### SIGNAL MatewnckScreen::window-stacking-changed ##### -->
+<para>
+
+</para>
+
+@matewnckscreen: the object which received the signal.
+
+<!-- ##### SIGNAL MatewnckScreen::workspace-created ##### -->
+<para>
+
+</para>
+
+@matewnckscreen: the object which received the signal.
+@arg1: 
+
+<!-- ##### SIGNAL MatewnckScreen::workspace-destroyed ##### -->
 <para>
 
 </para>
@@ -296,7 +296,7 @@ MateWnckScreen
 @Returns: 
 
 
-<!-- ##### ENUM MateWnckMotionDirection ##### -->
+<!-- ##### ENUM MatewnckMotionDirection ##### -->
 <para>
 
 </para>
@@ -356,7 +356,7 @@ MateWnckScreen
 @current_token: 
 
 
-<!-- ##### STRUCT MateWnckWorkspaceLayout ##### -->
+<!-- ##### STRUCT MatewnckWorkspaceLayout ##### -->
 <para>
 
 </para>

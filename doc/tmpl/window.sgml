@@ -1,5 +1,5 @@
 <!-- ##### SECTION Title ##### -->
-MateWnckWindow
+MatewnckWindow
 
 <!-- ##### SECTION Short_Description ##### -->
 
@@ -20,43 +20,13 @@ MateWnckWindow
 <!-- ##### SECTION Image ##### -->
 
 
-<!-- ##### STRUCT MateWnckWindow ##### -->
+<!-- ##### STRUCT MatewnckWindow ##### -->
 <para>
 
 </para>
 
 
-<!-- ##### SIGNAL MateWnckWindow::actions-changed ##### -->
-<para>
-
-</para>
-
-@matewnckwindow: the object which received the signal.
-@arg1: 
-@arg2: 
-
-<!-- ##### SIGNAL MateWnckWindow::geometry-changed ##### -->
-<para>
-
-</para>
-
-@matewnckwindow: the object which received the signal.
-
-<!-- ##### SIGNAL MateWnckWindow::icon-changed ##### -->
-<para>
-
-</para>
-
-@matewnckwindow: the object which received the signal.
-
-<!-- ##### SIGNAL MateWnckWindow::name-changed ##### -->
-<para>
-
-</para>
-
-@matewnckwindow: the object which received the signal.
-
-<!-- ##### SIGNAL MateWnckWindow::state-changed ##### -->
+<!-- ##### SIGNAL MatewnckWindow::actions-changed ##### -->
 <para>
 
 </para>
@@ -65,7 +35,37 @@ MateWnckWindow
 @arg1: 
 @arg2: 
 
-<!-- ##### SIGNAL MateWnckWindow::workspace-changed ##### -->
+<!-- ##### SIGNAL MatewnckWindow::geometry-changed ##### -->
+<para>
+
+</para>
+
+@matewnckwindow: the object which received the signal.
+
+<!-- ##### SIGNAL MatewnckWindow::icon-changed ##### -->
+<para>
+
+</para>
+
+@matewnckwindow: the object which received the signal.
+
+<!-- ##### SIGNAL MatewnckWindow::name-changed ##### -->
+<para>
+
+</para>
+
+@matewnckwindow: the object which received the signal.
+
+<!-- ##### SIGNAL MatewnckWindow::state-changed ##### -->
+<para>
+
+</para>
+
+@matewnckwindow: the object which received the signal.
+@arg1: 
+@arg2: 
+
+<!-- ##### SIGNAL MatewnckWindow::workspace-changed ##### -->
 <para>
 
 </para>
@@ -243,7 +243,7 @@ MateWnckWindow
 @order: 
 
 
-<!-- ##### ENUM MateWnckWindowType ##### -->
+<!-- ##### ENUM MatewnckWindowType ##### -->
 <para>
 
 </para>
@@ -275,7 +275,7 @@ MateWnckWindow
 @wintype: 
 
 
-<!-- ##### ENUM MateWnckWindowState ##### -->
+<!-- ##### ENUM MatewnckWindowState ##### -->
 <para>
 
 </para>
@@ -429,7 +429,7 @@ MateWnckWindow
 @Returns: 
 
 
-<!-- ##### ENUM MateWnckWindowActions ##### -->
+<!-- ##### ENUM MatewnckWindowActions ##### -->
 <para>
 
 </para>
@@ -749,7 +749,7 @@ MateWnckWindow
 @height: 
 
 
-<!-- ##### ENUM MateWnckWindowGravity ##### -->
+<!-- ##### ENUM MatewnckWindowGravity ##### -->
 <para>
 
 </para>
@@ -766,7 +766,7 @@ MateWnckWindow
 @MATEWNCK_WINDOW_GRAVITY_SOUTHEAST: 
 @MATEWNCK_WINDOW_GRAVITY_STATIC: 
 
-<!-- ##### ENUM MateWnckWindowMoveResizeMask ##### -->
+<!-- ##### ENUM MatewnckWindowMoveResizeMask ##### -->
 <para>
 
 </para>

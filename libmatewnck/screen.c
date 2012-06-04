@@ -43,19 +43,19 @@
 /**
  * SECTION:screen
  * @short_description: an object representing a screen.
- * @see_also: #MateWnckWindow, #MateWnckWorkspace
+ * @see_also: #MatewnckWindow, #MatewnckWorkspace
  * @stability: Unstable
  *
- * The #MateWnckScreen represents a physical screen. A screen may consist of
+ * The #MatewnckScreen represents a physical screen. A screen may consist of
  * multiple monitors which are merged to form a large screen area. The
- * #MateWnckScreen is at the bottom of the libmatewnck stack of objects: #MateWnckWorkspace
- * objects exist a #MateWnckScreen and #MateWnckWindow objects are displayed on a
- * #MateWnckWorkspace.
+ * #MatewnckScreen is at the bottom of the libmatewnck stack of objects: #MatewnckWorkspace
+ * objects exist a #MatewnckScreen and #MatewnckWindow objects are displayed on a
+ * #MatewnckWorkspace.
  *
- * The #MateWnckScreen corresponds to the notion of
+ * The #MatewnckScreen corresponds to the notion of
  * <classname>GdkScreen</classname> in GDK.
  *
- * The #MateWnckScreen objects are always owned by libmatewnck and must not be
+ * The #MatewnckScreen objects are always owned by libmatewnck and must not be
  * referenced or unreferenced.
  */
 
@@ -67,9 +67,9 @@
 #define _NET_WM_BOTTOMRIGHT 2
 #define _NET_WM_BOTTOMLEFT  3
 
-static MateWnckScreen** screens = NULL;
+static MatewnckScreen** screens = NULL;
 
-struct _MateWnckScreenPrivate
+struct _MatewnckScreenPrivate
 {
   int number;
   Window xroot;
@@ -87,10 +87,10 @@ struct _MateWnckScreenPrivate
    * These are usually shared for all screens, although this is not guaranteed
    * to be true.
    */
-  MateWnckWindow *active_window;
-  MateWnckWindow *previously_active_window;
+  MatewnckWindow *active_window;
+  MatewnckWindow *previously_active_window;
 
-  MateWnckWorkspace *active_workspace;
+  MatewnckWorkspace *active_workspace;
 
   /* Provides the sorting order number for the next window, to make
    * sure windows remain sorted in the order they appear.
@@ -110,7 +110,7 @@ struct _MateWnckScreenPrivate
   guint showing_desktop : 1;
   
   guint vertical_workspaces : 1;
-  _MateWnckLayoutCorner starting_corner;
+  _MatewnckLayoutCorner starting_corner;
   gint rows_of_workspaces;
   gint columns_of_workspaces;  
 
@@ -129,8 +129,8 @@ struct _MateWnckScreenPrivate
   guint need_update_wm : 1;
 };
 
-G_DEFINE_TYPE (MateWnckScreen, matewnck_screen, G_TYPE_OBJECT);
-#define MATEWNCK_SCREEN_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), MATEWNCK_TYPE_SCREEN, MateWnckScreenPrivate))
+G_DEFINE_TYPE (MatewnckScreen, matewnck_screen, G_TYPE_OBJECT);
+#define MATEWNCK_SCREEN_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), MATEWNCK_TYPE_SCREEN, MatewnckScreenPrivate))
 
 enum {
   ACTIVE_WINDOW_CHANGED,
@@ -151,52 +151,52 @@ enum {
   LAST_SIGNAL
 };
 
-static void matewnck_screen_init        (MateWnckScreen      *screen);
-static void matewnck_screen_class_init  (MateWnckScreenClass *klass);
+static void matewnck_screen_init        (MatewnckScreen      *screen);
+static void matewnck_screen_class_init  (MatewnckScreenClass *klass);
 static void matewnck_screen_finalize    (GObject         *object);
 
-static void update_client_list        (MateWnckScreen      *screen);
-static void update_workspace_list     (MateWnckScreen      *screen);
-static void update_viewport_settings  (MateWnckScreen      *screen);
-static void update_active_workspace   (MateWnckScreen      *screen);
-static void update_active_window      (MateWnckScreen      *screen);
-static void update_workspace_layout   (MateWnckScreen      *screen);
-static void update_workspace_names    (MateWnckScreen      *screen);
-static void update_showing_desktop    (MateWnckScreen      *screen);
+static void update_client_list        (MatewnckScreen      *screen);
+static void update_workspace_list     (MatewnckScreen      *screen);
+static void update_viewport_settings  (MatewnckScreen      *screen);
+static void update_active_workspace   (MatewnckScreen      *screen);
+static void update_active_window      (MatewnckScreen      *screen);
+static void update_workspace_layout   (MatewnckScreen      *screen);
+static void update_workspace_names    (MatewnckScreen      *screen);
+static void update_showing_desktop    (MatewnckScreen      *screen);
 
-static void queue_update            (MateWnckScreen      *screen);
-static void unqueue_update          (MateWnckScreen      *screen);              
-static void do_update_now           (MateWnckScreen      *screen);
+static void queue_update            (MatewnckScreen      *screen);
+static void unqueue_update          (MatewnckScreen      *screen);              
+static void do_update_now           (MatewnckScreen      *screen);
 
-static void emit_active_window_changed    (MateWnckScreen      *screen);
-static void emit_active_workspace_changed (MateWnckScreen      *screen,
-                                           MateWnckWorkspace   *previous_space);
-static void emit_window_stacking_changed  (MateWnckScreen      *screen);
-static void emit_window_opened            (MateWnckScreen      *screen,
-                                           MateWnckWindow      *window);
-static void emit_window_closed            (MateWnckScreen      *screen,
-                                           MateWnckWindow      *window);
-static void emit_workspace_created        (MateWnckScreen      *screen,
-                                           MateWnckWorkspace   *space);
-static void emit_workspace_destroyed      (MateWnckScreen      *screen,
-                                           MateWnckWorkspace   *space);
-static void emit_application_opened       (MateWnckScreen      *screen,
-                                           MateWnckApplication *app);
-static void emit_application_closed       (MateWnckScreen      *screen,
-                                           MateWnckApplication *app);
-static void emit_class_group_opened       (MateWnckScreen      *screen,
-                                           MateWnckClassGroup  *class_group);
-static void emit_class_group_closed       (MateWnckScreen      *screen,
-                                           MateWnckClassGroup  *class_group);
-static void emit_background_changed       (MateWnckScreen      *screen);
-static void emit_showing_desktop_changed  (MateWnckScreen      *screen);
-static void emit_viewports_changed        (MateWnckScreen      *screen);
-static void emit_wm_changed               (MateWnckScreen *screen);
+static void emit_active_window_changed    (MatewnckScreen      *screen);
+static void emit_active_workspace_changed (MatewnckScreen      *screen,
+                                           MatewnckWorkspace   *previous_space);
+static void emit_window_stacking_changed  (MatewnckScreen      *screen);
+static void emit_window_opened            (MatewnckScreen      *screen,
+                                           MatewnckWindow      *window);
+static void emit_window_closed            (MatewnckScreen      *screen,
+                                           MatewnckWindow      *window);
+static void emit_workspace_created        (MatewnckScreen      *screen,
+                                           MatewnckWorkspace   *space);
+static void emit_workspace_destroyed      (MatewnckScreen      *screen,
+                                           MatewnckWorkspace   *space);
+static void emit_application_opened       (MatewnckScreen      *screen,
+                                           MatewnckApplication *app);
+static void emit_application_closed       (MatewnckScreen      *screen,
+                                           MatewnckApplication *app);
+static void emit_class_group_opened       (MatewnckScreen      *screen,
+                                           MatewnckClassGroup  *class_group);
+static void emit_class_group_closed       (MatewnckScreen      *screen,
+                                           MatewnckClassGroup  *class_group);
+static void emit_background_changed       (MatewnckScreen      *screen);
+static void emit_showing_desktop_changed  (MatewnckScreen      *screen);
+static void emit_viewports_changed        (MatewnckScreen      *screen);
+static void emit_wm_changed               (MatewnckScreen *screen);
 
 static guint signals[LAST_SIGNAL] = { 0 };
 
 static void
-matewnck_screen_init (MateWnckScreen *screen)
+matewnck_screen_init (MatewnckScreen *screen)
 {  
   screen->priv = MATEWNCK_SCREEN_GET_PRIVATE (screen);
 
@@ -245,20 +245,20 @@ matewnck_screen_init (MateWnckScreen *screen)
 }
 
 static void
-matewnck_screen_class_init (MateWnckScreenClass *klass)
+matewnck_screen_class_init (MatewnckScreenClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   _matewnck_init ();
 
-  g_type_class_add_private (klass, sizeof (MateWnckScreenPrivate));
+  g_type_class_add_private (klass, sizeof (MatewnckScreenPrivate));
 
   object_class->finalize = matewnck_screen_finalize;
 
   /**
-   * MateWnckScreen::active-window-changed:
-   * @screen: the #MateWnckScreen which emitted the signal.
-   * @previously_active_window: the previously active #MateWnckWindow before this
+   * MatewnckScreen::active-window-changed:
+   * @screen: the #MatewnckScreen which emitted the signal.
+   * @previously_active_window: the previously active #MatewnckWindow before this
    * change.
    *
    * Emitted when the active window on @screen has changed.
@@ -267,15 +267,15 @@ matewnck_screen_class_init (MateWnckScreenClass *klass)
     g_signal_new ("active_window_changed",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (MateWnckScreenClass, active_window_changed),
+                  G_STRUCT_OFFSET (MatewnckScreenClass, active_window_changed),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1, MATEWNCK_TYPE_WINDOW);
 
   /**
-   * MateWnckScreen::active-workspace-changed:
-   * @screen: the #MateWnckScreen which emitted the signal.
-   * @previously_active_space: the previously active #MateWnckWorkspace before this
+   * MatewnckScreen::active-workspace-changed:
+   * @screen: the #MatewnckScreen which emitted the signal.
+   * @previously_active_space: the previously active #MatewnckWorkspace before this
    * change.
    *
    * Emitted when the active workspace on @screen has changed.
@@ -284,128 +284,128 @@ matewnck_screen_class_init (MateWnckScreenClass *klass)
     g_signal_new ("active_workspace_changed",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (MateWnckScreenClass, active_workspace_changed),
+                  G_STRUCT_OFFSET (MatewnckScreenClass, active_workspace_changed),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1, MATEWNCK_TYPE_WORKSPACE);
   
   /**
-   * MateWnckScreen::window-stacking-changed:
-   * @screen: the #MateWnckScreen which emitted the signal.
+   * MatewnckScreen::window-stacking-changed:
+   * @screen: the #MatewnckScreen which emitted the signal.
    *
-   * Emitted when the stacking order of #MateWnckWindow on @screen has changed.
+   * Emitted when the stacking order of #MatewnckWindow on @screen has changed.
    */
   signals[WINDOW_STACKING_CHANGED] =
     g_signal_new ("window_stacking_changed",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (MateWnckScreenClass, window_stacking_changed),
+                  G_STRUCT_OFFSET (MatewnckScreenClass, window_stacking_changed),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
   /**
-   * MateWnckScreen::window-opened:
-   * @screen: the #MateWnckScreen which emitted the signal.
-   * @window: the opened #MateWnckWindow.
+   * MatewnckScreen::window-opened:
+   * @screen: the #MatewnckScreen which emitted the signal.
+   * @window: the opened #MatewnckWindow.
    *
-   * Emitted when a new #MateWnckWindow is opened on @screen.
+   * Emitted when a new #MatewnckWindow is opened on @screen.
    */
   signals[WINDOW_OPENED] =
     g_signal_new ("window_opened",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (MateWnckScreenClass, window_opened),
+                  G_STRUCT_OFFSET (MatewnckScreenClass, window_opened),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1, MATEWNCK_TYPE_WINDOW);
 
   /**
-   * MateWnckScreen::window-closed:
-   * @screen: the #MateWnckScreen which emitted the signal.
-   * @window: the closed #MateWnckWindow.
+   * MatewnckScreen::window-closed:
+   * @screen: the #MatewnckScreen which emitted the signal.
+   * @window: the closed #MatewnckWindow.
    *
-   * Emitted when a #MateWnckWindow is closed on @screen.
+   * Emitted when a #MatewnckWindow is closed on @screen.
    */
   signals[WINDOW_CLOSED] =
     g_signal_new ("window_closed",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (MateWnckScreenClass, window_closed),
+                  G_STRUCT_OFFSET (MatewnckScreenClass, window_closed),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1, MATEWNCK_TYPE_WINDOW);
   
   /**
-   * MateWnckScreen::workspace-created:
-   * @screen: the #MateWnckScreen which emitted the signal.
+   * MatewnckScreen::workspace-created:
+   * @screen: the #MatewnckScreen which emitted the signal.
    * @space: the workspace that has been created. 
    *
-   * Emitted when a #MateWnckWorkspace is created on @screen.
+   * Emitted when a #MatewnckWorkspace is created on @screen.
    */
   signals[WORKSPACE_CREATED] =
     g_signal_new ("workspace_created",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (MateWnckScreenClass, workspace_created),
+                  G_STRUCT_OFFSET (MatewnckScreenClass, workspace_created),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1, MATEWNCK_TYPE_WORKSPACE);
   
   /**
-   * MateWnckScreen::workspace-destroyed:
-   * @screen: the #MateWnckScreen which emitted the signal.
+   * MatewnckScreen::workspace-destroyed:
+   * @screen: the #MatewnckScreen which emitted the signal.
    * @space: the workspace that has been destroyed. 
    *
-   * Emitted when a #MateWnckWorkspace is destroyed on @screen.
+   * Emitted when a #MatewnckWorkspace is destroyed on @screen.
    */
   signals[WORKSPACE_DESTROYED] =
     g_signal_new ("workspace_destroyed",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (MateWnckScreenClass, workspace_destroyed),
+                  G_STRUCT_OFFSET (MatewnckScreenClass, workspace_destroyed),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1, MATEWNCK_TYPE_WORKSPACE);
 
   /**
-   * MateWnckScreen::application-opened:
-   * @screen: the #MateWnckScreen which emitted the signal.
-   * @app: the opened #MateWnckApplication.
+   * MatewnckScreen::application-opened:
+   * @screen: the #MatewnckScreen which emitted the signal.
+   * @app: the opened #MatewnckApplication.
    *
-   * Emitted when a new #MateWnckApplication is opened on @screen.
+   * Emitted when a new #MatewnckApplication is opened on @screen.
    */
   signals[APPLICATION_OPENED] =
     g_signal_new ("application_opened",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (MateWnckScreenClass, application_opened),
+                  G_STRUCT_OFFSET (MatewnckScreenClass, application_opened),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1, MATEWNCK_TYPE_APPLICATION);
 
   /**
-   * MateWnckScreen::application-closed:
-   * @screen: the #MateWnckScreen which emitted the signal.
-   * @app: the closed #MateWnckApplication.
+   * MatewnckScreen::application-closed:
+   * @screen: the #MatewnckScreen which emitted the signal.
+   * @app: the closed #MatewnckApplication.
    *
-   * Emitted when a #MateWnckApplication is closed on @screen.
+   * Emitted when a #MatewnckApplication is closed on @screen.
    */
   signals[APPLICATION_CLOSED] =
     g_signal_new ("application_closed",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (MateWnckScreenClass, application_closed),
+                  G_STRUCT_OFFSET (MatewnckScreenClass, application_closed),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1, MATEWNCK_TYPE_APPLICATION);
 
   /**
-   * MateWnckScreen::class-group-opened:
-   * @screen: the #MateWnckScreen which emitted the signal.
-   * @class_group: the opened #MateWnckClassGroup.
+   * MatewnckScreen::class-group-opened:
+   * @screen: the #MatewnckScreen which emitted the signal.
+   * @class_group: the opened #MatewnckClassGroup.
    *
-   * Emitted when a new #MateWnckClassGroup is opened on @screen.
+   * Emitted when a new #MatewnckClassGroup is opened on @screen.
    *
    * Since: 2.20
    */
@@ -413,17 +413,17 @@ matewnck_screen_class_init (MateWnckScreenClass *klass)
     g_signal_new ("class_group_opened",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (MateWnckScreenClass, class_group_opened),
+                  G_STRUCT_OFFSET (MatewnckScreenClass, class_group_opened),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1, MATEWNCK_TYPE_CLASS_GROUP);
 
   /**
-   * MateWnckScreen::class-group-closed:
-   * @screen: the #MateWnckScreen which emitted the signal.
-   * @class_group: the closed #MateWnckClassGroup.
+   * MatewnckScreen::class-group-closed:
+   * @screen: the #MatewnckScreen which emitted the signal.
+   * @class_group: the closed #MatewnckClassGroup.
    *
-   * Emitted when a #MateWnckClassGroup is closed on @screen.
+   * Emitted when a #MatewnckClassGroup is closed on @screen.
    *
    * Since: 2.20
    */
@@ -431,14 +431,14 @@ matewnck_screen_class_init (MateWnckScreenClass *klass)
     g_signal_new ("class_group_closed",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (MateWnckScreenClass, class_group_closed),
+                  G_STRUCT_OFFSET (MatewnckScreenClass, class_group_closed),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1, MATEWNCK_TYPE_CLASS_GROUP);
 
   /**
-   * MateWnckScreen::background-changed:
-   * @screen: the #MateWnckScreen which emitted the signal.
+   * MatewnckScreen::background-changed:
+   * @screen: the #MatewnckScreen which emitted the signal.
    *
    * Emitted when the background on the root window of @screen has changed.
    */
@@ -446,14 +446,14 @@ matewnck_screen_class_init (MateWnckScreenClass *klass)
     g_signal_new ("background_changed",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (MateWnckScreenClass, background_changed),
+                  G_STRUCT_OFFSET (MatewnckScreenClass, background_changed),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
   /**
-   * MateWnckScreen::showing-desktop-changed:
-   * @screen: the #MateWnckScreen which emitted the signal.
+   * MatewnckScreen::showing-desktop-changed:
+   * @screen: the #MatewnckScreen which emitted the signal.
    *
    * Emitted when "showing the desktop" mode of @screen is toggled.
    *
@@ -463,17 +463,17 @@ matewnck_screen_class_init (MateWnckScreenClass *klass)
     g_signal_new ("showing_desktop_changed",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (MateWnckScreenClass, showing_desktop_changed),
+                  G_STRUCT_OFFSET (MatewnckScreenClass, showing_desktop_changed),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
   /**
-   * MateWnckScreen::viewports-changed:
-   * @screen: the #MateWnckScreen which emitted the signal.
+   * MatewnckScreen::viewports-changed:
+   * @screen: the #MatewnckScreen which emitted the signal.
    *
-   * Emitted when a viewport position has changed in a #MateWnckWorkspace of
-   * @screen or when a #MateWnckWorkspace of @screen gets or loses its viewport.
+   * Emitted when a viewport position has changed in a #MatewnckWorkspace of
+   * @screen or when a #MatewnckWorkspace of @screen gets or loses its viewport.
    *
    * Since: 2.20
    */
@@ -481,14 +481,14 @@ matewnck_screen_class_init (MateWnckScreenClass *klass)
     g_signal_new ("viewports_changed",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (MateWnckScreenClass, viewports_changed),
+                  G_STRUCT_OFFSET (MatewnckScreenClass, viewports_changed),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
   /**
-   * MateWnckScreen::window-manager-changed:
-   * @screen: the #MateWnckScreen which emitted the signal.
+   * MatewnckScreen::window-manager-changed:
+   * @screen: the #MatewnckScreen which emitted the signal.
    *
    * Emitted when the window manager on @screen has changed.
    *
@@ -498,7 +498,7 @@ matewnck_screen_class_init (MateWnckScreenClass *klass)
     g_signal_new ("window_manager_changed",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (MateWnckScreenClass, window_manager_changed),
+                  G_STRUCT_OFFSET (MatewnckScreenClass, window_manager_changed),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
@@ -507,7 +507,7 @@ matewnck_screen_class_init (MateWnckScreenClass *klass)
 static void
 matewnck_screen_finalize (GObject *object)
 {
-  MateWnckScreen *screen;
+  MatewnckScreen *screen;
   GList *tmp;
   gpointer weak_pointer;
 
@@ -578,7 +578,7 @@ sn_error_trap_pop (SnDisplay *display,
 #endif /* HAVE_STARTUP_NOTIFICATION */
 
 static void
-matewnck_screen_construct (MateWnckScreen *screen,
+matewnck_screen_construct (MatewnckScreen *screen,
                        int         number)
 {
   Display *display;
@@ -619,13 +619,13 @@ matewnck_screen_construct (MateWnckScreen *screen,
  * matewnck_screen_get:
  * @index: screen number, starting from 0.
  * 
- * Gets the #MateWnckScreen for a given screen on the default display.
+ * Gets the #MatewnckScreen for a given screen on the default display.
  * 
- * Return value: (transfer none): the #MateWnckScreen for screen @index, or %NULL
- * if no such screen exists. The returned #MateWnckScreen is owned by libmatewnck and
+ * Return value: (transfer none): the #MatewnckScreen for screen @index, or %NULL
+ * if no such screen exists. The returned #MatewnckScreen is owned by libmatewnck and
  * must not be referenced or unreferenced.
  **/
-MateWnckScreen*
+MatewnckScreen*
 matewnck_screen_get (int index)
 {
   Display *display;
@@ -639,7 +639,7 @@ matewnck_screen_get (int index)
   
   if (screens == NULL)
     {
-      screens = g_new0 (MateWnckScreen*, ScreenCount (display));
+      screens = g_new0 (MatewnckScreen*, ScreenCount (display));
       _matewnck_event_filter_init ();
     }
   
@@ -653,7 +653,7 @@ matewnck_screen_get (int index)
   return screens[index];
 }
 
-MateWnckScreen*
+MatewnckScreen*
 _matewnck_screen_get_existing (int number)
 {
   Display *display;
@@ -672,12 +672,12 @@ _matewnck_screen_get_existing (int number)
 /**
  * matewnck_screen_get_default:
  * 
- * Gets the default #MateWnckScreen on the default display.
+ * Gets the default #MatewnckScreen on the default display.
  * 
- * Return value: (transfer none): the default #MateWnckScreen. The returned
- * #MateWnckScreen is owned by libmatewnck and must not be referenced or unreferenced.
+ * Return value: (transfer none): the default #MatewnckScreen. The returned
+ * #MatewnckScreen is owned by libmatewnck and must not be referenced or unreferenced.
  **/
-MateWnckScreen*
+MatewnckScreen*
 matewnck_screen_get_default (void)
 {
   int default_screen;
@@ -691,17 +691,17 @@ matewnck_screen_get_default (void)
  * matewnck_screen_get_for_root:
  * @root_window_id: an X window ID.
  * 
- * Gets the #MateWnckScreen for the root window at @root_window_id, or
- * %NULL if no #MateWnckScreen exists for this root window.
+ * Gets the #MatewnckScreen for the root window at @root_window_id, or
+ * %NULL if no #MatewnckScreen exists for this root window.
  *
  * This function does not work if matewnck_screen_get() was not called for the
- * sought #MateWnckScreen before, and returns %NULL.
+ * sought #MatewnckScreen before, and returns %NULL.
  * 
- * Return value: (transfer none): the #MateWnckScreen for the root window at
- * @root_window_id, or %NULL. The returned #MateWnckScreen is owned by libmatewnck and
+ * Return value: (transfer none): the #MatewnckScreen for the root window at
+ * @root_window_id, or %NULL. The returned #MatewnckScreen is owned by libmatewnck and
  * must not be referenced or unreferenced.
  **/
-MateWnckScreen*
+MatewnckScreen*
 matewnck_screen_get_for_root (gulong root_window_id)
 {
   int i;
@@ -726,17 +726,17 @@ matewnck_screen_get_for_root (gulong root_window_id)
 
 /**
  * matewnck_screen_get_number:
- * @screen: a #MateWnckScreen.
+ * @screen: a #MatewnckScreen.
  * 
  * Gets the index of @screen on the display to which it belongs. The first
- * #MateWnckScreen has an index of 0.
+ * #MatewnckScreen has an index of 0.
  * 
  * Return value: the index of @space on @screen, or -1 on errors.
  *
  * Since: 2.20
  **/
 int
-matewnck_screen_get_number (MateWnckScreen *screen)
+matewnck_screen_get_number (MatewnckScreen *screen)
 {
   g_return_val_if_fail (MATEWNCK_IS_SCREEN (screen), -1);
 
@@ -745,19 +745,19 @@ matewnck_screen_get_number (MateWnckScreen *screen)
 
 /**
  * matewnck_screen_get_workspaces:
- * @screen: a #MateWnckScreen.
+ * @screen: a #MatewnckScreen.
  * 
- * Gets the list of #MateWnckWorkspace on @screen. The list is ordered: the
- * first element in the list is the first #MateWnckWorkspace, etc..
+ * Gets the list of #MatewnckWorkspace on @screen. The list is ordered: the
+ * first element in the list is the first #MatewnckWorkspace, etc..
  * 
- * Return value: (element-type MateWnckWorkspace) (transfer none): the list of
- * #MateWnckWorkspace on @screen. The list should not be modified nor freed, as it
+ * Return value: (element-type MatewnckWorkspace) (transfer none): the list of
+ * #MatewnckWorkspace on @screen. The list should not be modified nor freed, as it
  * is owned by @screen.
  *
  * Since: 2.20
  **/
 GList*
-matewnck_screen_get_workspaces (MateWnckScreen *screen)
+matewnck_screen_get_workspaces (MatewnckScreen *screen)
 {
   g_return_val_if_fail (MATEWNCK_IS_SCREEN (screen), NULL);
   
@@ -766,17 +766,17 @@ matewnck_screen_get_workspaces (MateWnckScreen *screen)
 
 /**
  * matewnck_screen_get_workspace:
- * @screen: a #MateWnckScreen.
+ * @screen: a #MatewnckScreen.
  * @workspace: a workspace index, starting from 0.
  * 
- * Gets the #MateWnckWorkspace numbered @workspace on @screen.
+ * Gets the #MatewnckWorkspace numbered @workspace on @screen.
  * 
- * Return value: (transfer none): the #MateWnckWorkspace numbered @workspace on
- * @screen, or %NULL if no such workspace exists. The returned #MateWnckWorkspace
+ * Return value: (transfer none): the #MatewnckWorkspace numbered @workspace on
+ * @screen, or %NULL if no such workspace exists. The returned #MatewnckWorkspace
  * is owned by libmatewnck and must not be referenced or unreferenced.
  **/
-MateWnckWorkspace*
-matewnck_screen_get_workspace (MateWnckScreen *screen,
+MatewnckWorkspace*
+matewnck_screen_get_workspace (MatewnckScreen *screen,
 			   int         workspace)
 {
   GList *list;
@@ -796,10 +796,10 @@ matewnck_screen_get_workspace (MateWnckScreen *screen,
 
 /**
  * matewnck_screen_get_workspace_index:
- * @screen: a #MateWnckScreen.
- * @space: a #MateWnckWorkspace.
+ * @screen: a #MatewnckScreen.
+ * @space: a #MatewnckWorkspace.
  * 
- * Gets the index of @space on @screen. The first #MateWnckWorkspace has an
+ * Gets the index of @space on @screen. The first #MatewnckWorkspace has an
  * index of 0. See also matewnck_workspace_get_number().
  * 
  * Return value: the index of @space on @screen, or -1 on errors.
@@ -808,8 +808,8 @@ matewnck_screen_get_workspace (MateWnckScreen *screen,
  * Deprecated:2.20: Use matewnck_workspace_get_number() instead.
  **/
 int
-matewnck_screen_get_workspace_index (MateWnckScreen    *screen,
-                                 MateWnckWorkspace *space)
+matewnck_screen_get_workspace_index (MatewnckScreen    *screen,
+                                 MatewnckWorkspace *space)
 {
   GList *tmp;
   int i;
@@ -832,18 +832,18 @@ matewnck_screen_get_workspace_index (MateWnckScreen    *screen,
 
 /**
  * matewnck_screen_get_active_workspace:
- * @screen: a #MateWnckScreen.
+ * @screen: a #MatewnckScreen.
  * 
- * Gets the active #MateWnckWorkspace on @screen. May return %NULL sometimes,
+ * Gets the active #MatewnckWorkspace on @screen. May return %NULL sometimes,
  * if libmatewnck is in a weird state due to the asynchronous nature of the
  * interaction with the window manager.
  * 
- * Return value: (transfer none): the active #MateWnckWorkspace on @screen, or
- * %NULL. The returned #MateWnckWorkspace is owned by libmatewnck and must not be
+ * Return value: (transfer none): the active #MatewnckWorkspace on @screen, or
+ * %NULL. The returned #MatewnckWorkspace is owned by libmatewnck and must not be
  * referenced or unreferenced.
  **/
-MateWnckWorkspace*
-matewnck_screen_get_active_workspace (MateWnckScreen *screen)
+MatewnckWorkspace*
+matewnck_screen_get_active_workspace (MatewnckScreen *screen)
 {
   g_return_val_if_fail (MATEWNCK_IS_SCREEN (screen), NULL);
 
@@ -852,27 +852,27 @@ matewnck_screen_get_active_workspace (MateWnckScreen *screen)
 
 /**
  * matewnck_screen_get_workspace_neighbor:
- * @screen: a #MateWnckScreen.
- * @space: a #MateWnckWorkspace.
+ * @screen: a #MatewnckScreen.
+ * @space: a #MatewnckWorkspace.
  * @direction: direction in which to search the neighbor.
  * 
- * Gets the neighbor #MateWnckWorkspace of @space in the @direction direction on
+ * Gets the neighbor #MatewnckWorkspace of @space in the @direction direction on
  * @screen.
  * 
- * Return value: (transfer none): the neighbor #MateWnckWorkspace of @space in the
- * @direction direction on @screen, or %NULL if no such neighbor #MateWnckWorkspace
- * exists. The returned #MateWnckWorkspace is owned by libmatewnck and must not be
+ * Return value: (transfer none): the neighbor #MatewnckWorkspace of @space in the
+ * @direction direction on @screen, or %NULL if no such neighbor #MatewnckWorkspace
+ * exists. The returned #MatewnckWorkspace is owned by libmatewnck and must not be
  * referenced or unreferenced.
  *
  * Since: 2.14
  * Deprecated:2.20: Use matewnck_workspace_get_neighbor() instead.
  **/
-MateWnckWorkspace*
-matewnck_screen_get_workspace_neighbor (MateWnckScreen         *screen,
-                                    MateWnckWorkspace      *space,
-                                    MateWnckMotionDirection direction)
+MatewnckWorkspace*
+matewnck_screen_get_workspace_neighbor (MatewnckScreen         *screen,
+                                    MatewnckWorkspace      *space,
+                                    MatewnckMotionDirection direction)
 {
-  MateWnckWorkspaceLayout layout;
+  MatewnckWorkspaceLayout layout;
   int i, space_index;
 
   g_return_val_if_fail (MATEWNCK_IS_SCREEN (screen), NULL);
@@ -918,17 +918,17 @@ matewnck_screen_get_workspace_neighbor (MateWnckScreen         *screen,
 
 /**
  * matewnck_screen_get_active_window:
- * @screen: a #MateWnckScreen.
+ * @screen: a #MatewnckScreen.
  * 
- * Gets the active #MateWnckWindow on @screen. May return %NULL sometimes, since
+ * Gets the active #MatewnckWindow on @screen. May return %NULL sometimes, since
  * not all window managers guarantee that a window is always active.
  * 
- * Return value: (transfer none): the active #MateWnckWindow on @screen, or %NULL.
- * The returned #MateWnckWindow is owned by libmatewnck and must not be referenced or
+ * Return value: (transfer none): the active #MatewnckWindow on @screen, or %NULL.
+ * The returned #MatewnckWindow is owned by libmatewnck and must not be referenced or
  * unreferenced.
  **/
-MateWnckWindow*
-matewnck_screen_get_active_window (MateWnckScreen *screen)
+MatewnckWindow*
+matewnck_screen_get_active_window (MatewnckScreen *screen)
 {
   g_return_val_if_fail (MATEWNCK_IS_SCREEN (screen), NULL);
 
@@ -937,20 +937,20 @@ matewnck_screen_get_active_window (MateWnckScreen *screen)
 
 /**
  * matewnck_screen_get_previously_active_window:
- * @screen: a #MateWnckScreen.
+ * @screen: a #MatewnckScreen.
  * 
- * Gets the previously active #MateWnckWindow on @screen. May return %NULL
+ * Gets the previously active #MatewnckWindow on @screen. May return %NULL
  * sometimes, since not all window managers guarantee that a window is always
  * active.
  * 
- * Return value: (transfer none): the previously active #MateWnckWindow on @screen,
- * or %NULL. The returned #MateWnckWindow is owned by libmatewnck and must not be
+ * Return value: (transfer none): the previously active #MatewnckWindow on @screen,
+ * or %NULL. The returned #MatewnckWindow is owned by libmatewnck and must not be
  * referenced or unreferenced.
  *
  * Since: 2.8
  **/
-MateWnckWindow*
-matewnck_screen_get_previously_active_window (MateWnckScreen *screen)
+MatewnckWindow*
+matewnck_screen_get_previously_active_window (MatewnckScreen *screen)
 {
   g_return_val_if_fail (MATEWNCK_IS_SCREEN (screen), NULL);
 
@@ -959,19 +959,19 @@ matewnck_screen_get_previously_active_window (MateWnckScreen *screen)
 
 /**
  * matewnck_screen_get_windows:
- * @screen: a #MateWnckScreen.
+ * @screen: a #MatewnckScreen.
  * 
- * Gets the list of #MateWnckWindow on @screen. The list is not in a defined
+ * Gets the list of #MatewnckWindow on @screen. The list is not in a defined
  * order, but should be "stable" (windows should not be reordered in it).
  * However, the stability of the list is established by the window manager, so
  * don't blame libmatewnck if it breaks down.
  * 
- * Return value: (element-type MateWnckWindow) (transfer none): the list of
- * #MateWnckWindow on @screen, or %NULL if there is no window on @screen. The list
+ * Return value: (element-type MatewnckWindow) (transfer none): the list of
+ * #MatewnckWindow on @screen, or %NULL if there is no window on @screen. The list
  * should not be modified nor freed, as it is owned by @screen.
  **/
 GList*
-matewnck_screen_get_windows (MateWnckScreen *screen)
+matewnck_screen_get_windows (MatewnckScreen *screen)
 {
   g_return_val_if_fail (MATEWNCK_IS_SCREEN (screen), NULL);
 
@@ -980,17 +980,17 @@ matewnck_screen_get_windows (MateWnckScreen *screen)
 
 /**
  * matewnck_screen_get_windows_stacked:
- * @screen: a #MateWnckScreen.
+ * @screen: a #MatewnckScreen.
  * 
- * Gets the list of #MateWnckWindow on @screen in bottom-to-top order.
+ * Gets the list of #MatewnckWindow on @screen in bottom-to-top order.
  * 
- * Return value: (element-type MateWnckWindow) (transfer none): the list of
- * #MateWnckWindow in stacking order on @screen, or %NULL if there is no window on
+ * Return value: (element-type MatewnckWindow) (transfer none): the list of
+ * #MatewnckWindow in stacking order on @screen, or %NULL if there is no window on
  * @screen. The list should not be modified nor freed, as it is owned by
  * @screen.
  **/
 GList*
-matewnck_screen_get_windows_stacked (MateWnckScreen *screen)
+matewnck_screen_get_windows_stacked (MatewnckScreen *screen)
 {
   g_return_val_if_fail (MATEWNCK_IS_SCREEN (screen), NULL);
 
@@ -999,7 +999,7 @@ matewnck_screen_get_windows_stacked (MateWnckScreen *screen)
 
 /**
  * _matewnck_screen_get_gdk_screen:
- * @screen: a #MateWnckScreen.
+ * @screen: a #MatewnckScreen.
  * 
  * Gets the <classname>GdkScreen</classname referring to the same screen as
  * @screen.
@@ -1008,7 +1008,7 @@ matewnck_screen_get_windows_stacked (MateWnckScreen *screen)
  * screen as @screen.
  **/
 GdkScreen *
-_matewnck_screen_get_gdk_screen (MateWnckScreen *screen)
+_matewnck_screen_get_gdk_screen (MatewnckScreen *screen)
 {
   g_return_val_if_fail (MATEWNCK_IS_SCREEN (screen), NULL);
 
@@ -1018,10 +1018,10 @@ _matewnck_screen_get_gdk_screen (MateWnckScreen *screen)
 
 /**
  * matewnck_screen_force_update:
- * @screen: a #MateWnckScreen.
+ * @screen: a #MatewnckScreen.
  * 
- * Synchronously and immediately updates the list of #MateWnckWindow on @screen.
- * This bypasses the standard update mechanism, where the list of #MateWnckWindow
+ * Synchronously and immediately updates the list of #MatewnckWindow on @screen.
+ * This bypasses the standard update mechanism, where the list of #MatewnckWindow
  * is updated in the idle loop.
  *
  * This is usually a bad idea for both performance and correctness reasons (to
@@ -1030,7 +1030,7 @@ _matewnck_screen_get_gdk_screen (MateWnckScreen *screen)
  * small applications that just do something and then exit.
  **/
 void
-matewnck_screen_force_update (MateWnckScreen *screen)
+matewnck_screen_force_update (MatewnckScreen *screen)
 {
   g_return_if_fail (MATEWNCK_IS_SCREEN (screen));
 
@@ -1039,14 +1039,14 @@ matewnck_screen_force_update (MateWnckScreen *screen)
 
 /**
  * matewnck_screen_get_workspace_count:
- * @screen: a #MateWnckScreen.
+ * @screen: a #MatewnckScreen.
  * 
- * Gets the number of #MateWnckWorkspace on @screen.
+ * Gets the number of #MatewnckWorkspace on @screen.
  * 
- * Return value: the number of #MateWnckWorkspace on @screen.
+ * Return value: the number of #MatewnckWorkspace on @screen.
  **/
 int
-matewnck_screen_get_workspace_count (MateWnckScreen *screen)
+matewnck_screen_get_workspace_count (MatewnckScreen *screen)
 {
   g_return_val_if_fail (MATEWNCK_IS_SCREEN (screen), 0);
 
@@ -1055,15 +1055,15 @@ matewnck_screen_get_workspace_count (MateWnckScreen *screen)
 
 /**
  * matewnck_screen_change_workspace_count:
- * @screen: a #MateWnckScreen.
- * @count: the number of #MateWnckWorkspace to request.
+ * @screen: a #MatewnckScreen.
+ * @count: the number of #MatewnckWorkspace to request.
  * 
- * Asks the window manager to change the number of #MateWnckWorkspace on @screen.
+ * Asks the window manager to change the number of #MatewnckWorkspace on @screen.
  *
  * Since: 2.2
  **/
 void
-matewnck_screen_change_workspace_count (MateWnckScreen *screen,
+matewnck_screen_change_workspace_count (MatewnckScreen *screen,
                                     int         count)
 {
   XEvent xev;
@@ -1090,7 +1090,7 @@ matewnck_screen_change_workspace_count (MateWnckScreen *screen,
 }
 
 void
-_matewnck_screen_process_property_notify (MateWnckScreen *screen,
+_matewnck_screen_process_property_notify (MatewnckScreen *screen,
                                       XEvent     *xevent)
 {
   /* most frequently-changed properties first */
@@ -1166,15 +1166,15 @@ _matewnck_screen_process_property_notify (MateWnckScreen *screen,
 
 /**
  * matewnck_screen_calc_workspace_layout:
- * @screen: a #MateWnckScreen.
- * @num_workspaces: the number of #MateWnckWorkspace on @screen, or -1 to let
+ * @screen: a #MatewnckScreen.
+ * @num_workspaces: the number of #MatewnckWorkspace on @screen, or -1 to let
  * matewnck_screen_calc_workspace_layout() find this number.
  * @space_index: the index of a #Workspace.
- * @layout: return location for the layout of #MateWnckWorkspace with additional
+ * @layout: return location for the layout of #MatewnckWorkspace with additional
  * information.
  *
- * Calculates the layout of #MateWnckWorkspace, with additional information like
- * the row and column of the #MateWnckWorkspace with index @space_index.
+ * Calculates the layout of #MatewnckWorkspace, with additional information like
+ * the row and column of the #MatewnckWorkspace with index @space_index.
  *
  * Since: 2.12
  * Deprecated:2.20:
@@ -1182,10 +1182,10 @@ _matewnck_screen_process_property_notify (MateWnckScreen *screen,
 /* TODO: when we make this private, remove num_workspaces since we can get it
  * from screen! */
 void
-matewnck_screen_calc_workspace_layout (MateWnckScreen          *screen,
+matewnck_screen_calc_workspace_layout (MatewnckScreen          *screen,
                                    int                  num_workspaces,
                                    int                  space_index,
-                                   MateWnckWorkspaceLayout *layout)
+                                   MatewnckWorkspaceLayout *layout)
 {
   int rows, cols;
   int grid_area;
@@ -1390,7 +1390,7 @@ matewnck_screen_calc_workspace_layout (MateWnckScreen          *screen,
 
 /**
  * matewnck_screen_free_workspace_layout:
- * @layout: a #MateWnckWorkspaceLayout.
+ * @layout: a #MatewnckWorkspaceLayout.
  *
  * Frees the content of @layout. This does not free @layout itself, so you
  * might want to free @layout yourself after calling this.
@@ -1399,7 +1399,7 @@ matewnck_screen_calc_workspace_layout (MateWnckScreen          *screen,
  * Deprecated:2.20:
  */
 void
-matewnck_screen_free_workspace_layout (MateWnckWorkspaceLayout *layout)
+matewnck_screen_free_workspace_layout (MatewnckWorkspaceLayout *layout)
 {
   g_return_if_fail (layout != NULL);
 
@@ -1407,8 +1407,8 @@ matewnck_screen_free_workspace_layout (MateWnckWorkspaceLayout *layout)
 }
 
 static void
-set_active_window (MateWnckScreen *screen,
-                   MateWnckWindow *window)
+set_active_window (MatewnckScreen *screen,
+                   MatewnckWindow *window)
 {
   gpointer weak_pointer;
 
@@ -1428,8 +1428,8 @@ set_active_window (MateWnckScreen *screen,
 }
 
 static void
-set_previously_active_window (MateWnckScreen *screen,
-                              MateWnckWindow *window)
+set_previously_active_window (MatewnckScreen *screen,
+                              MatewnckWindow *window)
 {
   gpointer weak_pointer;
 
@@ -1522,7 +1522,7 @@ arrays_contain_same_windows (Window *a,
 }
 
 static void
-update_client_list (MateWnckScreen *screen)
+update_client_list (MatewnckScreen *screen)
 {
   /* stacking order */
   Window *stack;
@@ -1590,16 +1590,16 @@ update_client_list (MateWnckScreen *screen)
   i = 0;
   while (i < mapping_length)
     {
-      MateWnckWindow *window;
+      MatewnckWindow *window;
 
       window = matewnck_window_get (mapping[i]);
 
       if (window == NULL)
         {
           Window leader;
-          MateWnckApplication *app;
+          MatewnckApplication *app;
 	  const char *res_class;
-	  MateWnckClassGroup *class_group;
+	  MatewnckClassGroup *class_group;
           
           window = _matewnck_window_create (mapping[i], 
                                         screen,
@@ -1650,12 +1650,12 @@ update_client_list (MateWnckScreen *screen)
   tmp = screen->priv->mapped_windows;
   while (tmp != NULL)
     {
-      MateWnckWindow *window = tmp->data;
+      MatewnckWindow *window = tmp->data;
 
       if (g_hash_table_lookup (new_hash, window) == NULL)
         {
-          MateWnckApplication *app;
-	  MateWnckClassGroup *class_group;
+          MatewnckApplication *app;
+	  MatewnckClassGroup *class_group;
           
           closed = g_list_prepend (closed, window);
 
@@ -1686,7 +1686,7 @@ update_client_list (MateWnckScreen *screen)
   i = 0;
   while (i < stack_length)
     {
-      MateWnckWindow *window;
+      MatewnckWindow *window;
 
       window = matewnck_window_get (stack[i]);
 
@@ -1752,7 +1752,7 @@ update_client_list (MateWnckScreen *screen)
   active_changed = FALSE;
   for (tmp = closed; tmp; tmp = tmp->next)
     {
-      MateWnckWindow *window;
+      MatewnckWindow *window;
 
       window = MATEWNCK_WINDOW (tmp->data);
 
@@ -1813,7 +1813,7 @@ update_client_list (MateWnckScreen *screen)
 }
 
 static void
-update_workspace_list (MateWnckScreen *screen)
+update_workspace_list (MatewnckScreen *screen)
 {
   int n_spaces;
   int old_n_spaces;
@@ -1874,7 +1874,7 @@ update_workspace_list (MateWnckScreen *screen)
       i = 0;
       while (i < (n_spaces - old_n_spaces))
         {
-          MateWnckWorkspace *space;
+          MatewnckWorkspace *space;
 
           space = _matewnck_workspace_create (old_n_spaces + i, screen);
 
@@ -1895,7 +1895,7 @@ update_workspace_list (MateWnckScreen *screen)
   tmp = deleted;
   while (tmp != NULL)
     {
-      MateWnckWorkspace *space = MATEWNCK_WORKSPACE (tmp->data);
+      MatewnckWorkspace *space = MATEWNCK_WORKSPACE (tmp->data);
 
       if (space == screen->priv->active_workspace)
         {
@@ -1939,10 +1939,10 @@ update_workspace_list (MateWnckScreen *screen)
 }
 
 static void
-update_viewport_settings (MateWnckScreen *screen)
+update_viewport_settings (MatewnckScreen *screen)
 {
   int i, n_spaces;
-  MateWnckWorkspace *space;
+  MatewnckWorkspace *space;
   gulong *p_coord;
   int n_coord;
   gboolean do_update;
@@ -2053,11 +2053,11 @@ update_viewport_settings (MateWnckScreen *screen)
 }
 
 static void
-update_active_workspace (MateWnckScreen *screen)
+update_active_workspace (MatewnckScreen *screen)
 {
   int number;
-  MateWnckWorkspace *previous_space;
-  MateWnckWorkspace *space;
+  MatewnckWorkspace *previous_space;
+  MatewnckWorkspace *space;
   
   if (!screen->priv->need_update_active_workspace)
     return;
@@ -2082,9 +2082,9 @@ update_active_workspace (MateWnckScreen *screen)
 }
 
 static void
-update_active_window (MateWnckScreen *screen)
+update_active_window (MatewnckScreen *screen)
 {
-  MateWnckWindow *window;
+  MatewnckWindow *window;
   Window xwindow;
   
   if (!screen->priv->need_update_active_window)
@@ -2109,7 +2109,7 @@ update_active_window (MateWnckScreen *screen)
 }
 
 static void
-update_workspace_layout (MateWnckScreen *screen)
+update_workspace_layout (MatewnckScreen *screen)
 {
   gulong *list;
   int n_items;
@@ -2203,7 +2203,7 @@ update_workspace_layout (MateWnckScreen *screen)
 }
 
 static void
-update_workspace_names (MateWnckScreen *screen)
+update_workspace_names (MatewnckScreen *screen)
 {
   char **names;
   int i;
@@ -2241,7 +2241,7 @@ update_workspace_names (MateWnckScreen *screen)
 }
 
 static void
-update_bg_pixmap (MateWnckScreen *screen)
+update_bg_pixmap (MatewnckScreen *screen)
 {
   Pixmap p;
   
@@ -2262,7 +2262,7 @@ update_bg_pixmap (MateWnckScreen *screen)
 }
 
 static void
-update_showing_desktop (MateWnckScreen *screen)
+update_showing_desktop (MatewnckScreen *screen)
 {
   int showing_desktop;
   
@@ -2282,7 +2282,7 @@ update_showing_desktop (MateWnckScreen *screen)
 }
 
 static void
-update_wm (MateWnckScreen *screen)
+update_wm (MatewnckScreen *screen)
 {
   Window  wm_window;
   
@@ -2308,7 +2308,7 @@ update_wm (MateWnckScreen *screen)
 }
 
 static void
-do_update_now (MateWnckScreen *screen)
+do_update_now (MatewnckScreen *screen)
 {
   if (screen->priv->update_handler)
     {
@@ -2346,7 +2346,7 @@ do_update_now (MateWnckScreen *screen)
 static gboolean
 update_idle (gpointer data)
 {
-  MateWnckScreen *screen;
+  MatewnckScreen *screen;
 
   screen = data;
 
@@ -2358,7 +2358,7 @@ update_idle (gpointer data)
 }
 
 static void
-queue_update (MateWnckScreen *screen)
+queue_update (MatewnckScreen *screen)
 {
   if (screen->priv->update_handler != 0)
     return;
@@ -2367,7 +2367,7 @@ queue_update (MateWnckScreen *screen)
 }
 
 static void
-unqueue_update (MateWnckScreen *screen)
+unqueue_update (MatewnckScreen *screen)
 {
   if (screen->priv->update_handler != 0)
     {
@@ -2377,7 +2377,7 @@ unqueue_update (MateWnckScreen *screen)
 }
 
 static void
-emit_active_window_changed (MateWnckScreen *screen)
+emit_active_window_changed (MatewnckScreen *screen)
 {
   g_signal_emit (G_OBJECT (screen),
                  signals[ACTIVE_WINDOW_CHANGED],
@@ -2385,8 +2385,8 @@ emit_active_window_changed (MateWnckScreen *screen)
 }
 
 static void
-emit_active_workspace_changed (MateWnckScreen    *screen,
-                               MateWnckWorkspace *previous_space)
+emit_active_workspace_changed (MatewnckScreen    *screen,
+                               MatewnckWorkspace *previous_space)
 {
   g_signal_emit (G_OBJECT (screen),
                  signals[ACTIVE_WORKSPACE_CHANGED],
@@ -2394,7 +2394,7 @@ emit_active_workspace_changed (MateWnckScreen    *screen,
 }
 
 static void
-emit_window_stacking_changed (MateWnckScreen *screen)
+emit_window_stacking_changed (MatewnckScreen *screen)
 {
   g_signal_emit (G_OBJECT (screen),
                  signals[WINDOW_STACKING_CHANGED],
@@ -2402,8 +2402,8 @@ emit_window_stacking_changed (MateWnckScreen *screen)
 }
 
 static void
-emit_window_opened (MateWnckScreen *screen,
-                    MateWnckWindow *window)
+emit_window_opened (MatewnckScreen *screen,
+                    MatewnckWindow *window)
 {
   g_signal_emit (G_OBJECT (screen),
                  signals[WINDOW_OPENED],
@@ -2411,8 +2411,8 @@ emit_window_opened (MateWnckScreen *screen,
 }
 
 static void
-emit_window_closed (MateWnckScreen *screen,
-                    MateWnckWindow *window)
+emit_window_closed (MatewnckScreen *screen,
+                    MatewnckWindow *window)
 {
   g_signal_emit (G_OBJECT (screen),
                  signals[WINDOW_CLOSED],
@@ -2420,8 +2420,8 @@ emit_window_closed (MateWnckScreen *screen,
 }
 
 static void
-emit_workspace_created (MateWnckScreen    *screen,
-                        MateWnckWorkspace *space)
+emit_workspace_created (MatewnckScreen    *screen,
+                        MatewnckWorkspace *space)
 {
   g_signal_emit (G_OBJECT (screen),
                  signals[WORKSPACE_CREATED],
@@ -2429,8 +2429,8 @@ emit_workspace_created (MateWnckScreen    *screen,
 }
 
 static void
-emit_workspace_destroyed (MateWnckScreen    *screen,
-                          MateWnckWorkspace *space)
+emit_workspace_destroyed (MatewnckScreen    *screen,
+                          MatewnckWorkspace *space)
 {
   g_signal_emit (G_OBJECT (screen),
                  signals[WORKSPACE_DESTROYED],
@@ -2438,8 +2438,8 @@ emit_workspace_destroyed (MateWnckScreen    *screen,
 }
 
 static void
-emit_application_opened (MateWnckScreen      *screen,
-                         MateWnckApplication *app)
+emit_application_opened (MatewnckScreen      *screen,
+                         MatewnckApplication *app)
 {
   g_signal_emit (G_OBJECT (screen),
                  signals[APPLICATION_OPENED],
@@ -2447,8 +2447,8 @@ emit_application_opened (MateWnckScreen      *screen,
 }
 
 static void
-emit_application_closed (MateWnckScreen      *screen,
-                         MateWnckApplication *app)
+emit_application_closed (MatewnckScreen      *screen,
+                         MatewnckApplication *app)
 {
   g_signal_emit (G_OBJECT (screen),
                  signals[APPLICATION_CLOSED],
@@ -2456,8 +2456,8 @@ emit_application_closed (MateWnckScreen      *screen,
 }
 
 static void
-emit_class_group_opened (MateWnckScreen     *screen,
-                         MateWnckClassGroup *class_group)
+emit_class_group_opened (MatewnckScreen     *screen,
+                         MatewnckClassGroup *class_group)
 {
   g_signal_emit (G_OBJECT (screen),
                  signals[CLASS_GROUP_OPENED],
@@ -2465,8 +2465,8 @@ emit_class_group_opened (MateWnckScreen     *screen,
 }
 
 static void
-emit_class_group_closed (MateWnckScreen     *screen,
-                         MateWnckClassGroup *class_group)
+emit_class_group_closed (MatewnckScreen     *screen,
+                         MatewnckClassGroup *class_group)
 {
   g_signal_emit (G_OBJECT (screen),
                  signals[CLASS_GROUP_CLOSED],
@@ -2474,7 +2474,7 @@ emit_class_group_closed (MateWnckScreen     *screen,
 }
 
 static void
-emit_background_changed (MateWnckScreen *screen)
+emit_background_changed (MatewnckScreen *screen)
 {
   g_signal_emit (G_OBJECT (screen),
                  signals[BACKGROUND_CHANGED],
@@ -2482,7 +2482,7 @@ emit_background_changed (MateWnckScreen *screen)
 }
 
 static void
-emit_showing_desktop_changed (MateWnckScreen *screen)
+emit_showing_desktop_changed (MatewnckScreen *screen)
 {
   g_signal_emit (G_OBJECT (screen),
                  signals[SHOWING_DESKTOP_CHANGED],
@@ -2490,7 +2490,7 @@ emit_showing_desktop_changed (MateWnckScreen *screen)
 }
 
 static void
-emit_viewports_changed (MateWnckScreen *screen)
+emit_viewports_changed (MatewnckScreen *screen)
 {
   g_signal_emit (G_OBJECT (screen),
                  signals[VIEWPORTS_CHANGED],
@@ -2498,7 +2498,7 @@ emit_viewports_changed (MateWnckScreen *screen)
 }
 
 static void
-emit_wm_changed (MateWnckScreen *screen)
+emit_wm_changed (MatewnckScreen *screen)
 {
   g_signal_emit (G_OBJECT (screen),
                  signals[WM_CHANGED],
@@ -2507,7 +2507,7 @@ emit_wm_changed (MateWnckScreen *screen)
 
 /**
  * matewnck_screen_get_window_manager_name:
- * @screen: a #MateWnckScreen.
+ * @screen: a #MatewnckScreen.
  *
  * Gets the name of the window manager.
  *
@@ -2519,7 +2519,7 @@ emit_wm_changed (MateWnckScreen *screen)
  * Since: 2.20
  */
 const char *
-matewnck_screen_get_window_manager_name (MateWnckScreen *screen)
+matewnck_screen_get_window_manager_name (MatewnckScreen *screen)
 {
   g_return_val_if_fail (MATEWNCK_IS_SCREEN (screen), NULL);
 
@@ -2528,7 +2528,7 @@ matewnck_screen_get_window_manager_name (MateWnckScreen *screen)
 
 /**
  * matewnck_screen_net_wm_supports:
- * @screen: a #MateWnckScreen.
+ * @screen: a #MatewnckScreen.
  * @atom: a property atom.
  *
  * Gets whether the window manager for @screen supports a certain hint from
@@ -2549,7 +2549,7 @@ matewnck_screen_get_window_manager_name (MateWnckScreen *screen)
  * hint, %FALSE otherwise.
  */
 gboolean
-matewnck_screen_net_wm_supports (MateWnckScreen *screen,
+matewnck_screen_net_wm_supports (MatewnckScreen *screen,
                              const char *atom)
 {
   g_return_val_if_fail (MATEWNCK_IS_SCREEN (screen), FALSE);
@@ -2560,14 +2560,14 @@ matewnck_screen_net_wm_supports (MateWnckScreen *screen,
 
 /**
  * matewnck_screen_get_background_pixmap:
- * @screen: a #MateWnckScreen.
+ * @screen: a #MatewnckScreen.
  *
  * Gets the X window ID of the background pixmap of @screen.
  *
  * Returns: the X window ID of the background pixmap of @screen.
  */
 gulong
-matewnck_screen_get_background_pixmap (MateWnckScreen *screen)
+matewnck_screen_get_background_pixmap (MatewnckScreen *screen)
 {
   g_return_val_if_fail (MATEWNCK_IS_SCREEN (screen), None);
   
@@ -2576,14 +2576,14 @@ matewnck_screen_get_background_pixmap (MateWnckScreen *screen)
 
 /**
  * matewnck_screen_get_width:
- * @screen: a #MateWnckScreen.
+ * @screen: a #MatewnckScreen.
  *
  * Gets the width of @screen.
  *
  * Returns: the width of @screen.
  */
 int
-matewnck_screen_get_width (MateWnckScreen *screen)
+matewnck_screen_get_width (MatewnckScreen *screen)
 {
   g_return_val_if_fail (MATEWNCK_IS_SCREEN (screen), 0);
 
@@ -2592,14 +2592,14 @@ matewnck_screen_get_width (MateWnckScreen *screen)
 
 /**
  * matewnck_screen_get_height:
- * @screen: a #MateWnckScreen.
+ * @screen: a #MatewnckScreen.
  *
  * Gets the height of @screen.
  *
  * Returns: the height of @screen.
  */
 int
-matewnck_screen_get_height (MateWnckScreen *screen)
+matewnck_screen_get_height (MatewnckScreen *screen)
 {
   g_return_val_if_fail (MATEWNCK_IS_SCREEN (screen), 0);
 
@@ -2607,34 +2607,34 @@ matewnck_screen_get_height (MateWnckScreen *screen)
 }
 
 Screen *
-_matewnck_screen_get_xscreen (MateWnckScreen *screen)
+_matewnck_screen_get_xscreen (MatewnckScreen *screen)
 {
   return screen->priv->xscreen;
 }
 
 /**
  * matewnck_screen_get_workspace_layout:
- * @screen: a #MateWnckScreen.
- * @orientation: return location for the orientation used in the #MateWnckWorkspace
+ * @screen: a #MatewnckScreen.
+ * @orientation: return location for the orientation used in the #MatewnckWorkspace
  * layout. See matewnck_pager_set_orientation() for more information.
- * @rows: return location for the number of rows in the #MateWnckWorkspace layout.
- * @columns: return location for the number of columns in the #MateWnckWorkspace
+ * @rows: return location for the number of rows in the #MatewnckWorkspace layout.
+ * @columns: return location for the number of columns in the #MatewnckWorkspace
  * layout.
  * @starting_corner: return location for the starting corner in the
- * #MateWnckWorkspace layout (i.e. the corner containing the first #MateWnckWorkspace).
+ * #MatewnckWorkspace layout (i.e. the corner containing the first #MatewnckWorkspace).
  *
- * Gets the layout of #MateWnckWorkspace on @screen.
+ * Gets the layout of #MatewnckWorkspace on @screen.
  */
 /* TODO: when we are sure about this API, add this function,
- * MateWnckLayoutOrientation, MateWnckLayoutCorner and a "layout-changed" signal. But
- * to make it really better, use a MateWnckScreenLayout struct. We might also want
- * to wait for deprecation of MateWnckWorkspaceLayout. */
+ * MatewnckLayoutOrientation, MatewnckLayoutCorner and a "layout-changed" signal. But
+ * to make it really better, use a MatewnckScreenLayout struct. We might also want
+ * to wait for deprecation of MatewnckWorkspaceLayout. */
 void
-_matewnck_screen_get_workspace_layout (MateWnckScreen             *screen,
-                                   _MateWnckLayoutOrientation *orientation,
+_matewnck_screen_get_workspace_layout (MatewnckScreen             *screen,
+                                   _MatewnckLayoutOrientation *orientation,
                                    int                    *rows,
                                    int                    *columns,
-                                   _MateWnckLayoutCorner      *starting_corner)
+                                   _MatewnckLayoutCorner      *starting_corner)
 {
   g_return_if_fail (MATEWNCK_IS_SCREEN (screen));
   
@@ -2655,14 +2655,14 @@ _matewnck_screen_get_workspace_layout (MateWnckScreen             *screen,
 
 /**
  * matewnck_screen_try_set_workspace_layout:
- * @screen: a #MateWnckScreen.
+ * @screen: a #MatewnckScreen.
  * @current_token: a token. Use 0 if you do not called
  * matewnck_screen_try_set_workspace_layout() before, or if you did not keep the
  * old token.
- * @rows: the number of rows to use for the #MateWnckWorkspace layout.
- * @columns: the number of columns to use for the #MateWnckWorkspace layout.
+ * @rows: the number of rows to use for the #MatewnckWorkspace layout.
+ * @columns: the number of columns to use for the #MatewnckWorkspace layout.
  *
- * Tries to modify the layout of #MateWnckWorkspace on @screen. To do this, tries
+ * Tries to modify the layout of #MatewnckWorkspace on @screen. To do this, tries
  * to acquire ownership of the layout. If the current process is the owner of
  * the layout, @current_token is used to determine if the caller is the owner
  * (there might be more than one part of the same process trying to set the
@@ -2670,9 +2670,9 @@ _matewnck_screen_get_workspace_layout (MateWnckScreen             *screen,
  * @screen at a time, setting the layout is not guaranteed to work.
  *
  * If @rows is 0, the actual number of rows will be determined based on
- * @columns and the number of #MateWnckWorkspace. If @columns is 0, the actual
+ * @columns and the number of #MatewnckWorkspace. If @columns is 0, the actual
  * number of columns will be determined based on @rows and the number of
- * #MateWnckWorkspace. @rows and @columns must not be 0 at the same time.
+ * #MatewnckWorkspace. @rows and @columns must not be 0 at the same time.
  *
  * You have to release the ownership of the layout with
  * matewnck_screen_release_workspace_layout() when you do not need it anymore.
@@ -2682,7 +2682,7 @@ _matewnck_screen_get_workspace_layout (MateWnckScreen             *screen,
  * matewnck_screen_release_workspace_layout(), or 0 if the layout could not be set.
  */
 int
-matewnck_screen_try_set_workspace_layout (MateWnckScreen *screen,
+matewnck_screen_try_set_workspace_layout (MatewnckScreen *screen,
                                       int         current_token,
                                       int         rows,
                                       int         columns)
@@ -2706,16 +2706,16 @@ matewnck_screen_try_set_workspace_layout (MateWnckScreen *screen,
 
 /**
  * matewnck_screen_release_workspace_layout:
- * @screen: a #MateWnckScreen.
+ * @screen: a #MatewnckScreen.
  * @current_token: the token obtained through
  * matewnck_screen_try_set_workspace_layout().
  *
- * Releases the ownership of the layout of #MateWnckWorkspace on @screen.
+ * Releases the ownership of the layout of #MatewnckWorkspace on @screen.
  * @current_token is used to verify that the caller is the owner of the layout.
  * If the verification fails, nothing happens.
  */
 void
-matewnck_screen_release_workspace_layout (MateWnckScreen *screen,
+matewnck_screen_release_workspace_layout (MatewnckScreen *screen,
                                       int         current_token)
 {
   g_return_if_fail (MATEWNCK_IS_SCREEN (screen));
@@ -2727,17 +2727,17 @@ matewnck_screen_release_workspace_layout (MateWnckScreen *screen,
 
 /**
  * matewnck_screen_get_showing_desktop:
- * @screen: a #MateWnckScreen.
+ * @screen: a #MatewnckScreen.
  *
  * Gets whether @screen is in the "showing the desktop" mode. This mode is
- * changed when a #MateWnckScreen::showing-desktop-changed signal gets emitted.
+ * changed when a #MatewnckScreen::showing-desktop-changed signal gets emitted.
  *
  * Return value: %TRUE if @window is fullscreen, %FALSE otherwise.
  *
  * Since: 2.2
  **/
 gboolean
-matewnck_screen_get_showing_desktop (MateWnckScreen *screen)
+matewnck_screen_get_showing_desktop (MatewnckScreen *screen)
 {
   g_return_val_if_fail (MATEWNCK_IS_SCREEN (screen), FALSE);
   
@@ -2746,7 +2746,7 @@ matewnck_screen_get_showing_desktop (MateWnckScreen *screen)
 
 /**
  * matewnck_screen_toggle_showing_desktop:
- * @screen: a #MateWnckScreen.
+ * @screen: a #MatewnckScreen.
  * @show: whether to activate the "showing the desktop" mode on @screen.
  *
  * Asks the window manager to set the "showing the desktop" mode on @screen
@@ -2755,7 +2755,7 @@ matewnck_screen_get_showing_desktop (MateWnckScreen *screen)
  * Since: 2.2
  **/
 void
-matewnck_screen_toggle_showing_desktop (MateWnckScreen *screen,
+matewnck_screen_toggle_showing_desktop (MatewnckScreen *screen,
                                     gboolean    show)
 {
   g_return_if_fail (MATEWNCK_IS_SCREEN (screen));
@@ -2767,17 +2767,17 @@ matewnck_screen_toggle_showing_desktop (MateWnckScreen *screen,
 
 /**
  * matewnck_screen_move_viewport:
- * @screen: a #MateWnckScreen.
+ * @screen: a #MatewnckScreen.
  * @x: X offset in pixels of viewport.
  * @y: Y offset in pixels of viewport.
  *
- * Asks the window manager to move the viewport of the current #MateWnckWorkspace
+ * Asks the window manager to move the viewport of the current #MatewnckWorkspace
  * on @screen.
  *
  * Since: 2.4
  */
 void
-matewnck_screen_move_viewport (MateWnckScreen *screen,
+matewnck_screen_move_viewport (MatewnckScreen *screen,
                            int         x,
                            int         y)
 {
@@ -2790,7 +2790,7 @@ matewnck_screen_move_viewport (MateWnckScreen *screen,
 
 #ifdef HAVE_STARTUP_NOTIFICATION
 SnDisplay*
-_matewnck_screen_get_sn_display (MateWnckScreen *screen)
+_matewnck_screen_get_sn_display (MatewnckScreen *screen)
 {
   g_return_val_if_fail (MATEWNCK_IS_SCREEN (screen), NULL);
   
@@ -2799,7 +2799,7 @@ _matewnck_screen_get_sn_display (MateWnckScreen *screen)
 #endif /* HAVE_STARTUP_NOTIFICATION */
 
 void
-_matewnck_screen_change_workspace_name (MateWnckScreen *screen,
+_matewnck_screen_change_workspace_name (MatewnckScreen *screen,
                                     int         number,
                                     const char *name)
 {
@@ -2818,7 +2818,7 @@ _matewnck_screen_change_workspace_name (MateWnckScreen *screen,
         names[i] = (char*) name;
       else
         {
-          MateWnckWorkspace *workspace;
+          MatewnckWorkspace *workspace;
           workspace = matewnck_screen_get_workspace (screen, i);
           if (workspace)
             names[i] = (char*) matewnck_workspace_get_name (workspace);
