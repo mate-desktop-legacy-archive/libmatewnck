@@ -22,7 +22,7 @@ MATE_MAINTAINER_MODE_DEFINES
 dnl libtool versioning for libmatewnck
 
 dnl increment if the interface has additions, changes, removals.
-LIBMATEWNCK_CURRENT=26
+LIBMATEWNCK_CURRENT=0
 
 dnl increment any time the source changes; set to
 dnl  0 if you increment CURRENT
@@ -31,7 +31,7 @@ LIBMATEWNCK_REVISION=0
 dnl increment if any interfaces have been added; set to 0
 dnl  if any interfaces have been changed or removed. removal has
 dnl  precedence over adding, so set to 0 if both happened.
-LIBMATEWNCK_AGE=4
+LIBMATEWNCK_AGE=0
 
 AC_SUBST(LIBMATEWNCK_CURRENT)
 AC_SUBST(LIBMATEWNCK_REVISION)
