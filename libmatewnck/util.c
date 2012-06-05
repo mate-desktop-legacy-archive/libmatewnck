@@ -78,13 +78,13 @@ typedef enum
   MATEWNCK_EXT_UNKNOWN = 0,
   MATEWNCK_EXT_FOUND = 1,
   MATEWNCK_EXT_MISSING = 2
-} MateWnckExtStatus;
+} MatewnckExtStatus;
 
 
 #if 0
 /* useful for debugging */
 static void
-_matewnck_print_resource_usage (MateWnckResourceUsage *usage)
+_matewnck_print_resource_usage (MatewnckResourceUsage *usage)
 {
   if (!usage)
     return;
@@ -116,12 +116,12 @@ _matewnck_print_resource_usage (MateWnckResourceUsage *usage)
 }
 #endif
 
-static MateWnckExtStatus
+static MatewnckExtStatus
 matewnck_init_resource_usage (GdkDisplay *gdisplay)
 {
   int event, error;
   Display *xdisplay;
-  MateWnckExtStatus status;
+  MatewnckExtStatus status;
 
   xdisplay = GDK_DISPLAY_XDISPLAY (gdisplay);
 
@@ -167,7 +167,7 @@ matewnck_init_resource_usage (GdkDisplay *gdisplay)
 void
 matewnck_xid_read_resource_usage (GdkDisplay        *gdisplay,
                               gulong             xid,
-                              MateWnckResourceUsage *usage)
+                              MatewnckResourceUsage *usage)
 {
   g_return_if_fail (usage != NULL);
 
@@ -503,7 +503,7 @@ matewnck_pid_read_resource_usage_destroy_hash_table (gpointer data)
 static gboolean
 matewnck_pid_read_resource_usage_from_cache (GdkDisplay        *gdisplay,
                                          gulong             pid,
-                                         MateWnckResourceUsage *usage)
+                                         MatewnckResourceUsage *usage)
 {
   gboolean  need_rebuild;
   gulong   *xid_p;
@@ -549,7 +549,7 @@ matewnck_pid_read_resource_usage_from_cache (GdkDisplay        *gdisplay,
 static void
 matewnck_pid_read_resource_usage_no_cache (GdkDisplay        *gdisplay,
                                        gulong             pid,
-                                       MateWnckResourceUsage *usage)
+                                       MatewnckResourceUsage *usage)
 {
   Display *xdisplay;
   int i;
@@ -559,7 +559,7 @@ matewnck_pid_read_resource_usage_no_cache (GdkDisplay        *gdisplay,
   i = 0;
   while (i < ScreenCount (xdisplay))
     {
-      MateWnckScreen *screen;
+      MatewnckScreen *screen;
       GList *windows;
       GList *tmp;
       
@@ -616,7 +616,7 @@ matewnck_pid_read_resource_usage_no_cache (GdkDisplay        *gdisplay,
 void
 matewnck_pid_read_resource_usage (GdkDisplay        *gdisplay,
                               gulong             pid,
-                              MateWnckResourceUsage *usage)
+                              MatewnckResourceUsage *usage)
 {
   g_return_if_fail (usage != NULL);
 
@@ -633,7 +633,7 @@ matewnck_pid_read_resource_usage (GdkDisplay        *gdisplay,
 #endif /* HAVE_XRES */
 }
 
-static MateWnckClientType client_type = 0;
+static MatewnckClientType client_type = 0;
 
 /**
  * matewnck_set_client_type:
@@ -649,7 +649,7 @@ static MateWnckClientType client_type = 0;
  * Since: 2.14
  */
 void
-matewnck_set_client_type (MateWnckClientType ewmh_sourceindication_client_type)
+matewnck_set_client_type (MatewnckClientType ewmh_sourceindication_client_type)
 {
   /* Clients constantly switching types makes no sense; this should only be
    * set once.
@@ -660,7 +660,7 @@ matewnck_set_client_type (MateWnckClientType ewmh_sourceindication_client_type)
     client_type = ewmh_sourceindication_client_type;
 }
 
-MateWnckClientType
+MatewnckClientType
 _matewnck_get_client_type (void)
 {
   /* If the type hasn't been set yet, use the default--treat it as a

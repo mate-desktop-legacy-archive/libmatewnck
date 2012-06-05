@@ -5,12 +5,12 @@ ACLOCAL_AMFLAGS = -I m4
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc --enable-introspection
 
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = libmatewnck-1.0.pc
+pkgconfig_DATA = libmatewnck.pc
 
 EXTRA_DIST = \
 	HACKING				\
-	libmatewnck-1.0.pc.in		\
-	libmatewnck-1.0-uninstalled.pc.in
+	libmatewnck.pc.in		\
+	libmatewnck-uninstalled.pc.in
 
 MAINTAINERCLEANFILES = \
 	$(srcdir)/INSTALL \

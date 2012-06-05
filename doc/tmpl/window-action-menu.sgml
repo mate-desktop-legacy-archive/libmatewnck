@@ -1,5 +1,5 @@
 <!-- ##### SECTION Title ##### -->
-MateWnckActionMenu
+MatewnckActionMenu
 
 <!-- ##### SECTION Short_Description ##### -->
 
@@ -20,13 +20,13 @@ MateWnckActionMenu
 <!-- ##### SECTION Image ##### -->
 
 
-<!-- ##### STRUCT MateWnckActionMenu ##### -->
+<!-- ##### STRUCT MatewnckActionMenu ##### -->
 <para>
 
 </para>
 
 
-<!-- ##### ARG MateWnckActionMenu:window ##### -->
+<!-- ##### ARG MatewnckActionMenu:window ##### -->
 <para>
 
 </para>

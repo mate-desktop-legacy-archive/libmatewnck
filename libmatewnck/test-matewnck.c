@@ -7,57 +7,57 @@ static GtkWidget *global_tree_view;
 static GtkTreeModel *global_tree_model;
 static guint refill_idle;
 
-static void active_window_changed_callback    (MateWnckScreen      *screen,
-                                               MateWnckWindow      *previous_window,
+static void active_window_changed_callback    (MatewnckScreen      *screen,
+                                               MatewnckWindow      *previous_window,
                                                gpointer         data);
-static void active_workspace_changed_callback (MateWnckScreen      *screen,
-                                               MateWnckWorkspace   *previous_workspace,
+static void active_workspace_changed_callback (MatewnckScreen      *screen,
+                                               MatewnckWorkspace   *previous_workspace,
                                                gpointer         data);
-static void window_stacking_changed_callback  (MateWnckScreen      *screen,
+static void window_stacking_changed_callback  (MatewnckScreen      *screen,
                                                gpointer         data);
-static void window_opened_callback            (MateWnckScreen      *screen,
-                                               MateWnckWindow      *window,
+static void window_opened_callback            (MatewnckScreen      *screen,
+                                               MatewnckWindow      *window,
                                                gpointer         data);
-static void window_closed_callback            (MateWnckScreen      *screen,
-                                               MateWnckWindow      *window,
+static void window_closed_callback            (MatewnckScreen      *screen,
+                                               MatewnckWindow      *window,
                                                gpointer         data);
-static void workspace_created_callback        (MateWnckScreen      *screen,
-                                               MateWnckWorkspace   *space,
+static void workspace_created_callback        (MatewnckScreen      *screen,
+                                               MatewnckWorkspace   *space,
                                                gpointer         data);
-static void workspace_destroyed_callback      (MateWnckScreen      *screen,
-                                               MateWnckWorkspace   *space,
+static void workspace_destroyed_callback      (MatewnckScreen      *screen,
+                                               MatewnckWorkspace   *space,
                                                gpointer         data);
-static void application_opened_callback       (MateWnckScreen      *screen,
-                                               MateWnckApplication *app);
-static void application_closed_callback       (MateWnckScreen      *screen,
-                                               MateWnckApplication *app);
-static void showing_desktop_changed_callback  (MateWnckScreen      *screen,
+static void application_opened_callback       (MatewnckScreen      *screen,
+                                               MatewnckApplication *app);
+static void application_closed_callback       (MatewnckScreen      *screen,
+                                               MatewnckApplication *app);
+static void showing_desktop_changed_callback  (MatewnckScreen      *screen,
                                                gpointer         data);
-static void window_name_changed_callback      (MateWnckWindow      *window,
+static void window_name_changed_callback      (MatewnckWindow      *window,
                                                gpointer         data);
-static void window_state_changed_callback     (MateWnckWindow      *window,
-                                               MateWnckWindowState  changed,
-                                               MateWnckWindowState  new,
+static void window_state_changed_callback     (MatewnckWindow      *window,
+                                               MatewnckWindowState  changed,
+                                               MatewnckWindowState  new,
                                                gpointer         data);
-static void window_workspace_changed_callback (MateWnckWindow      *window,
+static void window_workspace_changed_callback (MatewnckWindow      *window,
                                                gpointer         data);
-static void window_icon_changed_callback      (MateWnckWindow      *window,
+static void window_icon_changed_callback      (MatewnckWindow      *window,
                                                gpointer         data);
-static void window_geometry_changed_callback  (MateWnckWindow      *window,
+static void window_geometry_changed_callback  (MatewnckWindow      *window,
                                                gpointer         data);
 
 static GtkTreeModel* create_tree_model (void);
 static GtkWidget*    create_tree_view  (void);
 static void          refill_tree_model (GtkTreeModel *model,
-                                        MateWnckScreen   *screen);
+                                        MatewnckScreen   *screen);
 static void          update_window     (GtkTreeModel *model,
-                                        MateWnckWindow   *window);
+                                        MatewnckWindow   *window);
 static void          queue_refill_model (void);
 
 int
 main (int argc, char **argv)
 {
-  MateWnckScreen *screen;
+  MatewnckScreen *screen;
   GtkWidget *sw;
   GtkWidget *win;
   
@@ -129,11 +129,11 @@ main (int argc, char **argv)
 }
 
 static void
-active_window_changed_callback    (MateWnckScreen    *screen,
-                                   MateWnckWindow    *previous_window,
+active_window_changed_callback    (MatewnckScreen    *screen,
+                                   MatewnckWindow    *previous_window,
                                    gpointer       data)
 {
-  MateWnckWindow *window;
+  MatewnckWindow *window;
   
   g_print ("Active window changed\n");
 
@@ -144,23 +144,23 @@ active_window_changed_callback    (MateWnckScreen    *screen,
 }
 
 static void
-active_workspace_changed_callback (MateWnckScreen    *screen,
-                                   MateWnckWorkspace *previous_workspace,
+active_workspace_changed_callback (MatewnckScreen    *screen,
+                                   MatewnckWorkspace *previous_workspace,
                                    gpointer       data)
 {
   g_print ("Active workspace changed\n");
 }
 
 static void
-window_stacking_changed_callback  (MateWnckScreen    *screen,
+window_stacking_changed_callback  (MatewnckScreen    *screen,
                                    gpointer       data)
 {
   g_print ("Stacking changed\n");
 }
 
 static void
-window_opened_callback            (MateWnckScreen    *screen,
-                                   MateWnckWindow    *window,
+window_opened_callback            (MatewnckScreen    *screen,
+                                   MatewnckWindow    *window,
                                    gpointer       data)
 {
   g_print ("Window '%s' opened (pid = %d session_id = %s)\n",
@@ -189,8 +189,8 @@ window_opened_callback            (MateWnckScreen    *screen,
 }
 
 static void
-window_closed_callback            (MateWnckScreen    *screen,
-                                   MateWnckWindow    *window,
+window_closed_callback            (MatewnckScreen    *screen,
+                                   MatewnckWindow    *window,
                                    gpointer       data)
 {
   g_print ("Window '%s' closed\n",
@@ -200,39 +200,39 @@ window_closed_callback            (MateWnckScreen    *screen,
 }
 
 static void
-workspace_created_callback        (MateWnckScreen    *screen,
-                                   MateWnckWorkspace *space,
+workspace_created_callback        (MatewnckScreen    *screen,
+                                   MatewnckWorkspace *space,
                                    gpointer       data)
 {
   g_print ("Workspace created\n");
 }
 
 static void
-workspace_destroyed_callback      (MateWnckScreen    *screen,
-                                   MateWnckWorkspace *space,
+workspace_destroyed_callback      (MatewnckScreen    *screen,
+                                   MatewnckWorkspace *space,
                                    gpointer       data)
 {
   g_print ("Workspace destroyed\n");
 }
 
 static void
-application_opened_callback (MateWnckScreen      *screen,
-                             MateWnckApplication *app)
+application_opened_callback (MatewnckScreen      *screen,
+                             MatewnckApplication *app)
 {
   g_print ("Application opened\n");
   queue_refill_model ();
 }
 
 static void
-application_closed_callback (MateWnckScreen      *screen,
-                             MateWnckApplication *app)
+application_closed_callback (MatewnckScreen      *screen,
+                             MatewnckApplication *app)
 {
   g_print ("Application closed\n");
   queue_refill_model ();
 }
 
 static void
-showing_desktop_changed_callback (MateWnckScreen *screen,
+showing_desktop_changed_callback (MatewnckScreen *screen,
                                   gpointer    data)
 {
   g_print ("Showing desktop now = %d\n",
@@ -240,7 +240,7 @@ showing_desktop_changed_callback (MateWnckScreen *screen,
 }
 
 static void
-window_name_changed_callback (MateWnckWindow    *window,
+window_name_changed_callback (MatewnckWindow    *window,
                               gpointer       data)
 {
   g_print ("Name changed on window '%s'\n",
@@ -250,9 +250,9 @@ window_name_changed_callback (MateWnckWindow    *window,
 }
 
 static void
-window_state_changed_callback (MateWnckWindow     *window,
-                               MateWnckWindowState changed,
-                               MateWnckWindowState new,
+window_state_changed_callback (MatewnckWindow     *window,
+                               MatewnckWindowState changed,
+                               MatewnckWindowState new,
                                gpointer        data)
 {
   g_print ("State changed on window '%s'\n",
@@ -301,10 +301,10 @@ window_state_changed_callback (MateWnckWindow     *window,
 }
 
 static void
-window_workspace_changed_callback (MateWnckWindow    *window,
+window_workspace_changed_callback (MatewnckWindow    *window,
                                    gpointer       data)
 {
-  MateWnckWorkspace *space;
+  MatewnckWorkspace *space;
 
   space = matewnck_window_get_workspace (window);
 
@@ -320,7 +320,7 @@ window_workspace_changed_callback (MateWnckWindow    *window,
 }
 
 static void
-window_icon_changed_callback (MateWnckWindow    *window,
+window_icon_changed_callback (MatewnckWindow    *window,
                               gpointer       data)
 {
   g_print ("Icon changed on window '%s'\n",
@@ -330,7 +330,7 @@ window_icon_changed_callback (MateWnckWindow    *window,
 }
 
 static void
-window_geometry_changed_callback  (MateWnckWindow      *window,
+window_geometry_changed_callback  (MatewnckWindow      *window,
                                    gpointer         data)
 {
   int x, y, width, height;
@@ -353,7 +353,7 @@ create_tree_model (void)
 
 static void
 refill_tree_model (GtkTreeModel *model,
-                   MateWnckScreen   *screen)
+                   MatewnckScreen   *screen)
 {
   GList *tmp;
   
@@ -363,7 +363,7 @@ refill_tree_model (GtkTreeModel *model,
   while (tmp != NULL)
     {
       GtkTreeIter iter;
-      MateWnckWindow *window = tmp->data;
+      MatewnckWindow *window = tmp->data;
 
       gtk_list_store_append (GTK_LIST_STORE (model), &iter);
       gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, window, -1);
@@ -387,7 +387,7 @@ refill_tree_model (GtkTreeModel *model,
 
 static void
 update_window (GtkTreeModel *model,
-               MateWnckWindow   *window)
+               MatewnckWindow   *window)
 {
   GtkTreeIter iter;
   GList *windows;
@@ -427,11 +427,11 @@ update_window (GtkTreeModel *model,
     g_warning ("Tree model has no row %d", i);
 }
 
-static MateWnckWindow*
+static MatewnckWindow*
 get_window (GtkTreeModel *model,
             GtkTreeIter  *iter)
 {
-  MateWnckWindow *window;
+  MatewnckWindow *window;
   
   gtk_tree_model_get (model, iter,
                       0, &window,
@@ -458,7 +458,7 @@ icon_set_func (GtkTreeViewColumn *tree_column,
                GtkTreeIter       *iter,
                gpointer           data)
 {
-  MateWnckWindow *window;
+  MatewnckWindow *window;
   
   window = get_window (model, iter);
   if (window == NULL)
@@ -476,7 +476,7 @@ title_set_func (GtkTreeViewColumn *tree_column,
                 GtkTreeIter       *iter,
                 gpointer           data)
 {
-  MateWnckWindow *window;
+  MatewnckWindow *window;
 
   window = get_window (model, iter);
   if (window == NULL)
@@ -494,8 +494,8 @@ workspace_set_func (GtkTreeViewColumn *tree_column,
                     GtkTreeIter       *iter,
                     gpointer           data)
 {
-  MateWnckWindow *window;
-  MateWnckWorkspace *space;
+  MatewnckWindow *window;
+  MatewnckWorkspace *space;
   char *name;
   
   window = get_window (model, iter);
@@ -525,7 +525,7 @@ pid_set_func (GtkTreeViewColumn *tree_column,
               GtkTreeIter       *iter,
               gpointer           data)
 {
-  MateWnckWindow *window;
+  MatewnckWindow *window;
   int pid;
   char *name;
   
@@ -554,7 +554,7 @@ shaded_set_func (GtkTreeViewColumn *tree_column,
                  GtkTreeIter       *iter,
                  gpointer           data)
 {
-  MateWnckWindow *window;
+  MatewnckWindow *window;
 
   window = get_window (model, iter);
   if (window == NULL)
@@ -573,7 +573,7 @@ shaded_toggled_callback (GtkCellRendererToggle *cell,
   GtkTreeModel *model = gtk_tree_view_get_model (tree_view);
   GtkTreePath *path = gtk_tree_path_new_from_string (path_string);
   GtkTreeIter iter;
-  MateWnckWindow *window;
+  MatewnckWindow *window;
 
   gtk_tree_model_get_iter (model, &iter, path);
   window = get_window (model, &iter);
@@ -593,7 +593,7 @@ minimized_set_func (GtkTreeViewColumn *tree_column,
                     GtkTreeIter       *iter,
                     gpointer           data)
 {
-  MateWnckWindow *window;
+  MatewnckWindow *window;
 
   window = get_window (model, iter);
   if (window == NULL)
@@ -613,7 +613,7 @@ minimized_toggled_callback (GtkCellRendererToggle *cell,
   GtkTreeModel *model = gtk_tree_view_get_model (tree_view);
   GtkTreePath *path = gtk_tree_path_new_from_string (path_string);
   GtkTreeIter iter;
-  MateWnckWindow *window;
+  MatewnckWindow *window;
 
   gtk_tree_model_get_iter (model, &iter, path);
   window = get_window (model, &iter);
@@ -637,7 +637,7 @@ maximized_set_func (GtkTreeViewColumn *tree_column,
                     GtkTreeIter       *iter,
                     gpointer           data)
 {
-  MateWnckWindow *window;
+  MatewnckWindow *window;
 
   window = get_window (model, iter);
   if (window == NULL)
@@ -657,7 +657,7 @@ maximized_toggled_callback (GtkCellRendererToggle *cell,
   GtkTreeModel *model = gtk_tree_view_get_model (tree_view);
   GtkTreePath *path = gtk_tree_path_new_from_string (path_string);
   GtkTreeIter iter;
-  MateWnckWindow *window;
+  MatewnckWindow *window;
 
   gtk_tree_model_get_iter (model, &iter, path);
   window = get_window (model, &iter);
@@ -677,7 +677,7 @@ session_id_set_func (GtkTreeViewColumn *tree_column,
                      GtkTreeIter       *iter,
                      gpointer           data)
 {
-  MateWnckWindow *window;
+  MatewnckWindow *window;
   const char *id;
   
   window = get_window (model, iter);
@@ -699,7 +699,7 @@ selection_func (GtkTreeSelection  *selection,
                 gpointer           data)
 {
   GtkTreeIter iter;
-  MateWnckWindow *window;
+  MatewnckWindow *window;
   
   /* Kind of some hack action here. If you try to select a row that's
    * not the active window, we ask the WM to make that window active

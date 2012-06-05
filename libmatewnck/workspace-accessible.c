@@ -24,7 +24,7 @@
 #include <unistd.h>
 #include "workspace-accessible.h"
 #include "private.h"
-static void        matewnck_workspace_accessible_class_init          (MateWnckWorkspaceAccessibleClass *klass);
+static void        matewnck_workspace_accessible_class_init          (MatewnckWorkspaceAccessibleClass *klass);
 static const char* matewnck_workspace_accessible_get_name            (AtkObject                    *obj);
 static const char* matewnck_workspace_accessible_get_description     (AtkObject                    *obj);
 static int         matewnck_workspace_accessible_get_index_in_parent (AtkObject                    *obj);
@@ -56,13 +56,13 @@ matewnck_workspace_accessible_get_type (void)
     {
       const GTypeInfo tinfo = 
       {
-        sizeof (MateWnckWorkspaceAccessibleClass),
+        sizeof (MatewnckWorkspaceAccessibleClass),
         (GBaseInitFunc) NULL, /* base init */
         (GBaseFinalizeFunc) NULL, /* base finalize */
         (GClassInitFunc) matewnck_workspace_accessible_class_init,
         (GClassFinalizeFunc) NULL, /* class finalize */
         NULL, /* class data */
-        sizeof (MateWnckWorkspaceAccessible), /* instance size*/
+        sizeof (MatewnckWorkspaceAccessible), /* instance size*/
         0, /* nb preallocs */
         (GInstanceInitFunc) NULL, /* instance init */
         NULL /* value table */
@@ -75,7 +75,7 @@ matewnck_workspace_accessible_get_type (void)
         NULL
       };
 
-      type = g_type_register_static (ATK_TYPE_GOBJECT_ACCESSIBLE, "MateWnckWorkspaceAccessible", &tinfo, 0);
+      type = g_type_register_static (ATK_TYPE_GOBJECT_ACCESSIBLE, "MatewnckWorkspaceAccessible", &tinfo, 0);
       g_type_add_interface_static (type, ATK_TYPE_COMPONENT, &atk_component_info);
   }
   return type;
@@ -101,8 +101,8 @@ matewnck_workspace_accessible_get_extents (AtkComponent *component,
                                        AtkCoordType  coords)
 {
   AtkGObjectAccessible *atk_gobj;
-  MateWnckWorkspace *workspace;
-  MateWnckPager *pager;
+  MatewnckWorkspace *workspace;
+  MatewnckPager *pager;
   GdkRectangle rect;
   GtkWidget *widget;
   AtkObject *parent;
@@ -192,7 +192,7 @@ matewnck_workspace_accessible_contains (AtkComponent *component,
 }
 
 static void
-matewnck_workspace_accessible_class_init (MateWnckWorkspaceAccessibleClass *klass)
+matewnck_workspace_accessible_class_init (MatewnckWorkspaceAccessibleClass *klass)
 {
   AtkObjectClass *class = ATK_OBJECT_CLASS (klass);
 

@@ -26,16 +26,16 @@ msgstr ""
 #. * @see_also: matewnck_window_get_application()
 #. * @stability: Unstable
 #. *
-#. * The #MateWnckApplication is a group of #MateWnckWindow that are all in the same
+#. * The #MatewnckApplication is a group of #MatewnckWindow that are all in the same
 #. * application. It can be used to represent windows by applications, group
 #. * windows by applications or to manipulate all windows of a particular
 #. * application.
 #. *
-#. * A #MateWnckApplication is identified by the group leader of the #MateWnckWindow
-#. * belonging to it, and new #MateWnckWindow are added to a #MateWnckApplication if and
-#. * only if they have the group leader of the #MateWnckApplication.
+#. * A #MatewnckApplication is identified by the group leader of the #MatewnckWindow
+#. * belonging to it, and new #MatewnckWindow are added to a #MatewnckApplication if and
+#. * only if they have the group leader of the #MatewnckApplication.
 #. *
-#. * The #MateWnckApplication objects are always owned by libmatewnck and must not be
+#. * The #MatewnckApplication objects are always owned by libmatewnck and must not be
 #. * referenced or unreferenced.
 #.
 #: ../libmatewnck/application.c:51
@@ -234,10 +234,10 @@ msgstr "_Luk"
 #. *
 #. * SECTION:window
 #. * @short_description: an object representing a window.
-#. * @see_also: #MateWnckWorkspace, #MateWnckApplication, #MateWnckClassGroup
+#. * @see_also: #MatewnckWorkspace, #MatewnckApplication, #MatewnckClassGroup
 #. * @stability: Unstable
 #. *
-#. * The #MateWnckWindow objects are always owned by libmatewnck and must not be
+#. * The #MatewnckWindow objects are always owned by libmatewnck and must not be
 #. * referenced or unreferenced.
 #.
 #: ../libmatewnck/window.c:50

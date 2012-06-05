@@ -43,28 +43,28 @@
  * SECTION:tasklist
  * @short_description: a tasklist widget, showing the list of windows as a list
  * of buttons.
- * @see_also: #MateWnckScreen, #MateWnckSelector
+ * @see_also: #MatewnckScreen, #MatewnckSelector
  * @stability: Unstable
  *
- * The #MateWnckTasklist represents client windows on a screen as a list of buttons
+ * The #MatewnckTasklist represents client windows on a screen as a list of buttons
  * labelled with the window titles and icons. Pressing a button can activate or
  * minimize the represented window, and other typical actions are available
  * through a popup menu. Windows needing attention can also be distinguished
  * by a fade effect on the buttons representing them, to help attract the
  * user's attention.
  *
- * The behavior of the #MateWnckTasklist can be customized in various ways, like
+ * The behavior of the #MatewnckTasklist can be customized in various ways, like
  * grouping multiple windows of the same application in one button (see
  * matewnck_tasklist_set_grouping() and matewnck_tasklist_set_grouping_limit()), or
  * showing windows from all workspaces (see
  * matewnck_tasklist_set_include_all_workspaces()). The fade effect for windows
  * needing attention can be controlled by various style properties like
- * #MateWnckTasklist:fade-max-loops and #MateWnckTasklist:fade-opacity.
+ * #MatewnckTasklist:fade-max-loops and #MatewnckTasklist:fade-opacity.
  *
  * The tasklist also acts as iconification destination. If there are multiple
- * #MateWnckTasklist or other applications setting the iconification destination
+ * #MatewnckTasklist or other applications setting the iconification destination
  * for windows, the iconification destinations might not be consistent among
- * windows and it is not possible to determine which #MateWnckTasklist (or which
+ * windows and it is not possible to determine which #MatewnckTasklist (or which
  * other application) owns this propriety.
  */
 
@@ -82,14 +82,14 @@
 
 
 #define MATEWNCK_TYPE_TASK              (matewnck_task_get_type ())
-#define MATEWNCK_TASK(object)           (G_TYPE_CHECK_INSTANCE_CAST ((object), MATEWNCK_TYPE_TASK, MateWnckTask))
-#define MATEWNCK_TASK_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), MATEWNCK_TYPE_TASK, MateWnckTaskClass))
+#define MATEWNCK_TASK(object)           (G_TYPE_CHECK_INSTANCE_CAST ((object), MATEWNCK_TYPE_TASK, MatewnckTask))
+#define MATEWNCK_TASK_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), MATEWNCK_TYPE_TASK, MatewnckTaskClass))
 #define MATEWNCK_IS_TASK(object)        (G_TYPE_CHECK_INSTANCE_TYPE ((object), MATEWNCK_TYPE_TASK))
 #define MATEWNCK_IS_TASK_CLASS(klass)   (G_TYPE_CHECK_CLASS_TYPE ((klass), MATEWNCK_TYPE_TASK))
-#define MATEWNCK_TASK_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS ((obj), MATEWNCK_TYPE_TASK, MateWnckTaskClass))
+#define MATEWNCK_TASK_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS ((obj), MATEWNCK_TYPE_TASK, MatewnckTaskClass))
 
-typedef struct _MateWnckTask        MateWnckTask;
-typedef struct _MateWnckTaskClass   MateWnckTaskClass;
+typedef struct _MatewnckTask        MatewnckTask;
+typedef struct _MatewnckTaskClass   MatewnckTaskClass;
 
 #define DEFAULT_GROUPING_LIMIT 80
 
@@ -110,29 +110,29 @@ typedef enum
   MATEWNCK_TASK_CLASS_GROUP,
   MATEWNCK_TASK_WINDOW,
   MATEWNCK_TASK_STARTUP_SEQUENCE
-} MateWnckTaskType;
+} MatewnckTaskType;
 
-struct _MateWnckTask
+struct _MatewnckTask
 {
   GObject parent_instance;
 
-  MateWnckTasklist *tasklist;
+  MatewnckTasklist *tasklist;
   
   GtkWidget *button;
   GtkWidget *image;
   GtkWidget *label;
 
-  MateWnckTaskType type;
+  MatewnckTaskType type;
 
-  MateWnckClassGroup *class_group;
-  MateWnckWindow *window;
+  MatewnckClassGroup *class_group;
+  MatewnckWindow *window;
 #ifdef HAVE_STARTUP_NOTIFICATION
   SnStartupSequence *startup_sequence;
 #endif
   
   gdouble grouping_score;
 
-  GList *windows; /* List of the MateWnckTask for the window,
+  GList *windows; /* List of the MatewnckTask for the window,
 		     if this is a class group */
   guint state_changed_tag;
   guint icon_changed_tag;
@@ -166,23 +166,23 @@ struct _MateWnckTask
   guint col;
 };
 
-struct _MateWnckTaskClass
+struct _MatewnckTaskClass
 {
   GObjectClass parent_class;
 };
 
 typedef struct _skipped_window
 {
-  MateWnckWindow *window;
+  MatewnckWindow *window;
   gulong tag;
 } skipped_window;
 
-struct _MateWnckTasklistPrivate
+struct _MatewnckTasklistPrivate
 {
-  MateWnckScreen *screen;
+  MatewnckScreen *screen;
 
-  MateWnckTask *active_task; /* NULL if active window not in tasklist */
-  MateWnckTask *active_class_group; /* NULL if active window not in tasklist */
+  MatewnckTask *active_task; /* NULL if active window not in tasklist */
+  MatewnckTask *active_class_group; /* NULL if active window not in tasklist */
   
   gboolean include_all_workspaces;
   
@@ -207,7 +207,7 @@ struct _MateWnckTasklistPrivate
 
   gboolean switch_workspace_on_unminimize;
   
-  MateWnckTasklistGroupingType grouping;
+  MatewnckTasklistGroupingType grouping;
   gint grouping_limit;
 
   guint activate_timeout_id;
@@ -218,7 +218,7 @@ struct _MateWnckTasklistPrivate
   int *size_hints;
   int size_hints_len;
 
-  MateWnckLoadIconFunction icon_loader;
+  MatewnckLoadIconFunction icon_loader;
   void *icon_loader_data;
   GDestroyNotify free_icon_loader_data;
   
@@ -238,56 +238,56 @@ struct _MateWnckTasklistPrivate
 
 static GType matewnck_task_get_type (void);
 
-G_DEFINE_TYPE (MateWnckTask, matewnck_task, G_TYPE_OBJECT);
-G_DEFINE_TYPE (MateWnckTasklist, matewnck_tasklist, GTK_TYPE_CONTAINER);
-#define MATEWNCK_TASKLIST_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), MATEWNCK_TYPE_TASKLIST, MateWnckTasklistPrivate))
+G_DEFINE_TYPE (MatewnckTask, matewnck_task, G_TYPE_OBJECT);
+G_DEFINE_TYPE (MatewnckTasklist, matewnck_tasklist, GTK_TYPE_CONTAINER);
+#define MATEWNCK_TASKLIST_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), MATEWNCK_TYPE_TASKLIST, MatewnckTasklistPrivate))
 
-static void matewnck_task_init        (MateWnckTask      *task);
-static void matewnck_task_class_init  (MateWnckTaskClass *klass);
+static void matewnck_task_init        (MatewnckTask      *task);
+static void matewnck_task_class_init  (MatewnckTaskClass *klass);
 static void matewnck_task_finalize    (GObject       *object);
 
-static void matewnck_task_stop_glow   (MateWnckTask *task);
+static void matewnck_task_stop_glow   (MatewnckTask *task);
 
-static MateWnckTask *matewnck_task_new_from_window      (MateWnckTasklist    *tasklist,
-						 MateWnckWindow      *window);
-static MateWnckTask *matewnck_task_new_from_class_group (MateWnckTasklist    *tasklist,
-						 MateWnckClassGroup  *class_group);
+static MatewnckTask *matewnck_task_new_from_window      (MatewnckTasklist    *tasklist,
+						 MatewnckWindow      *window);
+static MatewnckTask *matewnck_task_new_from_class_group (MatewnckTasklist    *tasklist,
+						 MatewnckClassGroup  *class_group);
 #ifdef HAVE_STARTUP_NOTIFICATION
-static MateWnckTask *matewnck_task_new_from_startup_sequence (MateWnckTasklist      *tasklist,
+static MatewnckTask *matewnck_task_new_from_startup_sequence (MatewnckTasklist      *tasklist,
                                                       SnStartupSequence *sequence);
 #endif
-static gboolean matewnck_task_get_needs_attention (MateWnckTask *task);
+static gboolean matewnck_task_get_needs_attention (MatewnckTask *task);
 
 
-static char      *matewnck_task_get_text (MateWnckTask *task,
+static char      *matewnck_task_get_text (MatewnckTask *task,
                                       gboolean  icon_text,
                                       gboolean  include_state);
-static GdkPixbuf *matewnck_task_get_icon (MateWnckTask *task);
+static GdkPixbuf *matewnck_task_get_icon (MatewnckTask *task);
 static gint       matewnck_task_compare_alphabetically (gconstpointer  a,
                                                     gconstpointer  b);
 static gint       matewnck_task_compare  (gconstpointer  a,
 				      gconstpointer  b);
-static void       matewnck_task_update_visible_state (MateWnckTask *task);
-static void       matewnck_task_state_changed        (MateWnckWindow      *window,
-                                                  MateWnckWindowState  changed_mask, 
-                                                  MateWnckWindowState  new_state,
+static void       matewnck_task_update_visible_state (MatewnckTask *task);
+static void       matewnck_task_state_changed        (MatewnckWindow      *window,
+                                                  MatewnckWindowState  changed_mask, 
+                                                  MatewnckWindowState  new_state,
                                                   gpointer         data);
 
 static void       matewnck_task_drag_begin    (GtkWidget          *widget,
                                            GdkDragContext     *context,
-                                           MateWnckTask           *task);
+                                           MatewnckTask           *task);
 static void       matewnck_task_drag_end      (GtkWidget          *widget,
                                            GdkDragContext     *context,
-                                           MateWnckTask           *task);
+                                           MatewnckTask           *task);
 static void       matewnck_task_drag_data_get (GtkWidget          *widget,
                                            GdkDragContext     *context,
                                            GtkSelectionData   *selection_data,
                                            guint               info,
                                            guint               time,
-                                           MateWnckTask           *task);
+                                           MatewnckTask           *task);
 
-static void     matewnck_tasklist_init          (MateWnckTasklist      *tasklist);
-static void     matewnck_tasklist_class_init    (MateWnckTasklistClass *klass);
+static void     matewnck_tasklist_init          (MatewnckTasklist      *tasklist);
+static void     matewnck_tasklist_class_init    (MatewnckTasklistClass *klass);
 static GObject *matewnck_tasklist_constructor   (GType              type,
                                              guint              n_construct_properties,
                                              GObjectConstructParam *construct_properties);
@@ -307,11 +307,11 @@ static void     matewnck_tasklist_forall        (GtkContainer     *container,
                                              gpointer          callback_data);
 static void     matewnck_tasklist_remove	    (GtkContainer   *container,
 					     GtkWidget	    *widget);
-static gboolean matewnck_tasklist_scroll_cb     (MateWnckTasklist   *tasklist,
+static gboolean matewnck_tasklist_scroll_cb     (MatewnckTasklist   *tasklist,
                                              GdkEventScroll *event,
                                              gpointer        user_data);
-static void     matewnck_tasklist_free_tasks    (MateWnckTasklist   *tasklist);
-static void     matewnck_tasklist_update_lists  (MateWnckTasklist   *tasklist);
+static void     matewnck_tasklist_free_tasks    (MatewnckTasklist   *tasklist);
+static void     matewnck_tasklist_update_lists  (MatewnckTasklist   *tasklist);
 static int      matewnck_tasklist_layout        (GtkAllocation  *allocation,
 					     int             max_width,
 					     int             max_height,
@@ -319,41 +319,41 @@ static int      matewnck_tasklist_layout        (GtkAllocation  *allocation,
 					     int            *n_cols_out,
 					     int            *n_rows_out);
 
-static void     matewnck_tasklist_active_window_changed    (MateWnckScreen   *screen,
-                                                        MateWnckWindow   *previous_window,
-							MateWnckTasklist *tasklist);
-static void     matewnck_tasklist_active_workspace_changed (MateWnckScreen   *screen,
-                                                        MateWnckWorkspace *previous_workspace,
-							MateWnckTasklist *tasklist);
-static void     matewnck_tasklist_window_added             (MateWnckScreen   *screen,
-							MateWnckWindow   *win,
-							MateWnckTasklist *tasklist);
-static void     matewnck_tasklist_window_removed           (MateWnckScreen   *screen,
-							MateWnckWindow   *win,
-							MateWnckTasklist *tasklist);
-static void     matewnck_tasklist_viewports_changed        (MateWnckScreen   *screen,
-							MateWnckTasklist *tasklist);
-static void     matewnck_tasklist_connect_window           (MateWnckTasklist *tasklist,
-							MateWnckWindow   *window);
-static void     matewnck_tasklist_disconnect_window        (MateWnckTasklist *tasklist,
-							MateWnckWindow   *window);
+static void     matewnck_tasklist_active_window_changed    (MatewnckScreen   *screen,
+                                                        MatewnckWindow   *previous_window,
+							MatewnckTasklist *tasklist);
+static void     matewnck_tasklist_active_workspace_changed (MatewnckScreen   *screen,
+                                                        MatewnckWorkspace *previous_workspace,
+							MatewnckTasklist *tasklist);
+static void     matewnck_tasklist_window_added             (MatewnckScreen   *screen,
+							MatewnckWindow   *win,
+							MatewnckTasklist *tasklist);
+static void     matewnck_tasklist_window_removed           (MatewnckScreen   *screen,
+							MatewnckWindow   *win,
+							MatewnckTasklist *tasklist);
+static void     matewnck_tasklist_viewports_changed        (MatewnckScreen   *screen,
+							MatewnckTasklist *tasklist);
+static void     matewnck_tasklist_connect_window           (MatewnckTasklist *tasklist,
+							MatewnckWindow   *window);
+static void     matewnck_tasklist_disconnect_window        (MatewnckTasklist *tasklist,
+							MatewnckWindow   *window);
 
-static void     matewnck_tasklist_change_active_task       (MateWnckTasklist *tasklist,
-							MateWnckTask *active_task);
+static void     matewnck_tasklist_change_active_task       (MatewnckTasklist *tasklist,
+							MatewnckTask *active_task);
 static gboolean matewnck_tasklist_change_active_timeout    (gpointer data);
-static void     matewnck_tasklist_activate_task_window     (MateWnckTask *task,
+static void     matewnck_tasklist_activate_task_window     (MatewnckTask *task,
                                                         guint32   timestamp);
 
-static void     matewnck_tasklist_update_icon_geometries   (MateWnckTasklist *tasklist,
+static void     matewnck_tasklist_update_icon_geometries   (MatewnckTasklist *tasklist,
 							GList        *visible_tasks);
-static void     matewnck_tasklist_connect_screen           (MateWnckTasklist *tasklist);
-static void     matewnck_tasklist_disconnect_screen        (MateWnckTasklist *tasklist);
+static void     matewnck_tasklist_connect_screen           (MatewnckTasklist *tasklist);
+static void     matewnck_tasklist_disconnect_screen        (MatewnckTasklist *tasklist);
 
 #ifdef HAVE_STARTUP_NOTIFICATION
 static void     matewnck_tasklist_sn_event                 (SnMonitorEvent *event,
                                                         void           *user_data);
-static void     matewnck_tasklist_check_end_sequence       (MateWnckTasklist   *tasklist,
-                                                        MateWnckWindow     *window);
+static void     matewnck_tasklist_check_end_sequence       (MatewnckTasklist   *tasklist,
+                                                        MatewnckWindow     *window);
 #endif
 
 
@@ -368,7 +368,7 @@ static GType
 matewnck_task_get_type (void) G_GNUC_CONST;
 
 static void
-cleanup_screenshots (MateWnckTask *task)
+cleanup_screenshots (MatewnckTask *task)
 {
   if (task->screenshot != NULL)
     {
@@ -383,7 +383,7 @@ cleanup_screenshots (MateWnckTask *task)
 }
 
 static void
-matewnck_task_init (MateWnckTask *task)
+matewnck_task_init (MatewnckTask *task)
 {
   task->tasklist = NULL;
 
@@ -433,7 +433,7 @@ matewnck_task_init (MateWnckTask *task)
 }
 
 static void
-matewnck_task_class_init (MateWnckTaskClass *klass)
+matewnck_task_class_init (MatewnckTaskClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   
@@ -451,7 +451,7 @@ matewnck_task_class_init (MateWnckTaskClass *klass)
 }
 
 static gboolean
-matewnck_task_button_glow (MateWnckTask *task)
+matewnck_task_button_glow (MatewnckTask *task)
 {
   GTimeVal tv;
   gdouble glow_factor, now;
@@ -528,13 +528,13 @@ matewnck_task_button_glow (MateWnckTask *task)
 }
 
 static void
-matewnck_task_clear_glow_start_timeout_id (MateWnckTask *task)
+matewnck_task_clear_glow_start_timeout_id (MatewnckTask *task)
 {
   task->button_glow = 0;
 }
 
 static void
-matewnck_task_queue_glow (MateWnckTask *task)
+matewnck_task_queue_glow (MatewnckTask *task)
 {
   if (task->button_glow == 0)
     {
@@ -553,7 +553,7 @@ matewnck_task_queue_glow (MateWnckTask *task)
 }
 
 static void
-matewnck_task_stop_glow (MateWnckTask *task)
+matewnck_task_stop_glow (MatewnckTask *task)
 {
   if (task->button_glow != 0)
     g_source_remove (task->button_glow);
@@ -562,7 +562,7 @@ matewnck_task_stop_glow (MateWnckTask *task)
 static void
 matewnck_task_finalize (GObject *object)
 {
-  MateWnckTask *task;
+  MatewnckTask *task;
 
   task = MATEWNCK_TASK (object);
 
@@ -665,7 +665,7 @@ matewnck_task_finalize (GObject *object)
 }
 
 static void
-matewnck_tasklist_init (MateWnckTasklist *tasklist)
+matewnck_tasklist_init (MatewnckTasklist *tasklist)
 {
   int i;
   GtkWidget *widget;
@@ -735,13 +735,13 @@ matewnck_tasklist_init (MateWnckTasklist *tasklist)
 }
 
 static void
-matewnck_tasklist_class_init (MateWnckTasklistClass *klass)
+matewnck_tasklist_class_init (MatewnckTasklistClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
   GtkContainerClass *container_class = GTK_CONTAINER_CLASS (klass);
 
-  g_type_class_add_private (klass, sizeof (MateWnckTasklistPrivate));
+  g_type_class_add_private (klass, sizeof (MatewnckTasklistPrivate));
 
   object_class->constructor = matewnck_tasklist_constructor;
   object_class->finalize = matewnck_tasklist_finalize;
@@ -756,7 +756,7 @@ matewnck_tasklist_class_init (MateWnckTasklistClass *klass)
   container_class->remove = matewnck_tasklist_remove;
   
   /**
-   * MateWnckTasklist:fade-loop-time:
+   * MatewnckTasklist:fade-loop-time:
    *
    * When a window needs attention, a fade effect is drawn on the button
    * representing the window. This property controls the time one loop of this
@@ -772,7 +772,7 @@ matewnck_tasklist_class_init (MateWnckTasklistClass *klass)
                                                               G_PARAM_READABLE|G_PARAM_STATIC_NAME|G_PARAM_STATIC_NICK|G_PARAM_STATIC_BLURB));
 
   /**
-   * MateWnckTasklist:fade-max-loops:
+   * MatewnckTasklist:fade-max-loops:
    *
    * When a window needs attention, a fade effect is drawn on the button
    * representing the window. This property controls the number of loops for
@@ -788,7 +788,7 @@ matewnck_tasklist_class_init (MateWnckTasklistClass *klass)
                                                               G_PARAM_READABLE|G_PARAM_STATIC_NAME|G_PARAM_STATIC_NICK|G_PARAM_STATIC_BLURB));
 
   /**
-   * MateWnckTasklist:fade-overlay-rect:
+   * MatewnckTasklist:fade-overlay-rect:
    *
    * When a window needs attention, a fade effect is drawn on the button
    * representing the window. Set this property to %TRUE to enable a
@@ -806,7 +806,7 @@ matewnck_tasklist_class_init (MateWnckTasklistClass *klass)
                                                                  G_PARAM_READABLE|G_PARAM_STATIC_NAME|G_PARAM_STATIC_NICK|G_PARAM_STATIC_BLURB));
 
   /**
-   * MateWnckTasklist:fade-opacity:
+   * MatewnckTasklist:fade-opacity:
    *
    * When a window needs attention, a fade effect is drawn on the button
    * representing the window. This property controls the final opacity that
@@ -841,7 +841,7 @@ matewnck_tasklist_constructor (GType                  type,
 }
 
 static void
-matewnck_tasklist_free_skipped_windows (MateWnckTasklist  *tasklist)
+matewnck_tasklist_free_skipped_windows (MatewnckTasklist  *tasklist)
 {
   GList *l;
   
@@ -862,7 +862,7 @@ matewnck_tasklist_free_skipped_windows (MateWnckTasklist  *tasklist)
 static void
 matewnck_tasklist_finalize (GObject *object)
 {
-  MateWnckTasklist *tasklist;
+  MatewnckTasklist *tasklist;
 
   tasklist = MATEWNCK_TASKLIST (object);
 
@@ -919,14 +919,14 @@ matewnck_tasklist_finalize (GObject *object)
 
 /**
  * matewnck_tasklist_set_grouping:
- * @tasklist: a #MateWnckTasklist.
+ * @tasklist: a #MatewnckTasklist.
  * @grouping: a grouping policy.
  *
  * Sets the grouping policy for @tasklist to @grouping.
  */
 void
-matewnck_tasklist_set_grouping (MateWnckTasklist            *tasklist,
-			    MateWnckTasklistGroupingType grouping)
+matewnck_tasklist_set_grouping (MatewnckTasklist            *tasklist,
+			    MatewnckTasklistGroupingType grouping)
 {
   g_return_if_fail (MATEWNCK_IS_TASKLIST (tasklist));
 
@@ -938,26 +938,26 @@ matewnck_tasklist_set_grouping (MateWnckTasklist            *tasklist,
 }
 
 static void
-matewnck_tasklist_set_relief_callback (MateWnckWindow   *win,
-				   MateWnckTask     *task,
-				   MateWnckTasklist *tasklist)
+matewnck_tasklist_set_relief_callback (MatewnckWindow   *win,
+				   MatewnckTask     *task,
+				   MatewnckTasklist *tasklist)
 {
   gtk_button_set_relief (GTK_BUTTON (task->button), tasklist->priv->relief);
 }
 
 /**
  * matewnck_tasklist_set_button_relief:
- * @tasklist: a #MateWnckTasklist.
+ * @tasklist: a #MatewnckTasklist.
  * @relief: a relief type.
  *
  * Sets the relief type of the buttons in @tasklist to @relief. The main use of
- * this function is proper integration of #MateWnckTasklist in panels with
+ * this function is proper integration of #MatewnckTasklist in panels with
  * non-system backgrounds.
  *
  * Since: 2.12
  */
 void
-matewnck_tasklist_set_button_relief (MateWnckTasklist *tasklist, GtkReliefStyle relief)
+matewnck_tasklist_set_button_relief (MatewnckTasklist *tasklist, GtkReliefStyle relief)
 {
   GList *walk;
 
@@ -977,17 +977,17 @@ matewnck_tasklist_set_button_relief (MateWnckTasklist *tasklist, GtkReliefStyle 
 
 /**
  * matewnck_tasklist_set_switch_workspace_on_unminimize:
- * @tasklist: a #MateWnckTasklist.
- * @switch_workspace_on_unminimize: whether to activate the #MateWnckWorkspace a
- * #MateWnckWindow is on when unminimizing it.
+ * @tasklist: a #MatewnckTasklist.
+ * @switch_workspace_on_unminimize: whether to activate the #MatewnckWorkspace a
+ * #MatewnckWindow is on when unminimizing it.
  *
- * Sets @tasklist to activate or not the #MateWnckWorkspace a #MateWnckWindow is on
+ * Sets @tasklist to activate or not the #MatewnckWorkspace a #MatewnckWindow is on
  * when unminimizing it, according to @switch_workspace_on_unminimize.
  *
  * FIXME: does it still work?
  */
 void
-matewnck_tasklist_set_switch_workspace_on_unminimize (MateWnckTasklist  *tasklist,
+matewnck_tasklist_set_switch_workspace_on_unminimize (MatewnckTasklist  *tasklist,
 						  gboolean       switch_workspace_on_unminimize)
 {
   g_return_if_fail (MATEWNCK_IS_TASKLIST (tasklist));
@@ -997,24 +997,24 @@ matewnck_tasklist_set_switch_workspace_on_unminimize (MateWnckTasklist  *tasklis
 
 /**
  * matewnck_tasklist_set_include_all_workspaces:
- * @tasklist: a #MateWnckTasklist.
- * @include_all_workspaces: whether to display #MateWnckWindow from all
- * #MateWnckWorkspace in @tasklist.
+ * @tasklist: a #MatewnckTasklist.
+ * @include_all_workspaces: whether to display #MatewnckWindow from all
+ * #MatewnckWorkspace in @tasklist.
  *
- * Sets @tasklist to display #MateWnckWindow from all #MateWnckWorkspace or not,
+ * Sets @tasklist to display #MatewnckWindow from all #MatewnckWorkspace or not,
  * according to @include_all_workspaces.
  *
- * Note that if the active #MateWnckWorkspace has a viewport and if
- * @include_all_workspaces is %FALSE, then only the #MateWnckWindow visible in the
+ * Note that if the active #MatewnckWorkspace has a viewport and if
+ * @include_all_workspaces is %FALSE, then only the #MatewnckWindow visible in the
  * viewport are displayed in @tasklist. The rationale for this is that the
  * viewport is generally used to implement workspace-like behavior. A
- * side-effect of this is that, when using multiple #MateWnckWorkspace with
- * viewport, it is not possible to show all #MateWnckWindow from a #MateWnckWorkspace
+ * side-effect of this is that, when using multiple #MatewnckWorkspace with
+ * viewport, it is not possible to show all #MatewnckWindow from a #MatewnckWorkspace
  * (even those that are not visible in the viewport) in @tasklist without
- * showing all #MateWnckWindow from all #MateWnckWorkspace.
+ * showing all #MatewnckWindow from all #MatewnckWorkspace.
  */
 void
-matewnck_tasklist_set_include_all_workspaces (MateWnckTasklist *tasklist,
+matewnck_tasklist_set_include_all_workspaces (MatewnckTasklist *tasklist,
 					  gboolean      include_all_workspaces)
 {
   g_return_if_fail (MATEWNCK_IS_TASKLIST (tasklist));
@@ -1031,16 +1031,16 @@ matewnck_tasklist_set_include_all_workspaces (MateWnckTasklist *tasklist,
 
 /**
  * matewnck_tasklist_set_grouping_limit:
- * @tasklist: a #MateWnckTasklist.
+ * @tasklist: a #MatewnckTasklist.
  * @limit: a size in pixels.
  *
  * Sets the maximum size of buttons in @tasklist before @tasklist tries to
- * group #MateWnckWindow in the same #MateWnckApplication in only one button. This
+ * group #MatewnckWindow in the same #MatewnckApplication in only one button. This
  * limit is valid only when the grouping policy of @tasklist is
  * %MATEWNCK_TASKLIST_AUTO_GROUP.
  */
 void
-matewnck_tasklist_set_grouping_limit (MateWnckTasklist *tasklist,
+matewnck_tasklist_set_grouping_limit (MatewnckTasklist *tasklist,
 				  gint          limit)
 {
   g_return_if_fail (MATEWNCK_IS_TASKLIST (tasklist));
@@ -1054,7 +1054,7 @@ matewnck_tasklist_set_grouping_limit (MateWnckTasklist *tasklist,
 
 /**
  * matewnck_tasklist_set_minimum_width:
- * @tasklist: a #MateWnckTasklist.
+ * @tasklist: a #MatewnckTasklist.
  * @size: a minimum width in pixels.
  *
  * Does nothing.
@@ -1062,13 +1062,13 @@ matewnck_tasklist_set_grouping_limit (MateWnckTasklist *tasklist,
  * Deprecated:2.20:
  */
 void 
-matewnck_tasklist_set_minimum_width (MateWnckTasklist *tasklist, gint size)
+matewnck_tasklist_set_minimum_width (MatewnckTasklist *tasklist, gint size)
 {
 }
  
 /**
  * matewnck_tasklist_get_minimum_width:
- * @tasklist: a #MateWnckTasklist.
+ * @tasklist: a #MatewnckTasklist.
  *
  * Returns -1.
  *
@@ -1077,14 +1077,14 @@ matewnck_tasklist_set_minimum_width (MateWnckTasklist *tasklist, gint size)
  * Deprecated:2.20:
  */
 gint
-matewnck_tasklist_get_minimum_width (MateWnckTasklist *tasklist)
+matewnck_tasklist_get_minimum_width (MatewnckTasklist *tasklist)
 {
   return -1;
 }
 
 /**
  * matewnck_tasklist_set_minimum_height:
- * @tasklist: a #MateWnckTasklist.
+ * @tasklist: a #MatewnckTasklist.
  * @size: a minimum height in pixels.
  *
  * Does nothing.
@@ -1092,13 +1092,13 @@ matewnck_tasklist_get_minimum_width (MateWnckTasklist *tasklist)
  * Deprecated:2.20:
  */
 void 
-matewnck_tasklist_set_minimum_height (MateWnckTasklist *tasklist, gint size)
+matewnck_tasklist_set_minimum_height (MatewnckTasklist *tasklist, gint size)
 {
 }
  
 /**
  * matewnck_tasklist_get_minimum_height:
- * @tasklist: a #MateWnckTasklist.
+ * @tasklist: a #MatewnckTasklist.
  *
  * Returns -1.
  *
@@ -1107,14 +1107,14 @@ matewnck_tasklist_set_minimum_height (MateWnckTasklist *tasklist, gint size)
  * Deprecated:2.20:
  */
 gint
-matewnck_tasklist_get_minimum_height (MateWnckTasklist *tasklist)
+matewnck_tasklist_get_minimum_height (MatewnckTasklist *tasklist)
 {
   return -1;
 }
 
 /**
  * matewnck_tasklist_set_icon_loader:
- * @tasklist: a #MateWnckTasklist
+ * @tasklist: a #MatewnckTasklist
  * @load_icon_func: icon loader function
  * @data: data for icon loader function
  * @free_data_func: function to free the data
@@ -1124,8 +1124,8 @@ matewnck_tasklist_get_minimum_height (MateWnckTasklist *tasklist)
  * Since: 2.2
  **/
 void
-matewnck_tasklist_set_icon_loader (MateWnckTasklist         *tasklist,
-                               MateWnckLoadIconFunction  load_icon_func,
+matewnck_tasklist_set_icon_loader (MatewnckTasklist         *tasklist,
+                               MatewnckLoadIconFunction  load_icon_func,
                                void                 *data,
                                GDestroyNotify        free_data_func)
 {
@@ -1174,11 +1174,11 @@ matewnck_tasklist_layout (GtkAllocation *allocation,
 }
 
 static void
-matewnck_tasklist_score_groups (MateWnckTasklist *tasklist,
+matewnck_tasklist_score_groups (MatewnckTasklist *tasklist,
 			    GList        *ungrouped_class_groups)
 {
-  MateWnckTask *class_group_task;
-  MateWnckTask *win_task;
+  MatewnckTask *class_group_task;
+  MatewnckTask *win_task;
   GList *l, *w;
   const char *first_name = NULL;
   int n_windows;
@@ -1235,10 +1235,10 @@ matewnck_tasklist_score_groups (MateWnckTasklist *tasklist,
 
 static GList *
 matewnck_task_get_highest_scored (GList     *ungrouped_class_groups,
-			      MateWnckTask **class_group_task_out)
+			      MatewnckTask **class_group_task_out)
 {
-  MateWnckTask *class_group_task;
-  MateWnckTask *best_task = NULL;
+  MatewnckTask *class_group_task;
+  MatewnckTask *best_task = NULL;
   double max_score = -1000000000.0; /* Large negative score */
   GList *l;
  
@@ -1291,7 +1291,7 @@ static void
 matewnck_tasklist_size_request  (GtkWidget      *widget,
                              GtkRequisition *requisition)
 {
-  MateWnckTasklist *tasklist;
+  MatewnckTasklist *tasklist;
   GtkRequisition child_req;
   GtkAllocation  tasklist_allocation;
   GtkAllocation  fake_allocation;
@@ -1308,7 +1308,7 @@ matewnck_tasklist_size_request  (GtkWidget      *widget,
   int n_grouped_buttons;
   gboolean score_set;
   int val;
-  MateWnckTask *class_group_task;
+  MatewnckTask *class_group_task;
   int lowest_range;
   int grouping_limit;
 
@@ -1319,7 +1319,7 @@ matewnck_tasklist_size_request  (GtkWidget      *widget,
   l = list;                                                     \
   while (l != NULL)                                             \
     {                                                           \
-      MateWnckTask *task = MATEWNCK_TASK (l->data);                     \
+      MatewnckTask *task = MATEWNCK_TASK (l->data);                     \
                                                                 \
       gtk_widget_size_request (task->button, &child_req);       \
                                                                 \
@@ -1449,11 +1449,11 @@ matewnck_tasklist_size_request  (GtkWidget      *widget,
 
 /**
  * matewnck_tasklist_get_size_hint_list:
- * @tasklist: a #MateWnckTasklist.
+ * @tasklist: a #MatewnckTasklist.
  * @n_elements: return location for the number of elements in the array
  * returned by this function. This number should always be pair.
  *
- * Since a #MateWnckTasklist does not have a fixed size (#MateWnckWindow can be grouped
+ * Since a #MatewnckTasklist does not have a fixed size (#MatewnckWindow can be grouped
  * when needed, for example), the standard size request mechanism in GTK+ is
  * not enough to announce what sizes can be used by @tasklist. The size hints
  * mechanism is a solution for this. See mate_panel_applet_set_size_hints() for more
@@ -1463,7 +1463,7 @@ matewnck_tasklist_size_request  (GtkWidget      *widget,
  * appropriate size for @tasklist.
  */
 const int *
-matewnck_tasklist_get_size_hint_list (MateWnckTasklist  *tasklist,
+matewnck_tasklist_get_size_hint_list (MatewnckTasklist  *tasklist,
 				  int           *n_elements)
 {
   g_return_val_if_fail (MATEWNCK_IS_TASKLIST (tasklist), NULL);
@@ -1478,7 +1478,7 @@ matewnck_task_size_allocated (GtkWidget     *widget,
                           GtkAllocation *allocation,
                           gpointer       data)
 {
-  MateWnckTask *task = MATEWNCK_TASK (data);
+  MatewnckTask *task = MATEWNCK_TASK (data);
   GtkStyle *style;
   int       min_image_width;
 
@@ -1506,8 +1506,8 @@ matewnck_tasklist_size_allocate (GtkWidget      *widget,
                              GtkAllocation  *allocation)
 {
   GtkAllocation child_allocation;
-  MateWnckTasklist *tasklist;
-  MateWnckTask *class_group_task;
+  MatewnckTasklist *tasklist;
+  MatewnckTask *class_group_task;
   int n_windows;
   int n_startup_sequences;
   GList *l;
@@ -1519,7 +1519,7 @@ matewnck_tasklist_size_allocate (GtkWidget      *widget,
   int i;
   gboolean score_set;
   GList *ungrouped_class_groups;
-  MateWnckTask *win_task;
+  MatewnckTask *win_task;
   GList *visible_tasks = NULL;
   GList *windows_sorted = NULL;
   int grouping_limit;
@@ -1611,7 +1611,7 @@ matewnck_tasklist_size_allocate (GtkWidget      *widget,
   l = tasklist->priv->windows_without_class_group;
   while (l != NULL)
     {
-      MateWnckTask *task;
+      MatewnckTask *task;
 
       task = MATEWNCK_TASK (l->data);
       visible_tasks = g_list_append (visible_tasks, task);
@@ -1636,7 +1636,7 @@ matewnck_tasklist_size_allocate (GtkWidget      *widget,
   total_width = allocation->width;
   while (l != NULL)
     {
-      MateWnckTask *task = MATEWNCK_TASK (l->data);
+      MatewnckTask *task = MATEWNCK_TASK (l->data);
       int row = i % n_rows;
       int col = i / n_rows;
       
@@ -1690,7 +1690,7 @@ matewnck_tasklist_size_allocate (GtkWidget      *widget,
 static void
 matewnck_tasklist_realize (GtkWidget *widget)
 {
-  MateWnckTasklist *tasklist;
+  MatewnckTasklist *tasklist;
   GdkScreen *gdkscreen;
 
   tasklist = MATEWNCK_TASKLIST (widget);  
@@ -1723,7 +1723,7 @@ matewnck_tasklist_realize (GtkWidget *widget)
 static void
 matewnck_tasklist_unrealize (GtkWidget *widget)
 {
-  MateWnckTasklist *tasklist;
+  MatewnckTasklist *tasklist;
 
   tasklist = MATEWNCK_TASKLIST (widget);
 
@@ -1747,7 +1747,7 @@ static gint
 matewnck_tasklist_expose (GtkWidget      *widget,
                       GdkEventExpose *event)
 {
-  MateWnckTasklist *tasklist;
+  MatewnckTasklist *tasklist;
   GdkGC *gc;
   
   g_return_val_if_fail (MATEWNCK_IS_TASKLIST (widget), FALSE);
@@ -1788,7 +1788,7 @@ matewnck_tasklist_forall (GtkContainer *container,
                       GtkCallback   callback,
                       gpointer      callback_data)
 {
-  MateWnckTasklist *tasklist;
+  MatewnckTasklist *tasklist;
   GList *tmp;
   
   tasklist = MATEWNCK_TASKLIST (container);
@@ -1796,7 +1796,7 @@ matewnck_tasklist_forall (GtkContainer *container,
   tmp = tasklist->priv->windows;
   while (tmp != NULL)
     {
-      MateWnckTask *task = MATEWNCK_TASK (tmp->data);
+      MatewnckTask *task = MATEWNCK_TASK (tmp->data);
       tmp = tmp->next;
       
       (* callback) (task->button, callback_data);
@@ -1805,7 +1805,7 @@ matewnck_tasklist_forall (GtkContainer *container,
   tmp = tasklist->priv->class_groups;
   while (tmp != NULL)
     {
-      MateWnckTask *task = MATEWNCK_TASK (tmp->data);
+      MatewnckTask *task = MATEWNCK_TASK (tmp->data);
       tmp = tmp->next;
       
       (* callback) (task->button, callback_data);
@@ -1814,7 +1814,7 @@ matewnck_tasklist_forall (GtkContainer *container,
   tmp = tasklist->priv->startup_sequences;
   while (tmp != NULL)
     {
-      MateWnckTask *task = MATEWNCK_TASK (tmp->data);
+      MatewnckTask *task = MATEWNCK_TASK (tmp->data);
       tmp = tmp->next;
       
       (* callback) (task->button, callback_data);
@@ -1825,7 +1825,7 @@ static void
 matewnck_tasklist_remove (GtkContainer   *container,
 		      GtkWidget	     *widget)
 {
-  MateWnckTasklist *tasklist;
+  MatewnckTasklist *tasklist;
   GList *tmp;
   
   g_return_if_fail (MATEWNCK_IS_TASKLIST (container));
@@ -1837,7 +1837,7 @@ matewnck_tasklist_remove (GtkContainer   *container,
   tmp = tasklist->priv->windows_without_class_group;
   while (tmp != NULL)
     {
-      MateWnckTask *task = MATEWNCK_TASK (tmp->data);
+      MatewnckTask *task = MATEWNCK_TASK (tmp->data);
       tmp = tmp->next;
 
       if (task->button == widget)
@@ -1853,7 +1853,7 @@ matewnck_tasklist_remove (GtkContainer   *container,
   tmp = tasklist->priv->windows;
   while (tmp != NULL)
     {
-      MateWnckTask *task = MATEWNCK_TASK (tmp->data);
+      MatewnckTask *task = MATEWNCK_TASK (tmp->data);
       tmp = tmp->next;
 
       if (task->button == widget)
@@ -1873,7 +1873,7 @@ matewnck_tasklist_remove (GtkContainer   *container,
   tmp = tasklist->priv->class_groups;
   while (tmp != NULL)
     {
-      MateWnckTask *task = MATEWNCK_TASK (tmp->data);
+      MatewnckTask *task = MATEWNCK_TASK (tmp->data);
       tmp = tmp->next;
       
       if (task->button == widget)
@@ -1893,7 +1893,7 @@ matewnck_tasklist_remove (GtkContainer   *container,
   tmp = tasklist->priv->startup_sequences;
   while (tmp != NULL)
     {
-      MateWnckTask *task = MATEWNCK_TASK (tmp->data);
+      MatewnckTask *task = MATEWNCK_TASK (tmp->data);
       tmp = tmp->next;
       
       if (task->button == widget)
@@ -1912,12 +1912,12 @@ matewnck_tasklist_remove (GtkContainer   *container,
 }
 
 static void
-matewnck_tasklist_connect_screen (MateWnckTasklist *tasklist)
+matewnck_tasklist_connect_screen (MatewnckTasklist *tasklist)
 {
   GList *windows;
   guint *c;
   int    i;
-  MateWnckScreen *screen;
+  MatewnckScreen *screen;
 
   g_return_if_fail (tasklist->priv->screen != NULL);
 
@@ -1954,7 +1954,7 @@ matewnck_tasklist_connect_screen (MateWnckTasklist *tasklist)
 }
 
 static void
-matewnck_tasklist_disconnect_screen (MateWnckTasklist *tasklist)
+matewnck_tasklist_disconnect_screen (MatewnckTasklist *tasklist)
 {
   GList *windows;
   int    i;
@@ -1991,8 +1991,8 @@ matewnck_tasklist_disconnect_screen (MateWnckTasklist *tasklist)
 
 /**
  * matewnck_tasklist_set_screen:
- * @tasklist: a #MateWnckTasklist.
- * @screen: a #MateWnckScreen.
+ * @tasklist: a #MatewnckTasklist.
+ * @screen: a #MatewnckScreen.
  *
  * Does nothing.
  *
@@ -2000,13 +2000,13 @@ matewnck_tasklist_disconnect_screen (MateWnckTasklist *tasklist)
  * Deprecated:2.20:
  */
 void
-matewnck_tasklist_set_screen (MateWnckTasklist *tasklist,
-			  MateWnckScreen   *screen)
+matewnck_tasklist_set_screen (MatewnckTasklist *tasklist,
+			  MatewnckScreen   *screen)
 {
 }
 
 static gboolean
-matewnck_tasklist_scroll_cb (MateWnckTasklist *tasklist,
+matewnck_tasklist_scroll_cb (MatewnckTasklist *tasklist,
                          GdkEventScroll *event,
                          gpointer user_data)
 {
@@ -2131,16 +2131,16 @@ matewnck_tasklist_scroll_cb (MateWnckTasklist *tasklist,
  * matewnck_tasklist_new:
  * @screen: deprecated argument, can be %NULL.
  *
- * Creates a new #MateWnckTasklist. The #MateWnckTasklist will list #MateWnckWindow of the
- * #MateWnckScreen it is on.
+ * Creates a new #MatewnckTasklist. The #MatewnckTasklist will list #MatewnckWindow of the
+ * #MatewnckScreen it is on.
  *
- * Return value: a newly created #MateWnckTasklist.
+ * Return value: a newly created #MatewnckTasklist.
  */
 /* TODO: when we break API again, remove the screen from here */
 GtkWidget*
-matewnck_tasklist_new (MateWnckScreen *screen)
+matewnck_tasklist_new (MatewnckScreen *screen)
 {
-  MateWnckTasklist *tasklist;
+  MatewnckTasklist *tasklist;
 
   tasklist = g_object_new (MATEWNCK_TYPE_TASKLIST, NULL);
 
@@ -2148,7 +2148,7 @@ matewnck_tasklist_new (MateWnckScreen *screen)
 }
 
 static void
-matewnck_tasklist_free_tasks (MateWnckTasklist *tasklist)
+matewnck_tasklist_free_tasks (MatewnckTasklist *tasklist)
 {
   GList *l;
   
@@ -2160,7 +2160,7 @@ matewnck_tasklist_free_tasks (MateWnckTasklist *tasklist)
       l = tasklist->priv->windows;
       while (l != NULL)
 	{
-	  MateWnckTask *task = MATEWNCK_TASK (l->data);
+	  MatewnckTask *task = MATEWNCK_TASK (l->data);
 	  l = l->next;
           /* if we just unref the task it means we lose our ref to the
            * task before we unparent the button, which breaks stuff.
@@ -2177,7 +2177,7 @@ matewnck_tasklist_free_tasks (MateWnckTasklist *tasklist)
       l = tasklist->priv->class_groups;
       while (l != NULL)
 	{
-	  MateWnckTask *task = MATEWNCK_TASK (l->data);
+	  MatewnckTask *task = MATEWNCK_TASK (l->data);
 	  l = l->next;
           /* if we just unref the task it means we lose our ref to the
            * task before we unparent the button, which breaks stuff.
@@ -2201,11 +2201,11 @@ matewnck_tasklist_free_tasks (MateWnckTasklist *tasklist)
  * This function determines if a window should be included in the tasklist.
  */
 static gboolean
-tasklist_include_window_impl (MateWnckTasklist *tasklist,
-                              MateWnckWindow   *win,
+tasklist_include_window_impl (MatewnckTasklist *tasklist,
+                              MatewnckWindow   *win,
                               gboolean      check_for_skipped_list)
 {
-  MateWnckWorkspace *active_workspace;
+  MatewnckWorkspace *active_workspace;
   int x, y, w, h;
 
   if (!check_for_skipped_list &&
@@ -2250,7 +2250,7 @@ tasklist_include_window_impl (MateWnckTasklist *tasklist,
 }
 
 static gboolean
-tasklist_include_in_skipped_list (MateWnckTasklist *tasklist, MateWnckWindow *win)
+tasklist_include_in_skipped_list (MatewnckTasklist *tasklist, MatewnckWindow *win)
 {
   return tasklist_include_window_impl (tasklist, 
                                        win,
@@ -2258,7 +2258,7 @@ tasklist_include_in_skipped_list (MateWnckTasklist *tasklist, MateWnckWindow *wi
 }
 
 static gboolean
-matewnck_tasklist_include_window (MateWnckTasklist *tasklist, MateWnckWindow *win)
+matewnck_tasklist_include_window (MatewnckTasklist *tasklist, MatewnckWindow *win)
 {
   return tasklist_include_window_impl (tasklist, 
                                        win,
@@ -2266,15 +2266,15 @@ matewnck_tasklist_include_window (MateWnckTasklist *tasklist, MateWnckWindow *wi
 }
 
 static void
-matewnck_tasklist_update_lists (MateWnckTasklist *tasklist)
+matewnck_tasklist_update_lists (MatewnckTasklist *tasklist)
 {
   GdkWindow *tasklist_window;
   GList *windows;
-  MateWnckWindow *win;
-  MateWnckClassGroup *class_group;
+  MatewnckWindow *win;
+  MatewnckClassGroup *class_group;
   GList *l;
-  MateWnckTask *win_task;
-  MateWnckTask *class_group_task;
+  MatewnckTask *win_task;
+  MatewnckTask *class_group_task;
 
   matewnck_tasklist_free_tasks (tasklist);
 
@@ -2401,7 +2401,7 @@ matewnck_tasklist_update_lists (MateWnckTasklist *tasklist)
 }
 
 static void
-matewnck_tasklist_change_active_task (MateWnckTasklist *tasklist, MateWnckTask *active_task)
+matewnck_tasklist_change_active_task (MatewnckTasklist *tasklist, MatewnckTask *active_task)
 {
   if (active_task &&
       active_task == tasklist->priv->active_task)
@@ -2458,14 +2458,14 @@ matewnck_tasklist_change_active_task (MateWnckTasklist *tasklist, MateWnckTask *
 }
 
 static void
-matewnck_tasklist_update_icon_geometries (MateWnckTasklist *tasklist,
+matewnck_tasklist_update_icon_geometries (MatewnckTasklist *tasklist,
 				      GList        *visible_tasks)
 {
 	gint x, y, width, height;
 	GList *l1;
 	
 	for (l1 = visible_tasks; l1; l1 = l1->next) {
-		MateWnckTask *task = MATEWNCK_TASK (l1->data);
+		MatewnckTask *task = MATEWNCK_TASK (l1->data);
                 GtkAllocation allocation;
 		
 		if (!gtk_widget_get_realized (task->button))
@@ -2493,7 +2493,7 @@ matewnck_tasklist_update_icon_geometries (MateWnckTasklist *tasklist,
 			GList *l2;
 
 			for (l2 = task->windows; l2; l2 = l2->next) {
-				MateWnckTask *win_task = MATEWNCK_TASK (l2->data);
+				MatewnckTask *win_task = MATEWNCK_TASK (l2->data);
 
 				g_assert (win_task->window);
 
@@ -2505,13 +2505,13 @@ matewnck_tasklist_update_icon_geometries (MateWnckTasklist *tasklist,
 }
 
 static void
-matewnck_tasklist_active_window_changed (MateWnckScreen   *screen,
-                                     MateWnckWindow   *previous_window,
-				     MateWnckTasklist *tasklist)
+matewnck_tasklist_active_window_changed (MatewnckScreen   *screen,
+                                     MatewnckWindow   *previous_window,
+				     MatewnckTasklist *tasklist)
 {
-  MateWnckWindow *active_window;
-  MateWnckWindow *initial_window;
-  MateWnckTask *active_task = NULL;
+  MatewnckWindow *active_window;
+  MatewnckWindow *initial_window;
+  MatewnckTask *active_task = NULL;
 
   /* FIXME: check for group modal window */
   initial_window = active_window = matewnck_screen_get_active_window (screen);
@@ -2530,20 +2530,20 @@ matewnck_tasklist_active_window_changed (MateWnckScreen   *screen,
 }
 
 static void
-matewnck_tasklist_active_workspace_changed (MateWnckScreen    *screen,
-                                        MateWnckWorkspace *previous_workspace,
-					MateWnckTasklist  *tasklist)
+matewnck_tasklist_active_workspace_changed (MatewnckScreen    *screen,
+                                        MatewnckWorkspace *previous_workspace,
+					MatewnckTasklist  *tasklist)
 {
   matewnck_tasklist_update_lists (tasklist);
   gtk_widget_queue_resize (GTK_WIDGET (tasklist));
 }
 
 static void
-matewnck_tasklist_window_changed_workspace (MateWnckWindow   *window,
-					MateWnckTasklist *tasklist)
+matewnck_tasklist_window_changed_workspace (MatewnckWindow   *window,
+					MatewnckTasklist *tasklist)
 {
-  MateWnckWorkspace *active_ws;
-  MateWnckWorkspace *window_ws;
+  MatewnckWorkspace *active_ws;
+  MatewnckWorkspace *window_ws;
   gboolean       need_update;
   GList         *l;
 
@@ -2561,7 +2561,7 @@ matewnck_tasklist_window_changed_workspace (MateWnckWindow   *window,
   l = tasklist->priv->windows;
   while (!need_update && l != NULL)
     {
-      MateWnckTask *task = l->data;
+      MatewnckTask *task = l->data;
 
       if (task->type == MATEWNCK_TASK_WINDOW &&
           task->window == window)
@@ -2580,7 +2580,7 @@ matewnck_tasklist_window_changed_workspace (MateWnckWindow   *window,
 static gboolean
 do_matewnck_tasklist_update_lists (gpointer data)
 {
-  MateWnckTasklist *tasklist = MATEWNCK_TASKLIST (data);
+  MatewnckTasklist *tasklist = MATEWNCK_TASKLIST (data);
 
   tasklist->priv->idle_callback_tag = 0;
 
@@ -2590,11 +2590,11 @@ do_matewnck_tasklist_update_lists (gpointer data)
 }
 
 static void
-matewnck_tasklist_window_changed_geometry (MateWnckWindow   *window,
-				       MateWnckTasklist *tasklist)
+matewnck_tasklist_window_changed_geometry (MatewnckWindow   *window,
+				       MatewnckTasklist *tasklist)
 {
   GdkWindow *tasklist_window;
-  MateWnckTask *win_task;
+  MatewnckTask *win_task;
   gboolean show;
   gboolean monitor_changed;
   int x, y, w, h;
@@ -2642,8 +2642,8 @@ matewnck_tasklist_window_changed_geometry (MateWnckWindow   *window,
 }
 
 static void
-matewnck_tasklist_connect_window (MateWnckTasklist *tasklist,
-			      MateWnckWindow   *window)
+matewnck_tasklist_connect_window (MatewnckTasklist *tasklist,
+			      MatewnckWindow   *window)
 {
   g_signal_connect_object (window, "workspace_changed",
 			   G_CALLBACK (matewnck_tasklist_window_changed_workspace),
@@ -2654,8 +2654,8 @@ matewnck_tasklist_connect_window (MateWnckTasklist *tasklist,
 }
 
 static void
-matewnck_tasklist_disconnect_window (MateWnckTasklist *tasklist,
-			         MateWnckWindow   *window)
+matewnck_tasklist_disconnect_window (MatewnckTasklist *tasklist,
+			         MatewnckWindow   *window)
 {
   g_signal_handlers_disconnect_by_func (window,
                                         matewnck_tasklist_window_changed_workspace,
@@ -2666,9 +2666,9 @@ matewnck_tasklist_disconnect_window (MateWnckTasklist *tasklist,
 }
 
 static void
-matewnck_tasklist_window_added (MateWnckScreen   *screen,
-			    MateWnckWindow   *win,
-			    MateWnckTasklist *tasklist)
+matewnck_tasklist_window_added (MatewnckScreen   *screen,
+			    MatewnckWindow   *win,
+			    MatewnckTasklist *tasklist)
 {
 #ifdef HAVE_STARTUP_NOTIFICATION
   matewnck_tasklist_check_end_sequence (tasklist, win);
@@ -2681,17 +2681,17 @@ matewnck_tasklist_window_added (MateWnckScreen   *screen,
 }
 
 static void
-matewnck_tasklist_window_removed (MateWnckScreen   *screen,
-			      MateWnckWindow   *win,
-			      MateWnckTasklist *tasklist)
+matewnck_tasklist_window_removed (MatewnckScreen   *screen,
+			      MatewnckWindow   *win,
+			      MatewnckTasklist *tasklist)
 {
   matewnck_tasklist_update_lists (tasklist);
   gtk_widget_queue_resize (GTK_WIDGET (tasklist));
 }
 
 static void
-matewnck_tasklist_viewports_changed (MateWnckScreen   *screen,
-                                 MateWnckTasklist *tasklist)
+matewnck_tasklist_viewports_changed (MatewnckScreen   *screen,
+                                 MatewnckTasklist *tasklist)
 {
   matewnck_tasklist_update_lists (tasklist);
   gtk_widget_queue_resize (GTK_WIDGET (tasklist));
@@ -2740,7 +2740,7 @@ matewnck_task_position_menu (GtkMenu   *menu,
 static gboolean
 matewnck_tasklist_change_active_timeout (gpointer data)
 {
-  MateWnckTasklist *tasklist = MATEWNCK_TASKLIST (data);
+  MatewnckTasklist *tasklist = MATEWNCK_TASKLIST (data);
 
   tasklist->priv->activate_timeout_id = 0;
 
@@ -2753,7 +2753,7 @@ static void
 matewnck_task_menu_activated (GtkMenuItem *menu_item,
 			  gpointer     data)
 {
-  MateWnckTask *task = MATEWNCK_TASK (data);
+  MatewnckTask *task = MATEWNCK_TASK (data);
 
   /* This is an "activate" callback function so gtk_get_current_event_time()
    * will suffice.
@@ -2762,10 +2762,10 @@ matewnck_task_menu_activated (GtkMenuItem *menu_item,
 }
 
 static void
-matewnck_tasklist_activate_next_in_class_group (MateWnckTask *task,
+matewnck_tasklist_activate_next_in_class_group (MatewnckTask *task,
                                             guint32   timestamp)
 {
-  MateWnckTask *activate_task;
+  MatewnckTask *activate_task;
   gboolean  activate_next;
   GList    *l;
 
@@ -2775,7 +2775,7 @@ matewnck_tasklist_activate_next_in_class_group (MateWnckTask *task,
   l = task->windows;
   while (l)
     {
-      MateWnckTask *task;
+      MatewnckTask *task;
 
       task = MATEWNCK_TASK (l->data);
 
@@ -2803,13 +2803,13 @@ matewnck_tasklist_activate_next_in_class_group (MateWnckTask *task,
 }
 
 static void
-matewnck_tasklist_activate_task_window (MateWnckTask *task,
+matewnck_tasklist_activate_task_window (MatewnckTask *task,
                                     guint32   timestamp)
 {
-  MateWnckTasklist *tasklist;
-  MateWnckWindowState state;
-  MateWnckWorkspace *active_ws;
-  MateWnckWorkspace *window_ws;
+  MatewnckTasklist *tasklist;
+  MatewnckWindowState state;
+  MatewnckWorkspace *active_ws;
+  MatewnckWorkspace *window_ws;
 
   tasklist = task->tasklist;
 
@@ -2867,13 +2867,13 @@ static void
 matewnck_task_close_all (GtkMenuItem *menu_item,
  		     gpointer     data)
 {
-  MateWnckTask *task = MATEWNCK_TASK (data);
+  MatewnckTask *task = MATEWNCK_TASK (data);
   GList *l;
 
   l = task->windows;
   while (l)
     {
-      MateWnckTask *child = MATEWNCK_TASK (l->data);
+      MatewnckTask *child = MATEWNCK_TASK (l->data);
       matewnck_window_close (child->window, gtk_get_current_event_time ());
       l = l->next;
     }
@@ -2883,13 +2883,13 @@ static void
 matewnck_task_unminimize_all (GtkMenuItem *menu_item,
 		          gpointer     data)
 {
-  MateWnckTask *task = MATEWNCK_TASK (data);
+  MatewnckTask *task = MATEWNCK_TASK (data);
   GList *l;
 
   l = task->windows;
   while (l)
     {
-      MateWnckTask *child = MATEWNCK_TASK (l->data);
+      MatewnckTask *child = MATEWNCK_TASK (l->data);
       /* This is inside an activate callback, so gtk_get_current_event_time()
        * will work.
        */
@@ -2902,13 +2902,13 @@ static void
 matewnck_task_minimize_all (GtkMenuItem *menu_item,
   		        gpointer     data)
 {
-  MateWnckTask *task = MATEWNCK_TASK (data);
+  MatewnckTask *task = MATEWNCK_TASK (data);
   GList *l;
 
   l = task->windows;
   while (l)
     {
-      MateWnckTask *child = MATEWNCK_TASK (l->data);
+      MatewnckTask *child = MATEWNCK_TASK (l->data);
       matewnck_window_minimize (child->window);
       l = l->next;
     }
@@ -2918,13 +2918,13 @@ static void
 matewnck_task_unmaximize_all (GtkMenuItem *menu_item,
   		        gpointer     data)
 {
-  MateWnckTask *task = MATEWNCK_TASK (data);
+  MatewnckTask *task = MATEWNCK_TASK (data);
   GList *l;
 
   l = task->windows;
   while (l)
     {
-      MateWnckTask *child = MATEWNCK_TASK (l->data);
+      MatewnckTask *child = MATEWNCK_TASK (l->data);
       matewnck_window_unmaximize (child->window);
       l = l->next;
     }
@@ -2934,24 +2934,24 @@ static void
 matewnck_task_maximize_all (GtkMenuItem *menu_item,
   		        gpointer     data)
 {
-  MateWnckTask *task = MATEWNCK_TASK (data);
+  MatewnckTask *task = MATEWNCK_TASK (data);
   GList *l;
 
   l = task->windows;
   while (l)
     {
-      MateWnckTask *child = MATEWNCK_TASK (l->data);
+      MatewnckTask *child = MATEWNCK_TASK (l->data);
       matewnck_window_maximize (child->window);
       l = l->next;
     }
 }
 
 static void
-matewnck_task_popup_menu (MateWnckTask *task,
+matewnck_task_popup_menu (MatewnckTask *task,
                       gboolean  action_submenu)
 {
   GtkWidget *menu;
-  MateWnckTask *win_task;
+  MatewnckTask *win_task;
   char *text;
   GdkPixbuf *pixbuf;
   GtkWidget *menu_item;
@@ -3125,7 +3125,7 @@ matewnck_task_popup_menu (MateWnckTask *task,
 
 static void
 matewnck_task_button_toggled (GtkButton *button,
-			  MateWnckTask  *task)
+			  MatewnckTask  *task)
 {
   /* Did we really want to change the state of the togglebutton? */
   if (task->really_toggling)
@@ -3157,7 +3157,7 @@ matewnck_task_button_toggled (GtkButton *button,
 }
 
 static char *
-matewnck_task_get_text (MateWnckTask *task,
+matewnck_task_get_text (MatewnckTask *task,
                     gboolean  icon_text,
                     gboolean  include_state)
 {
@@ -3285,9 +3285,9 @@ matewnck_task_scale_icon (GdkPixbuf *orig, gboolean minimized)
 
 
 static GdkPixbuf *
-matewnck_task_get_icon (MateWnckTask *task)
+matewnck_task_get_icon (MatewnckTask *task)
 {
-  MateWnckWindowState state;
+  MatewnckWindowState state;
   GdkPixbuf *pixbuf;
 
   pixbuf = NULL;
@@ -3342,10 +3342,10 @@ matewnck_task_get_icon (MateWnckTask *task)
 }
 
 static gboolean
-matewnck_task_get_needs_attention (MateWnckTask *task)
+matewnck_task_get_needs_attention (MatewnckTask *task)
 {
   GList *l;
-  MateWnckTask *win_task;
+  MatewnckTask *win_task;
   gboolean needs_attention;
 
   needs_attention = FALSE;
@@ -3384,7 +3384,7 @@ matewnck_task_get_needs_attention (MateWnckTask *task)
 }
 
 static void
-matewnck_task_update_visible_state (MateWnckTask *task)
+matewnck_task_update_visible_state (MatewnckTask *task)
 {
   GdkPixbuf *pixbuf;
   char *text;
@@ -3422,12 +3422,12 @@ matewnck_task_update_visible_state (MateWnckTask *task)
 }
 
 static void
-matewnck_task_state_changed (MateWnckWindow     *window,
-			 MateWnckWindowState changed_mask,
-			 MateWnckWindowState new_state,
+matewnck_task_state_changed (MatewnckWindow     *window,
+			 MatewnckWindowState changed_mask,
+			 MatewnckWindowState new_state,
 			 gpointer        data)
 {
-  MateWnckTasklist *tasklist = MATEWNCK_TASKLIST (data);
+  MatewnckTasklist *tasklist = MATEWNCK_TASKLIST (data);
 
   if (changed_mask & MATEWNCK_WINDOW_STATE_SKIP_TASKLIST)
     {
@@ -3439,7 +3439,7 @@ matewnck_task_state_changed (MateWnckWindow     *window,
   if ((changed_mask & MATEWNCK_WINDOW_STATE_DEMANDS_ATTENTION) ||
       (changed_mask & MATEWNCK_WINDOW_STATE_URGENT))
     {
-      MateWnckWorkspace *active_workspace =
+      MatewnckWorkspace *active_workspace =
         matewnck_screen_get_active_workspace (tasklist->priv->screen);
 
       if (active_workspace                              &&
@@ -3456,7 +3456,7 @@ matewnck_task_state_changed (MateWnckWindow     *window,
       (changed_mask & MATEWNCK_WINDOW_STATE_DEMANDS_ATTENTION) ||
       (changed_mask & MATEWNCK_WINDOW_STATE_URGENT))
     {
-      MateWnckTask *win_task = NULL;
+      MatewnckTask *win_task = NULL;
 
       /* FIXME: Handle group modal dialogs */
       for (; window && !win_task; window = matewnck_window_get_transient (window))
@@ -3464,7 +3464,7 @@ matewnck_task_state_changed (MateWnckWindow     *window,
 
       if (win_task)
 	{
-	  MateWnckTask *class_group_task;
+	  MatewnckTask *class_group_task;
 
 	  matewnck_task_update_visible_state (win_task);
 	  
@@ -3480,40 +3480,40 @@ matewnck_task_state_changed (MateWnckWindow     *window,
 }
 
 static void
-matewnck_task_icon_changed (MateWnckWindow *window,
+matewnck_task_icon_changed (MatewnckWindow *window,
 			gpointer    data)
 {
-  MateWnckTask *task = MATEWNCK_TASK (data);
+  MatewnckTask *task = MATEWNCK_TASK (data);
 
   if (task)
     matewnck_task_update_visible_state (task);
 }
 
 static void
-matewnck_task_name_changed (MateWnckWindow *window,
+matewnck_task_name_changed (MatewnckWindow *window,
 			gpointer    data)
 {
-  MateWnckTask *task = MATEWNCK_TASK (data);
+  MatewnckTask *task = MATEWNCK_TASK (data);
 
   if (task)
     matewnck_task_update_visible_state (task);
 }
 
 static void
-matewnck_task_class_name_changed (MateWnckClassGroup *class_group,
+matewnck_task_class_name_changed (MatewnckClassGroup *class_group,
 			      gpointer        data)
 {
-  MateWnckTask *task = MATEWNCK_TASK (data);
+  MatewnckTask *task = MATEWNCK_TASK (data);
 
   if (task)
     matewnck_task_update_visible_state (task);
 }
 
 static void
-matewnck_task_class_icon_changed (MateWnckClassGroup *class_group,
+matewnck_task_class_icon_changed (MatewnckClassGroup *class_group,
 			      gpointer        data)
 {
-  MateWnckTask *task = MATEWNCK_TASK (data);
+  MatewnckTask *task = MATEWNCK_TASK (data);
 
   if (task)
     matewnck_task_update_visible_state (task);
@@ -3522,8 +3522,8 @@ matewnck_task_class_icon_changed (MateWnckClassGroup *class_group,
 static gboolean
 matewnck_task_motion_timeout (gpointer data)
 {
-  MateWnckWorkspace *ws;
-  MateWnckTask *task = MATEWNCK_TASK (data);
+  MatewnckWorkspace *ws;
+  MatewnckTask *task = MATEWNCK_TASK (data);
 
   task->button_activate = 0;
 
@@ -3547,7 +3547,7 @@ static void
 matewnck_task_drag_leave (GtkWidget          *widget,
 		      GdkDragContext     *context,
 		      guint               time,
-		      MateWnckTask           *task)
+		      MatewnckTask           *task)
 {
   if (task->button_activate != 0)
     {
@@ -3564,7 +3564,7 @@ matewnck_task_drag_motion (GtkWidget          *widget,
 		       gint                x,
 		       gint                y,
 		       guint               time,
-		       MateWnckTask            *task)
+		       MatewnckTask            *task)
 {
   if (gtk_drag_dest_find_target (widget, context, NULL))
     {
@@ -3592,7 +3592,7 @@ matewnck_task_drag_motion (GtkWidget          *widget,
 static void
 matewnck_task_drag_begin (GtkWidget          *widget,
 		      GdkDragContext     *context,
-		      MateWnckTask           *task)
+		      MatewnckTask           *task)
 {
   _matewnck_window_set_as_drag_icon (task->window, context,
                                  GTK_WIDGET (task->tasklist));
@@ -3603,7 +3603,7 @@ matewnck_task_drag_begin (GtkWidget          *widget,
 static void
 matewnck_task_drag_end (GtkWidget      *widget,
 		    GdkDragContext *context,
-		    MateWnckTask       *task)
+		    MatewnckTask       *task)
 {
   task->tasklist->priv->drag_start_time = 0;
 }
@@ -3614,7 +3614,7 @@ matewnck_task_drag_data_get (GtkWidget          *widget,
 		         GtkSelectionData   *selection_data,
 		         guint               info,
 		 	 guint               time,
-		         MateWnckTask           *task)
+		         MatewnckTask           *task)
 {
   gulong xid;    
 
@@ -3632,14 +3632,14 @@ matewnck_task_drag_data_received (GtkWidget          *widget,
                               GtkSelectionData   *data,
                               guint               info,
                               guint               time,
-                              MateWnckTask           *target_task)
+                              MatewnckTask           *target_task)
 {
-  MateWnckTasklist *tasklist;
+  MatewnckTasklist *tasklist;
   GList        *l, *windows;
-  MateWnckWindow   *window;
+  MatewnckWindow   *window;
   gulong       *xid;
   guint         new_order, old_order, order;
-  MateWnckWindow   *found_window;
+  MatewnckWindow   *found_window;
 
   if ((gtk_selection_data_get_length (data) != sizeof (gulong)) ||
       (gtk_selection_data_get_format (data) != 8))
@@ -3701,7 +3701,7 @@ matewnck_task_drag_data_received (GtkWidget          *widget,
        if (!tasklist->priv->include_all_workspaces &&
            !matewnck_window_is_pinned (found_window))
          {
-           MateWnckWorkspace *active_space;
+           MatewnckWorkspace *active_space;
            active_space = matewnck_screen_get_active_workspace (tasklist->priv->screen);
            matewnck_window_move_to_workspace (found_window, active_space);
          }
@@ -3717,7 +3717,7 @@ matewnck_task_button_press_event (GtkWidget	      *widget,
 			      GdkEventButton  *event,
 			      gpointer         data)
 {
-  MateWnckTask *task = MATEWNCK_TASK (data);
+  MatewnckTask *task = MATEWNCK_TASK (data);
 
   switch (task->type)
     {
@@ -3787,7 +3787,7 @@ matewnck_task_expose (GtkWidget        *widget,
                   gpointer          data);
 
 static void
-matewnck_task_create_widgets (MateWnckTask *task, GtkReliefStyle relief)
+matewnck_task_create_widgets (MatewnckTask *task, GtkReliefStyle relief)
 {
   GtkWidget *hbox;
   GdkPixbuf *pixbuf;
@@ -3997,10 +3997,10 @@ fake_expose_widget (GtkWidget *widget,
 }
 
 static GdkPixmap *
-take_screenshot (MateWnckTask *task)
+take_screenshot (MatewnckTask *task)
 {
   GtkAllocation allocation;
-  MateWnckTasklist *tasklist;
+  MatewnckTasklist *tasklist;
   GtkWidget    *tasklist_widget;
   GdkPixmap *pixmap;
   gint width, height;
@@ -4105,7 +4105,7 @@ matewnck_task_expose (GtkWidget        *widget,
   GtkAllocation allocation;
   GdkGC *lgc, *dgc;
   int x, y;
-  MateWnckTask *task;
+  MatewnckTask *task;
 
   window = gtk_widget_get_window (widget);
   gtk_widget_get_allocation (widget, &allocation);
@@ -4174,7 +4174,7 @@ matewnck_task_compare_alphabetically (gconstpointer a,
 }
 
 static gint
-compare_class_group_tasks (MateWnckTask *task1, MateWnckTask *task2)
+compare_class_group_tasks (MatewnckTask *task1, MatewnckTask *task2)
 {
   const char *name1, *name2;
 
@@ -4188,8 +4188,8 @@ static gint
 matewnck_task_compare (gconstpointer  a,
 		   gconstpointer  b)
 {
-  MateWnckTask *task1 = MATEWNCK_TASK (a);
-  MateWnckTask *task2 = MATEWNCK_TASK (b);
+  MatewnckTask *task1 = MATEWNCK_TASK (a);
+  MatewnckTask *task2 = MATEWNCK_TASK (b);
   gint pos1, pos2;
 
   pos1 = pos2 = 0;  /* silence the compiler */
@@ -4236,8 +4236,8 @@ matewnck_task_compare (gconstpointer  a,
 }
 
 static void
-remove_startup_sequences_for_window (MateWnckTasklist *tasklist,
-                                     MateWnckWindow   *window)
+remove_startup_sequences_for_window (MatewnckTasklist *tasklist,
+                                     MatewnckWindow   *window)
 {
 #ifdef HAVE_STARTUP_NOTIFICATION
   const char *win_id;
@@ -4250,7 +4250,7 @@ remove_startup_sequences_for_window (MateWnckTasklist *tasklist,
   tmp = tasklist->priv->startup_sequences;
   while (tmp != NULL)
     {
-      MateWnckTask *task = tmp->data;
+      MatewnckTask *task = tmp->data;
       GList *next = tmp->next;
       const char *task_id;
       
@@ -4268,11 +4268,11 @@ remove_startup_sequences_for_window (MateWnckTasklist *tasklist,
 #endif
 }
 
-static MateWnckTask *
-matewnck_task_new_from_window (MateWnckTasklist *tasklist,
-			   MateWnckWindow   *window)
+static MatewnckTask *
+matewnck_task_new_from_window (MatewnckTasklist *tasklist,
+			   MatewnckWindow   *window)
 {
-  MateWnckTask *task;
+  MatewnckTask *task;
 
   task = g_object_new (MATEWNCK_TYPE_TASK, NULL);
 
@@ -4288,11 +4288,11 @@ matewnck_task_new_from_window (MateWnckTasklist *tasklist,
   return task;
 }
 
-static MateWnckTask *
-matewnck_task_new_from_class_group (MateWnckTasklist   *tasklist,
-				MateWnckClassGroup *class_group)
+static MatewnckTask *
+matewnck_task_new_from_class_group (MatewnckTasklist   *tasklist,
+				MatewnckClassGroup *class_group)
 {
-  MateWnckTask *task;
+  MatewnckTask *task;
 
   task = g_object_new (MATEWNCK_TYPE_TASK, NULL);
 
@@ -4307,11 +4307,11 @@ matewnck_task_new_from_class_group (MateWnckTasklist   *tasklist,
 }
 
 #ifdef HAVE_STARTUP_NOTIFICATION
-static MateWnckTask*
-matewnck_task_new_from_startup_sequence (MateWnckTasklist      *tasklist,
+static MatewnckTask*
+matewnck_task_new_from_startup_sequence (MatewnckTasklist      *tasklist,
                                      SnStartupSequence *sequence)
 {
-  MateWnckTask *task;
+  MatewnckTask *task;
 
   task = g_object_new (MATEWNCK_TYPE_TASK, NULL);
 
@@ -4337,7 +4337,7 @@ matewnck_task_new_from_startup_sequence (MateWnckTasklist      *tasklist,
 static gboolean
 sequence_timeout_callback (void *user_data)
 {
-  MateWnckTasklist *tasklist = user_data;
+  MatewnckTasklist *tasklist = user_data;
   GList *tmp;
   GTimeVal now;
   long tv_sec, tv_usec;
@@ -4349,7 +4349,7 @@ sequence_timeout_callback (void *user_data)
   tmp = tasklist->priv->startup_sequences;
   while (tmp != NULL)
     {
-      MateWnckTask *task = MATEWNCK_TASK (tmp->data);
+      MatewnckTask *task = MATEWNCK_TASK (tmp->data);
 
       sn_startup_sequence_get_last_active_time (task->startup_sequence,
                                                 &tv_sec, &tv_usec);
@@ -4385,7 +4385,7 @@ static void
 matewnck_tasklist_sn_event (SnMonitorEvent *event,
                         void           *user_data)
 {
-  MateWnckTasklist *tasklist;
+  MatewnckTasklist *tasklist;
 
   tasklist = MATEWNCK_TASKLIST (user_data);
 
@@ -4393,7 +4393,7 @@ matewnck_tasklist_sn_event (SnMonitorEvent *event,
     {
     case SN_MONITOR_EVENT_INITIATED:
       {
-        MateWnckTask *task;
+        MatewnckTask *task;
         
         task = matewnck_task_new_from_startup_sequence (tasklist,
                                                     sn_monitor_event_get_startup_sequence (event));
@@ -4422,7 +4422,7 @@ matewnck_tasklist_sn_event (SnMonitorEvent *event,
         tmp = tasklist->priv->startup_sequences;
         while (tmp != NULL)
           {
-            MateWnckTask *task = MATEWNCK_TASK (tmp->data);
+            MatewnckTask *task = MATEWNCK_TASK (tmp->data);
 
             if (task->startup_sequence ==
                 sn_monitor_event_get_startup_sequence (event))
@@ -4454,8 +4454,8 @@ matewnck_tasklist_sn_event (SnMonitorEvent *event,
 }
 
 static void
-matewnck_tasklist_check_end_sequence (MateWnckTasklist   *tasklist,
-                                  MateWnckWindow     *window)
+matewnck_tasklist_check_end_sequence (MatewnckTasklist   *tasklist,
+                                  MatewnckWindow     *window)
 {
   const char *res_class;
   const char *res_name;
@@ -4473,7 +4473,7 @@ matewnck_tasklist_check_end_sequence (MateWnckTasklist   *tasklist,
   tmp = tasklist->priv->startup_sequences;
   while (tmp != NULL)
     {
-      MateWnckTask *task = MATEWNCK_TASK (tmp->data);
+      MatewnckTask *task = MATEWNCK_TASK (tmp->data);
       const char *wmclass;
 
       wmclass = sn_startup_sequence_get_wmclass (task->startup_sequence);

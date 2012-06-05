@@ -34,7 +34,7 @@
  * @see_also: matewnck_window_get_class_group()
  * @stability: Unstable
  *
- * The #MateWnckClassGroup is a group of #MateWnckWindow that are all in the same
+ * The #MatewnckClassGroup is a group of #MatewnckWindow that are all in the same
  * class. It can be used to represent windows by classes, group windows by
  * classes or to manipulate all windows of a particular class.
  *
@@ -44,12 +44,12 @@
  * section (section 4.1.2.5) of the <ulink
  * url="http://tronche.com/gui/x/icccm/">ICCCM</ulink>.
  *
- * The #MateWnckClassGroup objects are always owned by libmatewnck and must not be
+ * The #MatewnckClassGroup objects are always owned by libmatewnck and must not be
  * referenced or unreferenced.
  */
 
-/* Private part of the MateWnckClassGroup structure */
-struct _MateWnckClassGroupPrivate {
+/* Private part of the MatewnckClassGroup structure */
+struct _MatewnckClassGroupPrivate {
   char *res_class;
   char *name;
   GList *windows;
@@ -58,16 +58,16 @@ struct _MateWnckClassGroupPrivate {
   GdkPixbuf *mini_icon;
 };
 
-G_DEFINE_TYPE (MateWnckClassGroup, matewnck_class_group, G_TYPE_OBJECT);
-#define MATEWNCK_CLASS_GROUP_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), MATEWNCK_TYPE_CLASS_GROUP, MateWnckClassGroupPrivate))
+G_DEFINE_TYPE (MatewnckClassGroup, matewnck_class_group, G_TYPE_OBJECT);
+#define MATEWNCK_CLASS_GROUP_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), MATEWNCK_TYPE_CLASS_GROUP, MatewnckClassGroupPrivate))
 
-/* Hash table that maps res_class strings -> MateWnckClassGroup instances */
+/* Hash table that maps res_class strings -> MatewnckClassGroup instances */
 static GHashTable *class_group_hash = NULL;
 
 
 
-static void matewnck_class_group_class_init  (MateWnckClassGroupClass *class);
-static void matewnck_class_group_init        (MateWnckClassGroup      *class_group);
+static void matewnck_class_group_class_init  (MatewnckClassGroupClass *class);
+static void matewnck_class_group_init        (MatewnckClassGroup      *class_group);
 static void matewnck_class_group_finalize    (GObject             *object);
 
 enum {
@@ -79,17 +79,17 @@ enum {
 static guint signals[LAST_SIGNAL] = { 0 };
 
 static void
-matewnck_class_group_class_init (MateWnckClassGroupClass *class)
+matewnck_class_group_class_init (MatewnckClassGroupClass *class)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (class);
 
-  g_type_class_add_private (class, sizeof (MateWnckClassGroupPrivate));
+  g_type_class_add_private (class, sizeof (MatewnckClassGroupPrivate));
 
   gobject_class->finalize = matewnck_class_group_finalize;
 
   /**
-   * MateWnckClassGroup::name-changed:
-   * @class_group: the #MateWnckClassGroup which emitted the signal.
+   * MatewnckClassGroup::name-changed:
+   * @class_group: the #MatewnckClassGroup which emitted the signal.
    *
    * Emitted when the name of @class_group changes.
    */
@@ -97,13 +97,13 @@ matewnck_class_group_class_init (MateWnckClassGroupClass *class)
     g_signal_new ("name_changed",
                   G_OBJECT_CLASS_TYPE (gobject_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (MateWnckClassGroupClass, name_changed),
+                  G_STRUCT_OFFSET (MatewnckClassGroupClass, name_changed),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
   /**
-   * MateWnckClassGroup::icon-changed:
-   * @class_group: the #MateWnckClassGroup which emitted the signal.
+   * MatewnckClassGroup::icon-changed:
+   * @class_group: the #MatewnckClassGroup which emitted the signal.
    *
    * Emitted when the icon of @class_group changes.
    */
@@ -111,14 +111,14 @@ matewnck_class_group_class_init (MateWnckClassGroupClass *class)
     g_signal_new ("icon_changed",
                   G_OBJECT_CLASS_TYPE (gobject_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (MateWnckClassGroupClass, icon_changed),
+                  G_STRUCT_OFFSET (MatewnckClassGroupClass, icon_changed),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 }
 
 static void
-matewnck_class_group_init (MateWnckClassGroup *class_group)
+matewnck_class_group_init (MatewnckClassGroup *class_group)
 {
   class_group->priv = MATEWNCK_CLASS_GROUP_GET_PRIVATE (class_group);
 
@@ -133,7 +133,7 @@ matewnck_class_group_init (MateWnckClassGroup *class_group)
 static void
 matewnck_class_group_finalize (GObject *object)
 {
-  MateWnckClassGroup *class_group;
+  MatewnckClassGroup *class_group;
 
   class_group = MATEWNCK_CLASS_GROUP (object);
 
@@ -163,16 +163,16 @@ matewnck_class_group_finalize (GObject *object)
  * matewnck_class_group_get:
  * @res_class: name of the sought resource class.
  *
- * Gets the #MateWnckClassGroup corresponding to @res_class.
+ * Gets the #MatewnckClassGroup corresponding to @res_class.
  *
- * Return value: (transfer none): the #MateWnckClassGroup corresponding to
- * @res_class, or %NULL if there is no #MateWnckClassGroup with the specified
- * @res_class. The returned #MateWnckClassGroup is owned by libmatewnck and must not be
+ * Return value: (transfer none): the #MatewnckClassGroup corresponding to
+ * @res_class, or %NULL if there is no #MatewnckClassGroup with the specified
+ * @res_class. The returned #MatewnckClassGroup is owned by libmatewnck and must not be
  * referenced or unreferenced.
  *
  * Since: 2.2
  **/
-MateWnckClassGroup *
+MatewnckClassGroup *
 matewnck_class_group_get (const char *res_class)
 {
   if (!class_group_hash)
@@ -185,17 +185,17 @@ matewnck_class_group_get (const char *res_class)
  * _matewnck_class_group_create:
  * @res_class: name of the resource class for the group.
  *
- * Creates a new MateWnckClassGroup with the specified resource class name.  If
+ * Creates a new MatewnckClassGroup with the specified resource class name.  If
  * @res_class is #NULL, then windows without a resource class name will get
  * grouped under this class group.
  *
- * Return value: a newly-created #MateWnckClassGroup, or an existing one that
+ * Return value: a newly-created #MatewnckClassGroup, or an existing one that
  * matches the @res_class.
  **/
-MateWnckClassGroup *
+MatewnckClassGroup *
 _matewnck_class_group_create (const char *res_class)
 {
-  MateWnckClassGroup *class_group;
+  MatewnckClassGroup *class_group;
 
   if (class_group_hash == NULL)
     class_group_hash = g_hash_table_new (g_str_hash, g_str_equal);
@@ -216,12 +216,12 @@ _matewnck_class_group_create (const char *res_class)
 
 /**
  * _matewnck_class_group_destroy:
- * @class_group: a #MateWnckClassGroup.
+ * @class_group: a #MatewnckClassGroup.
  *
  * Destroys the specified @class_group.
  **/
 void
-_matewnck_class_group_destroy (MateWnckClassGroup *class_group)
+_matewnck_class_group_destroy (MatewnckClassGroup *class_group)
 {
   g_return_if_fail (MATEWNCK_IS_CLASS_GROUP (class_group));
 
@@ -235,7 +235,7 @@ _matewnck_class_group_destroy (MateWnckClassGroup *class_group)
 }
 
 static const char *
-get_name_from_applications (MateWnckClassGroup *class_group)
+get_name_from_applications (MatewnckClassGroup *class_group)
 {
   const char *first_name;
   GList *l;
@@ -248,8 +248,8 @@ get_name_from_applications (MateWnckClassGroup *class_group)
 
   for (l = class_group->priv->windows; l; l = l->next)
     {
-      MateWnckWindow *w;
-      MateWnckApplication *app;
+      MatewnckWindow *w;
+      MatewnckApplication *app;
 
       w = MATEWNCK_WINDOW (l->data);
       app = matewnck_window_get_application (w);
@@ -276,7 +276,7 @@ get_name_from_applications (MateWnckClassGroup *class_group)
 }
 
 static const char *
-get_name_from_windows (MateWnckClassGroup *class_group)
+get_name_from_windows (MatewnckClassGroup *class_group)
 {
   const char *first_name;
   GList *l;
@@ -289,7 +289,7 @@ get_name_from_windows (MateWnckClassGroup *class_group)
 
   for (l = class_group->priv->windows; l; l = l->next)
     {
-      MateWnckWindow *window;
+      MatewnckWindow *window;
 
       window = MATEWNCK_WINDOW (l->data);
 
@@ -314,7 +314,7 @@ get_name_from_windows (MateWnckClassGroup *class_group)
  * or from individual windows.
  */
 static void
-set_name (MateWnckClassGroup *class_group)
+set_name (MatewnckClassGroup *class_group)
 {
   const char *new_name;
 
@@ -348,7 +348,7 @@ set_name (MateWnckClassGroup *class_group)
 
 /* Walks the list of applications, trying to get an icon from them */
 static void
-get_icons_from_applications (MateWnckClassGroup *class_group, GdkPixbuf **icon, GdkPixbuf **mini_icon)
+get_icons_from_applications (MatewnckClassGroup *class_group, GdkPixbuf **icon, GdkPixbuf **mini_icon)
 {
   GList *l;
 
@@ -357,8 +357,8 @@ get_icons_from_applications (MateWnckClassGroup *class_group, GdkPixbuf **icon, 
 
   for (l = class_group->priv->windows; l; l = l->next)
     {
-      MateWnckWindow *window;
-      MateWnckApplication *app;
+      MatewnckWindow *window;
+      MatewnckApplication *app;
 
       window = MATEWNCK_WINDOW (l->data);
       app = matewnck_window_get_application (window);
@@ -380,7 +380,7 @@ get_icons_from_applications (MateWnckClassGroup *class_group, GdkPixbuf **icon, 
 
 /* Walks the list of windows, trying to get an icon from them */
 static void
-get_icons_from_windows (MateWnckClassGroup *class_group, GdkPixbuf **icon, GdkPixbuf **mini_icon)
+get_icons_from_windows (MatewnckClassGroup *class_group, GdkPixbuf **icon, GdkPixbuf **mini_icon)
 {
   GList *l;
 
@@ -389,7 +389,7 @@ get_icons_from_windows (MateWnckClassGroup *class_group, GdkPixbuf **icon, GdkPi
 
   for (l = class_group->priv->windows; l; l = l->next)
     {
-      MateWnckWindow *window;
+      MatewnckWindow *window;
 
       window = MATEWNCK_WINDOW (l->data);
 
@@ -410,7 +410,7 @@ get_icons_from_windows (MateWnckClassGroup *class_group, GdkPixbuf **icon, GdkPi
  * group leaders or from individual windows.
  */
 static void
-set_icon (MateWnckClassGroup *class_group)
+set_icon (MatewnckClassGroup *class_group)
 {
   GdkPixbuf *icon, *mini_icon;
 
@@ -443,15 +443,15 @@ set_icon (MateWnckClassGroup *class_group)
 
 /**
  * _matewnck_class_group_add_window:
- * @class_group: a #MateWnckClassGroup.
- * @window: a #MateWnckWindow.
+ * @class_group: a #MatewnckClassGroup.
+ * @window: a #MatewnckWindow.
  *
  * Adds a window to @class_group.  You should only do this if the resource
  * class of the window matches the @class_group<!-- -->'s.
  **/
 void
-_matewnck_class_group_add_window (MateWnckClassGroup *class_group,
-                              MateWnckWindow     *window)
+_matewnck_class_group_add_window (MatewnckClassGroup *class_group,
+                              MatewnckWindow     *window)
 {
 
   g_return_if_fail (MATEWNCK_IS_CLASS_GROUP (class_group));
@@ -472,15 +472,15 @@ _matewnck_class_group_add_window (MateWnckClassGroup *class_group,
 
 /**
  * _matewnck_class_group_remove_window:
- * @class_group: a #MateWnckClassGroup.
- * @window: a #MateWnckWindow.
+ * @class_group: a #MatewnckClassGroup.
+ * @window: a #MatewnckWindow.
  * 
  * Removes a window from the list of windows that are grouped under the
  * specified @class_group.
  **/
 void
-_matewnck_class_group_remove_window (MateWnckClassGroup *class_group,
-				 MateWnckWindow     *window)
+_matewnck_class_group_remove_window (MatewnckClassGroup *class_group,
+				 MatewnckWindow     *window)
 {
   g_return_if_fail (MATEWNCK_IS_CLASS_GROUP (class_group));
   g_return_if_fail (MATEWNCK_IS_WINDOW (window));
@@ -496,19 +496,19 @@ _matewnck_class_group_remove_window (MateWnckClassGroup *class_group,
 
 /**
  * matewnck_class_group_get_windows:
- * @class_group: a #MateWnckClassGroup.
+ * @class_group: a #MatewnckClassGroup.
  * 
- * Gets the list of #MateWnckWindow that are grouped in @class_group.
+ * Gets the list of #MatewnckWindow that are grouped in @class_group.
  * 
- * Return value: (element-type MateWnckWindow) (transfer none): the list of
- * #MateWnckWindow grouped in @class_group, or %NULL if the group contains no
+ * Return value: (element-type MatewnckWindow) (transfer none): the list of
+ * #MatewnckWindow grouped in @class_group, or %NULL if the group contains no
  * window. The list should not be modified nor freed, as it is owned by
  * @class_group.
  *
  * Since: 2.2
  **/
 GList *
-matewnck_class_group_get_windows (MateWnckClassGroup *class_group)
+matewnck_class_group_get_windows (MatewnckClassGroup *class_group)
 {
   g_return_val_if_fail (class_group != NULL, NULL);
 
@@ -517,7 +517,7 @@ matewnck_class_group_get_windows (MateWnckClassGroup *class_group)
 
 /**
  * matewnck_class_group_get_res_class:
- * @class_group: a #MateWnckClassGroup.
+ * @class_group: a #MatewnckClassGroup.
  * 
  * Gets the resource class name for @class_group.
  * 
@@ -527,7 +527,7 @@ matewnck_class_group_get_windows (MateWnckClassGroup *class_group)
  * Since: 2.2
  **/
 const char *
-matewnck_class_group_get_res_class (MateWnckClassGroup *class_group)
+matewnck_class_group_get_res_class (MatewnckClassGroup *class_group)
 {
   g_return_val_if_fail (class_group != NULL, NULL);
 
@@ -536,14 +536,14 @@ matewnck_class_group_get_res_class (MateWnckClassGroup *class_group)
 
 /**
  * matewnck_class_group_get_name:
- * @class_group: a #MateWnckClassGroup.
+ * @class_group: a #MatewnckClassGroup.
  * 
  * Gets an human-readable name for @class_group. Since there is no way to
  * properly find this name, a suboptimal heuristic is used to find it. The name
- * is the name of all #MateWnckApplication for each #MateWnckWindow in @class_group if
- * they all have the same name. If all #MateWnckApplication don't have the same
- * name, the name is the name of all #MateWnckWindow in @class_group if they all
- * have the same name. If all #MateWnckWindow don't have the same name, the
+ * is the name of all #MatewnckApplication for each #MatewnckWindow in @class_group if
+ * they all have the same name. If all #MatewnckApplication don't have the same
+ * name, the name is the name of all #MatewnckWindow in @class_group if they all
+ * have the same name. If all #MatewnckWindow don't have the same name, the
  * resource class name is used.
  * 
  * Return value: an human-readable name for @class_group.
@@ -551,7 +551,7 @@ matewnck_class_group_get_res_class (MateWnckClassGroup *class_group)
  * Since: 2.2
  **/
 const char *
-matewnck_class_group_get_name (MateWnckClassGroup *class_group)
+matewnck_class_group_get_name (MatewnckClassGroup *class_group)
 {
   g_return_val_if_fail (class_group != NULL, NULL);
 
@@ -560,12 +560,12 @@ matewnck_class_group_get_name (MateWnckClassGroup *class_group)
 
 /**
  * matewnck_class_group_get_icon:
- * @class_group: a #MateWnckClassGroup.
+ * @class_group: a #MatewnckClassGroup.
  * 
  * Gets the icon to be used for @class_group. Since there is no way to
  * properly find the icon, a suboptimal heuristic is used to find it. The icon
- * is the first icon found by looking at all the #MateWnckApplication for each
- * #MateWnckWindow in @class_group, then at all the #MateWnckWindow in @class_group. If
+ * is the first icon found by looking at all the #MatewnckApplication for each
+ * #MatewnckWindow in @class_group, then at all the #MatewnckWindow in @class_group. If
  * no icon was found, a fallback icon is used.
  * 
  * Return value: the icon for @class_group. The caller should reference the
@@ -575,7 +575,7 @@ matewnck_class_group_get_name (MateWnckClassGroup *class_group)
  * Since: 2.2
  **/
 GdkPixbuf *
-matewnck_class_group_get_icon (MateWnckClassGroup *class_group)
+matewnck_class_group_get_icon (MatewnckClassGroup *class_group)
 {
   g_return_val_if_fail (class_group != NULL, NULL);
 
@@ -584,7 +584,7 @@ matewnck_class_group_get_icon (MateWnckClassGroup *class_group)
 
 /**
  * matewnck_class_group_get_mini_icon:
- * @class_group: a #MateWnckClassGroup.
+ * @class_group: a #MatewnckClassGroup.
  * 
  * Gets the mini-icon to be used for @class_group. Since there is no way to
  * properly find the mini-icon, the same suboptimal heuristic as the one for
@@ -597,7 +597,7 @@ matewnck_class_group_get_icon (MateWnckClassGroup *class_group)
  * Since: 2.2
  **/
 GdkPixbuf *
-matewnck_class_group_get_mini_icon (MateWnckClassGroup *class_group)
+matewnck_class_group_get_mini_icon (MatewnckClassGroup *class_group)
 {
   g_return_val_if_fail (class_group != NULL, NULL);
 

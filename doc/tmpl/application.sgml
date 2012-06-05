@@ -1,5 +1,5 @@
 <!-- ##### SECTION Title ##### -->
-MateWnckApplication
+MatewnckApplication
 
 <!-- ##### SECTION Short_Description ##### -->
 
@@ -20,20 +20,20 @@ MateWnckApplication
 <!-- ##### SECTION Image ##### -->
 
 
-<!-- ##### STRUCT MateWnckApplication ##### -->
+<!-- ##### STRUCT MatewnckApplication ##### -->
 <para>
 
 </para>
 
 
-<!-- ##### SIGNAL MateWnckApplication::icon-changed ##### -->
+<!-- ##### SIGNAL MatewnckApplication::icon-changed ##### -->
 <para>
 
 </para>
 
 @matewnckapplication: the object which received the signal.
 
-<!-- ##### SIGNAL MateWnckApplication::name-changed ##### -->
+<!-- ##### SIGNAL MatewnckApplication::name-changed ##### -->
 <para>
 
 </para>

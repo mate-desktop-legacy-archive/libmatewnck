@@ -28,28 +28,28 @@
 
 G_BEGIN_DECLS
 #define MATEWNCK_TYPE_SELECTOR              (matewnck_selector_get_type ())
-#define MATEWNCK_SELECTOR(object)           (G_TYPE_CHECK_INSTANCE_CAST ((object), MATEWNCK_TYPE_SELECTOR, MateWnckSelector))
-#define MATEWNCK_SELECTOR_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), MATEWNCK_TYPE_SELECTOR, MateWnckSelectorClass))
+#define MATEWNCK_SELECTOR(object)           (G_TYPE_CHECK_INSTANCE_CAST ((object), MATEWNCK_TYPE_SELECTOR, MatewnckSelector))
+#define MATEWNCK_SELECTOR_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), MATEWNCK_TYPE_SELECTOR, MatewnckSelectorClass))
 #define MATEWNCK_IS_SELECTOR(object)        (G_TYPE_CHECK_INSTANCE_TYPE ((object), MATEWNCK_TYPE_SELECTOR))
 #define MATEWNCK_IS_SELECTOR_CLASS(klass)   (G_TYPE_CHECK_CLASS_TYPE ((klass), MATEWNCK_TYPE_SELECTOR))
-#define MATEWNCK_SELECTOR_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS ((obj), MATEWNCK_TYPE_SELECTOR, MateWnckSelectorClass))
-typedef struct _MateWnckSelector MateWnckSelector;
-typedef struct _MateWnckSelectorClass MateWnckSelectorClass;
-typedef struct _MateWnckSelectorPrivate MateWnckSelectorPrivate;
+#define MATEWNCK_SELECTOR_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS ((obj), MATEWNCK_TYPE_SELECTOR, MatewnckSelectorClass))
+typedef struct _MatewnckSelector MatewnckSelector;
+typedef struct _MatewnckSelectorClass MatewnckSelectorClass;
+typedef struct _MatewnckSelectorPrivate MatewnckSelectorPrivate;
 
 /**
- * MateWnckSelector:
+ * MatewnckSelector:
  *
- * The #MateWnckSelector struct contains only private fields and should not be
+ * The #MatewnckSelector struct contains only private fields and should not be
  * directly accessed.
  */
-struct _MateWnckSelector
+struct _MatewnckSelector
 {
   GtkMenuBar parent_instance;
-  MateWnckSelectorPrivate *priv;
+  MatewnckSelectorPrivate *priv;
 };
 
-struct _MateWnckSelectorClass 
+struct _MatewnckSelectorClass 
 {
   GtkMenuBarClass parent_class;
   

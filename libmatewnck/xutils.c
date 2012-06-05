@@ -664,15 +664,15 @@ filter_func (GdkXEvent  *gdkxevent,
     {
     case PropertyNotify:
       {
-        MateWnckScreen *screen;
+        MatewnckScreen *screen;
         
         screen = matewnck_screen_get_for_root (xevent->xany.window);
         if (screen != NULL)
           _matewnck_screen_process_property_notify (screen, xevent);
         else
           {
-            MateWnckWindow *window;
-            MateWnckApplication *app;
+            MatewnckWindow *window;
+            MatewnckApplication *app;
 
             window = matewnck_window_get (xevent->xany.window);
             app = matewnck_application_get (xevent->xany.window);
@@ -688,7 +688,7 @@ filter_func (GdkXEvent  *gdkxevent,
 
     case ConfigureNotify:
       {
-        MateWnckWindow *window;
+        MatewnckWindow *window;
         
         window = matewnck_window_get (xevent->xconfigure.window);
         
@@ -713,7 +713,7 @@ filter_func (GdkXEvent  *gdkxevent,
 
       while (i < ScreenCount (display))
         {
-          MateWnckScreen *s;
+          MatewnckScreen *s;
 
           s = _matewnck_screen_get_existing (i);
           if (s != NULL)
@@ -1869,7 +1869,7 @@ typedef enum
   USING_NET_WM_ICON
 } IconOrigin;
 
-struct _MateWnckIconCache
+struct _MatewnckIconCache
 {
   IconOrigin origin;
   Pixmap prev_pixmap;
@@ -1887,12 +1887,12 @@ struct _MateWnckIconCache
   guint net_wm_icon_dirty : 1;  
 };
 
-MateWnckIconCache*
+MatewnckIconCache*
 _matewnck_icon_cache_new (void)
 {
-  MateWnckIconCache *icon_cache;
+  MatewnckIconCache *icon_cache;
 
-  icon_cache = g_slice_new0 (MateWnckIconCache);
+  icon_cache = g_slice_new0 (MatewnckIconCache);
 
   icon_cache->origin = USING_NO_ICON;
   icon_cache->prev_pixmap = None;
@@ -1911,7 +1911,7 @@ _matewnck_icon_cache_new (void)
 }
 
 static void
-clear_icon_cache (MateWnckIconCache *icon_cache,
+clear_icon_cache (MatewnckIconCache *icon_cache,
                   gboolean       dirty_all)
 {
   if (icon_cache->icon)
@@ -1933,15 +1933,15 @@ clear_icon_cache (MateWnckIconCache *icon_cache,
 }
 
 void
-_matewnck_icon_cache_free (MateWnckIconCache *icon_cache)
+_matewnck_icon_cache_free (MatewnckIconCache *icon_cache)
 {
   clear_icon_cache (icon_cache, FALSE);
   
-  g_slice_free (MateWnckIconCache, icon_cache);
+  g_slice_free (MatewnckIconCache, icon_cache);
 }
 
 void
-_matewnck_icon_cache_property_changed (MateWnckIconCache *icon_cache,
+_matewnck_icon_cache_property_changed (MatewnckIconCache *icon_cache,
                                    Atom           atom)
 {  
   if (atom == _matewnck_atom_get ("_NET_WM_ICON"))
@@ -1953,7 +1953,7 @@ _matewnck_icon_cache_property_changed (MateWnckIconCache *icon_cache,
 }
 
 gboolean
-_matewnck_icon_cache_get_icon_invalidated (MateWnckIconCache *icon_cache)
+_matewnck_icon_cache_get_icon_invalidated (MatewnckIconCache *icon_cache)
 {
   if (icon_cache->origin <= USING_KWM_WIN_ICON &&
       icon_cache->kwm_win_icon_dirty)
@@ -1977,20 +1977,20 @@ _matewnck_icon_cache_get_icon_invalidated (MateWnckIconCache *icon_cache)
 }
 
 void
-_matewnck_icon_cache_set_want_fallback (MateWnckIconCache *icon_cache,
+_matewnck_icon_cache_set_want_fallback (MatewnckIconCache *icon_cache,
                                     gboolean       setting)
 {
   icon_cache->want_fallback = setting;
 }
 
 gboolean
-_matewnck_icon_cache_get_is_fallback (MateWnckIconCache *icon_cache)
+_matewnck_icon_cache_get_is_fallback (MatewnckIconCache *icon_cache)
 {
   return icon_cache->origin == USING_FALLBACK_ICON;
 }
 
 static void
-replace_cache (MateWnckIconCache *icon_cache,
+replace_cache (MatewnckIconCache *icon_cache,
                IconOrigin     origin,
                GdkPixbuf     *new_icon,
                GdkPixbuf     *new_mini_icon)
@@ -2068,7 +2068,7 @@ scaled_from_pixdata (guchar *pixdata,
 
 gboolean
 _matewnck_read_icons (Window         xwindow,
-                  MateWnckIconCache *icon_cache,
+                  MatewnckIconCache *icon_cache,
                   GdkPixbuf    **iconp,
                   int            ideal_width,
                   int            ideal_height,

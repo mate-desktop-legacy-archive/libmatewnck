@@ -1,5 +1,5 @@
 <!-- ##### SECTION Title ##### -->
-MateWnckTasklist
+MatewnckTasklist
 
 <!-- ##### SECTION Short_Description ##### -->
 
@@ -20,28 +20,28 @@ MateWnckTasklist
 <!-- ##### SECTION Image ##### -->
 
 
-<!-- ##### STRUCT MateWnckTasklist ##### -->
+<!-- ##### STRUCT MatewnckTasklist ##### -->
 <para>
 
 </para>
 
 
-<!-- ##### ARG MateWnckTasklist:fade-loop-time ##### -->
+<!-- ##### ARG MatewnckTasklist:fade-loop-time ##### -->
 <para>
 
 </para>
 
-<!-- ##### ARG MateWnckTasklist:fade-max-loops ##### -->
+<!-- ##### ARG MatewnckTasklist:fade-max-loops ##### -->
 <para>
 
 </para>
 
-<!-- ##### ARG MateWnckTasklist:fade-opacity ##### -->
+<!-- ##### ARG MatewnckTasklist:fade-opacity ##### -->
 <para>
 
 </para>
 
-<!-- ##### ARG MateWnckTasklist:fade-overlay-rect ##### -->
+<!-- ##### ARG MatewnckTasklist:fade-overlay-rect ##### -->
 <para>
 
 </para>
@@ -64,7 +64,7 @@ MateWnckTasklist
 @screen: 
 
 
-<!-- ##### ENUM MateWnckTasklistGroupingType ##### -->
+<!-- ##### ENUM MatewnckTasklistGroupingType ##### -->
 <para>
 
 </para>
@@ -154,7 +154,7 @@ MateWnckTasklist
 @size: 
 
 
-<!-- ##### USER_FUNCTION MateWnckLoadIconFunction ##### -->
+<!-- ##### USER_FUNCTION MatewnckLoadIconFunction ##### -->
 <para>
 
 </para>

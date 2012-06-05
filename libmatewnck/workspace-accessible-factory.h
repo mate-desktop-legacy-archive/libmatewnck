@@ -28,21 +28,21 @@ extern "C" {
 #endif /* __cplusplus */
 
 #define MATEWNCK_TYPE_WORKSPACE_ACCESSIBLE_FACTORY               (matewnck_workspace_accessible_factory_get_type())
-#define MATEWNCK_WORKSPACE_ACCESSIBLE_FACTORY(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), MATEWNCK_TYPE_WORKSPACE_ACCESSIBLE_FACTORY, MateWnckWorkspaceAccessibleFactory))
-#define MATEWNCK_WORKSPACE_ACCESSIBLE_FACTORY_CLASS(klass)       (G_TYPE_CHECK_CLASS_CAST ((klass), MATEWNCK_TYPE_WORKSPACE_ACCESSIBLE_FACTORY, MateWnckWorkspaceAccessibleFactoryClass))
+#define MATEWNCK_WORKSPACE_ACCESSIBLE_FACTORY(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), MATEWNCK_TYPE_WORKSPACE_ACCESSIBLE_FACTORY, MatewnckWorkspaceAccessibleFactory))
+#define MATEWNCK_WORKSPACE_ACCESSIBLE_FACTORY_CLASS(klass)       (G_TYPE_CHECK_CLASS_CAST ((klass), MATEWNCK_TYPE_WORKSPACE_ACCESSIBLE_FACTORY, MatewnckWorkspaceAccessibleFactoryClass))
 #define MATEWNCK_IS_WORKSPACE_ACCESSIBLE_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), MATEWNCK_TYPE_WORKSPACE_ACCESSIBLE_FACTORY))
 #define MATEWNCK_IS_WORKSPACE_ACCESSIBLE_FACTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_TYPE ((klass), MATEWNCK_TYPE_WORKSPACE_ACCESSIBLE_FACTORY))
-#define MATEWNCK_WORKSPACE_ACCESSIBLE_FACTORY_GET_CLASS(obj)     (G_TYPE_INSTANCE_GET_CLASS ((obj), MATEWNCK_TYPE_WORKSPACE_ACCESSIBLE_FACTORY, MateWnckWorkspaceAccessibleFactoryClass))
+#define MATEWNCK_WORKSPACE_ACCESSIBLE_FACTORY_GET_CLASS(obj)     (G_TYPE_INSTANCE_GET_CLASS ((obj), MATEWNCK_TYPE_WORKSPACE_ACCESSIBLE_FACTORY, MatewnckWorkspaceAccessibleFactoryClass))
 
-typedef struct _MateWnckWorkspaceAccessibleFactory       MateWnckWorkspaceAccessibleFactory;
-typedef struct _MateWnckWorkspaceAccessibleFactoryClass  MateWnckWorkspaceAccessibleFactoryClass;
+typedef struct _MatewnckWorkspaceAccessibleFactory       MatewnckWorkspaceAccessibleFactory;
+typedef struct _MatewnckWorkspaceAccessibleFactoryClass  MatewnckWorkspaceAccessibleFactoryClass;
 
-struct _MateWnckWorkspaceAccessibleFactory
+struct _MatewnckWorkspaceAccessibleFactory
 {
   AtkObjectFactory parent;
 };
 
-struct _MateWnckWorkspaceAccessibleFactoryClass
+struct _MatewnckWorkspaceAccessibleFactoryClass
 {
   AtkObjectFactoryClass parent_class;
 };

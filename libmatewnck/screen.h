@@ -29,85 +29,85 @@
 G_BEGIN_DECLS
 
 /* forward decls */
-typedef struct _MateWnckApplication MateWnckApplication;
-typedef struct _MateWnckClassGroup  MateWnckClassGroup;
-typedef struct _MateWnckWindow      MateWnckWindow;
-typedef struct _MateWnckWorkspace   MateWnckWorkspace;
+typedef struct _MatewnckApplication MatewnckApplication;
+typedef struct _MatewnckClassGroup  MatewnckClassGroup;
+typedef struct _MatewnckWindow      MatewnckWindow;
+typedef struct _MatewnckWorkspace   MatewnckWorkspace;
 
 /* Screen */
 
 #define MATEWNCK_TYPE_SCREEN              (matewnck_screen_get_type ())
-#define MATEWNCK_SCREEN(object)           (G_TYPE_CHECK_INSTANCE_CAST ((object), MATEWNCK_TYPE_SCREEN, MateWnckScreen))
-#define MATEWNCK_SCREEN_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), MATEWNCK_TYPE_SCREEN, MateWnckScreenClass))
+#define MATEWNCK_SCREEN(object)           (G_TYPE_CHECK_INSTANCE_CAST ((object), MATEWNCK_TYPE_SCREEN, MatewnckScreen))
+#define MATEWNCK_SCREEN_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), MATEWNCK_TYPE_SCREEN, MatewnckScreenClass))
 #define MATEWNCK_IS_SCREEN(object)        (G_TYPE_CHECK_INSTANCE_TYPE ((object), MATEWNCK_TYPE_SCREEN))
 #define MATEWNCK_IS_SCREEN_CLASS(klass)   (G_TYPE_CHECK_CLASS_TYPE ((klass), MATEWNCK_TYPE_SCREEN))
-#define MATEWNCK_SCREEN_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS ((obj), MATEWNCK_TYPE_SCREEN, MateWnckScreenClass))
+#define MATEWNCK_SCREEN_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS ((obj), MATEWNCK_TYPE_SCREEN, MatewnckScreenClass))
 
-typedef struct _MateWnckScreen        MateWnckScreen;
-typedef struct _MateWnckScreenClass   MateWnckScreenClass;
-typedef struct _MateWnckScreenPrivate MateWnckScreenPrivate;
+typedef struct _MatewnckScreen        MatewnckScreen;
+typedef struct _MatewnckScreenClass   MatewnckScreenClass;
+typedef struct _MatewnckScreenPrivate MatewnckScreenPrivate;
 
 /**
- * MateWnckScreen:
+ * MatewnckScreen:
  *
- * The #MateWnckScreen struct contains only private fields and should not be
+ * The #MatewnckScreen struct contains only private fields and should not be
  * directly accessed.
  */
-struct _MateWnckScreen
+struct _MatewnckScreen
 {
   GObject parent_instance;
 
-  MateWnckScreenPrivate *priv;
+  MatewnckScreenPrivate *priv;
 };
 
-struct _MateWnckScreenClass
+struct _MatewnckScreenClass
 {
   GObjectClass parent_class;
 
   /* focused window changed */
-  void (* active_window_changed)    (MateWnckScreen *screen,
-                                     MateWnckWindow *previous_window);
+  void (* active_window_changed)    (MatewnckScreen *screen,
+                                     MatewnckWindow *previous_window);
   /* current workspace changed */
-  void (* active_workspace_changed) (MateWnckScreen *screen,
-                                     MateWnckWorkspace *previous_workspace);
+  void (* active_workspace_changed) (MatewnckScreen *screen,
+                                     MatewnckWorkspace *previous_workspace);
   /* stacking order changed */
-  void (* window_stacking_changed)  (MateWnckScreen *screen);
+  void (* window_stacking_changed)  (MatewnckScreen *screen);
   /* window added */
-  void (* window_opened)            (MateWnckScreen *screen,
-                                     MateWnckWindow *window);
+  void (* window_opened)            (MatewnckScreen *screen,
+                                     MatewnckWindow *window);
   /* window removed */
-  void (* window_closed)            (MateWnckScreen *screen,
-                                     MateWnckWindow *window);
+  void (* window_closed)            (MatewnckScreen *screen,
+                                     MatewnckWindow *window);
   /* new workspace */
-  void (* workspace_created)        (MateWnckScreen *screen,
-                                     MateWnckWorkspace *space);
+  void (* workspace_created)        (MatewnckScreen *screen,
+                                     MatewnckWorkspace *space);
   /* workspace gone */
-  void (* workspace_destroyed)      (MateWnckScreen *screen,
-                                     MateWnckWorkspace *space);
+  void (* workspace_destroyed)      (MatewnckScreen *screen,
+                                     MatewnckWorkspace *space);
   /* new app */
-  void (* application_opened)       (MateWnckScreen      *screen,
-                                     MateWnckApplication *app);
+  void (* application_opened)       (MatewnckScreen      *screen,
+                                     MatewnckApplication *app);
   /* app gone */
-  void (* application_closed)       (MateWnckScreen      *screen,
-                                     MateWnckApplication *app);
+  void (* application_closed)       (MatewnckScreen      *screen,
+                                     MatewnckApplication *app);
 
   /* New background */
-  void (* background_changed)       (MateWnckScreen      *screen);
+  void (* background_changed)       (MatewnckScreen      *screen);
 
   /* new class group */
-  void (* class_group_opened)       (MateWnckScreen     *screen,
-                                     MateWnckClassGroup *class_group);
+  void (* class_group_opened)       (MatewnckScreen     *screen,
+                                     MatewnckClassGroup *class_group);
   /* class group gone */
-  void (* class_group_closed)       (MateWnckScreen     *screen,
-                                     MateWnckClassGroup *class_group);
+  void (* class_group_closed)       (MatewnckScreen     *screen,
+                                     MatewnckClassGroup *class_group);
   /* Toggle showing desktop */
-  void (* showing_desktop_changed)  (MateWnckScreen      *screen);
+  void (* showing_desktop_changed)  (MatewnckScreen      *screen);
 
   /* Viewport stuff changed */
-  void (* viewports_changed)        (MateWnckScreen      *screen);
+  void (* viewports_changed)        (MatewnckScreen      *screen);
   
   /* Window manager changed */
-  void (* window_manager_changed)   (MateWnckScreen      *screen);
+  void (* window_manager_changed)   (MatewnckScreen      *screen);
 
   /* Padding for future expansion */
   void (* pad2) (void);
@@ -118,29 +118,29 @@ struct _MateWnckScreenClass
 };
 
 #ifndef MATEWNCK_DISABLE_DEPRECATED
-typedef struct _MateWnckWorkspaceLayout MateWnckWorkspaceLayout;
+typedef struct _MatewnckWorkspaceLayout MatewnckWorkspaceLayout;
 
 /**
- * MateWnckWorkspaceLayout:
+ * MatewnckWorkspaceLayout:
  * @rows: number of rows in the layout grid.
  * @cols: number of columns in the layout grid.
  * @grid: array of size @grid_area containing the index (starting from 0) of
- * the #MateWnckWorkspace for each position in the layout grid, or -1 if the
- * position does not correspond to any #MateWnckWorkspace.
- * @grid_area: size of the grid containing all #MateWnckWorkspace. This can be
- * bigger than the number of #MateWnckWorskpace because the grid might not be
+ * the #MatewnckWorkspace for each position in the layout grid, or -1 if the
+ * position does not correspond to any #MatewnckWorkspace.
+ * @grid_area: size of the grid containing all #MatewnckWorkspace. This can be
+ * bigger than the number of #MatewnckWorskpace because the grid might not be
  * filled.
- * @current_row: row of the specific #MateWnckWorkspace, starting from 0.
- * @current_col: column of the specific #MateWnckWorkspace, starting from 0.
+ * @current_row: row of the specific #MatewnckWorkspace, starting from 0.
+ * @current_col: column of the specific #MatewnckWorkspace, starting from 0.
  *
- * The #MateWnckWorkspaceLayout struct contains information about the layout of
- * #MateWnckWorkspace on a #MateWnckScreen, and the exact position of a specific
- * #MateWnckWorkspace.
+ * The #MatewnckWorkspaceLayout struct contains information about the layout of
+ * #MatewnckWorkspace on a #MatewnckScreen, and the exact position of a specific
+ * #MatewnckWorkspace.
  *
  * Since: 2.12
  * Deprecated:2.20:
  */
-struct _MateWnckWorkspaceLayout
+struct _MatewnckWorkspaceLayout
 {
   int rows;
   int cols;
@@ -152,17 +152,17 @@ struct _MateWnckWorkspaceLayout
 #endif /* MATEWNCK_DISABLE_DEPRECATED */
 
 /**
- * MateWnckMotionDirection:
- * @MATEWNCK_MOTION_UP: search a neighbor #MateWnckWorkspace above another
- * #MateWnckWorkspace. 
- * @MATEWNCK_MOTION_DOWN: search a neighbor #MateWnckWorkspace below another
- * #MateWnckWorkspace.
- * @MATEWNCK_MOTION_LEFT: search a neighbor #MateWnckWorkspace at the left of another
- * #MateWnckWorkspace.
- * @MATEWNCK_MOTION_RIGHT: search a neighbor #MateWnckWorkspace at the right of another
- * #MateWnckWorkspace.
+ * MatewnckMotionDirection:
+ * @MATEWNCK_MOTION_UP: search a neighbor #MatewnckWorkspace above another
+ * #MatewnckWorkspace. 
+ * @MATEWNCK_MOTION_DOWN: search a neighbor #MatewnckWorkspace below another
+ * #MatewnckWorkspace.
+ * @MATEWNCK_MOTION_LEFT: search a neighbor #MatewnckWorkspace at the left of another
+ * #MatewnckWorkspace.
+ * @MATEWNCK_MOTION_RIGHT: search a neighbor #MatewnckWorkspace at the right of another
+ * #MatewnckWorkspace.
  *
- * Type defining a direction in which to search a neighbor #MateWnckWorkspace.
+ * Type defining a direction in which to search a neighbor #MatewnckWorkspace.
  *
  * Since: 2.14
  */
@@ -174,37 +174,37 @@ typedef enum
   MATEWNCK_MOTION_DOWN = -2,
   MATEWNCK_MOTION_LEFT = -3,
   MATEWNCK_MOTION_RIGHT = -4
-} MateWnckMotionDirection;
+} MatewnckMotionDirection;
 
 /**
- * MateWnckLayoutOrientation:
- * @MATEWNCK_LAYOUT_ORIENTATION_HORIZONTAL: the #MateWnckWorkspace are laid out in
- * rows, with the first #MateWnckWorkspace in the defined #MateWnckLayoutCorner.
- * @MATEWNCK_LAYOUT_ORIENTATION_VERTICAL: the #MateWnckWorkspace are laid out in
- * columns, with the first #MateWnckWorkspace in the defined #MateWnckLayoutCorner.
+ * MatewnckLayoutOrientation:
+ * @MATEWNCK_LAYOUT_ORIENTATION_HORIZONTAL: the #MatewnckWorkspace are laid out in
+ * rows, with the first #MatewnckWorkspace in the defined #MatewnckLayoutCorner.
+ * @MATEWNCK_LAYOUT_ORIENTATION_VERTICAL: the #MatewnckWorkspace are laid out in
+ * columns, with the first #MatewnckWorkspace in the defined #MatewnckLayoutCorner.
  *
- * Type defining the orientation of the layout of #MateWnckWorkspace. See
+ * Type defining the orientation of the layout of #MatewnckWorkspace. See
  * matewnck_pager_set_orientation() for more information.
  */
 typedef enum
 {
   MATEWNCK_LAYOUT_ORIENTATION_HORIZONTAL,
   MATEWNCK_LAYOUT_ORIENTATION_VERTICAL
-} _MateWnckLayoutOrientation;
+} _MatewnckLayoutOrientation;
 
 /**
- * MateWnckLayoutCorner:
- * @MATEWNCK_LAYOUT_CORNER_TOPLEFT: the first #MateWnckWorkspace is in the top left
+ * MatewnckLayoutCorner:
+ * @MATEWNCK_LAYOUT_CORNER_TOPLEFT: the first #MatewnckWorkspace is in the top left
  * corner of the layout.
- * @MATEWNCK_LAYOUT_CORNER_TOPRIGHT: the first #MateWnckWorkspace is in the top right
+ * @MATEWNCK_LAYOUT_CORNER_TOPRIGHT: the first #MatewnckWorkspace is in the top right
  * corner of the layout.
- * @MATEWNCK_LAYOUT_CORNER_BOTTOMRIGHT: the first #MateWnckWorkspace is in the bottom
+ * @MATEWNCK_LAYOUT_CORNER_BOTTOMRIGHT: the first #MatewnckWorkspace is in the bottom
  * right corner of the layout.
- * @MATEWNCK_LAYOUT_CORNER_BOTTOMLEFT: the first #MateWnckWorkspace is in the bottom
+ * @MATEWNCK_LAYOUT_CORNER_BOTTOMLEFT: the first #MatewnckWorkspace is in the bottom
  * left corner of the layout.
  *
- * Type defining the starting corner of the layout of #MateWnckWorkspace, i.e. the
- * corner containing the first #MateWnckWorkspace.
+ * Type defining the starting corner of the layout of #MatewnckWorkspace, i.e. the
+ * corner containing the first #MatewnckWorkspace.
  */
 typedef enum
 {
@@ -212,62 +212,62 @@ typedef enum
   MATEWNCK_LAYOUT_CORNER_TOPRIGHT,
   MATEWNCK_LAYOUT_CORNER_BOTTOMRIGHT,
   MATEWNCK_LAYOUT_CORNER_BOTTOMLEFT
-} _MateWnckLayoutCorner;
+} _MatewnckLayoutCorner;
 
 GType matewnck_screen_get_type (void) G_GNUC_CONST;
 
-MateWnckScreen*    matewnck_screen_get_default              (void);
-MateWnckScreen*    matewnck_screen_get                      (int         index);
-MateWnckScreen*    matewnck_screen_get_for_root             (gulong      root_window_id);
-int            matewnck_screen_get_number               (MateWnckScreen *screen);
-MateWnckWorkspace* matewnck_screen_get_workspace            (MateWnckScreen *screen,
+MatewnckScreen*    matewnck_screen_get_default              (void);
+MatewnckScreen*    matewnck_screen_get                      (int         index);
+MatewnckScreen*    matewnck_screen_get_for_root             (gulong      root_window_id);
+int            matewnck_screen_get_number               (MatewnckScreen *screen);
+MatewnckWorkspace* matewnck_screen_get_workspace            (MatewnckScreen *screen,
                                                      int         workspace);
 #ifndef MATEWNCK_DISABLE_DEPRECATED
-int            matewnck_screen_get_workspace_index      (MateWnckScreen    *screen,
-                                                     MateWnckWorkspace *space);
-MateWnckWorkspace* matewnck_screen_get_workspace_neighbor   (MateWnckScreen         *screen,
-                                                     MateWnckWorkspace      *space,
-                                                     MateWnckMotionDirection direction);
+int            matewnck_screen_get_workspace_index      (MatewnckScreen    *screen,
+                                                     MatewnckWorkspace *space);
+MatewnckWorkspace* matewnck_screen_get_workspace_neighbor   (MatewnckScreen         *screen,
+                                                     MatewnckWorkspace      *space,
+                                                     MatewnckMotionDirection direction);
 #endif /* MATEWNCK_DISABLE_DEPRECATED */
-MateWnckWorkspace* matewnck_screen_get_active_workspace     (MateWnckScreen *screen);
-GList*         matewnck_screen_get_workspaces           (MateWnckScreen *screen);
-MateWnckWindow*    matewnck_screen_get_active_window        (MateWnckScreen *screen);
-MateWnckWindow*    matewnck_screen_get_previously_active_window (MateWnckScreen *screen);
-GList*         matewnck_screen_get_windows              (MateWnckScreen *screen);
-GList*         matewnck_screen_get_windows_stacked      (MateWnckScreen *screen);
-void           matewnck_screen_force_update             (MateWnckScreen *screen);
-int            matewnck_screen_get_workspace_count      (MateWnckScreen *screen);
-void           matewnck_screen_change_workspace_count   (MateWnckScreen *screen,
+MatewnckWorkspace* matewnck_screen_get_active_workspace     (MatewnckScreen *screen);
+GList*         matewnck_screen_get_workspaces           (MatewnckScreen *screen);
+MatewnckWindow*    matewnck_screen_get_active_window        (MatewnckScreen *screen);
+MatewnckWindow*    matewnck_screen_get_previously_active_window (MatewnckScreen *screen);
+GList*         matewnck_screen_get_windows              (MatewnckScreen *screen);
+GList*         matewnck_screen_get_windows_stacked      (MatewnckScreen *screen);
+void           matewnck_screen_force_update             (MatewnckScreen *screen);
+int            matewnck_screen_get_workspace_count      (MatewnckScreen *screen);
+void           matewnck_screen_change_workspace_count   (MatewnckScreen *screen,
                                                      int         count);
-const char*    matewnck_screen_get_window_manager_name  (MateWnckScreen *screen);
-gboolean       matewnck_screen_net_wm_supports          (MateWnckScreen *screen,
+const char*    matewnck_screen_get_window_manager_name  (MatewnckScreen *screen);
+gboolean       matewnck_screen_net_wm_supports          (MatewnckScreen *screen,
                                                      const char *atom);
-gulong         matewnck_screen_get_background_pixmap    (MateWnckScreen *screen);
-int            matewnck_screen_get_width                (MateWnckScreen *screen);
-int            matewnck_screen_get_height               (MateWnckScreen *screen);
-gboolean       matewnck_screen_get_showing_desktop      (MateWnckScreen *screen);
-void           matewnck_screen_toggle_showing_desktop   (MateWnckScreen *screen,
+gulong         matewnck_screen_get_background_pixmap    (MatewnckScreen *screen);
+int            matewnck_screen_get_width                (MatewnckScreen *screen);
+int            matewnck_screen_get_height               (MatewnckScreen *screen);
+gboolean       matewnck_screen_get_showing_desktop      (MatewnckScreen *screen);
+void           matewnck_screen_toggle_showing_desktop   (MatewnckScreen *screen,
                                                      gboolean    show);
-void           matewnck_screen_move_viewport            (MateWnckScreen *screen,
+void           matewnck_screen_move_viewport            (MatewnckScreen *screen,
                                                      int         x,
                                                      int         y);
-void           _matewnck_screen_get_workspace_layout     (MateWnckScreen             *screen,
-                                                      _MateWnckLayoutOrientation *orientation,
+void           _matewnck_screen_get_workspace_layout     (MatewnckScreen             *screen,
+                                                      _MatewnckLayoutOrientation *orientation,
                                                       int                    *rows,
                                                       int                    *columns,
-                                                      _MateWnckLayoutCorner      *starting_corner);
-int            matewnck_screen_try_set_workspace_layout (MateWnckScreen *screen,
+                                                      _MatewnckLayoutCorner      *starting_corner);
+int            matewnck_screen_try_set_workspace_layout (MatewnckScreen *screen,
                                                      int         current_token,
                                                      int         rows,
                                                      int         columns);
-void           matewnck_screen_release_workspace_layout (MateWnckScreen *screen,
+void           matewnck_screen_release_workspace_layout (MatewnckScreen *screen,
                                                      int         current_token);
 #ifndef MATEWNCK_DISABLE_DEPRECATED
-void           matewnck_screen_calc_workspace_layout    (MateWnckScreen          *screen,
+void           matewnck_screen_calc_workspace_layout    (MatewnckScreen          *screen,
                                                      int                  num_workspaces,
                                                      int                  space_index,
-                                                     MateWnckWorkspaceLayout *layout);
-void           matewnck_screen_free_workspace_layout (MateWnckWorkspaceLayout *layout);
+                                                     MatewnckWorkspaceLayout *layout);
+void           matewnck_screen_free_workspace_layout (MatewnckWorkspaceLayout *layout);
 #endif /* MATEWNCK_DISABLE_DEPRECATED */
 
 

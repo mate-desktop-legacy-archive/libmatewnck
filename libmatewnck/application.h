@@ -31,37 +31,37 @@
 G_BEGIN_DECLS
 
 #define MATEWNCK_TYPE_APPLICATION              (matewnck_application_get_type ())
-#define MATEWNCK_APPLICATION(object)           (G_TYPE_CHECK_INSTANCE_CAST ((object), MATEWNCK_TYPE_APPLICATION, MateWnckApplication))
-#define MATEWNCK_APPLICATION_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), MATEWNCK_TYPE_APPLICATION, MateWnckApplicationClass))
+#define MATEWNCK_APPLICATION(object)           (G_TYPE_CHECK_INSTANCE_CAST ((object), MATEWNCK_TYPE_APPLICATION, MatewnckApplication))
+#define MATEWNCK_APPLICATION_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), MATEWNCK_TYPE_APPLICATION, MatewnckApplicationClass))
 #define MATEWNCK_IS_APPLICATION(object)        (G_TYPE_CHECK_INSTANCE_TYPE ((object), MATEWNCK_TYPE_APPLICATION))
 #define MATEWNCK_IS_APPLICATION_CLASS(klass)   (G_TYPE_CHECK_CLASS_TYPE ((klass), MATEWNCK_TYPE_APPLICATION))
-#define MATEWNCK_APPLICATION_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS ((obj), MATEWNCK_TYPE_APPLICATION, MateWnckApplicationClass))
+#define MATEWNCK_APPLICATION_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS ((obj), MATEWNCK_TYPE_APPLICATION, MatewnckApplicationClass))
 
-typedef struct _MateWnckApplicationClass   MateWnckApplicationClass;
-typedef struct _MateWnckApplicationPrivate MateWnckApplicationPrivate;
+typedef struct _MatewnckApplicationClass   MatewnckApplicationClass;
+typedef struct _MatewnckApplicationPrivate MatewnckApplicationPrivate;
 
 /**
- * MateWnckApplication:
+ * MatewnckApplication:
  *
- * The #MateWnckApplication struct contains only private fields and should not be
+ * The #MatewnckApplication struct contains only private fields and should not be
  * directly accessed.
  */
-struct _MateWnckApplication
+struct _MatewnckApplication
 {
   GObject parent_instance;
 
-  MateWnckApplicationPrivate *priv;
+  MatewnckApplicationPrivate *priv;
 };
 
-struct _MateWnckApplicationClass
+struct _MatewnckApplicationClass
 {
   GObjectClass parent_class;
 
   /* app name or icon name changed */
-  void (* name_changed) (MateWnckApplication *app);
+  void (* name_changed) (MatewnckApplication *app);
 
   /* icon changed */
-  void (* icon_changed) (MateWnckApplication *app);
+  void (* icon_changed) (MatewnckApplication *app);
   
   /* Padding for future expansion */
   void (* pad1) (void);
@@ -72,25 +72,25 @@ struct _MateWnckApplicationClass
 
 GType matewnck_application_get_type (void) G_GNUC_CONST;
 
-MateWnckApplication* matewnck_application_get (gulong xwindow);
+MatewnckApplication* matewnck_application_get (gulong xwindow);
 
-gulong matewnck_application_get_xid (MateWnckApplication *app);
+gulong matewnck_application_get_xid (MatewnckApplication *app);
 
-GList* matewnck_application_get_windows   (MateWnckApplication *app);
-int    matewnck_application_get_n_windows (MateWnckApplication *app);
+GList* matewnck_application_get_windows   (MatewnckApplication *app);
+int    matewnck_application_get_n_windows (MatewnckApplication *app);
 
 /* application_get_name, application_get_pid, etc.; prefer to read
  * properties straight off the group leader, and failing that, if the
  * prop is the same for all windows in the app, return the values for
  * the window. Failing that, they make stuff up.
  */
-const char* matewnck_application_get_name      (MateWnckApplication *app);
-const char* matewnck_application_get_icon_name (MateWnckApplication *app);
-int         matewnck_application_get_pid       (MateWnckApplication *app);
-GdkPixbuf*  matewnck_application_get_icon      (MateWnckApplication *app);
-GdkPixbuf*  matewnck_application_get_mini_icon (MateWnckApplication *app);
-gboolean    matewnck_application_get_icon_is_fallback (MateWnckApplication *app);
-const char* matewnck_application_get_startup_id (MateWnckApplication *app);
+const char* matewnck_application_get_name      (MatewnckApplication *app);
+const char* matewnck_application_get_icon_name (MatewnckApplication *app);
+int         matewnck_application_get_pid       (MatewnckApplication *app);
+GdkPixbuf*  matewnck_application_get_icon      (MatewnckApplication *app);
+GdkPixbuf*  matewnck_application_get_mini_icon (MatewnckApplication *app);
+gboolean    matewnck_application_get_icon_is_fallback (MatewnckApplication *app);
+const char* matewnck_application_get_startup_id (MatewnckApplication *app);
 
 G_END_DECLS
 

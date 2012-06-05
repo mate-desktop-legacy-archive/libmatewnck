@@ -52,7 +52,7 @@ int
 main (int argc, char **argv)
 {
   GOptionContext *ctxt;
-  MateWnckScreen *screen;
+  MatewnckScreen *screen;
   GtkWidget *win;
   GtkWidget *frame;
   GtkWidget *tasklist;

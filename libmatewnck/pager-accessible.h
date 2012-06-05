@@ -31,21 +31,21 @@ extern "C" {
 #endif /* __cplusplus */
 
 #define MATEWNCK_PAGER_TYPE_ACCESSIBLE                     (matewnck_pager_accessible_get_type ())
-#define MATEWNCK_PAGER_ACCESSIBLE(obj)                     (G_TYPE_CHECK_INSTANCE_CAST ((obj), MATEWNCK_PAGER_TYPE_ACCESSIBLE, MateWnckPagerAccessible))
-#define MATEWNCK_PAGER_ACCESSIBLE_CLASS(klass)             (G_TYPE_CHECK_CLASS_CAST ((klass), MATEWNCK_PAGER_TYPE_ACCESSIBLE, MateWnckPagerAccessibleClass))
+#define MATEWNCK_PAGER_ACCESSIBLE(obj)                     (G_TYPE_CHECK_INSTANCE_CAST ((obj), MATEWNCK_PAGER_TYPE_ACCESSIBLE, MatewnckPagerAccessible))
+#define MATEWNCK_PAGER_ACCESSIBLE_CLASS(klass)             (G_TYPE_CHECK_CLASS_CAST ((klass), MATEWNCK_PAGER_TYPE_ACCESSIBLE, MatewnckPagerAccessibleClass))
 #define MATEWNCK_PAGER_IS_ACCESSIBLE(obj)                  (G_TYPE_CHECK_INSTANCE_TYPE ((obj), MATEWNCK_PAGER_TYPE_ACCESSIBLE))
-#define MATEWNCK_PAGER_IS_ACCESSIBLE_CLASS(klass)          (G_TYPE_CHECK_CLASS_TYPE ((klass), MateWnckPagerAccessible))
-#define MATEWNCK_PAGER_ACCESSIBLE_GET_CLASS(obj)           (G_TYPE_INSTANCE_GET_CLASS ((obj), MATEWNCK_PAGER_TYPE_ACCESSIBLE, MateWnckPagerAccessibleClass)) 
+#define MATEWNCK_PAGER_IS_ACCESSIBLE_CLASS(klass)          (G_TYPE_CHECK_CLASS_TYPE ((klass), MatewnckPagerAccessible))
+#define MATEWNCK_PAGER_ACCESSIBLE_GET_CLASS(obj)           (G_TYPE_INSTANCE_GET_CLASS ((obj), MATEWNCK_PAGER_TYPE_ACCESSIBLE, MatewnckPagerAccessibleClass)) 
 
-typedef struct _MateWnckPagerAccessible MateWnckPagerAccessible;
-typedef struct _MateWnckPagerAccessibleClass MateWnckPagerAccessibleClass;
+typedef struct _MatewnckPagerAccessible MatewnckPagerAccessible;
+typedef struct _MatewnckPagerAccessibleClass MatewnckPagerAccessibleClass;
 
-struct _MateWnckPagerAccessible
+struct _MatewnckPagerAccessible
 {
   GtkAccessible parent;
 };
 
-struct _MateWnckPagerAccessibleClass
+struct _MatewnckPagerAccessibleClass
 {
   GtkAccessibleClass parent_class;
 };

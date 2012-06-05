@@ -191,8 +191,8 @@ doc/Makefile
 po/Makefile.in
 libmatewnck/Makefile
 libmatewnck/version.h
-libmatewnck-1.0.pc
-libmatewnck-1.0-uninstalled.pc
+libmatewnck.pc
+libmatewnck-uninstalled.pc
 ])
 
 dnl ---------------------------------------------------------------------------

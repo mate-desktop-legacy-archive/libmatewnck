@@ -42,14 +42,14 @@
  * SECTION:selector
  * @short_description: a window selector widget, showing the list of windows as
  * a menu.
- * @see_also: #MateWnckTasklist
+ * @see_also: #MatewnckTasklist
  * @stability: Unstable
  *
- * The #MateWnckSelector represents client windows on a screen as a menu, where
+ * The #MatewnckSelector represents client windows on a screen as a menu, where
  * menu items are labelled with the window titles and icons. Activating a menu
  * item activates the represented window.
  *
- * The #MateWnckSelector will automatically detect the screen it is on, and will
+ * The #MatewnckSelector will automatically detect the screen it is on, and will
  * represent windows of this screen only.
  */
 
@@ -59,9 +59,9 @@ typedef struct
   GtkWidget *label;
 } window_hash_item;
 
-struct _MateWnckSelectorPrivate {
+struct _MatewnckSelectorPrivate {
   GtkWidget  *image;
-  MateWnckWindow *icon_window;
+  MatewnckWindow *icon_window;
 
   /* those have the same lifecycle as the menu */
   GtkWidget  *menu;
@@ -71,8 +71,8 @@ struct _MateWnckSelectorPrivate {
   int size;
 };
 
-G_DEFINE_TYPE (MateWnckSelector, matewnck_selector, GTK_TYPE_MENU_BAR);
-#define MATEWNCK_SELECTOR_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), MATEWNCK_TYPE_SELECTOR, MateWnckSelectorPrivate))
+G_DEFINE_TYPE (MatewnckSelector, matewnck_selector, GTK_TYPE_MENU_BAR);
+#define MATEWNCK_SELECTOR_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), MATEWNCK_TYPE_SELECTOR, MatewnckSelectorPrivate))
 
 static GObject *matewnck_selector_constructor (GType                  type,
                                            guint                  n_construct_properties,
@@ -81,13 +81,13 @@ static void matewnck_selector_dispose           (GObject           *object);
 static void matewnck_selector_finalize          (GObject           *object);
 static void matewnck_selector_realize           (GtkWidget *widget);
 static void matewnck_selector_unrealize         (GtkWidget *widget);
-static void matewnck_selector_connect_to_window (MateWnckSelector      *selector,
-                                             MateWnckWindow        *window);
+static void matewnck_selector_connect_to_window (MatewnckSelector      *selector,
+                                             MatewnckWindow        *window);
 
-static void matewnck_selector_insert_window (MateWnckSelector *selector,
-                                         MateWnckWindow   *window);
-static void matewnck_selector_append_window (MateWnckSelector *selector,
-                                         MateWnckWindow   *window);
+static void matewnck_selector_insert_window (MatewnckSelector *selector,
+                                         MatewnckWindow   *window);
+static void matewnck_selector_append_window (MatewnckSelector *selector,
+                                         MatewnckWindow   *window);
 
 static gint
 matewnck_selector_windows_compare (gconstpointer  a,
@@ -118,8 +118,8 @@ matewncklet_connect_while_alive (gpointer object,
                                   closure, FALSE);
 }
 
-static MateWnckScreen *
-matewnck_selector_get_screen (MateWnckSelector *selector)
+static MatewnckScreen *
+matewnck_selector_get_screen (MatewnckSelector *selector)
 {
   GdkScreen *screen;
 
@@ -181,9 +181,9 @@ matewnck_selector_dimm_icon (GdkPixbuf *pixbuf)
 }
 
 static void
-matewnck_selector_set_window_icon (MateWnckSelector *selector,
+matewnck_selector_set_window_icon (MatewnckSelector *selector,
                                GtkWidget *image,
-                               MateWnckWindow *window, gboolean use_icon_size)
+                               MatewnckWindow *window, gboolean use_icon_size)
 {
   GdkPixbuf *pixbuf, *freeme, *freeme2;
   int width, height;
@@ -234,7 +234,7 @@ matewnck_selector_set_window_icon (MateWnckSelector *selector,
 }
 
 static void
-matewnck_selector_set_active_window (MateWnckSelector *selector, MateWnckWindow *window)
+matewnck_selector_set_active_window (MatewnckSelector *selector, MatewnckWindow *window)
 {
   matewnck_selector_set_window_icon (selector, selector->priv->image,
 		  		 window, FALSE);
@@ -242,7 +242,7 @@ matewnck_selector_set_active_window (MateWnckSelector *selector, MateWnckWindow 
 }
 
 static void
-matewnck_selector_make_menu_consistent (MateWnckSelector *selector)
+matewnck_selector_make_menu_consistent (MatewnckSelector *selector)
 {
   GList     *l, *children;
   int        workspace_n;
@@ -296,8 +296,8 @@ matewnck_selector_make_menu_consistent (MateWnckSelector *selector)
           /* if we know of a workspace item that was not shown */
           if (workspace_item)
             {
-              MateWnckWindow    *window;
-              MateWnckWorkspace *workspace;
+              MatewnckWindow    *window;
+              MatewnckWorkspace *workspace;
 
               window = g_object_get_data (G_OBJECT (l->data),
                                           "matewnck-selector-window");
@@ -338,8 +338,8 @@ matewnck_selector_make_menu_consistent (MateWnckSelector *selector)
 }
 
 static void
-matewnck_selector_window_icon_changed (MateWnckWindow *window,
-                                   MateWnckSelector *selector)
+matewnck_selector_window_icon_changed (MatewnckWindow *window,
+                                   MatewnckSelector *selector)
 {
   window_hash_item *item;
   GtkWidget *image;
@@ -364,8 +364,8 @@ matewnck_selector_window_icon_changed (MateWnckWindow *window,
 }
 
 static void
-matewnck_selector_window_name_changed (MateWnckWindow *window,
-                                   MateWnckSelector *selector)
+matewnck_selector_window_name_changed (MatewnckWindow *window,
+                                   MatewnckSelector *selector)
 {
   window_hash_item *item;
   char *window_name;
@@ -386,10 +386,10 @@ matewnck_selector_window_name_changed (MateWnckWindow *window,
 }
 
 static void
-matewnck_selector_window_state_changed (MateWnckWindow *window,
-                                    MateWnckWindowState changed_mask,
-                                    MateWnckWindowState new_state,
-                                    MateWnckSelector *selector)
+matewnck_selector_window_state_changed (MatewnckWindow *window,
+                                    MatewnckWindowState changed_mask,
+                                    MatewnckWindowState new_state,
+                                    MatewnckSelector *selector)
 {
   window_hash_item *item;
   char *window_name;
@@ -444,8 +444,8 @@ matewnck_selector_window_state_changed (MateWnckWindow *window,
 
 
 static void
-matewnck_selector_window_workspace_changed (MateWnckWindow   *window,
-                                        MateWnckSelector *selector)
+matewnck_selector_window_workspace_changed (MatewnckWindow   *window,
+                                        MatewnckSelector *selector)
 {
   window_hash_item *item;
 
@@ -472,11 +472,11 @@ matewnck_selector_window_workspace_changed (MateWnckWindow   *window,
 }
 
 static void
-matewnck_selector_active_window_changed (MateWnckScreen   *screen,
-                                     MateWnckWindow   *previous_window,
-                                     MateWnckSelector *selector)
+matewnck_selector_active_window_changed (MatewnckScreen   *screen,
+                                     MatewnckWindow   *previous_window,
+                                     MatewnckSelector *selector)
 {
-  MateWnckWindow *window;
+  MatewnckWindow *window;
 
   window = matewnck_screen_get_active_window (screen);
 
@@ -485,9 +485,9 @@ matewnck_selector_active_window_changed (MateWnckScreen   *screen,
 }
 
 static void
-matewnck_selector_activate_window (MateWnckWindow *window)
+matewnck_selector_activate_window (MatewnckWindow *window)
 {
-  MateWnckWorkspace *workspace;
+  MatewnckWorkspace *workspace;
   guint32 timestamp;
 
   /* We're in an activate callback, so gtk_get_current_time() works... */
@@ -544,7 +544,7 @@ matewnck_selector_get_width (GtkWidget *widget, const char *text)
 static void  
 matewnck_selector_drag_begin (GtkWidget          *widget,
 			  GdkDragContext     *context,
-			  MateWnckWindow         *window)
+			  MatewnckWindow         *window)
 {
   while (widget)
     {
@@ -567,7 +567,7 @@ matewnck_selector_drag_data_get (GtkWidget          *widget,
 			     GtkSelectionData   *selection_data,
 			     guint               info,
 			     guint               time,
-			     MateWnckWindow         *window)
+			     MatewnckWindow         *window)
 {
   gulong xid;    
 
@@ -578,8 +578,8 @@ matewnck_selector_drag_data_get (GtkWidget          *widget,
 }
 
 static GtkWidget *
-matewnck_selector_item_new (MateWnckSelector *selector,
-                        const gchar *label, MateWnckWindow *window)
+matewnck_selector_item_new (MatewnckSelector *selector,
+                        const gchar *label, MatewnckWindow *window)
 {
   GtkWidget *item;
   GtkWidget *ellipsizing_label;
@@ -638,7 +638,7 @@ matewnck_selector_item_new (MateWnckSelector *selector,
 }
 
 static void
-matewnck_selector_workspace_name_changed (MateWnckWorkspace *workspace,
+matewnck_selector_workspace_name_changed (MatewnckWorkspace *workspace,
                                       GtkLabel      *label)
 {
   GtkStyle *style;
@@ -661,17 +661,17 @@ matewnck_selector_workspace_name_changed (MateWnckWorkspace *workspace,
 static void
 matewnck_selector_workspace_label_style_set (GtkLabel      *label,
                                          GtkStyle      *previous_style,
-                                         MateWnckWorkspace *workspace)
+                                         MatewnckWorkspace *workspace)
 {
   matewnck_selector_workspace_name_changed (workspace, label);
 }
 
 static void
-matewnck_selector_add_workspace (MateWnckSelector *selector,
-                             MateWnckScreen   *screen,
+matewnck_selector_add_workspace (MatewnckSelector *selector,
+                             MatewnckScreen   *screen,
                              int           workspace_n)
 {
-  MateWnckWorkspace *workspace;
+  MatewnckWorkspace *workspace;
   GtkWidget     *item;
   GtkWidget     *label;
 
@@ -702,9 +702,9 @@ matewnck_selector_add_workspace (MateWnckSelector *selector,
 }
 
 static GtkWidget *
-matewnck_selector_create_window (MateWnckSelector *selector, MateWnckWindow *window)
+matewnck_selector_create_window (MatewnckSelector *selector, MatewnckWindow *window)
 {
-  MateWnckWorkspace *workspace;
+  MatewnckWorkspace *workspace;
   GtkWidget *item;
   GtkWidget *image;
   char *name;
@@ -739,11 +739,11 @@ matewnck_selector_create_window (MateWnckSelector *selector, MateWnckWindow *win
 }
 
 static void
-matewnck_selector_insert_window (MateWnckSelector *selector, MateWnckWindow *window)
+matewnck_selector_insert_window (MatewnckSelector *selector, MatewnckWindow *window)
 {
   GtkWidget     *item;
-  MateWnckScreen    *screen;
-  MateWnckWorkspace *workspace;
+  MatewnckScreen    *screen;
+  MatewnckWorkspace *workspace;
   int            workspace_n;
   int            i;
 
@@ -808,7 +808,7 @@ matewnck_selector_insert_window (MateWnckSelector *selector, MateWnckWindow *win
 }
 
 static void
-matewnck_selector_append_window (MateWnckSelector *selector, MateWnckWindow *window)
+matewnck_selector_append_window (MatewnckSelector *selector, MatewnckWindow *window)
 {
   GtkWidget *item;
 
@@ -817,8 +817,8 @@ matewnck_selector_append_window (MateWnckSelector *selector, MateWnckWindow *win
 }
 
 static void
-matewnck_selector_window_opened (MateWnckScreen *screen,
-                             MateWnckWindow *window, MateWnckSelector *selector)
+matewnck_selector_window_opened (MatewnckScreen *screen,
+                             MatewnckWindow *window, MatewnckSelector *selector)
 {
   matewnck_selector_connect_to_window (selector, window);
 
@@ -835,8 +835,8 @@ matewnck_selector_window_opened (MateWnckScreen *screen,
 }
 
 static void
-matewnck_selector_window_closed (MateWnckScreen *screen,
-                             MateWnckWindow *window, MateWnckSelector *selector)
+matewnck_selector_window_closed (MatewnckScreen *screen,
+                             MatewnckWindow *window, MatewnckSelector *selector)
 {
   window_hash_item *item;
 
@@ -862,9 +862,9 @@ matewnck_selector_window_closed (MateWnckScreen *screen,
 }
 
 static void
-matewnck_selector_workspace_created (MateWnckScreen    *screen,
-                                 MateWnckWorkspace *workspace,
-                                 MateWnckSelector  *selector)
+matewnck_selector_workspace_created (MatewnckScreen    *screen,
+                                 MatewnckWorkspace *workspace,
+                                 MatewnckSelector  *selector)
 {
   if (!selector->priv->menu || !gtk_widget_get_visible (selector->priv->menu))
     return;
@@ -881,9 +881,9 @@ matewnck_selector_workspace_created (MateWnckScreen    *screen,
 }
 
 static void
-matewnck_selector_workspace_destroyed (MateWnckScreen    *screen,
-                                   MateWnckWorkspace *workspace,
-                                   MateWnckSelector  *selector)
+matewnck_selector_workspace_destroyed (MatewnckScreen    *screen,
+                                   MatewnckWorkspace *workspace,
+                                   MatewnckSelector  *selector)
 {
   GList     *l, *children;
   GtkWidget *destroy;
@@ -926,7 +926,7 @@ matewnck_selector_workspace_destroyed (MateWnckScreen    *screen,
 }
 
 static void
-matewnck_selector_connect_to_window (MateWnckSelector *selector, MateWnckWindow *window)
+matewnck_selector_connect_to_window (MatewnckSelector *selector, MatewnckWindow *window)
 {
   matewncklet_connect_while_alive (window, "icon_changed",
                                G_CALLBACK (matewnck_selector_window_icon_changed),
@@ -943,8 +943,8 @@ matewnck_selector_connect_to_window (MateWnckSelector *selector, MateWnckWindow 
 }
 
 static void
-matewnck_selector_disconnect_from_window (MateWnckSelector *selector,
-                                      MateWnckWindow   *window)
+matewnck_selector_disconnect_from_window (MatewnckSelector *selector,
+                                      MatewnckWindow   *window)
 {
   g_signal_handlers_disconnect_by_func (window,
                                         matewnck_selector_window_icon_changed,
@@ -961,7 +961,7 @@ matewnck_selector_disconnect_from_window (MateWnckSelector *selector,
 }
 
 static void
-matewnck_selector_connect_to_screen (MateWnckSelector *selector, MateWnckScreen *screen)
+matewnck_selector_connect_to_screen (MatewnckSelector *selector, MatewnckScreen *screen)
 {
   matewncklet_connect_while_alive (screen, "active_window_changed",
                                G_CALLBACK
@@ -986,8 +986,8 @@ matewnck_selector_connect_to_screen (MateWnckSelector *selector, MateWnckScreen 
 }
 
 static void
-matewnck_selector_disconnect_from_screen (MateWnckSelector *selector,
-                                      MateWnckScreen   *screen)
+matewnck_selector_disconnect_from_screen (MatewnckSelector *selector,
+                                      MatewnckScreen   *screen)
 {
   g_signal_handlers_disconnect_by_func (screen,
                                         matewnck_selector_active_window_changed,
@@ -1007,7 +1007,7 @@ matewnck_selector_disconnect_from_screen (MateWnckSelector *selector,
 }
 
 static void
-matewnck_selector_destroy_menu (GtkWidget *widget, MateWnckSelector *selector)
+matewnck_selector_destroy_menu (GtkWidget *widget, MatewnckSelector *selector)
 {
   selector->priv->menu = NULL;
 
@@ -1019,16 +1019,16 @@ matewnck_selector_destroy_menu (GtkWidget *widget, MateWnckSelector *selector)
 }
 
 static gboolean
-matewnck_selector_scroll_cb (MateWnckSelector *selector,
+matewnck_selector_scroll_cb (MatewnckSelector *selector,
                          GdkEventScroll *event,
                          gpointer user_data)
 {
-  MateWnckScreen *screen;
-  MateWnckWorkspace *workspace;
+  MatewnckScreen *screen;
+  MatewnckWorkspace *workspace;
   GList *windows_list;
   GList *l;
-  MateWnckWindow *window;
-  MateWnckWindow *previous_window;
+  MatewnckWindow *window;
+  MatewnckWindow *previous_window;
   gboolean should_activate_next_window;
 
   screen = matewnck_selector_get_screen (selector);
@@ -1094,17 +1094,17 @@ matewnck_selector_scroll_cb (MateWnckSelector *selector,
 }
 
 static void
-matewnck_selector_menu_hidden (GtkWidget *menu, MateWnckSelector *selector)
+matewnck_selector_menu_hidden (GtkWidget *menu, MatewnckSelector *selector)
 {
   gtk_widget_set_state (GTK_WIDGET (selector), GTK_STATE_NORMAL);
 }
 
 static void
-matewnck_selector_on_show (GtkWidget *widget, MateWnckSelector *selector)
+matewnck_selector_on_show (GtkWidget *widget, MatewnckSelector *selector)
 {
   GtkWidget *separator;
-  MateWnckScreen *screen;
-  MateWnckWorkspace *workspace;
+  MatewnckScreen *screen;
+  MatewnckWorkspace *workspace;
   int nb_workspace;
   int i;
   GList **windows_per_workspace;
@@ -1184,7 +1184,7 @@ matewnck_selector_on_show (GtkWidget *widget, MateWnckSelector *selector)
 }
 
 static void
-matewnck_selector_fill (MateWnckSelector *selector)
+matewnck_selector_fill (MatewnckSelector *selector)
 {
   GtkWidget *menu_item;
 
@@ -1222,7 +1222,7 @@ matewnck_selector_fill (MateWnckSelector *selector)
 }
 
 static void
-matewnck_selector_init (MateWnckSelector *selector)
+matewnck_selector_init (MatewnckSelector *selector)
 {
   AtkObject *atk_obj;
 
@@ -1243,12 +1243,12 @@ matewnck_selector_init (MateWnckSelector *selector)
 }
 
 static void
-matewnck_selector_class_init (MateWnckSelectorClass *klass)
+matewnck_selector_class_init (MatewnckSelectorClass *klass)
 {
   GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
 
-  g_type_class_add_private (klass, sizeof (MateWnckSelectorPrivate));
+  g_type_class_add_private (klass, sizeof (MatewnckSelectorPrivate));
 
   object_class->constructor = matewnck_selector_constructor;
   object_class->dispose = matewnck_selector_dispose;
@@ -1278,7 +1278,7 @@ matewnck_selector_constructor (GType                  type,
 static void
 matewnck_selector_finalize (GObject *object)
 {
-  MateWnckSelector *selector;
+  MatewnckSelector *selector;
 
   selector = MATEWNCK_SELECTOR (object);
 
@@ -1292,7 +1292,7 @@ matewnck_selector_finalize (GObject *object)
 static void
 matewnck_selector_dispose (GObject *object)
 {
-  MateWnckSelector *selector;
+  MatewnckSelector *selector;
 
   selector = MATEWNCK_SELECTOR (object);
 
@@ -1309,9 +1309,9 @@ matewnck_selector_dispose (GObject *object)
 static void
 matewnck_selector_realize (GtkWidget *widget)
 {
-  MateWnckSelector *selector;
-  MateWnckScreen   *screen;
-  MateWnckWindow   *window;
+  MatewnckSelector *selector;
+  MatewnckScreen   *screen;
+  MatewnckWindow   *window;
   GList        *l;
 
   GTK_WIDGET_CLASS (matewnck_selector_parent_class)->realize (widget);
@@ -1331,8 +1331,8 @@ matewnck_selector_realize (GtkWidget *widget)
 static void
 matewnck_selector_unrealize (GtkWidget *widget)
 {
-  MateWnckSelector *selector;
-  MateWnckScreen   *screen;
+  MatewnckSelector *selector;
+  MatewnckScreen   *screen;
   GList        *l;
 
   selector = MATEWNCK_SELECTOR (widget);
@@ -1349,17 +1349,17 @@ matewnck_selector_unrealize (GtkWidget *widget)
 /**
  * matewnck_selector_new:
  *
- * Creates a new #MateWnckSelector. The #MateWnckSelector will list #MateWnckWindow of the
- * #MateWnckScreen it is on.
+ * Creates a new #MatewnckSelector. The #MatewnckSelector will list #MatewnckWindow of the
+ * #MatewnckScreen it is on.
  *
- * Return value: a newly created #MateWnckSelector.
+ * Return value: a newly created #MatewnckSelector.
  *
  * Since: 2.10
  */
 GtkWidget *
 matewnck_selector_new (void)
 {
-  MateWnckSelector *selector;
+  MatewnckSelector *selector;
 
   selector = g_object_new (MATEWNCK_TYPE_SELECTOR, NULL);
 
