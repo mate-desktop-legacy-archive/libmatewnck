@@ -1,0 +1,774 @@
+commit 3ec4a126e159987cc3514ec4c33ea5c04b04e0ec
+Merge: a661e89 64358c5
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Tue Jun 5 09:49:53 2012 +0200
+
+    Merge branch 'master' of github.com:mate-desktop/libmatewnck
+
+commit a661e894ad15efa834ae001dca481b69f85c2e32
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Tue Jun 5 09:49:43 2012 +0200
+
+    update README and configure.ac
+
+ README       |   16 +++-------------
+ configure.ac |    4 ++--
+ 2 files changed, 5 insertions(+), 15 deletions(-)
+
+commit 64358c5a43aadc39713705cbb55c57680389682e
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Tue Jun 5 00:04:04 2012 +0200
+
+    MateWnck => Matewnck
+
+ doc/html/MateWnckApplication.html                  |  425 ----
+ doc/html/MateWnckClassGroup.html                   |  315 ---
+ doc/html/MateWnckPager.html                        |  423 ----
+ doc/html/MateWnckScreen.html                       | 1425 -----------
+ doc/html/MateWnckSelector.html                     |  124 -
+ doc/html/MateWnckTasklist.html                     |  648 -----
+ doc/html/MateWnckWindow.html                       | 2623 --------------------
+ doc/html/MateWnckWorkspace.html                    |  470 ----
+ doc/html/MatewnckApplication.html                  |  425 ++++
+ doc/html/MatewnckClassGroup.html                   |  315 +++
+ doc/html/MatewnckPager.html                        |  423 ++++
+ doc/html/MatewnckScreen.html                       | 1425 +++++++++++
+ doc/html/MatewnckSelector.html                     |  124 +
+ doc/html/MatewnckTasklist.html                     |  648 +++++
+ doc/html/MatewnckWindow.html                       | 2623 ++++++++++++++++++++
+ doc/html/MatewnckWorkspace.html                    |  470 ++++
+ doc/html/core.html                                 |   14 +-
+ doc/html/index.html                                |   18 +-
+ doc/html/index.sgml                                |  694 +++---
+ doc/html/ix01.html                                 |  416 ++--
+ doc/html/ix02.html                                 |   22 +-
+ doc/html/ix03.html                                 |   34 +-
+ doc/html/ix04.html                                 |   14 +-
+ doc/html/ix05.html                                 |    4 +-
+ doc/html/ix06.html                                 |    8 +-
+ doc/html/ix07.html                                 |   10 +-
+ doc/html/ix08.html                                 |   18 +-
+ doc/html/ix09.html                                 |   14 +-
+ doc/html/ix10.html                                 |   16 +-
+ doc/html/ix11.html                                 |   34 +-
+ doc/html/ix13.html                                 |    4 +-
+ doc/html/libmatewnck-Miscellaneous-Functions.html  |   12 +-
+ .../libmatewnck-Resource-Usage-of-X-Clients.html   |   42 +-
+ doc/html/libmatewnck-Window-Action-Menu.html       |   56 +-
+ doc/html/libmatewnck.devhelp2                      |  568 ++---
+ doc/html/utils.html                                |    4 +-
+ doc/html/widgets.html                              |   14 +-
+ doc/libmatewnck-sections.txt                       |  126 +-
+ doc/tmpl/application.sgml                          |    8 +-
+ doc/tmpl/class-group.sgml                          |    8 +-
+ doc/tmpl/misc.sgml                                 |    2 +-
+ doc/tmpl/pager.sgml                                |    8 +-
+ doc/tmpl/resource.sgml                             |    2 +-
+ doc/tmpl/screen.sgml                               |   38 +-
+ doc/tmpl/selector.sgml                             |    4 +-
+ doc/tmpl/tasklist.sgml                             |   16 +-
+ doc/tmpl/util.sgml                                 |    4 +-
+ doc/tmpl/window-action-menu.sgml                   |    6 +-
+ doc/tmpl/window.sgml                               |   26 +-
+ doc/tmpl/workspace.sgml                            |    6 +-
+ libmatewnck/Makefile.am                            |   16 +-
+ libmatewnck/application.c                          |  162 +-
+ libmatewnck/application.h                          |   46 +-
+ libmatewnck/class-group.c                          |  138 +-
+ libmatewnck/class-group.h                          |   36 +-
+ libmatewnck/matewnck-enum-types.c                  |   24 +-
+ libmatewnck/matewnck-urgency-monitor.c             |   32 +-
+ libmatewnck/matewnckprop.c                         |   88 +-
+ libmatewnck/pager-accessible-factory.c             |    6 +-
+ libmatewnck/pager-accessible-factory.h             |   14 +-
+ libmatewnck/pager-accessible.c                     |   50 +-
+ libmatewnck/pager-accessible.h                     |   16 +-
+ libmatewnck/pager.c                                |  406 +--
+ libmatewnck/pager.h                                |   70 +-
+ libmatewnck/private.h                              |   98 +-
+ libmatewnck/screen.c                               |  644 ++---
+ libmatewnck/screen.h                               |  226 +-
+ libmatewnck/selector.c                             |  186 +-
+ libmatewnck/selector.h                             |   22 +-
+ libmatewnck/tasklist.c                             |  620 ++---
+ libmatewnck/tasklist.h                             |   84 +-
+ libmatewnck/test-matewnck.c                        |  146 +-
+ libmatewnck/test-pager.c                           |    8 +-
+ libmatewnck/test-selector.c                        |    2 +-
+ libmatewnck/test-tasklist.c                        |    2 +-
+ libmatewnck/util.c                                 |   24 +-
+ libmatewnck/util.h                                 |   18 +-
+ libmatewnck/window-action-menu.c                   |  118 +-
+ libmatewnck/window-action-menu.h                   |   26 +-
+ libmatewnck/window.c                               |  670 ++---
+ libmatewnck/window.h                               |  242 +-
+ libmatewnck/workspace-accessible-factory.c         |    6 +-
+ libmatewnck/workspace-accessible-factory.h         |   14 +-
+ libmatewnck/workspace-accessible.c                 |   14 +-
+ libmatewnck/workspace-accessible.h                 |   16 +-
+ libmatewnck/workspace.c                            |  150 +-
+ libmatewnck/workspace.h                            |   50 +-
+ libmatewnck/xutils.c                               |   36 +-
+ libmatewnck/xutils.h                               |   16 +-
+ po/ar.po                                           |   14 +-
+ po/as.po                                           |   14 +-
+ po/ast.po                                          |   14 +-
+ po/be.po                                           |   14 +-
+ po/be@latin.po                                     |   14 +-
+ po/bg.po                                           |   14 +-
+ po/bn.po                                           |   14 +-
+ po/bn_IN.po                                        |   14 +-
+ po/br.po                                           |   14 +-
+ po/ca.po                                           |   14 +-
+ po/ca@valencia.po                                  |   14 +-
+ po/crh.po                                          |   14 +-
+ po/cs.po                                           |   14 +-
+ po/da.po                                           |   14 +-
+ po/de.po                                           |   14 +-
+ po/dz.po                                           |   14 +-
+ po/el.po                                           |   14 +-
+ po/en@shaw.po                                      |   14 +-
+ po/en_GB.po                                        |   14 +-
+ po/es.po                                           |   14 +-
+ po/et.po                                           |   14 +-
+ po/eu.po                                           |   14 +-
+ po/fi.po                                           |   14 +-
+ po/fr.po                                           |   14 +-
+ po/ga.po                                           |   14 +-
+ po/gl.po                                           |   14 +-
+ po/gu.po                                           |   14 +-
+ po/he.po                                           |   14 +-
+ po/hi.po                                           |   14 +-
+ po/hr.po                                           |   14 +-
+ po/hu.po                                           |   14 +-
+ po/id.po                                           |   14 +-
+ po/it.po                                           |   14 +-
+ po/ja.po                                           |   14 +-
+ po/ka.po                                           |   14 +-
+ po/kk.po                                           |   14 +-
+ po/kn.po                                           |   14 +-
+ po/ko.po                                           |   14 +-
+ po/lt.po                                           |   14 +-
+ po/lv.po                                           |   14 +-
+ po/mai.po                                          |   14 +-
+ po/mk.po                                           |   14 +-
+ po/ml.po                                           |   14 +-
+ po/mr.po                                           |   14 +-
+ po/nb.po                                           |   14 +-
+ po/ne.po                                           |   14 +-
+ po/nl.po                                           |   14 +-
+ po/nn.po                                           |   14 +-
+ po/oc.po                                           |   14 +-
+ po/or.po                                           |   14 +-
+ po/pa.po                                           |   14 +-
+ po/pl.po                                           |   14 +-
+ po/pt.po                                           |   14 +-
+ po/pt_BR.po                                        |   14 +-
+ po/ro.po                                           |   14 +-
+ po/ru.po                                           |   14 +-
+ po/sk.po                                           |   14 +-
+ po/sl.po                                           |   14 +-
+ po/sr.po                                           |   14 +-
+ po/sr@latin.po                                     |   14 +-
+ po/sv.po                                           |   14 +-
+ po/ta.po                                           |   14 +-
+ po/te.po                                           |   14 +-
+ po/th.po                                           |   14 +-
+ po/tr.po                                           |   14 +-
+ po/ug.po                                           |   14 +-
+ po/uk.po                                           |   14 +-
+ po/vi.po                                           |   14 +-
+ po/zh_CN.po                                        |   14 +-
+ po/zh_HK.po                                        |   14 +-
+ po/zh_TW.po                                        |   14 +-
+ 160 files changed, 10356 insertions(+), 10356 deletions(-)
+
+commit c8f021378a23c51cff99e103464e6576eb9e47e4
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Tue May 29 12:34:32 2012 +0200
+
+    rename libmatewnck-1.0 to libmatewnck
+
+ Makefile.am                       |    6 +++---
+ configure.ac                      |    4 ++--
+ doc/Makefile.am                   |    2 +-
+ libmatewnck-1.0-uninstalled.pc.in |   13 -------------
+ libmatewnck-1.0.pc.in             |   13 -------------
+ libmatewnck-uninstalled.pc.in     |   13 +++++++++++++
+ libmatewnck.pc.in                 |   13 +++++++++++++
+ libmatewnck/Makefile.am           |   20 ++++++++++----------
+ 8 files changed, 42 insertions(+), 42 deletions(-)
+
+commit fce6db2fa810dacc808a74878a4ffdfe066925a7
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Tue May 29 12:34:12 2012 +0200
+
+    add autogen.sh
+
+ autogen.sh |   25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
+
+commit 028046d23c81125c89fc867de77be611e5f585af
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Tue May 29 12:33:44 2012 +0200
+
+    add Changelog and NEWS empty files
+
+ 0 files changed
+
+commit c25436a4a860ae5d7ae87079c463fb77e349d922
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Thu May 24 17:42:05 2012 +0200
+
+    removed WNCK_I_KNOW_THIS_IS_UNSTABLE
+    libmatewnck will be part of MATE Desktop, so it will be stable
+
+ doc/Makefile.am         |    2 +-
+ libmatewnck/Makefile.am |    1 -
+ libmatewnck/window.h    |    4 ----
+ 3 files changed, 1 insertion(+), 6 deletions(-)
+
+commit bdf507aa4b22a08c19c17ed809f75ed8728f6fdc
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Thu May 24 16:58:27 2012 +0200
+
+    wnck => matewnck
+
+ AUTHORS                                            |    4 +
+ ChangeLog                                          | 1548 --
+ HACKING                                            |   26 +-
+ INSTALL                                            |  302 -
+ MAINTAINERS                                        |   25 -
+ Makefile.am                                        |   11 +-
+ Makefile.in                                        |  892 -
+ NEWS                                               | 1780 --
+ README                                             |   25 +-
+ aclocal.m4                                         | 2074 ---
+ config.guess                                       | 1501 --
+ config.h.in                                        |   92 -
+ config.sub                                         | 1705 --
+ configure                                          |17921 --------------------
+ configure.ac                                       |   70 +-
+ depcomp                                            |  630 -
+ doc/Makefile.am                                    |   16 +-
+ doc/Makefile.in                                    |  747 -
+ doc/html/MateWnckApplication.html                  |  425 +
+ doc/html/MateWnckClassGroup.html                   |  315 +
+ doc/html/MateWnckPager.html                        |  423 +
+ doc/html/MateWnckScreen.html                       | 1425 ++
+ doc/html/MateWnckSelector.html                     |  124 +
+ doc/html/MateWnckTasklist.html                     |  648 +
+ doc/html/MateWnckWindow.html                       | 2623 +++
+ doc/html/MateWnckWorkspace.html                    |  470 +
+ doc/html/WnckApplication.html                      |  425 -
+ doc/html/WnckClassGroup.html                       |  315 -
+ doc/html/WnckPager.html                            |  423 -
+ doc/html/WnckScreen.html                           | 1425 --
+ doc/html/WnckSelector.html                         |  124 -
+ doc/html/WnckTasklist.html                         |  648 -
+ doc/html/WnckWindow.html                           | 2623 ---
+ doc/html/WnckWorkspace.html                        |  470 -
+ doc/html/core.html                                 |   26 +-
+ doc/html/index.html                                |   40 +-
+ doc/html/index.sgml                                |  770 +-
+ doc/html/indexes.html                              |   10 +-
+ doc/html/intro.html                                |   18 +-
+ doc/html/ix01.html                                 |  440 +-
+ doc/html/ix02.html                                 |   30 +-
+ doc/html/ix03.html                                 |   38 +-
+ doc/html/ix04.html                                 |   18 +-
+ doc/html/ix05.html                                 |   12 +-
+ doc/html/ix06.html                                 |   12 +-
+ doc/html/ix07.html                                 |   14 +-
+ doc/html/ix08.html                                 |   22 +-
+ doc/html/ix09.html                                 |   20 +-
+ doc/html/ix10.html                                 |   20 +-
+ doc/html/ix11.html                                 |   38 +-
+ doc/html/ix12.html                                 |    6 +-
+ doc/html/ix13.html                                 |   16 +-
+ doc/html/libmatewnck-Miscellaneous-Functions.html  |  136 +
+ .../libmatewnck-Resource-Usage-of-X-Clients.html   |  235 +
+ doc/html/libmatewnck-Version-Information.html      |  151 +
+ doc/html/libmatewnck-Window-Action-Menu.html       |  188 +
+ doc/html/libmatewnck.devhelp2                      |  329 +
+ doc/html/libwnck-Miscellaneous-Functions.html      |  136 -
+ doc/html/libwnck-Resource-Usage-of-X-Clients.html  |  235 -
+ doc/html/libwnck-Version-Information.html          |  151 -
+ doc/html/libwnck-Window-Action-Menu.html           |  188 -
+ doc/html/libwnck.devhelp2                          |  329 -
+ doc/html/utils.html                                |   24 +-
+ doc/html/widgets.html                              |   26 +-
+ doc/libmatewnck-docs.sgml                          |  118 +
+ doc/libmatewnck-overrides.txt                      |    2 +
+ doc/libmatewnck-sections.txt                       |  474 +
+ doc/libmatewnck.types                              |   13 +
+ doc/libwnck-docs.sgml                              |  118 -
+ doc/libwnck-overrides.txt                          |    2 -
+ doc/libwnck-sections.txt                           |  474 -
+ doc/libwnck.types                                  |   13 -
+ doc/tmpl/application.sgml                          |   34 +-
+ doc/tmpl/class-group.sgml                          |   24 +-
+ doc/tmpl/libmatewnck-unused.sgml                   |   24 +
+ doc/tmpl/libwnck-unused.sgml                       |   24 -
+ doc/tmpl/misc.sgml                                 |   10 +-
+ doc/tmpl/pager.sgml                                |   34 +-
+ doc/tmpl/resource.sgml                             |    6 +-
+ doc/tmpl/screen.sgml                               |  132 +-
+ doc/tmpl/selector.sgml                             |    6 +-
+ doc/tmpl/tasklist.sgml                             |   48 +-
+ doc/tmpl/util.sgml                                 |   16 +-
+ doc/tmpl/version.sgml                              |    8 +-
+ doc/tmpl/window-action-menu.sgml                   |   10 +-
+ doc/tmpl/window.sgml                               |  298 +-
+ doc/tmpl/workspace.sgml                            |   34 +-
+ gtk-doc.make                                       |  280 -
+ libmatewnck-1.0-uninstalled.pc.in                  |   13 +
+ libmatewnck-1.0.pc.in                              |   13 +
+ libmatewnck/Makefile.am                            |  190 +
+ libmatewnck/TODO                                   |    4 +
+ libmatewnck/application.c                          |  730 +
+ libmatewnck/application.h                          |   99 +
+ libmatewnck/class-group.c                          |  605 +
+ libmatewnck/class-group.h                          |   85 +
+ libmatewnck/default_icon.png                       |  Bin 0 -> 345 bytes
+ libmatewnck/inlinepixbufs.h                        |  251 +
+ libmatewnck/libmatewnck.h                          |   45 +
+ libmatewnck/matewnck-enum-types.c                  |  272 +
+ libmatewnck/matewnck-enum-types.h                  |   48 +
+ libmatewnck/matewnck-marshal.c                     |   90 +
+ libmatewnck/matewnck-marshal.h                     |   20 +
+ libmatewnck/matewnck-marshal.list                  |   25 +
+ libmatewnck/matewnck-urgency-monitor.c             |  218 +
+ libmatewnck/matewnckprop.c                         | 2030 +++
+ libmatewnck/pager-accessible-factory.c             |   71 +
+ libmatewnck/pager-accessible-factory.h             |   59 +
+ libmatewnck/pager-accessible.c                     |  487 +
+ libmatewnck/pager-accessible.h                     |   62 +
+ libmatewnck/pager.c                                | 2770 +++
+ libmatewnck/pager.h                                |  130 +
+ libmatewnck/private.h                              |  151 +
+ libmatewnck/screen.c                               | 2837 ++++
+ libmatewnck/screen.h                               |  276 +
+ libmatewnck/selector.c                             | 1367 ++
+ libmatewnck/selector.h                             |   67 +
+ libmatewnck/stock_delete.png                       |  Bin 0 -> 220 bytes
+ libmatewnck/stock_maximize.png                     |  Bin 0 -> 166 bytes
+ libmatewnck/stock_minimize.png                     |  Bin 0 -> 145 bytes
+ libmatewnck/tasklist.c                             | 4499 +++++
+ libmatewnck/tasklist.h                             |  146 +
+ libmatewnck/test-matewnck.c                        |  879 +
+ libmatewnck/test-pager.c                           |  101 +
+ libmatewnck/test-selector.c                        |   75 +
+ libmatewnck/test-tasklist.c                        |  153 +
+ libmatewnck/test-urgent.c                          |   96 +
+ libmatewnck/util.c                                 |  802 +
+ libmatewnck/util.h                                 |  116 +
+ libmatewnck/version.h                              |   93 +
+ libmatewnck/version.h.in                           |   93 +
+ libmatewnck/window-action-menu.c                   | 1244 ++
+ libmatewnck/window-action-menu.h                   |   77 +
+ libmatewnck/window.c                               | 3261 ++++
+ libmatewnck/window.h                               |  412 +
+ libmatewnck/workspace-accessible-factory.c         |   64 +
+ libmatewnck/workspace-accessible-factory.h         |   59 +
+ libmatewnck/workspace-accessible.c                 |  256 +
+ libmatewnck/workspace-accessible.h                 |   64 +
+ libmatewnck/workspace.c                            |  614 +
+ libmatewnck/workspace.h                            |   91 +
+ libmatewnck/xutils.c                               | 2733 +++
+ libmatewnck/xutils.h                               |  216 +
+ libwnck-1.0-uninstalled.pc.in                      |   13 -
+ libwnck-1.0.pc.in                                  |   13 -
+ libwnck/Makefile.am                                |  190 -
+ libwnck/Makefile.in                                | 1140 --
+ libwnck/TODO                                       |    4 -
+ libwnck/application.c                              |  730 -
+ libwnck/application.h                              |   99 -
+ libwnck/class-group.c                              |  605 -
+ libwnck/class-group.h                              |   85 -
+ libwnck/default_icon.png                           |  Bin 345 -> 0 bytes
+ libwnck/inlinepixbufs.h                            |  251 -
+ libwnck/libwnck.h                                  |   45 -
+ libwnck/pager-accessible-factory.c                 |   71 -
+ libwnck/pager-accessible-factory.h                 |   59 -
+ libwnck/pager-accessible.c                         |  487 -
+ libwnck/pager-accessible.h                         |   62 -
+ libwnck/pager.c                                    | 2770 ---
+ libwnck/pager.h                                    |  130 -
+ libwnck/private.h                                  |  151 -
+ libwnck/screen.c                                   | 2837 ----
+ libwnck/screen.h                                   |  276 -
+ libwnck/selector.c                                 | 1367 --
+ libwnck/selector.h                                 |   67 -
+ libwnck/stock_delete.png                           |  Bin 220 -> 0 bytes
+ libwnck/stock_maximize.png                         |  Bin 166 -> 0 bytes
+ libwnck/stock_minimize.png                         |  Bin 145 -> 0 bytes
+ libwnck/tasklist.c                                 | 4499 -----
+ libwnck/tasklist.h                                 |  146 -
+ libwnck/test-pager.c                               |  101 -
+ libwnck/test-selector.c                            |   75 -
+ libwnck/test-tasklist.c                            |  153 -
+ libwnck/test-urgent.c                              |   96 -
+ libwnck/test-wnck.c                                |  879 -
+ libwnck/util.c                                     |  802 -
+ libwnck/util.h                                     |  116 -
+ libwnck/version.h                                  |   93 -
+ libwnck/version.h.in                               |   93 -
+ libwnck/window-action-menu.c                       | 1244 --
+ libwnck/window-action-menu.h                       |   77 -
+ libwnck/window.c                                   | 3261 ----
+ libwnck/window.h                                   |  412 -
+ libwnck/wnck-enum-types.c                          |  272 -
+ libwnck/wnck-enum-types.h                          |   48 -
+ libwnck/wnck-marshal.c                             |   90 -
+ libwnck/wnck-marshal.h                             |   20 -
+ libwnck/wnck-marshal.list                          |   25 -
+ libwnck/wnck-urgency-monitor.c                     |  218 -
+ libwnck/wnckprop.c                                 | 2030 ---
+ libwnck/workspace-accessible-factory.c             |   64 -
+ libwnck/workspace-accessible-factory.h             |   59 -
+ libwnck/workspace-accessible.c                     |  256 -
+ libwnck/workspace-accessible.h                     |   64 -
+ libwnck/workspace.c                                |  614 -
+ libwnck/workspace.h                                |   91 -
+ libwnck/xutils.c                                   | 2733 ---
+ libwnck/xutils.h                                   |  216 -
+ missing                                            |  376 -
+ mkinstalldirs                                      |  162 -
+ po/Makefile.in.in                                  |  217 -
+ po/POTFILES.in                                     |   18 +-
+ po/am.po                                           |   64 +-
+ po/ar.po                                           |  546 +-
+ po/as.po                                           |  544 +-
+ po/ast.po                                          |  638 +-
+ po/az.po                                           |   64 +-
+ po/be.po                                           |  548 +-
+ po/be@latin.po                                     |  548 +-
+ po/bg.po                                           |  546 +-
+ po/bn.po                                           |  550 +-
+ po/bn_IN.po                                        |  548 +-
+ po/br.po                                           |  636 +-
+ po/bs.po                                           |   64 +-
+ po/ca.po                                           |  552 +-
+ po/ca@valencia.po                                  |  530 +-
+ po/crh.po                                          |  548 +-
+ po/cs.po                                           |  550 +-
+ po/cy.po                                           |   76 +-
+ po/da.po                                           |  548 +-
+ po/de.po                                           |  550 +-
+ po/dz.po                                           |  632 +-
+ po/el.po                                           |  550 +-
+ po/en@shaw.po                                      |  550 +-
+ po/en_CA.po                                        |   74 +-
+ po/en_GB.po                                        |  546 +-
+ po/eo.po                                           |   72 +-
+ po/es.po                                           |  554 +-
+ po/et.po                                           |   36 +-
+ po/eu.po                                           |  544 +-
+ po/fa.po                                           |   64 +-
+ po/fi.po                                           |  548 +-
+ po/fr.po                                           |  552 +-
+ po/ga.po                                           |  602 +-
+ po/gl.po                                           |  550 +-
+ po/gu.po                                           |  548 +-
+ po/he.po                                           |  548 +-
+ po/hi.po                                           |  548 +-
+ po/hr.po                                           |  546 +-
+ po/hu.po                                           |  560 +-
+ po/id.po                                           |  556 +-
+ po/is.po                                           |   64 +-
+ po/it.po                                           |  560 +-
+ po/ja.po                                           |  552 +-
+ po/ka.po                                           |  546 +-
+ po/kk.po                                           |  638 +-
+ po/kn.po                                           |  548 +-
+ po/ko.po                                           |  548 +-
+ po/ku.po                                           |   64 +-
+ po/ky.po                                           |   64 +-
+ po/li.po                                           |   64 +-
+ po/lt.po                                           |  546 +-
+ po/lv.po                                           |  550 +-
+ po/mai.po                                          |  548 +-
+ po/mi.po                                           |   64 +-
+ po/mk.po                                           |  548 +-
+ po/ml.po                                           |  546 +-
+ po/mn.po                                           |   66 +-
+ po/mr.po                                           |  548 +-
+ po/ms.po                                           |   64 +-
+ po/nb.po                                           |  546 +-
+ po/ne.po                                           |  540 +-
+ po/nl.po                                           |  548 +-
+ po/nn.po                                           |  546 +-
+ po/oc.po                                           |  546 +-
+ po/or.po                                           |  548 +-
+ po/pa.po                                           |  548 +-
+ po/pl.po                                           |  548 +-
+ po/pt.po                                           |  552 +-
+ po/pt_BR.po                                        |  550 +-
+ po/ro.po                                           |  642 +-
+ po/ru.po                                           |  548 +-
+ po/rw.po                                           |   74 +-
+ po/si.po                                           |   68 +-
+ po/sk.po                                           |  550 +-
+ po/sl.po                                           |  638 +-
+ po/sq.po                                           |   72 +-
+ po/sr.po                                           |  552 +-
+ po/sr@latin.po                                     |  552 +-
+ po/sv.po                                           |  632 +-
+ po/ta.po                                           |  554 +-
+ po/te.po                                           |  548 +-
+ po/th.po                                           |  548 +-
+ po/tr.po                                           |  548 +-
+ po/ug.po                                           |  526 +-
+ po/uk.po                                           |  546 +-
+ po/vi.po                                           |  636 +-
+ po/wa.po                                           |   64 +-
+ po/xh.po                                           |   66 +-
+ po/zh_CN.po                                        |  548 +-
+ po/zh_HK.po                                        |  606 +-
+ po/zh_TW.po                                        |  606 +-
+ 293 files changed, 58772 insertions(+), 90168 deletions(-)
+
+commit 7238692a81e177ff2cb2b3a7bde3b58f1c5808d5
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Thu May 24 16:41:31 2012 +0200
+
+    import libwnck-2.31.0
+
+ AUTHORS                                           |    2 +
+ COPYING                                           |  481 +
+ ChangeLog                                         | 1548 ++
+ HACKING                                           |   37 +
+ INSTALL                                           |  302 +
+ MAINTAINERS                                       |   25 +
+ Makefile.am                                       |   46 +
+ Makefile.in                                       |  892 +
+ NEWS                                              | 1780 ++
+ README                                            |   48 +
+ aclocal.m4                                        | 2074 +++
+ config.guess                                      | 1501 ++
+ config.h.in                                       |   92 +
+ config.sub                                        | 1705 ++
+ configure                                         |17921 +++++++++++++++++++++
+ configure.ac                                      |  225 +
+ depcomp                                           |  630 +
+ doc/Makefile.am                                   |   53 +
+ doc/Makefile.in                                   |  747 +
+ doc/html/WnckApplication.html                     |  425 +
+ doc/html/WnckClassGroup.html                      |  315 +
+ doc/html/WnckPager.html                           |  423 +
+ doc/html/WnckScreen.html                          | 1425 ++
+ doc/html/WnckSelector.html                        |  124 +
+ doc/html/WnckTasklist.html                        |  648 +
+ doc/html/WnckWindow.html                          | 2623 +++
+ doc/html/WnckWorkspace.html                       |  470 +
+ doc/html/core.html                                |   52 +
+ doc/html/home.png                                 |  Bin 0 -> 654 bytes
+ doc/html/index.html                               |   91 +
+ doc/html/index.sgml                               |  385 +
+ doc/html/indexes.html                             |   48 +
+ doc/html/intro.html                               |   58 +
+ doc/html/ix01.html                                |  471 +
+ doc/html/ix02.html                                |   61 +
+ doc/html/ix03.html                                |   69 +
+ doc/html/ix04.html                                |   49 +
+ doc/html/ix05.html                                |   43 +
+ doc/html/ix06.html                                |   43 +
+ doc/html/ix07.html                                |   45 +
+ doc/html/ix08.html                                |   53 +
+ doc/html/ix09.html                                |   51 +
+ doc/html/ix10.html                                |   51 +
+ doc/html/ix11.html                                |   69 +
+ doc/html/ix12.html                                |   35 +
+ doc/html/ix13.html                                |   46 +
+ doc/html/left.png                                 |  Bin 0 -> 459 bytes
+ doc/html/libwnck-Miscellaneous-Functions.html     |  136 +
+ doc/html/libwnck-Resource-Usage-of-X-Clients.html |  235 +
+ doc/html/libwnck-Version-Information.html         |  151 +
+ doc/html/libwnck-Window-Action-Menu.html          |  188 +
+ doc/html/libwnck.devhelp2                         |  329 +
+ doc/html/right.png                                |  Bin 0 -> 472 bytes
+ doc/html/style.css                                |  266 +
+ doc/html/up.png                                   |  Bin 0 -> 406 bytes
+ doc/html/utils.html                               |   44 +
+ doc/html/widgets.html                             |   49 +
+ doc/libwnck-docs.sgml                             |  118 +
+ doc/libwnck-overrides.txt                         |    2 +
+ doc/libwnck-sections.txt                          |  474 +
+ doc/libwnck.types                                 |   13 +
+ doc/tmpl/application.sgml                         |  141 +
+ doc/tmpl/class-group.sgml                         |   96 +
+ doc/tmpl/libwnck-unused.sgml                      |   24 +
+ doc/tmpl/misc.sgml                                |   46 +
+ doc/tmpl/pager.sgml                               |  119 +
+ doc/tmpl/resource.sgml                            |   60 +
+ doc/tmpl/screen.sgml                              |  426 +
+ doc/tmpl/selector.sgml                            |   37 +
+ doc/tmpl/tasklist.sgml                            |  189 +
+ doc/tmpl/util.sgml                                |   81 +
+ doc/tmpl/version.sgml                             |   53 +
+ doc/tmpl/window-action-menu.sgml                  |   51 +
+ doc/tmpl/window.sgml                              |  832 +
+ doc/tmpl/workspace.sgml                           |  153 +
+ gtk-doc.make                                      |  280 +
+ install-sh                                        |  520 +
+ libwnck-1.0-uninstalled.pc.in                     |   13 +
+ libwnck-1.0.pc.in                                 |   13 +
+ libwnck/Makefile.am                               |  190 +
+ libwnck/Makefile.in                               | 1140 ++
+ libwnck/TODO                                      |    4 +
+ libwnck/application.c                             |  730 +
+ libwnck/application.h                             |   99 +
+ libwnck/class-group.c                             |  605 +
+ libwnck/class-group.h                             |   85 +
+ libwnck/default_icon.png                          |  Bin 0 -> 345 bytes
+ libwnck/inlinepixbufs.h                           |  251 +
+ libwnck/libwnck.h                                 |   45 +
+ libwnck/pager-accessible-factory.c                |   71 +
+ libwnck/pager-accessible-factory.h                |   59 +
+ libwnck/pager-accessible.c                        |  487 +
+ libwnck/pager-accessible.h                        |   62 +
+ libwnck/pager.c                                   | 2770 ++++
+ libwnck/pager.h                                   |  130 +
+ libwnck/private.h                                 |  151 +
+ libwnck/screen.c                                  | 2837 ++++
+ libwnck/screen.h                                  |  276 +
+ libwnck/selector.c                                | 1367 ++
+ libwnck/selector.h                                |   67 +
+ libwnck/stock_delete.png                          |  Bin 0 -> 220 bytes
+ libwnck/stock_maximize.png                        |  Bin 0 -> 166 bytes
+ libwnck/stock_minimize.png                        |  Bin 0 -> 145 bytes
+ libwnck/tasklist.c                                | 4499 ++++++
+ libwnck/tasklist.h                                |  146 +
+ libwnck/test-pager.c                              |  101 +
+ libwnck/test-selector.c                           |   75 +
+ libwnck/test-tasklist.c                           |  153 +
+ libwnck/test-urgent.c                             |   96 +
+ libwnck/test-wnck.c                               |  879 +
+ libwnck/util.c                                    |  802 +
+ libwnck/util.h                                    |  116 +
+ libwnck/version.h                                 |   93 +
+ libwnck/version.h.in                              |   93 +
+ libwnck/window-action-menu.c                      | 1244 ++
+ libwnck/window-action-menu.h                      |   77 +
+ libwnck/window.c                                  | 3261 ++++
+ libwnck/window.h                                  |  412 +
+ libwnck/wnck-enum-types.c                         |  272 +
+ libwnck/wnck-enum-types.h                         |   48 +
+ libwnck/wnck-marshal.c                            |   90 +
+ libwnck/wnck-marshal.h                            |   20 +
+ libwnck/wnck-marshal.list                         |   25 +
+ libwnck/wnck-urgency-monitor.c                    |  218 +
+ libwnck/wnckprop.c                                | 2030 +++
+ libwnck/workspace-accessible-factory.c            |   64 +
+ libwnck/workspace-accessible-factory.h            |   59 +
+ libwnck/workspace-accessible.c                    |  256 +
+ libwnck/workspace-accessible.h                    |   64 +
+ libwnck/workspace.c                               |  614 +
+ libwnck/workspace.h                               |   91 +
+ libwnck/xutils.c                                  | 2733 ++++
+ libwnck/xutils.h                                  |  216 +
+ ltmain.sh                                         | 8406 ++++++++++
+ m4/gtk-doc.m4                                     |   67 +
+ m4/intltool.m4                                    |  216 +
+ m4/libtool.m4                                     | 7357 +++++++++
+ m4/ltoptions.m4                                   |  368 +
+ m4/ltsugar.m4                                     |  123 +
+ m4/ltversion.m4                                   |   23 +
+ m4/lt~obsolete.m4                                 |   92 +
+ missing                                           |  376 +
+ mkinstalldirs                                     |  162 +
+ po/LINGUAS                                        |   92 +
+ po/Makefile.in.in                                 |  217 +
+ po/POTFILES.in                                    |   11 +
+ po/am.po                                          |  156 +
+ po/ar.po                                          | 1261 ++
+ po/as.po                                          | 1266 ++
+ po/ast.po                                         | 1243 ++
+ po/az.po                                          |  151 +
+ po/be.po                                          | 1271 ++
+ po/be@latin.po                                    | 1248 ++
+ po/bg.po                                          | 1251 ++
+ po/bn.po                                          | 1272 ++
+ po/bn_IN.po                                       | 1248 ++
+ po/br.po                                          | 1240 ++
+ po/bs.po                                          |  151 +
+ po/ca.po                                          | 1277 ++
+ po/ca@valencia.po                                 | 1288 ++
+ po/crh.po                                         | 1298 ++
+ po/cs.po                                          | 1244 ++
+ po/cy.po                                          |  164 +
+ po/da.po                                          | 1257 ++
+ po/de.po                                          | 1269 ++
+ po/dz.po                                          | 1225 ++
+ po/el.po                                          | 1263 ++
+ po/en@shaw.po                                     | 1291 ++
+ po/en_CA.po                                       |  153 +
+ po/en_GB.po                                       | 1255 ++
+ po/eo.po                                          |  162 +
+ po/es.po                                          | 1272 ++
+ po/et.po                                          | 1009 ++
+ po/eu.po                                          | 1267 ++
+ po/fa.po                                          |  150 +
+ po/fi.po                                          | 1255 ++
+ po/fr.po                                          | 1275 ++
+ po/ga.po                                          | 1228 ++
+ po/gl.po                                          | 1296 ++
+ po/gu.po                                          | 1236 ++
+ po/he.po                                          | 1258 ++
+ po/hi.po                                          | 1222 ++
+ po/hr.po                                          | 1199 ++
+ po/hu.po                                          | 1252 ++
+ po/id.po                                          | 1275 ++
+ po/is.po                                          |  151 +
+ po/it.po                                          | 1285 ++
+ po/ja.po                                          | 1274 ++
+ po/ka.po                                          | 1267 ++
+ po/kk.po                                          | 1241 ++
+ po/kn.po                                          | 1263 ++
+ po/ko.po                                          | 1246 ++
+ po/ku.po                                          |  143 +
+ po/ky.po                                          |  143 +
+ po/li.po                                          |  150 +
+ po/lt.po                                          | 1252 ++
+ po/lv.po                                          | 1283 ++
+ po/mai.po                                         | 1224 ++
+ po/mi.po                                          |  147 +
+ po/mk.po                                          | 1246 ++
+ po/ml.po                                          | 1259 ++
+ po/mn.po                                          |  153 +
+ po/mr.po                                          | 1217 ++
+ po/ms.po                                          |  149 +
+ po/nb.po                                          | 1228 ++
+ po/ne.po                                          | 1164 ++
+ po/nl.po                                          | 1267 ++
+ po/nn.po                                          | 1400 ++
+ po/oc.po                                          | 1201 ++
+ po/or.po                                          | 1232 ++
+ po/pa.po                                          | 1228 ++
+ po/pl.po                                          | 1273 ++
+ po/pt.po                                          | 1271 ++
+ po/pt_BR.po                                       | 1259 ++
+ po/ro.po                                          | 1245 ++
+ po/ru.po                                          | 1264 ++
+ po/rw.po                                          |  181 +
+ po/si.po                                          |  149 +
+ po/sk.po                                          | 1258 ++
+ po/sl.po                                          | 1224 ++
+ po/sq.po                                          |  152 +
+ po/sr.po                                          | 1268 ++
+ po/sr@latin.po                                    | 1268 ++
+ po/sv.po                                          | 1266 ++
+ po/ta.po                                          | 1233 ++
+ po/te.po                                          | 1232 ++
+ po/th.po                                          | 1224 ++
+ po/tr.po                                          | 1255 ++
+ po/ug.po                                          | 1181 ++
+ po/uk.po                                          | 1272 ++
+ po/vi.po                                          | 1229 ++
+ po/wa.po                                          |  157 +
+ po/xh.po                                          |  141 +
+ po/zh_CN.po                                       | 1219 ++
+ po/zh_HK.po                                       | 1240 ++
+ po/zh_TW.po                                       | 1242 ++
+ 236 files changed, 182818 insertions(+)
