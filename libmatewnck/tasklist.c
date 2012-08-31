@@ -3746,6 +3746,12 @@ matewnck_task_button_press_event (GtkWidget	      *widget,
 
           return FALSE;
         } 
+      else if (event->button == 2)
+        {
+            /* middle-click close window */
+            matewnck_window_close (task->window, gtk_get_current_event_time ());
+            return TRUE;
+        }
       else if (event->button == 3)
         {
           if (task->action_menu)
