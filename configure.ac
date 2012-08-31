@@ -1,7 +1,7 @@
 AC_PREREQ(2.62)
 
 m4_define([matewnck_major_version], [1])
-m4_define([matewnck_minor_version], [4])
+m4_define([matewnck_minor_version], [5])
 m4_define([matewnck_micro_version], [0])
 m4_define([matewnck_version],
           [matewnck_major_version.matewnck_minor_version.matewnck_micro_version])
