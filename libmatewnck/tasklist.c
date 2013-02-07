@@ -234,6 +234,8 @@ struct _MatewnckTasklistPrivate
   GdkPixmap *background;
 
   guint drag_start_time;
+
+  GtkOrientation orientation;
 };
 
 static GType matewnck_task_get_type (void);
@@ -316,6 +318,7 @@ static int      matewnck_tasklist_layout        (GtkAllocation  *allocation,
 					     int             max_width,
 					     int             max_height,
 					     int             n_buttons,
+					     GtkOrientation  orientation,
 					     int            *n_cols_out,
 					     int            *n_rows_out);
 
@@ -976,6 +979,19 @@ matewnck_tasklist_set_button_relief (MatewnckTasklist *tasklist, GtkReliefStyle 
 }
 
 /**
+ * matewnck_tasklist_set_orientation:
+ * @tasklist: a #MatewnckTasklist.
+ * @orient: a GtkOrientation.
+ *
+ * Set the orientation of the @tasklist.  The main use of this function is
+ * proper integration of #MatewnckTasklist in vertical panels.
+ */
+void matewnck_tasklist_set_orientation(MatewnckTasklist *tasklist, GtkOrientation orient)
+{
+  tasklist->priv->orientation = orient;
+}
+
+/**
  * matewnck_tasklist_set_switch_workspace_on_unminimize:
  * @tasklist: a #MatewnckTasklist.
  * @switch_workspace_on_unminimize: whether to activate the #MatewnckWorkspace a
@@ -1147,25 +1163,38 @@ matewnck_tasklist_layout (GtkAllocation *allocation,
 		      int            max_width,
 		      int            max_height,
 		      int            n_buttons,
+		      GtkOrientation orientation,
 		      int           *n_cols_out,
 		      int           *n_rows_out)
 {
   int n_cols, n_rows;
 
-  /* How many rows fit in the allocation */
-  n_rows = allocation->height / max_height;
-
-  /* Don't have more rows than buttons */
-  n_rows = MIN (n_rows, n_buttons);
-
-  /* At least one row */
-  n_rows = MAX (n_rows, 1);
-  
-  /* We want to use as many rows as possible to limit the width */
-  n_cols = (n_buttons + n_rows - 1) / n_rows;
-
-  /* At least one column */
-  n_cols = MAX (n_cols, 1);
+  if (orientation == GTK_ORIENTATION_HORIZONTAL)
+    {
+      /* How many rows fit in the allocation */
+      n_rows = allocation->height / max_height;
+      
+      /* Don't have more rows than buttons */
+      n_rows = MIN (n_rows, n_buttons);
+      
+      /* At least one row */
+      n_rows = MAX (n_rows, 1);
+      
+      /* We want to use as many rows as possible to limit the width */
+      n_cols = (n_buttons + n_rows - 1) / n_rows;
+      
+      /* At least one column */
+      n_cols = MAX (n_cols, 1);
+    }
+  else
+    {
+      n_cols = allocation->width / max_width;
+      n_cols = MIN(n_cols, n_buttons);
+      n_cols = MAX(n_cols, 1);
+ 
+      n_rows = (n_buttons + n_cols - 1) / n_cols;
+      n_rows = MAX(n_rows, 1);
+    }
 
   *n_cols_out = n_cols;
   *n_rows_out = n_rows;
@@ -1367,6 +1396,7 @@ matewnck_tasklist_size_request  (GtkWidget      *widget,
 			tasklist->priv->max_button_width,
 			tasklist->priv->max_button_height,
 			n_windows + n_startup_sequences,
+			tasklist->priv->orientation,
 			&n_cols, &n_rows);
 
   last_n_cols = G_MAXINT;
@@ -1399,29 +1429,58 @@ matewnck_tasklist_size_request  (GtkWidget      *widget,
 			    tasklist->priv->max_button_width,
 			    tasklist->priv->max_button_height,
 			    n_startup_sequences + n_windows - n_grouped_buttons,
+                tasklist->priv->orientation,
 			    &n_cols, &n_rows);
-      if (n_cols != last_n_cols &&
-	  (tasklist->priv->grouping == MATEWNCK_TASKLIST_AUTO_GROUP ||
-	   ungrouped_class_groups == NULL))
-	{
-	  val = n_cols * tasklist->priv->max_button_width;
-	  if (val >= lowest_range)
-	    { /* Overlaps old range */
-              g_assert (array->len > 0);
-	      lowest_range = n_cols * grouping_limit;
-              g_array_index(array, int, array->len-1) = lowest_range;
-	    }
-	  else
-	    {
-	      /* Full new range */
-	      g_array_insert_val (array, array->len, val);
-	      val = n_cols * grouping_limit;
-	      g_array_insert_val (array, array->len, val);
-	      lowest_range = val;
-	    }
-
-	  last_n_cols = n_cols;
-	}
+      if (tasklist->priv->orientation == GTK_ORIENTATION_HORIZONTAL)
+        {
+          if (n_cols != last_n_cols &&
+             (tasklist->priv->grouping == MATEWNCK_TASKLIST_AUTO_GROUP ||
+              ungrouped_class_groups == NULL))
+            {
+              val = n_cols * tasklist->priv->max_button_width;
+              if (val >= lowest_range)
+                {
+                  /* Overlaps old range */
+                  g_assert (array->len > 0);
+                  lowest_range = n_cols * grouping_limit;
+                  g_array_index(array, int, array->len-1) = lowest_range;
+                }
+              else
+                {
+                  /* Full new range */
+                  g_array_insert_val (array, array->len, val);
+                  val = n_cols * grouping_limit;
+                  g_array_insert_val (array, array->len, val);
+                  lowest_range = val;
+                }
+              last_n_cols = n_cols;
+            }
+        }
+      else
+        {
+          if (n_rows != last_n_cols &&
+             (tasklist->priv->grouping == MATEWNCK_TASKLIST_AUTO_GROUP ||
+              ungrouped_class_groups == NULL))
+            {
+              val = n_rows * tasklist->priv->max_button_height;;
+              if (val >= lowest_range)
+                {
+                  /* Overlaps old range */
+                  g_assert (array->len > 0);
+                  lowest_range = n_rows * grouping_limit;
+                  g_array_index(array, int, array->len-1) = lowest_range;
+                }
+              else
+                {
+                  /* Full new range */
+                  g_array_insert_val (array, array->len, val);
+                  val = n_rows * grouping_limit;
+                  g_array_insert_val (array, array->len, val);
+                  lowest_range = val;
+                }
+              last_n_cols = n_rows;
+            }
+        }
     }
 
   g_list_free (ungrouped_class_groups);
@@ -1443,8 +1502,16 @@ matewnck_tasklist_size_request  (GtkWidget      *widget,
     
   tasklist->priv->size_hints = (int *)g_array_free (array, FALSE);
 
-  requisition->width = tasklist->priv->size_hints[0];
-  requisition->height = fake_allocation.height;
+  if (tasklist->priv->orientation == GTK_ORIENTATION_VERTICAL)
+    {
+      requisition->width  = n_cols * tasklist->priv->max_button_width;
+      requisition->height = n_rows * tasklist->priv->max_button_height;
+    }
+  else
+    {
+      requisition->width = tasklist->priv->size_hints[0];
+      requisition->height = fake_allocation.height;
+    }
 }
 
 /**
@@ -1540,6 +1607,7 @@ matewnck_tasklist_size_allocate (GtkWidget      *widget,
 				       tasklist->priv->max_button_width,
 				       tasklist->priv->max_button_height,
 				       n_startup_sequences + n_windows,
+				       tasklist->priv->orientation,
 				       &n_cols, &n_rows);
   while (ungrouped_class_groups != NULL &&
 	 ((tasklist->priv->grouping == MATEWNCK_TASKLIST_ALWAYS_GROUP) ||
@@ -1589,6 +1657,7 @@ matewnck_tasklist_size_allocate (GtkWidget      *widget,
 					   tasklist->priv->max_button_width,
 					   tasklist->priv->max_button_height,
 					   n_startup_sequences + n_windows - n_grouped_buttons,
+					   tasklist->priv->orientation,
 					   &n_cols, &n_rows);
     }
 
@@ -2143,6 +2212,7 @@ matewnck_tasklist_new (MatewnckScreen *screen)
   MatewnckTasklist *tasklist;
 
   tasklist = g_object_new (MATEWNCK_TYPE_TASKLIST, NULL);
+  tasklist->priv->orientation = GTK_ORIENTATION_HORIZONTAL;
 
   return GTK_WIDGET (tasklist);
 }
