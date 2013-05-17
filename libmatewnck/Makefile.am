@@ -177,10 +177,10 @@ Matewnck_1_0_gir_SCANNERFLAGS = --pkg-export=libmatewnck
 Matewnck_1_0_gir_FILES = $(introspection_sources)
 INTROSPECTION_GIRS += Matewnck-1.0.gir
 
-girdir = $(INTROSPECTION_GIRDIR)
+girdir = $(datadir)/gir-1.0/
 gir_DATA = $(INTROSPECTION_GIRS)
 
-typelibdir = $(INTROSPECTION_TYPELIBDIR)
+typelibdir = $(libdir)/girepository-1.0/
 typelib_DATA = $(INTROSPECTION_GIRS:.gir=.typelib)
 
 CLEANFILES += $(gir_DATA) $(typelib_DATA)
