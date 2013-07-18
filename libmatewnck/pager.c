@@ -114,12 +114,30 @@ static void matewnck_pager_finalize    (GObject        *object);
 
 static void     matewnck_pager_realize       (GtkWidget        *widget);
 static void     matewnck_pager_unrealize     (GtkWidget        *widget);
+#if GTK_CHECK_VERSION (3, 0, 0)
+static void     matewnck_pager_get_preferred_size (GtkWidget      *widget,
+                                                   GtkOrientation  orientation,
+                                                   gint          *minimal_size,
+                                                   gint          *natural_size);
+static void     matewnck_pager_get_preferred_width (GtkWidget *widget,
+                                                    gint      *minimal_width,
+                                                    gint      *natural_width);
+static void     matewnck_pager_get_preferred_height (GtkWidget *widget,
+                                                     gint      *minimal_height,
+                                                     gint      *natural_height);
+#else
 static void     matewnck_pager_size_request  (GtkWidget        *widget,
-                                          GtkRequisition   *requisition);
+                                              GtkRequisition   *requisition);
+#endif
 static void     matewnck_pager_size_allocate (GtkWidget        *widget,
                                           GtkAllocation    *allocation);
+#if GTK_CHECK_VERSION (3, 0, 0)
+static gboolean matewnck_pager_draw      (GtkWidget        *widget,
+                                          cairo_t          *cr);
+#else
 static gboolean matewnck_pager_expose_event  (GtkWidget        *widget,
                                           GdkEventExpose   *event);
+#endif
 static gboolean matewnck_pager_button_press  (GtkWidget        *widget,
                                           GdkEventButton   *event);
 static gboolean matewnck_pager_drag_motion   (GtkWidget        *widget,
@@ -250,9 +268,18 @@ matewnck_pager_class_init (MatewnckPagerClass *klass)
 
   widget_class->realize = matewnck_pager_realize;
   widget_class->unrealize = matewnck_pager_unrealize;
+#if GTK_CHECK_VERSION (3, 0, 0)
+  widget_class->get_preferred_width = matewnck_pager_get_preferred_width;
+  widget_class->get_preferred_height = matewnck_pager_get_preferred_height;
+#else
   widget_class->size_request = matewnck_pager_size_request;
+#endif
   widget_class->size_allocate = matewnck_pager_size_allocate;
+#if GTK_CHECK_VERSION (3, 0, 0)
+  widget_class->draw = matewnck_pager_draw;
+#else
   widget_class->expose_event = matewnck_pager_expose_event;
+#endif
   widget_class->button_press_event = matewnck_pager_button_press;
   widget_class->button_release_event = matewnck_pager_button_release;
   widget_class->motion_notify_event = matewnck_pager_motion;
@@ -352,13 +379,19 @@ matewnck_pager_realize (GtkWidget *widget)
   attributes.height = allocation.height;
   attributes.wclass = GDK_INPUT_OUTPUT;
   attributes.visual = gtk_widget_get_visual (widget);
+#if !GTK_CHECK_VERSION (3, 0, 0)
   attributes.colormap = gtk_widget_get_colormap (widget);
+#endif
   attributes.event_mask = gtk_widget_get_events (widget) | GDK_EXPOSURE_MASK |
 	  		  GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
 			  GDK_LEAVE_NOTIFY_MASK | GDK_POINTER_MOTION_MASK |
 			  GDK_POINTER_MOTION_HINT_MASK;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+  attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL;
+#else
   attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
+#endif
 
   window = gdk_window_new (gtk_widget_get_parent_window (widget), &attributes, attributes_mask);
   gtk_widget_set_window (widget, window);
@@ -404,8 +437,15 @@ matewnck_pager_unrealize (GtkWidget *widget)
 }
 
 static void
+#if GTK_CHECK_VERSION (3, 0, 0)
+matewnck_pager_get_preferred_size (GtkWidget      *widget,
+                                   GtkOrientation  orientation,
+                                   gint          *minimal_size,
+                                   gint          *natural_size)
+#else
 matewnck_pager_size_request  (GtkWidget      *widget,
-                          GtkRequisition *requisition)
+                              GtkRequisition *requisition)
+#endif
 {
   MatewnckPager *pager;
   int n_spaces;
@@ -416,6 +456,8 @@ matewnck_pager_size_request  (GtkWidget      *widget,
   int n_rows;
   int focus_width;
   MatewnckWorkspace *space;
+  gint width;
+  gint height;
 
   pager = MATEWNCK_PAGER (widget);
   
@@ -461,13 +503,13 @@ matewnck_pager_size_request  (GtkWidget      *widget,
       other_dimension_size = screen_aspect * size;
       if (pager->priv->orientation == GTK_ORIENTATION_VERTICAL)
 	{
-	  requisition->width = size * n_rows + (n_rows - 1);
-	  requisition->height = other_dimension_size * spaces_per_row  + (spaces_per_row - 1);
+	  width = size * n_rows + (n_rows - 1);
+	  height = other_dimension_size * spaces_per_row  + (spaces_per_row - 1);
 	}
       else
 	{
-	  requisition->width = size * spaces_per_row + (spaces_per_row - 1);
-	  requisition->height = other_dimension_size * n_rows  + (n_rows - 1);
+	  width = size * spaces_per_row + (spaces_per_row - 1);
+	  height = other_dimension_size * n_rows  + (n_rows - 1);
 	}
     }
   else
@@ -525,13 +567,13 @@ matewnck_pager_size_request  (GtkWidget      *widget,
       
       if (pager->priv->orientation == GTK_ORIENTATION_HORIZONTAL)
 	{
-	  requisition->width = other_dimension_size * spaces_per_row + (spaces_per_row - 1);
-	  requisition->height = size * n_rows + (n_rows - 1);
+	  width = other_dimension_size * spaces_per_row + (spaces_per_row - 1);
+	  height = size * n_rows + (n_rows - 1);
 	}
       else
 	{
-	  requisition->width = other_dimension_size * n_rows + (n_rows - 1);
-	  requisition->height = size * spaces_per_row + (spaces_per_row - 1);
+	  width = other_dimension_size * n_rows + (n_rows - 1);
+	  height = size * spaces_per_row + (spaces_per_row - 1);
 	}
     }
 
@@ -541,17 +583,50 @@ matewnck_pager_size_request  (GtkWidget      *widget,
 
       style = gtk_widget_get_style (widget);
 
-      requisition->width += 2 * style->xthickness;
-      requisition->height += 2 * style->ythickness;
+      width += 2 * style->xthickness;
+      height += 2 * style->ythickness;
     }
 
   gtk_widget_style_get (widget,
 			"focus-line-width", &focus_width,
 			NULL);
                                                                                                              
-  requisition->width  += 2 * focus_width;
-  requisition->height += 2 * focus_width;
+  width  += 2 * focus_width;
+  height += 2 * focus_width;
+#if GTK_CHECK_VERSION (3, 0, 0)
+  if (orientation == GTK_ORIENTATION_HORIZONTAL)
+    *minimal_size = *natural_size = width;
+  else
+    *minimal_size = *natural_size = height;
+#else
+  requisition->width = width;
+  requisition->height = height;
+#endif
 }
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+static void
+matewnck_pager_get_preferred_width (GtkWidget *widget,
+                                    gint      *minimal_width,
+                                    gint      *natural_width)
+{
+  matewnck_pager_get_preferred_size (widget,
+                                     GTK_ORIENTATION_HORIZONTAL,
+                                     minimal_width,
+                                     natural_width);
+}
+
+static void
+matewnck_pager_get_preferred_height (GtkWidget *widget,
+                                     gint      *minimal_height,
+                                     gint      *natural_height)
+{
+  matewnck_pager_get_preferred_size (widget,
+                                     GTK_ORIENTATION_VERTICAL,
+                                     minimal_height,
+                                     natural_height);
+}
+#endif
 
 static void
 matewnck_pager_size_allocate (GtkWidget      *widget,
@@ -841,15 +916,21 @@ get_window_rect (MatewnckWindow         *window,
 }
 
 static void
+#if GTK_CHECK_VERSION (3, 0, 0)
+draw_window (cairo_t            *cr,
+#else
 draw_window (GdkDrawable        *drawable,
+#endif
              GtkWidget          *widget,
-             MatewnckWindow         *win,
+             MatewnckWindow     *win,
              const GdkRectangle *winrect,
              GtkStateType        state,
              gboolean            translucent)
 {
   GtkStyle *style;
+#if !GTK_CHECK_VERSION (3, 0, 0)
   cairo_t *cr;
+#endif
   GdkPixbuf *icon;
   int icon_x, icon_y, icon_w, icon_h;
   gboolean is_active;
@@ -861,7 +942,12 @@ draw_window (GdkDrawable        *drawable,
   is_active = matewnck_window_is_active (win);
   translucency = translucent ? 0.4 : 1.0;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+  cairo_save (cr);
+#else
   cr = gdk_cairo_create (drawable);
+#endif
+
   cairo_rectangle (cr, winrect->x, winrect->y, winrect->width, winrect->height);
   cairo_clip (cr);
 
@@ -937,8 +1023,12 @@ draw_window (GdkDrawable        *drawable,
                    MAX (0, winrect->width - 1), MAX (0, winrect->height - 1));
   cairo_stroke (cr);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+  cairo_restore (cr);
+#else
   cairo_destroy (cr);
-}            
+#endif
+}
 
 static MatewnckWindow *
 window_at_point (MatewnckPager     *pager,
@@ -1101,7 +1191,8 @@ matewnck_pager_draw_workspace (MatewnckPager    *pager,
   GtkStateType state;
   GdkWindow *window;
   GtkStyle *style;
-  
+  cairo_t *cr;
+
   space = matewnck_screen_get_workspace (pager->priv->screen, workspace);
   if (!space)
     return;
@@ -1118,12 +1209,17 @@ matewnck_pager_draw_workspace (MatewnckPager    *pager,
 
   window = gtk_widget_get_window (widget);
   style = gtk_widget_get_style (widget);
+  cr = gdk_cairo_create (window);
 
   /* FIXME in names mode, should probably draw things like a button.
    */
   
   if (bg_pixbuf)
     {
+#if GTK_CHECK_VERSION (3, 0, 0)
+      gdk_cairo_set_source_pixbuf (cr, bg_pixbuf, rect->x, rect->y);
+      cairo_paint (cr);
+#else
       gdk_draw_pixbuf (window,
                        style->dark_gc[state],
                        bg_pixbuf,
@@ -1132,13 +1228,10 @@ matewnck_pager_draw_workspace (MatewnckPager    *pager,
                        -1, -1,
                        GDK_RGB_DITHER_MAX,
                        0, 0);
+#endif
     }
   else
     {
-      cairo_t *cr;
-
-      cr = gdk_cairo_create (window);
-
       if (!matewnck_workspace_is_virtual (space))
         {
           gdk_cairo_set_source_color (cr, &style->dark[state]);
@@ -1263,7 +1356,11 @@ matewnck_pager_draw_workspace (MatewnckPager    *pager,
 	  
 	  get_window_rect (win, rect, &winrect);
 	  
+#if GTK_CHECK_VERSION (3, 0, 0)
+	  draw_window (cr,
+#else
 	  draw_window (window,
+#endif
 		       widget,
 		       win,
 		       &winrect,
@@ -1288,7 +1385,17 @@ matewnck_pager_draw_workspace (MatewnckPager    *pager,
 						workspace_name);
       
       pango_layout_get_pixel_size (layout, &w, &h);
-      
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+      if (is_current)
+        gdk_cairo_set_source_color (cr, &style->fg[GTK_STATE_SELECTED]);
+      else
+        gdk_cairo_set_source_color (cr, &style->fg[GTK_STATE_NORMAL]);
+      cairo_move_to (cr,
+                     rect->x + (rect->width - w) / 2,
+                     rect->y + (rect->height - h) / 2);
+      pango_cairo_show_layout (cr, layout);
+#else
       gdk_draw_layout  (window,
 			is_current ?
 			style->fg_gc[GTK_STATE_SELECTED] :
@@ -1296,6 +1403,7 @@ matewnck_pager_draw_workspace (MatewnckPager    *pager,
 			rect->x + (rect->width - w) / 2,
 			rect->y + (rect->height - h) / 2,
 			layout);
+#endif
 
       g_object_unref (layout);
     }
@@ -1303,13 +1411,19 @@ matewnck_pager_draw_workspace (MatewnckPager    *pager,
   if (workspace == pager->priv->prelight && pager->priv->prelight_dnd)
     {
       /* stolen directly from gtk source so it matches nicely */
-      cairo_t *cr;
+#if GTK_CHECK_VERSION (3, 0, 0)
+      gtk_paint_shadow (style, cr,
+#else
       gtk_paint_shadow (style, window,
+#endif
 		        GTK_STATE_NORMAL, GTK_SHADOW_OUT,
+#if GTK_CHECK_VERSION (3, 0, 0)
+		        widget, "dnd",
+#else
 		        NULL, widget, "dnd",
+#endif
 			rect->x, rect->y, rect->width, rect->height);
 
-      cr = gdk_cairo_create (window);
       cairo_set_source_rgb (cr, 0.0, 0.0, 0.0); /* black */
       cairo_set_line_width (cr, 1.0);
       cairo_rectangle (cr,
@@ -1321,8 +1435,13 @@ matewnck_pager_draw_workspace (MatewnckPager    *pager,
 }
 
 static gboolean
+#if GTK_CHECK_VERSION (3, 0, 0)
+matewnck_pager_draw (GtkWidget *widget,
+                     cairo_t   *cr)
+#else
 matewnck_pager_expose_event  (GtkWidget      *widget,
-                          GdkEventExpose *event)
+                              GdkEventExpose *event)
+#endif
 {
   MatewnckPager *pager;
   int i;
@@ -1330,8 +1449,10 @@ matewnck_pager_expose_event  (GtkWidget      *widget,
   MatewnckWorkspace *active_space;
   GdkPixbuf *bg_pixbuf;
   gboolean first;
+#if !GTK_CHECK_VERSION (3, 0, 0)
   GdkWindow *window;
   GtkAllocation allocation;
+#endif
   GtkStyle *style;
   int focus_width;
   
@@ -1342,8 +1463,10 @@ matewnck_pager_expose_event  (GtkWidget      *widget,
   bg_pixbuf = NULL;
   first = TRUE;
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
   window = gtk_widget_get_window (widget);
   gtk_widget_get_allocation (widget, &allocation);
+#endif
 
   style = gtk_widget_get_style (widget);
   gtk_widget_style_get (widget,
@@ -1352,28 +1475,50 @@ matewnck_pager_expose_event  (GtkWidget      *widget,
 
   if (gtk_widget_has_focus (widget))
     gtk_paint_focus (style,
+#if GTK_CHECK_VERSION (3, 0, 0)
+		     cr,
+#else
 		     window,
+#endif
 		     gtk_widget_get_state (widget),
+#if !GTK_CHECK_VERSION (3, 0, 0)
 		     NULL,
+#endif
 		     widget,
 		     "pager",
 		     0, 0,
+#if GTK_CHECK_VERSION (3, 0, 0)
+		     gtk_widget_get_allocated_width (widget),
+		     gtk_widget_get_allocated_height (widget));
+#else
 		     allocation.width,
 		     allocation.height);
+#endif
 
   if (pager->priv->shadow_type != GTK_SHADOW_NONE)
     {
       gtk_paint_shadow (style,
+#if GTK_CHECK_VERSION (3, 0, 0)
+			cr,
+#else
 			window,
+#endif
 			gtk_widget_get_state (widget),
 			pager->priv->shadow_type,
+#if !GTK_CHECK_VERSION (3, 0, 0)
 			NULL,
+#endif
 			widget,
 			"pager",
 			focus_width,
 			focus_width,
+#if GTK_CHECK_VERSION (3, 0, 0)
+			gtk_widget_get_allocated_width (widget) - 2 * focus_width,
+			gtk_widget_get_allocated_height (widget) - 2 * focus_width);
+#else
 			allocation.width - 2 * focus_width,
 			allocation.height - 2 * focus_width);
+#endif
     }
   
   i = 0;
@@ -1398,9 +1543,12 @@ matewnck_pager_expose_event  (GtkWidget      *widget,
                                                      rect.height);
               first = FALSE;
             }
-          
+#if GTK_CHECK_VERSION (3, 0, 0)
+	  matewnck_pager_draw_workspace (pager, i, &rect, bg_pixbuf);
+#else
 	  if (gdk_rectangle_intersect (&event->area, &rect, &intersect))
 	    matewnck_pager_draw_workspace (pager, i, &rect, bg_pixbuf);
+#endif
 	}
  
       ++i;
@@ -1707,7 +1855,12 @@ matewnck_update_drag_icon (MatewnckWindow     *window,
   gint org_w, org_h, dnd_w, dnd_h;
   MatewnckWorkspace *workspace;
   GdkRectangle rect;
+#if GTK_CHECK_VERSION (3, 0, 0)
+  cairo_t *cr;
+  cairo_surface_t *surface;
+#else
   GdkPixmap *pixmap;
+#endif
   GtkWidget *widget;
 
   widget = g_object_get_data (G_OBJECT (context), "matewnck-drag-source-widget");
@@ -1737,10 +1890,21 @@ matewnck_update_drag_icon (MatewnckWindow     *window,
   rect.width = MAX (rect.width, 3);
   rect.height = MAX (rect.height, 3);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+  surface = gdk_window_create_similar_surface (gtk_widget_get_window (widget),
+                                               CAIRO_CONTENT_COLOR,
+                                               rect.width, rect.height);
+  cr = cairo_create (surface);
+  draw_window (cr, widget, window,
+               &rect, GTK_STATE_NORMAL, FALSE);
+  gtk_drag_set_icon_surface (context, surface);
+  cairo_surface_destroy (surface);
+  cairo_destroy (cr);
+#else
   pixmap = gdk_pixmap_new (gtk_widget_get_window (widget),
                            rect.width, rect.height, -1);
   draw_window (GDK_DRAWABLE (pixmap), widget, window,
-	       &rect, GTK_STATE_NORMAL, FALSE);  
+               &rect, GTK_STATE_NORMAL, FALSE);
 
   gtk_drag_set_icon_pixmap (context, 
                             gdk_drawable_get_colormap (GDK_DRAWABLE (pixmap)),
@@ -1748,6 +1912,7 @@ matewnck_update_drag_icon (MatewnckWindow     *window,
 			    -2, -2);
 
   g_object_unref (pixmap);
+#endif
 }
 
 static void
@@ -2656,10 +2821,14 @@ matewnck_pager_get_background (MatewnckPager *pager,
   if (p != None)
     {
       _matewnck_error_trap_push ();
+#if GTK_CHECK_VERSION (3, 0, 0)
+      pix = _matewnck_gdk_pixbuf_get_from_pixmap (p);
+#else
       pix = _matewnck_gdk_pixbuf_get_from_pixmap (NULL,
                                               p,
                                               0, 0, 0, 0,
                                               -1, -1);
+#endif
       _matewnck_error_trap_pop ();
     }
 
