@@ -160,7 +160,26 @@ AC_SUBST(XRES_PACKAGE)
 AC_SUBST(XLIB_CFLAGS)
 AC_SUBST(XLIB_LIBS)
 
-PKG_CHECK_MODULES(LIBMATEWNCK, gtk+-2.0 >= 2.19.7 glib-2.0 >= 2.16.0 gobject-2.0 >= 2.13.0 $STARTUP_NOTIFICATION_PACKAGE $X11_PACKAGE $XRES_PACKAGE)
+AC_MSG_CHECKING([which gtk+ version to compile against])
+AC_ARG_WITH([gtk],
+  [AS_HELP_STRING([--with-gtk=2.0|3.0],[which gtk+ version to compile against (default: 2.0)])],
+  [case "$with_gtk" in
+     2.0|3.0) ;;
+     *) AC_MSG_ERROR([invalid gtk version specified]) ;;
+   esac],
+  [with_gtk=2.0])
+AC_MSG_RESULT([$with_gtk])
+
+case "$with_gtk" in
+  2.0) GTK_API_VERSION=2.0
+       GTK_REQUIRED=2.19.7
+       ;;
+  3.0) GTK_API_VERSION=3.0
+       GTK_REQUIRED=3.0.0
+       ;;
+esac
+
+PKG_CHECK_MODULES(LIBMATEWNCK, gtk+-$GTK_API_VERSION >= $GTK_REQUIRED glib-2.0 >= 2.16.0 gobject-2.0 >= 2.13.0 $STARTUP_NOTIFICATION_PACKAGE $X11_PACKAGE $XRES_PACKAGE)
 AC_SUBST(LIBMATEWNCK_LIBS)
 AC_SUBST(LIBMATEWNCK_CFLAGS)
 
@@ -217,6 +236,7 @@ echo "
         Maintainer mode:              ${USE_MAINTAINER_MODE}
         Use *_DISABLE_DEPRECATED:     ${enable_deprecation_flags}
 
+        Gtk+ version:                 ${GTK_API_VERSION}
         Startup notification support: ${have_sn}
         XRes support:                 ${have_xres}
         Build introspection support:  ${found_introspection}
