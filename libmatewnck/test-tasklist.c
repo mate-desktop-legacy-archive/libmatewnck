@@ -102,13 +102,21 @@ main (int argc, char **argv)
 
   if (transparent)
     {
+#if GTK_CHECK_VERSION (3, 0, 0)
+      GdkVisual *map;
+      map = gdk_screen_get_rgba_visual (gtk_widget_get_screen (win));
+#else
       GdkColormap *map;
-
       map = gdk_screen_get_rgba_colormap (gtk_widget_get_screen (win));
+#endif
 
       if (map != NULL)
         {
+#if GTK_CHECK_VERSION (3, 0, 0)
+          gtk_widget_set_visual (win, map);
+#else
           gtk_widget_set_colormap (win, map);
+#endif
 
           g_signal_connect (win, "composited-changed",
                             G_CALLBACK (window_composited_changed),

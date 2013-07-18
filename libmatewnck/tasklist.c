@@ -154,8 +154,13 @@ struct _MatewnckTask
 
   guint32 dnd_timestamp;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+  cairo_surface_t *screenshot;
+  cairo_surface_t *screenshot_faded;
+#else
   GdkPixmap *screenshot;
   GdkPixmap *screenshot_faded;
+#endif
 
   time_t  start_needs_attention;
   gdouble glow_start_time;
@@ -230,8 +235,10 @@ struct _MatewnckTasklistPrivate
   gint monitor_num;
   GdkRectangle monitor_geometry;
   GtkReliefStyle relief;
-  
+
+#if !GTK_CHECK_VERSION (3, 0, 0)
   GdkPixmap *background;
+#endif
 
   guint drag_start_time;
 
@@ -295,14 +302,26 @@ static GObject *matewnck_tasklist_constructor   (GType              type,
                                              GObjectConstructParam *construct_properties);
 static void     matewnck_tasklist_finalize      (GObject        *object);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+static void    matewnck_tasklist_get_preferred_width (GtkWidget *widget,
+                                                      gint *minimum_width,
+                                                      gint *natural_width);
+static void    matewnck_tasklist_get_preferred_height (GtkWidget *widget,
+                                                       gint *minimum_height,
+                                                       gint *natural_height);
+#else
 static void     matewnck_tasklist_size_request  (GtkWidget        *widget,
                                              GtkRequisition   *requisition);
+#endif
+
 static void     matewnck_tasklist_size_allocate (GtkWidget        *widget,
                                              GtkAllocation    *allocation);
 static void     matewnck_tasklist_realize       (GtkWidget        *widget);
 static void     matewnck_tasklist_unrealize     (GtkWidget        *widget);
+#if !GTK_CHECK_VERSION (3, 0, 0)
 static gint     matewnck_tasklist_expose        (GtkWidget        *widget,
                                              GdkEventExpose    *event);
+#endif
 static void     matewnck_tasklist_forall        (GtkContainer     *container,
                                              gboolean	       include_internals,
                                              GtkCallback       callback,
@@ -375,12 +394,20 @@ cleanup_screenshots (MatewnckTask *task)
 {
   if (task->screenshot != NULL)
     {
+#if GTK_CHECK_VERSION (3, 0, 0)
+      cairo_surface_destroy (task->screenshot);
+#else
       g_object_unref (task->screenshot);
+#endif
       task->screenshot = NULL;
     }
   if (task->screenshot_faded != NULL)
     {
+#if GTK_CHECK_VERSION (3, 0, 0)
+      cairo_surface_destroy (task->screenshot_faded);
+#else
       g_object_unref (task->screenshot_faded);
+#endif
       task->screenshot_faded = NULL;
     }
 }
@@ -510,13 +537,21 @@ matewnck_task_button_glow (MatewnckTask *task)
 
   cairo_save (cr);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+  cairo_set_source_surface (cr, task->screenshot, 0., 0.);
+#else
   gdk_cairo_set_source_pixmap (cr, task->screenshot, 0., 0.);
   cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
+#endif
   cairo_paint (cr);
 
   cairo_restore (cr);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+  cairo_set_source_surface (cr, task->screenshot_faded, 0., 0.);
+#else
   gdk_cairo_set_source_pixmap (cr, task->screenshot_faded, 0., 0.);
+#endif
   cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
   cairo_paint_with_alpha (cr, glow_factor);
 
@@ -727,8 +762,10 @@ matewnck_tasklist_init (MatewnckTasklist *tasklist)
   tasklist->priv->monitor_num = -1;
   tasklist->priv->monitor_geometry.width = -1; /* invalid value */
   tasklist->priv->relief = GTK_RELIEF_NORMAL;
-  
+
+#if !GTK_CHECK_VERSION (3, 0, 0)
   tasklist->priv->background = NULL;
+#endif
 
   tasklist->priv->drag_start_time = 0;
 
@@ -749,12 +786,19 @@ matewnck_tasklist_class_init (MatewnckTasklistClass *klass)
   object_class->constructor = matewnck_tasklist_constructor;
   object_class->finalize = matewnck_tasklist_finalize;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+  widget_class->get_preferred_width = matewnck_tasklist_get_preferred_width;
+  widget_class->get_preferred_height = matewnck_tasklist_get_preferred_height;
+#else
   widget_class->size_request = matewnck_tasklist_size_request;
+#endif
   widget_class->size_allocate = matewnck_tasklist_size_allocate;
   widget_class->realize = matewnck_tasklist_realize;
   widget_class->unrealize = matewnck_tasklist_unrealize;
+#if !GTK_CHECK_VERSION (3, 0, 0)
   widget_class->expose_event = matewnck_tasklist_expose;
-  
+#endif
+
   container_class->forall = matewnck_tasklist_forall;
   container_class->remove = matewnck_tasklist_remove;
   
@@ -911,11 +955,13 @@ matewnck_tasklist_finalize (GObject *object)
   tasklist->priv->free_icon_loader_data = NULL;
   tasklist->priv->icon_loader_data = NULL;
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
   if (tasklist->priv->background)
     {
       g_object_unref (tasklist->priv->background);
       tasklist->priv->background = NULL;
     }
+#endif
 
   G_OBJECT_CLASS (matewnck_tasklist_parent_class)->finalize (object);
 }
@@ -1344,21 +1390,39 @@ matewnck_tasklist_size_request  (GtkWidget      *widget,
   tasklist = MATEWNCK_TASKLIST (widget);
 
   /* Calculate max needed height and width of the buttons */
+#if GTK_CHECK_VERSION (3, 0, 0)
 #define GET_MAX_WIDTH_HEIGHT_FROM_BUTTONS(list)                 \
   l = list;                                                     \
   while (l != NULL)                                             \
     {                                                           \
-      MatewnckTask *task = MATEWNCK_TASK (l->data);                     \
+      MatewnckTask *task = MATEWNCK_TASK (l->data);             \
+                                                                \
+      gtk_widget_get_preferred_size (task->button,              \
+                                     &child_req, NULL);         \
+      max_height = MAX (child_req.height,                       \
+                        max_height);                            \
+      max_width = MAX (child_req.width,                         \
+                       max_width);                              \
+                                                                \
+      l = l->next;                                              \
+    }
+#else
+#define GET_MAX_WIDTH_HEIGHT_FROM_BUTTONS(list)                 \
+  l = list;                                                     \
+  while (l != NULL)                                             \
+    {                                                           \
+      MatewnckTask *task = MATEWNCK_TASK (l->data);             \
                                                                 \
       gtk_widget_size_request (task->button, &child_req);       \
                                                                 \
       max_height = MAX (child_req.height,                       \
-			max_height);                            \
+                        max_height);                            \
       max_width = MAX (child_req.width,                         \
-		       max_width);                              \
+                       max_width);                              \
                                                                 \
       l = l->next;                                              \
     }
+#endif
 
   GET_MAX_WIDTH_HEIGHT_FROM_BUTTONS (tasklist->priv->windows)
   GET_MAX_WIDTH_HEIGHT_FROM_BUTTONS (tasklist->priv->class_groups)
@@ -1513,6 +1577,32 @@ matewnck_tasklist_size_request  (GtkWidget      *widget,
       requisition->height = fake_allocation.height;
     }
 }
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+static void
+matewnck_tasklist_get_preferred_width (GtkWidget *widget,
+                                       gint *minimum_width,
+                                       gint *natural_width)
+{
+  GtkRequisition req;
+
+  matewnck_tasklist_size_request (widget, &req);
+
+  *minimum_width = *natural_width = req.width;
+}
+
+static void
+matewnck_tasklist_get_preferred_height (GtkWidget *widget,
+                                        gint *minimum_height,
+                                        gint *natural_height)
+{
+  GtkRequisition req;
+
+  matewnck_tasklist_size_request (widget, &req);
+
+  *minimum_height = *natural_height = req.height;
+}
+#endif
 
 /**
  * matewnck_tasklist_get_size_hint_list:
@@ -1812,6 +1902,7 @@ matewnck_tasklist_unrealize (GtkWidget *widget)
 		   NULL);
 }
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 static gint
 matewnck_tasklist_expose (GtkWidget      *widget,
                       GdkEventExpose *event)
@@ -1850,6 +1941,7 @@ matewnck_tasklist_expose (GtkWidget      *widget,
   
   return (* GTK_WIDGET_CLASS (matewnck_tasklist_parent_class)->expose_event) (widget, event);
 }
+#endif
 
 static void
 matewnck_tasklist_forall (GtkContainer *container,
@@ -2782,8 +2874,12 @@ matewnck_task_position_menu (GtkMenu   *menu,
   gint menu_ypos;
   gint pointer_x;
   gint pointer_y;
-  
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+  gtk_widget_get_preferred_size (GTK_WIDGET (menu), &requisition, NULL);
+#else
   gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
+#endif
 
   window = gtk_widget_get_window (widget);
   gtk_widget_get_allocation (widget, &allocation);
@@ -3858,9 +3954,15 @@ matewnck_task_button_press_event (GtkWidget	      *widget,
 }
 
 static gboolean
+#if GTK_CHECK_VERSION (3, 0, 0)
+matewnck_task_draw (GtkWidget  *widget,
+                    cairo_t    *cr,
+                    gpointer    data);
+#else
 matewnck_task_expose (GtkWidget        *widget,
-                  GdkEventExpose   *event,
-                  gpointer          data);
+                      GdkEventExpose   *event,
+                      gpointer          data);
+#endif
 
 static void
 matewnck_task_create_widgets (MatewnckTask *task, GtkReliefStyle relief)
@@ -4028,12 +4130,18 @@ matewnck_task_create_widgets (MatewnckTask *task, GtkReliefStyle relief)
       g_assert_not_reached ();
     }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+  g_signal_connect_object (task->button, "draw",
+                           G_CALLBACK (matewnck_task_draw),
+#else
   g_signal_connect_object (task->button, "expose_event",
                            G_CALLBACK (matewnck_task_expose),
+#endif
                            G_OBJECT (task),
                            G_CONNECT_AFTER);
 }
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 static void
 fake_expose_widget (GtkWidget *widget,
                     GdkPixmap *pixmap,
@@ -4071,17 +4179,36 @@ fake_expose_widget (GtkWidget *widget,
   allocation.y -= y;
   gtk_widget_set_allocation (widget, &allocation);
 }
+#endif
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+static cairo_surface_t *
+#else
 static GdkPixmap *
+#endif
 take_screenshot (MatewnckTask *task)
 {
   GtkAllocation allocation;
   MatewnckTasklist *tasklist;
   GtkWidget    *tasklist_widget;
+#if GTK_CHECK_VERSION (3, 0, 0)
+  cairo_surface_t *surface;
+  cairo_t *cr;
+#else
   GdkPixmap *pixmap;
+#endif
   gint width, height;
   gboolean overlay_rect;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+  width = gtk_widget_get_allocated_width (task->button);
+  height = gtk_widget_get_allocated_height (task->button);
+
+  surface = gdk_window_create_similar_surface (gtk_widget_get_window (task->button),
+                                               CAIRO_CONTENT_COLOR_ALPHA,
+                                               width, height);
+  cr = cairo_create (surface);
+#else
   gtk_widget_get_allocation (task->button, &allocation);
   
   width = allocation.width;
@@ -4089,7 +4216,8 @@ take_screenshot (MatewnckTask *task)
   
   pixmap = gdk_pixmap_new (gtk_widget_get_window (task->button),
                            width, height, -1);
-  
+#endif
+
   tasklist = MATEWNCK_TASKLIST (task->tasklist);
   tasklist_widget = GTK_WIDGET (task->tasklist);
 
@@ -4102,8 +4230,13 @@ take_screenshot (MatewnckTask *task)
       style = gtk_widget_get_style (task->button);
 
       /* Draw a rectangle with bg[SELECTED] */
+#if GTK_CHECK_VERSION (3, 0, 0)
+      gdk_cairo_set_source_color (cr, &style->bg[GTK_STATE_SELECTED]);
+      cairo_paint (cr);
+#else
       gdk_draw_rectangle (pixmap, style->bg_gc[GTK_STATE_SELECTED],
                           TRUE, 0, 0, width + 1, height + 1);
+#endif
     }
   else
     {
@@ -4117,18 +4250,29 @@ take_screenshot (MatewnckTask *task)
       style = gtk_style_copy (gtk_widget_get_style (task->button));
       style->bg[state] = style->bg[GTK_STATE_SELECTED];
       /* Now attach it to the window */
+#if GTK_CHECK_VERSION (3, 0, 0)
+      attached_style = gtk_style_attach (style, gtk_widget_get_window (task->button));
+#else
       attached_style = gtk_style_attach (style, pixmap);
+#endif
       g_object_ref (attached_style);
       
+#if !GTK_CHECK_VERSION (3, 0, 0)
       /* copy the background */
       gdk_draw_drawable (pixmap, attached_style->bg_gc[GTK_STATE_NORMAL],
                          tasklist->priv->background,
                          allocation.x, allocation.y,
                          0, 0, width, height);
-      
+#endif
+
       /* draw the button with our modified style instead of the real one. */
+#if GTK_CHECK_VERSION (3, 0, 0)
+      gtk_paint_box (attached_style, cr, state,
+                     GTK_SHADOW_OUT, task->button, "button",
+#else
       gtk_paint_box (attached_style, (GdkWindow*) pixmap, state,
                      GTK_SHADOW_OUT, NULL, task->button, "button",
+#endif
                      0, 0, width, height);
 
       g_object_unref (style);
@@ -4137,14 +4281,51 @@ take_screenshot (MatewnckTask *task)
     }
   
   /* then the image and label */
+#if GTK_CHECK_VERSION (3, 0, 0)
+  cairo_save (cr);
+  gtk_widget_get_allocation (task->image, &allocation);
+  cairo_translate (cr, allocation.x, allocation.y);
+  gtk_widget_draw (task->image, cr);
+  cairo_restore (cr);
+
+  cairo_save (cr);
+  gtk_widget_get_allocation (task->label, &allocation);
+  cairo_translate (cr, allocation.x, allocation.y);
+  gtk_widget_draw (task->label, cr);
+  cairo_restore (cr);
+
+  return surface;
+#else
   fake_expose_widget (task->image, pixmap,
                       -allocation.x, -allocation.y);
   fake_expose_widget (task->label, pixmap,
                       -allocation.x, -allocation.y);
   
   return pixmap;
+#endif
 }
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+static cairo_surface_t *
+copy_surface (GtkWidget *widget)
+{
+  cairo_surface_t *surface;
+  cairo_t *cr;
+
+  surface = gdk_window_create_similar_surface (gtk_widget_get_window (widget),
+                                               CAIRO_CONTENT_COLOR_ALPHA,
+
+  gtk_widget_get_allocated_width (widget),
+  gtk_widget_get_allocated_height (widget));
+
+  cr = cairo_create (surface);
+  gtk_widget_draw (widget, cr);
+
+  cairo_destroy (cr);
+
+  return surface;
+}
+#else
 static GdkPixmap *
 copy_pixmap (GtkWidget *widget)
 {
@@ -4170,21 +4351,32 @@ copy_pixmap (GtkWidget *widget)
 
   return pixmap;
 }
+#endif
 
 static gboolean
+#if GTK_CHECK_VERSION (3, 0, 0)
+matewnck_task_draw (GtkWidget *widget,
+                    cairo_t *cr,
+                    gpointer data)
+#else
 matewnck_task_expose (GtkWidget        *widget,
-                  GdkEventExpose   *event,
-                  gpointer          data)
+                      GdkEventExpose   *event,
+                      gpointer          data)
+#endif
 {
   GtkStyle *style;
+#if !GTK_CHECK_VERSION (3, 0, 0)
   GdkWindow *window;
   GtkAllocation allocation;
   GdkGC *lgc, *dgc;
+#endif
   int x, y;
   MatewnckTask *task;
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
   window = gtk_widget_get_window (widget);
   gtk_widget_get_allocation (widget, &allocation);
+#endif
 
   task = MATEWNCK_TASK (data);
   
@@ -4194,21 +4386,48 @@ matewnck_task_expose (GtkWidget        *widget,
     {
     case MATEWNCK_TASK_CLASS_GROUP:
       style = gtk_widget_get_style (widget);
+#if !GTK_CHECK_VERSION (3, 0, 0)
       lgc = style->light_gc[GTK_STATE_NORMAL];
       dgc = style->dark_gc[GTK_STATE_NORMAL];
+#endif
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+      x = gtk_widget_get_allocated_width (widget) -
+          (gtk_container_get_border_width (GTK_CONTAINER (widget)) + style->ythickness + 12);
+      y = gtk_widget_get_allocated_height (widget) / 2 - 5;
+#else
       x = allocation.x + allocation.width -
           (gtk_container_get_border_width (GTK_CONTAINER (widget)) + style->ythickness + 12);
       y = allocation.y + allocation.height / 2 - 5;
+#endif
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+      gtk_paint_tab (style, cr,
+#else
       gtk_paint_tab (style, window,
-		     task->tasklist->priv->active_class_group == task ?
-		       GTK_STATE_ACTIVE : GTK_STATE_NORMAL,
-		     GTK_SHADOW_NONE, NULL, widget, NULL, x, y, 10, 10);
+#endif
+                     task->tasklist->priv->active_class_group == task ?
+                     GTK_STATE_ACTIVE : GTK_STATE_NORMAL,
+#if GTK_CHECK_VERSION (3, 0, 0)
+                     GTK_SHADOW_NONE, widget, NULL, x, y, 10, 10);
+#else
+                     GTK_SHADOW_NONE, NULL, widget, NULL, x, y, 10, 10);
+#endif
 
       /* Fall through to get screenshot
        */
     case MATEWNCK_TASK_WINDOW:
+#if GTK_CHECK_VERSION (3, 0, 0)
+      if (task->start_needs_attention)
+        {
+          time_t attention = task->start_needs_attention;
+          task->start_needs_attention = 0;
+          task->screenshot = copy_surface (widget);
+          task->screenshot_faded = take_screenshot (task);
+          task->start_needs_attention = attention;
+          matewnck_task_button_glow (task);
+        }
+#else
       if ((event->area.x <= allocation.x) &&
           (event->area.y <= allocation.y) &&
           (event->area.width >= allocation.width) &&
@@ -4222,6 +4441,7 @@ matewnck_task_expose (GtkWidget        *widget,
               matewnck_task_button_glow (task);
             }
         }
+#endif
 
     case MATEWNCK_TASK_STARTUP_SEQUENCE:
       break;
