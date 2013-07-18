@@ -25,6 +25,7 @@
 #define MATEWNCK_XUTILS_H
 
 #include <glib.h>
+#include <gtk/gtk.h>
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 #include <gdk/gdk.h>
@@ -194,6 +195,9 @@ void _matewnck_set_desktop_layout (Screen *xscreen,
                                int     rows,
                                int     columns);
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+GdkPixbuf* _matewnck_gdk_pixbuf_get_from_pixmap (Pixmap xpixmap);
+#else
 GdkPixbuf* _matewnck_gdk_pixbuf_get_from_pixmap (GdkPixbuf   *dest,
                                              Pixmap       xpixmap,
                                              int          src_x,
@@ -202,6 +206,7 @@ GdkPixbuf* _matewnck_gdk_pixbuf_get_from_pixmap (GdkPixbuf   *dest,
                                              int          dest_y,
                                              int          width,
                                              int          height);
+#endif
 
 #define MATEWNCK_NO_MANAGER_TOKEN 0
 

@@ -25,6 +25,9 @@
 #include "xutils.h"
 #include <string.h>
 #include <stdio.h>
+#if GTK_CHECK_VERSION (3, 0, 0)
+#include <cairo-xlib.h>
+#endif
 #include "screen.h"
 #include "window.h"
 #include "private.h"
@@ -240,7 +243,12 @@ text_property_to_utf8 (const XTextProperty *prop)
   
   list = NULL;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+  count = gdk_text_property_to_utf8_list_for_display (gdk_display_get_default(),
+                                          gdk_x11_xatom_to_atom (prop->encoding),
+#else
   count = gdk_text_property_to_utf8_list (gdk_x11_xatom_to_atom (prop->encoding),
+#endif
                                           prop->format,
                                           prop->value,
                                           prop->nitems,
@@ -782,7 +790,12 @@ _matewnck_deiconify (Window xwindow)
    */
   GdkWindow *gdkwindow;
 
+#if GTK_CHECK_VERSION (3, 0, 0)
+  gdkwindow = gdk_x11_window_lookup_for_display (gdk_display_get_default (),
+                                                 xwindow);
+#else
   gdkwindow = gdk_xid_table_lookup (xwindow);
+#endif
 
   _matewnck_error_trap_push ();
   if (gdkwindow)
@@ -1296,8 +1309,13 @@ _matewnck_select_input (Window xwindow,
                     int    mask)
 {
   GdkWindow *gdkwindow;
-  
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+  gdkwindow = gdk_x11_window_lookup_for_display (gdk_display_get_default (),
+                                                 xwindow);
+#else
   gdkwindow = gdk_xid_table_lookup (xwindow);
+#endif
 
   _matewnck_error_trap_push ();
   if (gdkwindow)
@@ -1644,6 +1662,7 @@ apply_mask (GdkPixbuf *pixbuf,
   return with_alpha;
 }
 
+#if !GTK_CHECK_VERSION (3, 0, 0)
 static GdkColormap*
 get_cmap (GdkPixmap *pixmap)
 {
@@ -1738,6 +1757,53 @@ _matewnck_gdk_pixbuf_get_from_pixmap (GdkPixbuf   *dest,
 
   return retval;
 }
+#else
+GdkPixbuf*
+_matewnck_gdk_pixbuf_get_from_pixmap (Pixmap xpixmap)
+{
+  cairo_surface_t *surface;
+  Display *display;
+  Window root_return;
+  int x_ret, y_ret;
+  unsigned int w_ret, h_ret, bw_ret, depth_ret;
+  XWindowAttributes attrs;
+  GdkPixbuf *retval;
+
+  display = GDK_DISPLAY_XDISPLAY (gdk_display_get_default ());
+
+  if (!XGetGeometry (display, xpixmap, &root_return,
+                     &x_ret, &y_ret, &w_ret, &h_ret, &bw_ret, &depth_ret))
+    return NULL;
+
+  if (depth_ret == 1)
+    {
+      surface = cairo_xlib_surface_create_for_bitmap (display,
+                                                      xpixmap,
+                                                      GDK_SCREEN_XSCREEN (gdk_screen_get_default ()),
+                                                      w_ret,
+                                                      h_ret);
+    }
+  else
+    {
+      if (!XGetWindowAttributes (display, root_return, &attrs))
+        return NULL;
+
+      surface = cairo_xlib_surface_create (display,
+                                           xpixmap,
+                                           attrs.visual,
+                                           w_ret, h_ret);
+    }
+
+  retval = gdk_pixbuf_get_from_surface (surface,
+                                        0,
+                                        0,
+                                        w_ret,
+                                        h_ret);
+  cairo_surface_destroy (surface);
+
+  return retval;
+}
+#endif
 
 static gboolean
 try_pixmap_and_mask (Pixmap      src_pixmap,
@@ -1759,19 +1825,27 @@ try_pixmap_and_mask (Pixmap      src_pixmap,
   _matewnck_error_trap_push ();
 
   get_pixmap_geometry (src_pixmap, &w, &h, NULL);
-      
+
+#if GTK_CHECK_VERSION (3, 0, 0)
+  unscaled = _matewnck_gdk_pixbuf_get_from_pixmap (src_pixmap);
+#else
   unscaled = _matewnck_gdk_pixbuf_get_from_pixmap (NULL,
                                                src_pixmap,
                                                0, 0, 0, 0,
                                                w, h);
+#endif
 
   if (unscaled && src_mask != None)
     {
       get_pixmap_geometry (src_mask, &w, &h, NULL);
+#if GTK_CHECK_VERSION (3, 0, 0)
+      mask = _matewnck_gdk_pixbuf_get_from_pixmap (src_mask);
+#else
       mask = _matewnck_gdk_pixbuf_get_from_pixmap (NULL,
                                                src_mask,
                                                0, 0, 0, 0,
                                                w, h);
+#endif
     }
   
   _matewnck_error_trap_pop ();
